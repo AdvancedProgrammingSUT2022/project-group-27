@@ -45,4 +45,14 @@ public class User {
 
         return false;
     }
+
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
+    }
+
+    public boolean changeNickname(String newNickname) {
+        if (User.isNicknameExist(newNickname)) return false;
+        this.nickname = newNickname;
+        return true;
+    }
 }

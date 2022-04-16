@@ -28,12 +28,12 @@ public class MainMenu extends Menu {
 
     @Override
     protected void showMenu() {
-
+        this.run();
     }
 
     @Override
     protected void enterMenu(String newMenuName) {
-
+        this.run();
     }
 
     private void LoggedOutUser() {

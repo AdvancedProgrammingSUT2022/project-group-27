@@ -30,12 +30,12 @@ public class LoginMenu extends Menu {
 
     @Override
     protected void showMenu() {
-
+        this.run();
     }
 
     @Override
     protected void enterMenu(String newMenuName) {
-
+        this.run();
     }
 
     @Override
