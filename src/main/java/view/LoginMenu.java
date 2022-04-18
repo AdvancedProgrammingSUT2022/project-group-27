@@ -29,12 +29,14 @@ public class LoginMenu extends Menu {
     public void run() {
         String input = getScanner().nextLine();
         Matcher matcher;
+        String regex;
 
         if (input.matches("^menu show-current$")) showMenu();
         else if (input.matches("^menu exit$")) exitMenu();
-        else if (input.matches("^menu enter (?<menuName>\\S+)$")) {
-            matcher = Controller.findMatcherFromString(input, "^menu enter (?<menuName>\\S+)$");
+        else if (input.matches((regex = "^menu enter (?<menuName>\\S+)$"))) {
+            matcher = Controller.findMatcherFromString(input, regex);
             if (matcher.find()) enterMenu(matcher.group("menuName"));
+            else System.out.println(Message.INVALID_COMMAND);
         }
         else {
             System.out.println(Message.INVALID_COMMAND);
@@ -50,11 +52,23 @@ public class LoginMenu extends Menu {
 
     @Override
     protected void enterMenu(String newMenuName) {
-        if (newMenuName.equals("Main_Menu")) {
-            System.out.println(Message.ENTER_MENU);
-            MainMenu.getInstance().run();
+        switch (newMenuName) {
+            case "Main_Menu": {
+                System.out.println(Message.ENTER_MENU);
+                MainMenu.getInstance().run();
+                //System.out.println(Message.LOGIN_FIRST);
+                break;
+            }
+            case "Game_Menu", "Profile_Menu" :
+                System.out.println(Message.INVALID_NAVIGATION);
+                break;
+            case "Login_Menu" :
+                System.out.println(Message.CURRENT_MENU);
+                break;
+            default :
+                System.out.println(Message.INVALID_MENU_NAME);
+                break;
         }
-        else System.out.println(Message.INVALID_NAVIGATION);
 
         this.run();
     }

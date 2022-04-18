@@ -1,7 +1,10 @@
 package view;
 
+import controller.Controller;
 import controller.MainController;
 import Enum.Message;
+
+import java.util.regex.Matcher;
 
 public class MainMenu extends Menu {
     //singleton pattern
@@ -24,9 +27,16 @@ public class MainMenu extends Menu {
     @Override
     public void run() {
         String input = getScanner().nextLine();
+        Matcher matcher;
+        String regex;
 
         if (input.matches("^menu show-current$")) showMenu();
         else if (input.matches("^menu exit$")) exitMenu();
+        else if (input.matches((regex = "^menu enter (?<menuName>\\S+)$"))) {
+            matcher = Controller.findMatcherFromString(input, regex);
+            if (matcher.find()) enterMenu(matcher.group("menuName"));
+            else System.out.println(Message.INVALID_COMMAND);
+        } else if (input.matches("^user logout$")) loggedOutUser();
         else {
             System.out.println(Message.INVALID_COMMAND);
             this.run();
@@ -41,10 +51,32 @@ public class MainMenu extends Menu {
 
     @Override
     protected void enterMenu(String newMenuName) {
+        switch (newMenuName) {
+            case "Game_Menu": {
+                System.out.println(Message.ENTER_MENU);
+                GameMenu.getInstance().run();
+                break;
+            }
+            case "Profile_Menu": {
+                System.out.println(Message.ENTER_MENU);
+                ProfileMenu.getInstance().run();
+                break;
+            }
+            case "Login_Menu" :
+                return;
+            case "Main_Menu" :
+                System.out.println(Message.CURRENT_MENU);
+                break;
+            default :
+                System.out.println(Message.INVALID_MENU_NAME);
+                break;
+        }
+
         this.run();
     }
 
-    private void LoggedOutUser() {
+    private void loggedOutUser() {
         Menu.setLoggedInUser(null);
+        System.out.println(Message.LOGOUT);
     }
 }
