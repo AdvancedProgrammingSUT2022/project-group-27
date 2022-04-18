@@ -36,6 +36,9 @@ public class ProfileMenu extends Menu{
             matcher = Controller.findMatcherFromString(input, regex);
             if (matcher.find()) enterMenu(matcher.group("menuName"));
             else System.out.println(Message.INVALID_COMMAND);
+        } else if (input.matches((regex = "^profile change --nickname (?<nickname>.+)$"))) {
+            matcher = Controller.findMatcherFromString(input, regex);
+            changeNickname(matcher);
         }
         else {
             System.out.println(Message.INVALID_COMMAND);
@@ -69,9 +72,12 @@ public class ProfileMenu extends Menu{
     }
 
     public void changeNickname(Matcher matcher) {
-        //check matcher validation and get String and
-        //ProfileController.getInstance().changeNickname(...)
-        //and sout message
+        if (matcher.find()) {
+            String nickname = matcher.group("nickname");
+            Message message = ProfileController.getInstance().changeNickname(nickname);
+            System.out.println(message);
+        } else System.out.println(Message.INVALID_COMMAND);
+
         this.run();
     }
 
