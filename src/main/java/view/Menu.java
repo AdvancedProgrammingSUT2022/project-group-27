@@ -12,7 +12,7 @@ public abstract class Menu {
         return scanner;
     }
 
-    protected static void setLoggedInUser(User loggedInUser) {
+    public static void setLoggedInUser(User loggedInUser) {
         Menu.loggedInUser = loggedInUser;
     }
 

@@ -10,7 +10,11 @@ public enum Message {
     NICKNAME_CHANGED("Your nickname changed successfully!"),
     PASSWORD_CHANGED("Your password changed successfully!"),
     EXIST_NICKNAME("The nickname you choice is already exist"),
+    EXIST_USERNAME("The username you choice is already exist"),
+    CREATE_USER_SUCCESSFUL("User created successfully!"),
+    USER_IS_INVALID("Username and password didn't match!"),
     INVALID_PASSWORD("Password is invalid"),
+    LOGIN_SUCCESSFUL("User logged in successfully!"),
     LOGOUT("User logged out successfully");
 
     private String message;
