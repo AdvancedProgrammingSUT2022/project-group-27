@@ -15,6 +15,8 @@ public enum Message {
     USER_IS_INVALID("Username and password didn't match!"),
     INVALID_PASSWORD("Password is invalid"),
     LOGIN_SUCCESSFUL("User logged in successfully!"),
+    USERNAME_NOT_EXIST("One of the usernames you choice doesn't exist"),
+    START_GAME("Game starts..."),
     LOGOUT("User logged out successfully");
 
     private String message;

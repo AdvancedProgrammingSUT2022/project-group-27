@@ -1,5 +1,10 @@
 package controller;
 
+import Enum.Message;
+import model.User;
+
+import java.util.ArrayList;
+
 public class GameController extends Controller {
     //singleton pattern
     private static GameController instance = null;
@@ -12,5 +17,13 @@ public class GameController extends Controller {
     public static GameController getInstance() {
         if (GameController.instance == null) GameController.setInstance(new GameController());
         return GameController.instance;
+    }
+
+    public Message startGame(ArrayList<String> usernames) {
+        for (String username: usernames) {
+            if (!User.isUsernameExist(username)) return Message.USERNAME_NOT_EXIST;
+        }
+
+        return Message.START_GAME;
     }
 }
