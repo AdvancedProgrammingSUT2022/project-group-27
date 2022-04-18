@@ -1,7 +1,9 @@
 package view;
 
+import controller.Controller;
 import controller.LoginController;
 import model.User;
+import Enum.Message;
 
 import java.util.regex.Matcher;
 
@@ -25,16 +27,35 @@ public class LoginMenu extends Menu {
 
     @Override
     public void run() {
+        String input = getScanner().nextLine();
+        Matcher matcher;
 
+        if (input.matches("^menu show-current$")) showMenu();
+        else if (input.matches("^menu exit$")) exitMenu();
+        else if (input.matches("^menu enter (?<menuName>\\S+)$")) {
+            matcher = Controller.findMatcherFromString(input, "^menu enter (?<menuName>\\S+)$");
+            if (matcher.find()) enterMenu(matcher.group("menuName"));
+        }
+        else {
+            System.out.println(Message.INVALID_COMMAND);
+            this.run();
+        }
     }
 
     @Override
     protected void showMenu() {
+        System.out.println("Login Menu");
         this.run();
     }
 
     @Override
     protected void enterMenu(String newMenuName) {
+        if (newMenuName.equals("Main_Menu")) {
+            System.out.println(Message.ENTER_MENU);
+            MainMenu.getInstance().run();
+        }
+        else System.out.println(Message.INVALID_NAVIGATION);
+
         this.run();
     }
 

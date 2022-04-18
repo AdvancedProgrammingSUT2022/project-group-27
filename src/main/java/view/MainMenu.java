@@ -1,7 +1,7 @@
 package view;
 
-import controller.LoginController;
 import controller.MainController;
+import Enum.Message;
 
 public class MainMenu extends Menu {
     //singleton pattern
@@ -23,11 +23,19 @@ public class MainMenu extends Menu {
 
     @Override
     public void run() {
+        String input = getScanner().nextLine();
 
+        if (input.matches("^menu show-current$")) showMenu();
+        else if (input.matches("^menu exit$")) exitMenu();
+        else {
+            System.out.println(Message.INVALID_COMMAND);
+            this.run();
+        }
     }
 
     @Override
     protected void showMenu() {
+        System.out.println("Main Menu");
         this.run();
     }
 

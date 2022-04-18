@@ -1,6 +1,7 @@
 package view;
 
 import controller.ProfileController;
+import Enum.Message;
 
 import java.util.regex.Matcher;
 
@@ -24,7 +25,14 @@ public class ProfileMenu extends Menu{
 
     @Override
     public void run() {
+        String input = getScanner().nextLine();
 
+        if (input.matches("^menu show-current$")) showMenu();
+        else if (input.matches("^menu exit$")) exitMenu();
+        else {
+            System.out.println(Message.INVALID_COMMAND);
+            this.run();
+        }
     }
 
     @Override
@@ -34,6 +42,7 @@ public class ProfileMenu extends Menu{
 
     @Override
     protected void showMenu() {
+        System.out.println("Profile Menu");
         this.run();
     }
 
