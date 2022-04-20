@@ -1,0 +1,37 @@
+package model;
+
+import static java.lang.Math.abs;
+import static java.lang.Math.sqrt;
+
+public class GlobalVariables {
+    public int surfaceWidth = 70, surfaceHeight = 41;
+    public int tool6Zelie = 6, arz6Zelie = 5;
+    public double epsilon = 0.5;
+
+    public int isEqual(double x, double y) {
+        if (abs(x - y) < this.epsilon) return 1;
+        return 0;
+    }
+
+    public double distanceOfTwoPoints(int x1, int y1, int x2, int y2) {
+        return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    }
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
+    public int checkIsGroundInPage(Ground ground) {
+        GlobalVariables globalVariables = new GlobalVariables();
+        if (ground.getxLocation() == 0 || ground.getxLocation() == globalVariables.surfaceHeight - 1 || ground.getyLocation() == 0 || ground.getyLocation() == globalVariables.surfaceWidth - 1) {
+            return 0;
+        }
+        return 1;
+    }
+}
