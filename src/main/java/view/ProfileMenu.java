@@ -1,9 +1,10 @@
 package view;
 
-import controller.Controller;
 import controller.ProfileController;
 import Enum.Message;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class ProfileMenu extends Menu{
@@ -39,9 +40,17 @@ public class ProfileMenu extends Menu{
                 System.out.println(Message.INVALID_COMMAND);
                 this.run();
             }
-        } else if (input.matches((regex = "^profile change --nickname (?<nickname>.+)$"))) {
+        } else if (input.matches((regex = "^profile change ((--nickname)|(-n)) (?<nickname>.+)$"))) {
             matcher = controller.findMatcherFromString(input, regex);
             if (matcher != null) changeNickname(matcher);
+            else {
+                System.out.println(Message.INVALID_COMMAND);
+                this.run();
+            }
+        } else if (input.matches("profile change --password .+")) {
+            matcher = controller.getInput("profile change --password",
+                    new ArrayList<String>(List.of("((--current)|(-c)) (?<currentPassword>\\S+)", "((--new)|(-n)) (?<newPassword>\\S+)")), input);
+            if (matcher != null) changePassword(matcher);
             else {
                 System.out.println(Message.INVALID_COMMAND);
                 this.run();
@@ -87,9 +96,11 @@ public class ProfileMenu extends Menu{
     }
 
     public void changePassword(Matcher matcher) {
-        //check matcher validation and get String and
-        //ProfileController.getInstance().changePassword(..)
-        //and sout message
+        String newPassword = matcher.group("newPassword");
+        String currentPassword = matcher.group("currentPassword");
+
+        Message message = controller.changePassword(newPassword, currentPassword);
+        System.out.println(message);
         this.run();
     }
 }

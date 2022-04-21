@@ -1,11 +1,8 @@
 package view;
 
-import controller.Controller;
 import controller.LoginController;
-import model.User;
 import Enum.Message;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -112,7 +109,7 @@ public class LoginMenu extends Menu {
         Message message = controller.loginUser(username, password);
         System.out.println(message);
         if (message == Message.LOGIN_SUCCESSFUL) MainMenu.getInstance().run();
-        
+
         this.run();
     }
 }

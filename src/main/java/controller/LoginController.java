@@ -34,7 +34,10 @@ public class LoginController extends Controller{
         Message message;
         User user = User.findUser(username, password);
         if (user == null) message = Message.USER_IS_INVALID;
-        else message = Message.LOGIN_SUCCESSFUL;
+        else {
+            Menu.setLoggedInUser(user);
+            message = Message.LOGIN_SUCCESSFUL;
+        }
 
         return message;
     }
