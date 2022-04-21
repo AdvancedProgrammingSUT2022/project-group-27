@@ -8,7 +8,23 @@ public class User {
     private String nickname;
     private int score;
 
-    private final static ArrayList<User> listOfUsers = new ArrayList<>();
+    private static ArrayList<User> listOfUsers = new ArrayList<>();
+
+    public User(String username, String password, String nickname) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.score = 0;
+        listOfUsers.add(this);
+    }
+
+    public static void setListOfUsers(ArrayList<User> listOfUsers) {
+        User.listOfUsers = listOfUsers;
+    }
+
+    public static ArrayList<User> getListOfUsers() {
+        return listOfUsers;
+    }
 
     public static User findUser(String username, String password) {
         for (User user: listOfUsers) {
@@ -24,14 +40,6 @@ public class User {
         }
 
         return null;
-    }
-
-    public User(String username, String password, String nickname) {
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-        this.score = 0;
-        listOfUsers.add(this);
     }
 
     public boolean isPasswordCorrect(String password) {
