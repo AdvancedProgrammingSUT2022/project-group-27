@@ -107,6 +107,7 @@ public class GameMenu extends Menu{
             }
         }
 
+        //TODO : payami nemikhayn chap konid? va inke check she beineshoon null nabashe
         if (isValid) GameView.getInstance(new ArrayList<User>(Arrays.asList(playerUsers))).run();
 
         this.run();

@@ -3,11 +3,18 @@ package model;
 import java.util.ArrayList;
 
 public class Player {
-    public static ArrayList<Player> allPlayers;
-    public ArrayList<City> cities;
-    public ArrayList<Ground> clearToSeeGrounds;
-    public ArrayList<Ground> wasCleardToSeeGrounds;
+    public User user;
+    public static ArrayList<Player> allPlayers=new ArrayList<>();
+    public static int counterOfNextRound=0;
+    public ArrayList<City> cities=new ArrayList<>();
+    public ArrayList<Unit> units=new ArrayList<>();
+    public ArrayList<Ground> clearToSeeGrounds=new ArrayList<>();
+    public ArrayList<Ground> wasClearedToSeeGrounds=new ArrayList<>();
+    public Player (User user){
+        this.user=user;
+        allPlayers.add(this);
 
+    }
 
     public void handleClearToSeeGrounds1depth(ArrayList <Ground> clearToSeeGrounds) {
         GlobalVariables globalVariables = new GlobalVariables();
@@ -41,13 +48,17 @@ public class Player {
     }
     public void handleClearToSee(){
         this.clearToSeeGrounds=new ArrayList<>();
-        for (int i=0;i<cities.size();i++){
-            for (int j=0;j<cities.get(i).groundsInCity.size();j++){
-                clearToSeeGrounds.add(cities.get(i).groundsInCity.get(j));
-            }
+        for (int i=0;i<this.units.size();i++){
+            this.clearToSeeGrounds.add(this.units.get(i).getGround());
         }
         handleClearToSeeGrounds1depth(this.clearToSeeGrounds);
         handleClearToSeeGrounds1depth(this.clearToSeeGrounds);
+    }
+    public static void nextTurn(){
+        counterOfNextRound++;
+    }
+    public static Player WhichPlayerTurnIs(){
+        return allPlayers.get(counterOfNextRound%allPlayers.size());
     }
 
 }

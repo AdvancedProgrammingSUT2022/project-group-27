@@ -47,5 +47,20 @@ public class Ground {
         }
         return true;
     }
+    public static Ground getGroundByNumber(int number){
+        for (int i=0;i<allGround.size();i++){
+            if (allGround.get(i).number==number) return allGround.get(i);
+        }
+        return null;
+    }
+    public boolean isFreeOfUnit(){
+        //TODO: vaghti unit ha do no shodan avaz she
+        for (int i=0;i<Player.allPlayers.size();i++){
+            for (int j=0;j<Player.allPlayers.get(i).units.size();j++){
+                if (Player.allPlayers.get(i).units.get(j).ground.number==this.number) return false;
+            }
+        }
+        return true;
+    }
 
 }

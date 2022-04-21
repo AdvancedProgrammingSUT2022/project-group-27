@@ -5,6 +5,7 @@ import static java.lang.Math.sqrt;
 
 public class GlobalVariables {
     public int surfaceWidth = 70, surfaceHeight = 41;
+    public static int numberOfTiles=77;
     public int tool6Zelie = 6, arz6Zelie = 5;
     public double epsilon = 0.5;
 
