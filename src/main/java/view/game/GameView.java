@@ -1,4 +1,4 @@
-package model.game;
+package view.game;
 
 
 import Enum.Message;
@@ -68,3 +68,4 @@ public class GameView {
         this.run();
     }
 }
+

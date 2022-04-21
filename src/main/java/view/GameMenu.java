@@ -3,7 +3,7 @@ package view;
 import controller.Controller;
 import controller.GameController;
 import Enum.Message;
-import model.game.GameView;
+import view.game.GameView;
 
 import java.util.regex.Matcher;
 
@@ -37,7 +37,7 @@ public class GameMenu extends Menu{
             matcher = Controller.findMatcherFromString(input, regex);
             if (matcher != null) enterMenu(matcher.group("menuName"));
             else System.out.println(Message.INVALID_COMMAND);
-        } else if (input.matches("^start game$")) GameView.getInstance().run();
+        } else if (input.matches("^start game$")) GameView.getInstance().run(); //ToDo change it to correct format
         else {
             System.out.println(Message.INVALID_COMMAND);
             this.run();

@@ -35,7 +35,7 @@ public class LoginMenu extends Menu {
         else if (input.matches("^menu exit$")) exitMenu();
         else if (input.matches((regex = "^menu enter (?<menuName>\\S+)$"))) {
             matcher = Controller.findMatcherFromString(input, regex);
-            if (matcher.find()) enterMenu(matcher.group("menuName"));
+            if (matcher != null) enterMenu(matcher.group("menuName"));
             else System.out.println(Message.INVALID_COMMAND);
         }
         else {
@@ -54,9 +54,7 @@ public class LoginMenu extends Menu {
     protected void enterMenu(String newMenuName) {
         switch (newMenuName) {
             case "Main_Menu": {
-                System.out.println(Message.ENTER_MENU);
-                MainMenu.getInstance().run();
-                //System.out.println(Message.LOGIN_FIRST);
+                System.out.println(Message.LOGIN_FIRST);
                 break;
             }
             case "Game_Menu", "Profile_Menu" :
