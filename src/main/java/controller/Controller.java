@@ -5,14 +5,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class Controller {
-    public static Matcher findMatcherFromString(String input, String regex) {
+    public Matcher findMatcherFromString(String input, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
         if(matcher.matches()) return matcher;
         return null;
     }
 
-    public static Matcher getInput(String prefix, ArrayList<String> regexArray, String input){
+    public Matcher getInput(String prefix, ArrayList<String> regexArray, String input){
         long powerOfArraySize = 1;
         for (int i = 0;i < regexArray.size(); i++) powerOfArraySize *= regexArray.size();
 

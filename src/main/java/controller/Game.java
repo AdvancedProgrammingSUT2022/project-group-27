@@ -4,7 +4,7 @@ import model.GlobalVariables;
 import model.Ground;
 import model.Pair;
 
-public class Game {
+public class Game extends Controller {
     //singleton pattern
     private static Game instance = null;
     private Game() {

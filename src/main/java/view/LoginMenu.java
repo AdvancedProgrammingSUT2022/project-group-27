@@ -5,6 +5,9 @@ import controller.LoginController;
 import model.User;
 import Enum.Message;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class LoginMenu extends Menu {
@@ -34,9 +37,25 @@ public class LoginMenu extends Menu {
         if (input.matches("^menu show-current$")) showMenu();
         else if (input.matches("^menu exit$")) exitMenu();
         else if (input.matches((regex = "^menu enter (?<menuName>\\S+)$"))) {
-            matcher = Controller.findMatcherFromString(input, regex);
+            matcher = controller.findMatcherFromString(input, regex);
             if (matcher != null) enterMenu(matcher.group("menuName"));
             else System.out.println(Message.INVALID_COMMAND);
+        } else if (input.matches("user create .+")) {
+            matcher = controller.getInput("user create",
+                    new ArrayList<String>(List.of("((--username)|(-u)) (?<username>.+)", "((--nickname)|(-n)) (?<nickname>.+)", "((--password)|(-p)) (?<password>\\S+)")), input);
+            if (matcher != null) createUser(matcher);
+            else {
+                System.out.println(Message.INVALID_COMMAND);
+                this.run();
+            }
+        } else if (input.matches("user login .+")) {
+            matcher = controller.getInput("user login",
+                    new ArrayList<String>(List.of("((--username)|(-u)) (?<username>.+)", "((--password)|(-p)) (?<password>\\S+)")), input);
+            if (matcher != null) loginUser(matcher);
+            else {
+                System.out.println(Message.INVALID_COMMAND);
+                this.run();
+            }
         }
         else {
             System.out.println(Message.INVALID_COMMAND);
@@ -77,15 +96,23 @@ public class LoginMenu extends Menu {
     }
 
     private void createUser(Matcher matcher) {
-        //check matcher validation and get String and
-        // this.controller.createUser();
+        String username = matcher.group("username");
+        String nickname = matcher.group("nickname");
+        String password = matcher.group("password");
+
+        Message message = controller.createUser(username, password, nickname);
+        System.out.println(message);
         this.run();
     }
 
     private void loginUser(Matcher matcher) {
-        //check matcher validation and get String and
-        // this.controller.loginUser();
-        // MainMenu.getInstance().run()
+        String username = matcher.group("username");
+        String password = matcher.group("password");
+
+        Message message = controller.loginUser(username, password);
+        System.out.println(message);
+        if (message == Message.LOGIN_SUCCESSFUL) MainMenu.getInstance().run();
+        
         this.run();
     }
 }

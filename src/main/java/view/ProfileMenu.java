@@ -33,12 +33,19 @@ public class ProfileMenu extends Menu{
         if (input.matches("^menu show-current$")) showMenu();
         else if (input.matches("^menu exit$")) exitMenu();
         else if (input.matches((regex = "^menu enter (?<menuName>\\S+)$"))) {
-            matcher = Controller.findMatcherFromString(input, regex);
-            if (matcher.find()) enterMenu(matcher.group("menuName"));
-            else System.out.println(Message.INVALID_COMMAND);
+            matcher = controller.findMatcherFromString(input, regex);
+            if (matcher != null) enterMenu(matcher.group("menuName"));
+            else {
+                System.out.println(Message.INVALID_COMMAND);
+                this.run();
+            }
         } else if (input.matches((regex = "^profile change --nickname (?<nickname>.+)$"))) {
-            matcher = Controller.findMatcherFromString(input, regex);
-            changeNickname(matcher);
+            matcher = controller.findMatcherFromString(input, regex);
+            if (matcher != null) changeNickname(matcher);
+            else {
+                System.out.println(Message.INVALID_COMMAND);
+                this.run();
+            }
         }
         else {
             System.out.println(Message.INVALID_COMMAND);
@@ -72,11 +79,9 @@ public class ProfileMenu extends Menu{
     }
 
     public void changeNickname(Matcher matcher) {
-        if (matcher.find()) {
-            String nickname = matcher.group("nickname");
-            Message message = ProfileController.getInstance().changeNickname(nickname);
-            System.out.println(message);
-        } else System.out.println(Message.INVALID_COMMAND);
+        String nickname = matcher.group("nickname");
+        Message message = ProfileController.getInstance().changeNickname(nickname);
+        System.out.println(message);
 
         this.run();
     }
