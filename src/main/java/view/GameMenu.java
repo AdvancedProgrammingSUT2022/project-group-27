@@ -31,89 +31,80 @@ public class GameMenu extends Menu{
     }
 
     public void createMap(){
-        HashMap <Pair,Integer> hashMap=new HashMap<>();
-
+        //TODO.. change it to bfs method
         GlobalVariables globalVariables = new GlobalVariables();
-        int counter=0;
-        int cntNumber=1;
-        for (int i=0;i<globalVariables.surfaceHeight;i+=globalVariables.arz6Zelie){
+        int counter = 0;
+        int numberOfCity = 1;
+        for (int i = 0; i < globalVariables.surfaceHeight; i += globalVariables.arz6Zelie){
             counter++;
-            int starter=0;
-            if (counter%2==0) starter+=globalVariables.tool6Zelie/2;
-            for (int j=starter;j<globalVariables.surfaceWidth;j+=globalVariables.tool6Zelie){
-                Ground ground= new Ground(i,j,cntNumber++);
-                if (globalVariables.checkIsGroundInPage(ground)==0){
+            int starter = 0;
+            if (counter % 2 == 0) starter += globalVariables.tool6Zelie / 2;
+            for (int j = starter; j < globalVariables.surfaceWidth; j += globalVariables.tool6Zelie){
+                Ground ground = new Ground(i, j, numberOfCity++);
+                if (!ground.checkIsGroundInPage()){
                     ground.number=0;
-                    cntNumber--;
+                    numberOfCity--;
                 }
-                Pair pair = new Pair(i,j);
-                System.out.println(i + " " + j);
-                hashMap.put(pair,1);
+
                 Ground.allGround.add(ground);
             }
         }
-        for (int i=0;i<globalVariables.surfaceHeight;i++){
-            for (int j=0;j< globalVariables.surfaceWidth;j++){
-                double best=1e9;
-                int p1=0;
-                Pair id=new Pair(0,0);
-                for (int a=0;a<globalVariables.surfaceHeight;a++){
-                    for (int b=0;b< globalVariables.surfaceWidth;b++){
-                        Pair pair=new Pair(a,b);
-                        Ground ground=Ground.getGroundByXY(a,b);
-                        if (ground==null) continue;
-                        if (globalVariables.isEqual(best, globalVariables.distanceOfTwoPoints(i, j, a, b))==1){
-                            p1=1;
-                            continue;
+        for (int i = 0; i < globalVariables.surfaceHeight; i++){
+            for (int j = 0; j < globalVariables.surfaceWidth; j++){
+                double bestForMatchPixels = 1e9;
+                int checkPixelType = 0;
+                Pair idOfBestMatch = new Pair(0,0);
+                for (int a = 0; a < globalVariables.surfaceHeight; a++){
+                    for (int b = 0; b < globalVariables.surfaceWidth; b++){
+                        Ground ground = Ground.getGroundByXY(a,b);
+                        if (ground == null);
+                        else if (globalVariables.isEqual(bestForMatchPixels, globalVariables.distanceOfTwoPoints(i, j, a, b)) == 1){
+                            checkPixelType=1;
                         }
-                        if (best>globalVariables.distanceOfTwoPoints(i, j, a, b)){
-                            best=globalVariables.distanceOfTwoPoints(i,j,a,b);
-                            p1=0;
-                            id= new Pair(a,b);
+                        else if (bestForMatchPixels > globalVariables.distanceOfTwoPoints(i, j, a, b)){
+                            bestForMatchPixels = globalVariables.distanceOfTwoPoints(i, j, a, b);
+                            checkPixelType = 0;
+                            idOfBestMatch= new Pair(a,b);
                         }
                     }
                 }
-                //System.out.println(best + " " + p1);
-                if (p1==0){
-                    Ground ground=Ground.getGroundByXY(id.F,id.S);
-                    if (ground==null){
-                        System.out.println("Didnt find the ground!!!!");
+
+                if (checkPixelType == 0){
+                    Ground ground = Ground.getGroundByXY(idOfBestMatch.firstInt, idOfBestMatch.secondInt);
+                    if (ground == null){
+                        System.out.println("Didn't find the ground!!!!");
+                    } else {
+                        Pair pixel = new Pair(i, j);
+                        ground.pixelsOfThisGround.add(pixel);
+                        Ground.pixelInWhichGround.put(Ground.PairToInt(pixel.firstInt, pixel.secondInt), ground);
                     }
-                    Pair pixel=new Pair(i,j);
-                    ground.pixelsOfThisGround.add(pixel);
-                    Ground.pixelInWitchGround.put(Ground.PairToInt(pixel.F,pixel.S),ground);
                 }
             }
         }
     }
+
     public void showMap(){
         GlobalVariables globalVariables = new GlobalVariables();
-        String[][] s=new String[globalVariables.surfaceHeight][globalVariables.surfaceWidth];
-        for (int i=1;i<globalVariables.surfaceHeight-1;i++){
-            for (int j=1;j<globalVariables.surfaceWidth-1;j++){
-                Ground ground=Ground.pixelInWitchGround.get(Ground.PairToInt(i,j));
-                if (Ground.getGroundByXY(i,j)!=null){
-                    Integer number= ground.number;
-                    s[i][j]=number.toString();
-                    while(s[i][j].length()<3){
-                        s[i][j]='0'+s[i][j];
+        String[][] showMap = new String[globalVariables.surfaceHeight][globalVariables.surfaceWidth];
+        for (int i = 1; i < globalVariables.surfaceHeight - 1; i++){
+            for (int j = 1; j < globalVariables.surfaceWidth - 1; j++){
+                Ground ground = Ground.pixelInWhichGround.get(Ground.PairToInt(i, j));
+                if (Ground.getGroundByXY(i, j) != null){
+                    Integer number = ground.number;
+                    showMap[i][j] = number.toString();
+                    while(showMap[i][j].length() < 3){
+                        showMap[i][j] = '0' + showMap[i][j];
                     }
-                    //s[i][j]=globalVariables.ANSI_GREEN+"███" ;
-                    continue;
                 }
-                if (!Ground.pixelInWitchGround.containsKey(Ground.PairToInt(i,j))){
-                    s[i][j]=globalVariables.ANSI_RED+"███" ;
-                }
-                else if (ground.getxLocation()==0 || ground.getxLocation()==globalVariables.surfaceHeight-1 || ground.getyLocation()==0 || ground.getyLocation()==globalVariables.surfaceWidth-1){
-                    s[i][j]=globalVariables.ANSI_BLACK+"███" ;
-                }
-                else s[i][j]=globalVariables.ANSI_BLUE +"███";
+                else if (!Ground.pixelInWhichGround.containsKey(Ground.PairToInt(i, j))) showMap[i][j]=GlobalVariables . ANSI_RED+"███" ;
+                else if (!ground.checkIsGroundInPage()) showMap[i][j]=GlobalVariables.ANSI_BLACK + "███" ;
+                else showMap[i][j] = GlobalVariables.ANSI_BLUE + "███";
             }
         }
 
-        for (int i=1;i<globalVariables.surfaceHeight-1;i++) {
+        for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {
             for (int j = 1; j < globalVariables.surfaceWidth - 1; j++) {
-                System.out.print(s[i][j]);
+                System.out.print(showMap[i][j]);
             }
             System.out.println("");
         }
@@ -134,9 +125,7 @@ public class GameMenu extends Menu{
             else System.out.println(Message.INVALID_COMMAND);
         }
         else if (input.equals("create map")){
-            System.out.println("mamad");
             createMap();
-            System.out.println(" ejrfjen ");
             this.run();
         }
         else if (input.equals("show map")){

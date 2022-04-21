@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Ground {
     public static ArrayList <Ground> allGround=new ArrayList<>();
-    public static HashMap<Integer,Ground> pixelInWitchGround=new HashMap<>();
+    public static HashMap<Integer,Ground> pixelInWhichGround=new HashMap<>();
     public Player owner;
     private int xLocation;
 
@@ -24,18 +24,28 @@ public class Ground {
     public int getyLocation() {
         return yLocation;
     }
+
     public static Ground getGroundByXY(int x,int y){
         for (int i=0;i<allGround.size();i++){
             if (allGround.get(i).xLocation==x && allGround.get(i).yLocation==y) return allGround.get(i);
         }
         return null;
     }
-    public static int PairToInt(int x,int y){
+
+    public static int PairToInt(int x, int y){
         GlobalVariables globalVariables=new GlobalVariables();
         return (x-1)*globalVariables.surfaceWidth+y;
     }
 
     public ArrayList <Pair> pixelsOfThisGround = new ArrayList<>();
 
+    public boolean checkIsGroundInPage() {
+        GlobalVariables globalVariables = new GlobalVariables();
+        if (this.getxLocation() == 0 || this.getxLocation() == globalVariables.surfaceHeight - 1 ||
+                this.getyLocation() == 0 || this.getyLocation() == globalVariables.surfaceWidth - 1) {
+            return false;
+        }
+        return true;
+    }
 
 }

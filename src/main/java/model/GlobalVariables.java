@@ -26,12 +26,4 @@ public class GlobalVariables {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
-
-    public int checkIsGroundInPage(Ground ground) {
-        GlobalVariables globalVariables = new GlobalVariables();
-        if (ground.getxLocation() == 0 || ground.getxLocation() == globalVariables.surfaceHeight - 1 || ground.getyLocation() == 0 || ground.getyLocation() == globalVariables.surfaceWidth - 1) {
-            return 0;
-        }
-        return 1;
-    }
 }
