@@ -5,25 +5,30 @@ import Enum.Message;
 import controller.Game;
 import model.GlobalVariables;
 import model.Ground;
+import model.User;
 import view.Menu;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class GameView {
     //singleton pattern
     private static GameView instance = null;
     private Game controller;
+    private ArrayList<User> playerUsers = new ArrayList<>();
 
-    private GameView() {
+    private GameView(ArrayList<User> playerUsers) {
         this.controller = Game.getInstance();
+        this.playerUsers = playerUsers;
     }
 
     private static void setInstance(GameView instance) {
         GameView.instance = instance;
     }
 
-    public static GameView getInstance() {
-        if (GameView.instance == null) GameView.setInstance(new GameView());
+    public static GameView getInstance(ArrayList<User> playerUsers) {
+        if (GameView.instance == null) GameView.setInstance(new GameView(playerUsers));
+        instance.playerUsers = playerUsers;
         return GameView.instance;
     }
 

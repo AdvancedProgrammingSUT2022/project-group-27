@@ -18,6 +18,14 @@ public class User {
         return null;
     }
 
+    public static User findUser(String username) {
+        for (User user: listOfUsers) {
+            if (user.username.equals(username)) return user;
+        }
+
+        return null;
+    }
+
     public User(String username, String password, String nickname) {
         this.username = username;
         this.password = password;

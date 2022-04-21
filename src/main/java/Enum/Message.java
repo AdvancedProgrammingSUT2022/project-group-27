@@ -17,6 +17,7 @@ public enum Message {
     LOGIN_SUCCESSFUL("User logged in successfully!"),
     USERNAME_NOT_EXIST("One of the usernames you choice doesn't exist"),
     START_GAME("Game starts..."),
+    USER_DOESNT_EXIST("Some of your selected users doesn't exist!"),
     LOGOUT("User logged out successfully");
 
     private String message;

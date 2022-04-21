@@ -3,9 +3,13 @@ package view;
 import controller.Controller;
 import controller.GameController;
 import Enum.Message;
+import model.User;
 import view.game.GameView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GameMenu extends Menu{
     //singleton pattern
@@ -40,7 +44,14 @@ public class GameMenu extends Menu{
                 System.out.println(Message.INVALID_COMMAND);
                 this.run();
             }
-        } else if (input.matches("^start game$")) GameView.getInstance().run(); //ToDo change it to correct format
+        } else if (input.matches((regex = "^play game (--player\\d+ (.+)){2,}$"))) {
+            matcher = controller.findMatcherFromString(input, regex);
+            if (matcher != null) startGame(matcher, input);
+            else {
+                System.out.println(Message.INVALID_COMMAND);
+                this.run();
+            }
+        }
         else {
             System.out.println(Message.INVALID_COMMAND);
             this.run();
@@ -68,6 +79,35 @@ public class GameMenu extends Menu{
                 System.out.println(Message.INVALID_MENU_NAME);
                 break;
         }
+
+        this.run();
+    }
+
+    private void startGame(Matcher matcher, String input) {
+        User[] playerUsers = new User[matcher.groupCount()];
+        String username;
+        int number;
+        boolean isValid = true;
+
+        Pattern pattern = Pattern.compile("--player(?<number>\\d+) (?<username>\\S+)");
+        Matcher playerMatcher = pattern.matcher(input);
+
+        while (playerMatcher.find() && isValid){
+            username = playerMatcher.group("username");
+            number = Integer.parseInt(playerMatcher.group("number"));
+
+            User user = User.findUser(username);
+            if (number <= playerUsers.length && playerUsers[number - 1] == null && user != null) playerUsers[number - 1] = user;
+            else if (number > playerUsers.length || playerUsers[number - 1] != null) {
+                System.out.println(Message.INVALID_COMMAND);
+                isValid = false;
+            } else {
+                System.out.println(Message.USER_DOESNT_EXIST);
+                isValid = false;
+            }
+        }
+
+        if (isValid) GameView.getInstance(new ArrayList<User>(Arrays.asList(playerUsers))).run();
 
         this.run();
     }
