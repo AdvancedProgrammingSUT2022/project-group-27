@@ -34,22 +34,22 @@ public class Player {
                     if (newGround.getxLocation() == 0 || newGround.getxLocation() == globalVariables.surfaceHeight - 1 || newGround.getyLocation() == 0
                             || newGround.getyLocation() == globalVariables.surfaceWidth - 1) continue;
 
-                    int p1 = 0; //TODO change p1 name
+                    boolean shouldWeAddThisGround = false;
                     for (Ground clearToSeeGround : clearToSeeGrounds) {
                         if (clearToSeeGround.equals(newGround)) {
-                            p1 = 1;
+                            shouldWeAddThisGround = true;
                             break;
                         }
                     }
 
                     for (Ground value : newArray) {
                         if (value.equals(newGround)) {
-                            p1 = 1;
+                            shouldWeAddThisGround = true;
                             break;
                         }
                     }
 
-                    if (p1 > 0) continue;
+                    if (shouldWeAddThisGround) continue;
 
                     newArray.add(newGround);
                 }
