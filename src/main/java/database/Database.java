@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
-    
+
     public static void readFromDatabase() throws IOException {
         String json = new String(Files.readAllBytes(Paths.get("database.txt")));
         ArrayList<User> listOfUsers;
