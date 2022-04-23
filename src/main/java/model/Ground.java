@@ -61,5 +61,26 @@ public class Ground {
         }
         return true;
     }
+    public ArrayList<Unit> unitsInThisGround(){
+        ArrayList <Unit> answer=new ArrayList<>();
+        for (int i=0;i<Player.allPlayers.size();i++){
+            for (int j=0;j<Player.allPlayers.get(i).units.size();j++){
+                if (Player.allPlayers.get(i).units.get(j).ground.number==this.number){
+                    answer.add(Player.allPlayers.get(i).units.get(j));
+                }
+            }
+        }
+        return answer;
+    }
+    public ArrayList<Unit> unitsOfASpecificPlayerInThisGround(Player player){
+        ArrayList <Unit> answer=new ArrayList<>();
 
+        for (int i=0;i<player.units.size();i++){
+            if (player.units.get(i).ground.number==this.number){
+                answer.add(player.units.get(i));
+            }
+        }
+
+        return answer;
+    }
 }

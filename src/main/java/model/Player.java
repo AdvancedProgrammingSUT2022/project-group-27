@@ -77,5 +77,23 @@ public class Player {
     public static Player whichPlayerTurnIs(){
         return allPlayers.get(counterOfNextRound % allPlayers.size());
     }
+    public void addGroundToVisitedGround(Ground ground){
+        boolean exist=false;
+        for (int i=0;i<wasClearedToSeeGrounds.size();i++){
+            if (wasClearedToSeeGrounds.get(i).number==ground.number) exist=true;
+        }
+        if (exist) return ;
+        wasClearedToSeeGrounds.add(ground);
+    }
+
+    public void moveUnitFromThisPlayerGroundsToAnotherGround(Ground firstGround,Ground secondGround){
+        ///TODO which Type Of Unit must be asked
+        ///TODO error sentence
+        for (int i=0;i<units.size();i++){
+            if (units.get(i).ground.number==firstGround.number){
+                units.get(i).moveUnitToAdjacentGround(secondGround);
+            }
+        }
+    }
 
 }

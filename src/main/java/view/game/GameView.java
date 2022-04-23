@@ -60,6 +60,11 @@ public class GameView {
             Player.nextTurn();
             this.run();
         }
+        else if (input.matches("^move unit \\d+ \\d+")){
+            String s[]=input.split(" +");
+            moveUnits(Integer.parseInt(s[2]),Integer.parseInt(s[3]));
+            this.run();
+        }
         else {
             System.out.println(Message.INVALID_COMMAND);
             this.run();
@@ -69,8 +74,13 @@ public class GameView {
     private void showMap(Player player){
         GlobalVariables globalVariables = new GlobalVariables();
         String[][] showMap = new String[globalVariables.surfaceHeight][globalVariables.surfaceWidth];
-        for (int i = 1; i <= globalVariables.surfaceHeight - 1; i++){
-            for (int j = 1; j <= globalVariables.surfaceWidth - 1; j++){
+        for (int i = 0; i < globalVariables.surfaceHeight ; i++) {
+            for (int j = 0; j < globalVariables.surfaceWidth ; j++) {
+                showMap[i][j]=GlobalVariables.ANSI_BLACK + "███";
+            }
+        }
+        for (int i = 1; i < globalVariables.surfaceHeight - 1; i++){
+            for (int j = 1; j < globalVariables.surfaceWidth - 1; j++){
                 Ground ground = Ground.pixelInWhichGround.get(Ground.PairToInt(i, j));
                 if (Ground.getGroundByXY(i, j) != null){
                     Integer number = ground.number;
@@ -88,8 +98,23 @@ public class GameView {
 
         player.handleClearToSee();
         for (int i = 0; i < player.clearToSeeGrounds.size(); i++){
+            player.addGroundToVisitedGround(player.clearToSeeGrounds.get(i));
+        }
+        for (int i = 0; i < player.wasClearedToSeeGrounds.size(); i++){
+            for (int j = 0; j < player.wasClearedToSeeGrounds.get(i).pixelsOfThisGround.size(); j++){
+                Pair pair = player.wasClearedToSeeGrounds.get(i).pixelsOfThisGround.get(j);
+
+                if (pair.firstInt>=globalVariables.surfaceHeight || pair.secondInt>=globalVariables.surfaceWidth) continue;
+                if (showMap[pair.firstInt][pair.secondInt].charAt(0) >= '0' && showMap[pair.firstInt][pair.secondInt].charAt(0) <= '9') continue;
+                System.out.println(i + " fne " + j + " " + player.wasClearedToSeeGrounds.get(i).number);
+                showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_CYAN + "███";
+            }
+        }
+        for (int i = 0; i < player.clearToSeeGrounds.size(); i++){
             for (int j = 0; j < player.clearToSeeGrounds.get(i).pixelsOfThisGround.size(); j++){
                 Pair pair = player.clearToSeeGrounds.get(i).pixelsOfThisGround.get(j);
+
+                if (pair.firstInt>=globalVariables.surfaceHeight || pair.secondInt>=globalVariables.surfaceWidth) continue;
                 if (showMap[pair.firstInt][pair.secondInt].charAt(0) >= '0' && showMap[pair.firstInt][pair.secondInt].charAt(0) <= '9') continue;
 
                 showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_RED + "███";
@@ -107,6 +132,17 @@ public class GameView {
             }
             System.out.println("");
         }
+    }
+    ///TODO: should move units be in controller?
+    private void moveUnits(int firstGroundNumber,int secondGroundNumber){
+        Player player=Player.whichPlayerTurnIs();
+        ArrayList <Unit> unitArrayList=Ground.getGroundByNumber(firstGroundNumber).unitsOfASpecificPlayerInThisGround(player);
+        /// TODO : type of unit
+        for (Unit unit : unitArrayList){
+            unit.moveUnitToAdjacentGround(Ground.getGroundByNumber(secondGroundNumber));
+        }
+        player.addGroundToVisitedGround(Ground.getGroundByNumber(firstGroundNumber));
+        player.addGroundToVisitedGround(Ground.getGroundByNumber(secondGroundNumber));
     }
 }
 
