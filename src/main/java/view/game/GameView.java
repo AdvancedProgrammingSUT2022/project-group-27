@@ -60,9 +60,9 @@ public class GameView {
             Player.nextTurn();
             this.run();
         }
-        else if (input.matches("^move unit \\d+ \\d+")){
+        else if (input.matches("^move unit \\d+ \\d+ ((Military)|(UnMilitary))")){
             String s[]=input.split(" +");
-            moveUnits(Integer.parseInt(s[2]),Integer.parseInt(s[3]));
+            moveUnits(Integer.parseInt(s[2]),Integer.parseInt(s[3]),s[4]);
             this.run();
         }
         else {
@@ -120,6 +120,16 @@ public class GameView {
                 showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_RED + "███";
             }
         }
+        for (int i = 0; i < player.clearToSeeGrounds.size(); i++){
+            Ground ground=player.clearToSeeGrounds.get(i);
+            ArrayList <Unit> unitArrayList=player.clearToSeeGrounds.get(i).unitsOfASpecificPlayerInThisGround(player);
+            for (Unit unit : unitArrayList){
+                if (unit instanceof MilitaryUnit){
+                    showMap[ground.getxLocation()+1][ground.getyLocation()-1]=GlobalVariables.ANSI_CYAN+"MIL";
+                }
+                else showMap[ground.getxLocation()+1][ground.getyLocation()+1]=GlobalVariables.ANSI_CYAN+"UNM";
+            }
+        }
 
         printMap(showMap, globalVariables);
         this.run();
@@ -134,15 +144,9 @@ public class GameView {
         }
     }
     ///TODO: should move units be in controller?
-    private void moveUnits(int firstGroundNumber,int secondGroundNumber){
+    private void moveUnits(int firstGroundNumber,int secondGroundNumber,String type){
+        this.controller.moveUnits(firstGroundNumber,secondGroundNumber,type);
         Player player=Player.whichPlayerTurnIs();
-        ArrayList <Unit> unitArrayList=Ground.getGroundByNumber(firstGroundNumber).unitsOfASpecificPlayerInThisGround(player);
-        /// TODO : type of unit
-        for (Unit unit : unitArrayList){
-            unit.moveUnitToAdjacentGround(Ground.getGroundByNumber(secondGroundNumber));
-        }
-        player.addGroundToVisitedGround(Ground.getGroundByNumber(firstGroundNumber));
-        player.addGroundToVisitedGround(Ground.getGroundByNumber(secondGroundNumber));
     }
 }
 

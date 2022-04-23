@@ -1,8 +1,8 @@
 package controller;
 
-import model.GlobalVariables;
-import model.Ground;
-import model.Pair;
+import model.*;
+
+import java.util.ArrayList;
 
 public class Game extends Controller {
     //singleton pattern
@@ -71,5 +71,16 @@ public class Game extends Controller {
                 }
             }
         }
+    }
+    public void moveUnits(int firstGroundNumber,int secondGroundNumber,String type){
+        Player player=Player.whichPlayerTurnIs();
+        ArrayList<Unit> unitArrayList=Ground.getGroundByNumber(firstGroundNumber).unitsOfASpecificPlayerInThisGround(player);
+        /// TODO : type of unit
+        for (Unit unit : unitArrayList){
+            if ((unit instanceof MilitaryUnit && type.equals("Military")) || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary")))
+            unit.moveUnitToAdjacentGround(Ground.getGroundByNumber(secondGroundNumber));
+        }
+        player.addGroundToVisitedGround(Ground.getGroundByNumber(firstGroundNumber));
+        player.addGroundToVisitedGround(Ground.getGroundByNumber(secondGroundNumber));
     }
 }
