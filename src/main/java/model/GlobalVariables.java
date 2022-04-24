@@ -4,10 +4,10 @@ import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
 public class GlobalVariables {
-    public int surfaceWidth = 70, surfaceHeight = 41;
-    public static int numberOfTiles=77;
-    public int tool6Zelie = 6, arz6Zelie = 5;
-    public double epsilon = 0.5;
+    public int surfaceWidth = 209, surfaceHeight = 57;
+    public static int numberOfTiles=10;
+    public int tool6Zelie = 8, arz6Zelie = 16;
+    public double epsilon = 0.1;
 
     public int isEqual(double x, double y) {
         if (abs(x - y) < this.epsilon) return 1;
@@ -15,7 +15,8 @@ public class GlobalVariables {
     }
 
     public double distanceOfTwoPoints(int x1, int y1, int x2, int y2) {
-        return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+        return abs(x1-x2)+abs(y1-y2);
+        //return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -27,4 +28,5 @@ public class GlobalVariables {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI = "\u001B[503m";
 }

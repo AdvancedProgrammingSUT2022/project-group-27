@@ -76,7 +76,7 @@ public class GameView {
         String[][] showMap = new String[globalVariables.surfaceHeight][globalVariables.surfaceWidth];
         for (int i = 0; i < globalVariables.surfaceHeight ; i++) {
             for (int j = 0; j < globalVariables.surfaceWidth ; j++) {
-                showMap[i][j]=GlobalVariables.ANSI_BLACK + "███";
+                showMap[i][j]=GlobalVariables.ANSI_BLACK + "█";
             }
         }
         for (int i = 1; i < globalVariables.surfaceHeight - 1; i++){
@@ -84,19 +84,32 @@ public class GameView {
                 Ground ground = Ground.pixelInWhichGround.get(Ground.PairToInt(i, j));
                 if (Ground.getGroundByXY(i, j) != null){
                     Integer number = ground.number;
-                    showMap[i][j] = number.toString();
-                    while(showMap[i][j].length() < 3){
-                        showMap[i][j] = '0' + showMap[i][j];
+                    String numberString=number.toString();
+                    for (int k=-1;k<numberString.length()-1;k++){
+                        showMap[i][j+k]=""+numberString.charAt(k+1);
                     }
-                } else if (!Ground.pixelInWhichGround.containsKey(Ground.PairToInt(i, j))) showMap[i][j]=GlobalVariables . ANSI_BLUE+"███" ;
-                else if (!ground.checkIsGroundInPage()) showMap[i][j]=GlobalVariables.ANSI_BLACK + "███" ;
+                } else if (!Ground.pixelInWhichGround.containsKey(Ground.PairToInt(i, j))) showMap[i][j]=GlobalVariables . ANSI_BLACK+"█" ;
+                else if (!ground.checkIsGroundInPage()) showMap[i][j]=GlobalVariables.ANSI_BLACK + "█" ;
                 else {
-                    showMap[i][j] = GlobalVariables.ANSI_WHITE + "███";
+                    showMap[i][j] = GlobalVariables.ANSI_WHITE + "█";
+                }
+            }
+        }
+        for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {
+            for (int j = 1; j < globalVariables.surfaceWidth - 1; j++) {
+                Ground ground = Ground.pixelInWhichGround.get(Ground.PairToInt(i, j));
+                if (Ground.getGroundByXY(i, j) != null) {
+                    Integer number = ground.number;
+                    String numberString = number.toString();
+                    while(numberString.length()<3) numberString="0"+numberString;
+                    for (int k = -1; k < numberString.length() - 1; k++) {
+                        showMap[i][j + k] = "" + numberString.charAt(k + 1);
+                    }
                 }
             }
         }
 
-        player.handleClearToSee();
+                    player.handleClearToSee();
         for (int i = 0; i < player.clearToSeeGrounds.size(); i++){
             player.addGroundToVisitedGround(player.clearToSeeGrounds.get(i));
         }
@@ -106,8 +119,8 @@ public class GameView {
 
                 if (pair.firstInt>=globalVariables.surfaceHeight || pair.secondInt>=globalVariables.surfaceWidth) continue;
                 if (showMap[pair.firstInt][pair.secondInt].charAt(0) >= '0' && showMap[pair.firstInt][pair.secondInt].charAt(0) <= '9') continue;
-                System.out.println(i + " fne " + j + " " + player.wasClearedToSeeGrounds.get(i).number);
-                showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_CYAN + "███";
+              //  System.out.println(i + " fne " + j + " " + player.wasClearedToSeeGrounds.get(i).number);
+                showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_CYAN + "█";
             }
         }
         for (int i = 0; i < player.clearToSeeGrounds.size(); i++){
@@ -117,7 +130,7 @@ public class GameView {
                 if (pair.firstInt>=globalVariables.surfaceHeight || pair.secondInt>=globalVariables.surfaceWidth) continue;
                 if (showMap[pair.firstInt][pair.secondInt].charAt(0) >= '0' && showMap[pair.firstInt][pair.secondInt].charAt(0) <= '9') continue;
 
-                showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_RED + "███";
+                showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_RED + "█";
             }
         }
         for (int i = 0; i < player.clearToSeeGrounds.size(); i++){
@@ -125,12 +138,53 @@ public class GameView {
             ArrayList <Unit> unitArrayList=player.clearToSeeGrounds.get(i).unitsOfASpecificPlayerInThisGround(player);
             for (Unit unit : unitArrayList){
                 if (unit instanceof MilitaryUnit){
-                    showMap[ground.getxLocation()+1][ground.getyLocation()-1]=GlobalVariables.ANSI_CYAN+"MIL";
+                    showMap[ground.getxLocation()+1][ground.getyLocation()-1]=GlobalVariables.ANSI_CYAN+"M";
                 }
-                else showMap[ground.getxLocation()+1][ground.getyLocation()+1]=GlobalVariables.ANSI_CYAN+"UNM";
+                else showMap[ground.getxLocation()+1][ground.getyLocation()+1]=GlobalVariables.ANSI_CYAN+"U";
             }
         }
+        int[][] visit = new int[globalVariables.surfaceHeight][globalVariables.surfaceWidth];
+        for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {
+            for (int j = 1; j < globalVariables.surfaceWidth - 1; j++) {
+                if (showMap[i][j]==GlobalVariables.ANSI_BLACK+"█" && showMap[i+1][j+1]==GlobalVariables.ANSI_BLACK+"█" && showMap[i-1][j-1]==GlobalVariables.ANSI_BLACK+"█"){
+                    //showMap[i][j]=GlobalVariables.ANSI_BLUE+'\\';
+                    visit[i][j]=1;
+                }
+                if (showMap[i][j]==GlobalVariables.ANSI_BLACK+"█" && showMap[i+1][j-1]==GlobalVariables.ANSI_BLACK+"█" && showMap[i-1][j+1]==GlobalVariables.ANSI_BLACK+"█"){
+                    //showMap[i][j]=GlobalVariables.ANSI_BLUE+'\\';
+                    visit[i][j]=2;
+                }
 
+            }
+        }
+        for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {
+            for (int j = 1; j < globalVariables.surfaceWidth - 1; j++) {
+                if (Ground.pixelInWhichGround.containsKey(Ground.PairToInt(i,j))) continue;
+                if (visit[i][j]==1){
+                    showMap[i][j]=GlobalVariables.ANSI_BLUE+'\\';
+                }
+                else if (visit[i][j]==2){
+                    showMap[i][j]=GlobalVariables.ANSI_BLUE+'/';
+                }
+                else if (showMap[i][j]==GlobalVariables.ANSI_BLACK+"█"){
+                    showMap[i][j]=GlobalVariables.ANSI_BLUE+'-';
+                }
+
+            }
+        }
+        for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {
+            for (int j = 1; j < globalVariables.surfaceWidth - 1; j++) {
+                if (showMap[i-1][j]==GlobalVariables.ANSI_BLACK+"█" && showMap[i+1][j]==GlobalVariables.ANSI_BLACK+"█") visit[i][j]=5;
+                if (showMap[i][j-1]==GlobalVariables.ANSI_BLACK+"█" && showMap[i][j+1]==GlobalVariables.ANSI_BLACK+"█") visit[i][j]=5;
+            }
+        }
+        for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {
+            for (int j = 1; j < globalVariables.surfaceWidth - 1; j++) {
+                if (visit[i][j]==5){
+                    showMap[i][j]=GlobalVariables.ANSI_BLACK+"█";
+                }
+            }
+        }
         printMap(showMap, globalVariables);
         this.run();
     }
