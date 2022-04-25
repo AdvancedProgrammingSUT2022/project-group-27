@@ -7,6 +7,7 @@ import model.*;
 import view.Menu;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 
@@ -112,10 +113,14 @@ public class GameView {
             Player.nextTurn();
             this.run();
         }
-        else if (input.matches("^move unit \\d+ \\d+ ((Military)|(UnMilitary))")){
-            String s[]=input.split(" +");
-            moveUnits(Integer.parseInt(s[2]),Integer.parseInt(s[3]),s[4]);
-            this.run();
+        else if (input.matches("^move unit .+$")){
+            matcher = controller.getInput("move unit",
+                    new ArrayList<String>(List.of("((--origin)|(-o)) (?<origin>\\d+)", "((--destination)|(-d)) (?<destination>\\d+)", "(?<type>(Military)|(UnMilitary))")), input);
+            if (matcher != null) moveUnits(matcher);
+            else {
+                System.out.println(Message.INVALID_COMMAND);
+                this.run();
+            }
         }
         else {
             System.out.println(Message.INVALID_COMMAND);
@@ -311,9 +316,14 @@ public class GameView {
             System.out.println("");
         }
     }
-    ///TODO: should move units be in controller?
-    private void moveUnits(int firstGroundNumber,int secondGroundNumber,String type){
+
+    private void moveUnits(Matcher matcher){
+        int firstGroundNumber = Integer.parseInt(matcher.group("origin"));
+        int secondGroundNumber = Integer.parseInt(matcher.group("destination"));
+        String type = matcher.group("type");
+
         this.controller.moveUnits(firstGroundNumber,secondGroundNumber,type);
+        this.run();
     }
 }
 
