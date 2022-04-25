@@ -6,8 +6,7 @@ public enum FeatureType {
     ICE(0, 0, 0, 0, 0, true),
     JUNGLE(1, -1, 0, 25, 2, false),
     MARSH(-1, 0, 0, -33, 2, false),
-    OASIS(3, 0, 1, -33, 1, false),
-    RIVER(0, 0, 1, 0, -1, false);
+    OASIS(3, 0, 1, -33, 1, false);
 
     private final int food;
     private final int production;

@@ -7,6 +7,10 @@ import Enum.GroundType;
 
 import static java.lang.Math.abs;
 
+import Enum.FeatureType;
+
+import javax.swing.plaf.basic.BasicRootPaneUI;
+
 public class Ground {
     private static ArrayList<Ground> allGround = new ArrayList<>();
     private static HashMap<Integer, Ground> pixelInWhichGround = new HashMap<>();
@@ -17,12 +21,21 @@ public class Ground {
     private final int yLocation;
     private int number;
     private GroundType groundType;
+    private FeatureType featureType;
 
     public Ground(int x, int y, int number) {
         this.xLocation = x;
         this.yLocation = y;
         this.number = number;
         allGround.add(this);
+    }
+
+    public FeatureType getFeatureType() {
+        return featureType;
+    }
+
+    public void setFeatureType(FeatureType featureType) {
+        this.featureType = featureType;
     }
 
     public int getxLocation() {
@@ -184,8 +197,16 @@ public class Ground {
             }
         }
         amount *= 9;
-        amount += secondGround.groundType.getMovementCost();
+        amount += secondGround.groundType.getMovementCost() + secondGround.getFeatureType().getMovementCost();
         return amount;
 
+    }
+
+    public boolean containRiver() {
+        for (int i = 0; i < River.getAllRivers().size(); i++) {
+            if (River.getAllRivers().get(i).getFirstGround().number == this.number) return true;
+            if (River.getAllRivers().get(i).getSecondGround().number == this.number) return true;
+        }
+        return false;
     }
 }

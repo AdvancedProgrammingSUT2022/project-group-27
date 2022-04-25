@@ -15,6 +15,7 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 import Enum.GroundType;
+import Enum.FeatureType;
 
 public class GameView {
     //singleton pattern
@@ -54,7 +55,24 @@ public class GameView {
             } else if (rand < 200) {
                 Ground.getGroundByNumber(i).setGroundType(GroundType.PLAIN);
             }
-
+            rand = random.nextInt(0, 200);
+            if (rand < 25) {
+                Ground.getGroundByNumber(i).setFeatureType(FeatureType.FOREST);
+            } else if (rand < 50) {
+                Ground.getGroundByNumber(i).setFeatureType(FeatureType.ICE);
+            } else if (rand < 75) {
+                Ground.getGroundByNumber(i).setFeatureType(FeatureType.JUNGLE);
+            } else if (rand < 100) {
+                Ground.getGroundByNumber(i).setFeatureType(FeatureType.MARSH);
+            } else if (rand < 150) {
+                if (Ground.getGroundByNumber(i).getGroundType() == GroundType.DESERT) {
+                    Ground.getGroundByNumber(i).setFeatureType(FeatureType.OASIS);
+                } else Ground.getGroundByNumber(i).setFeatureType(FeatureType.FOREST);
+            } else if (rand < 200) {
+                if (Ground.getGroundByNumber(i).containRiver())
+                    Ground.getGroundByNumber(i).setFeatureType(FeatureType.MARSH);
+                else Ground.getGroundByNumber(i).setFeatureType(FeatureType.JUNGLE);
+            }
         }
     }
 
@@ -231,6 +249,31 @@ public class GameView {
                 showMap[ground.getxLocation() - 2][ground.getyLocation()] = GlobalVariables.ANSI_BLUE + "T";
             }
         }
+        showMapFeature(player, showMap);
+    }
+
+    public void showMapFeature(Player player, String[][] showMap) {
+        for (int i = 0; i < player.getClearToSeeGrounds().size(); i++) {
+            Ground ground = player.getClearToSeeGrounds().get(i);
+            if (ground.getFeatureType() == FeatureType.FOREST) {
+                showMap[ground.getxLocation() - 3][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "F";
+            }
+            if (ground.getFeatureType() == FeatureType.JUNGLE) {
+                showMap[ground.getxLocation() - 3][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "J";
+            }
+            if (ground.getFeatureType() == FeatureType.ICE) {
+                showMap[ground.getxLocation() - 3][ground.getyLocation()] = GlobalVariables.ANSI_WHITE + "I";
+            }
+            if (ground.getFeatureType() == FeatureType.OASIS) {
+                showMap[ground.getxLocation() - 3][ground.getyLocation()] = GlobalVariables.ANSI_YELLOW + "O";
+            }
+            if (ground.getFeatureType() == FeatureType.WATERSHED) {
+                showMap[ground.getxLocation() - 3][ground.getyLocation()] = GlobalVariables.ANSI_BLACK + "W";
+            }
+            if (ground.getFeatureType() == FeatureType.MARSH) {
+                showMap[ground.getxLocation() - 3][ground.getyLocation()] = GlobalVariables.ANSI_CYAN + "M";
+            }
+        }
         showMapUnit(player, showMap);
     }
 
@@ -340,7 +383,8 @@ public class GameView {
         int secondGroundNumber = Integer.parseInt(matcher.group("destination"));
         String type = matcher.group("type");
 
-        this.controller.moveUnits(firstGroundNumber, secondGroundNumber, type);
+        String answer = this.controller.moveUnits(firstGroundNumber, secondGroundNumber, type);
+        System.out.println(answer);
         this.run();
     }
 }

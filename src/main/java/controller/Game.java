@@ -77,7 +77,7 @@ public class Game extends Controller {
         }
     }
 
-    public void moveUnits(int firstGroundNumber, int secondGroundNumber, String type) {
+    public String moveUnits(int firstGroundNumber, int secondGroundNumber, String type) {
         Player player = Player.whichPlayerTurnIs();
         ArrayList<Unit> unitArrayList = Ground.getGroundByNumber(firstGroundNumber).unitsOfASpecificPlayerInThisGround(player);
         /// TODO : type of unit
@@ -87,13 +87,15 @@ public class Game extends Controller {
                 exit = true;
             }
         }
-        if (exit) return;
+        if (exit) {
+            return "unit can not go to that ground:(";
+        }
         for (Unit unit : unitArrayList) {
             if ((unit instanceof MilitaryUnit && type.equals("Military")) || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary")))
                 unit.setDestination(Ground.getGroundByNumber(secondGroundNumber));
             unit.checkDestination();
         }
-
+        return "unit moved successfully";
         // player.addGroundToVisitedGround(Ground.getGroundByNumber(firstGroundNumber));
         //player.addGroundToVisitedGround(Ground.getGroundByNumber(secondGroundNumber));
     }
