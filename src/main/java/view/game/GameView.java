@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.regex.Matcher;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class GameView {
     //singleton pattern
     private static GameView instance = null;
@@ -21,8 +24,21 @@ public class GameView {
         this.playerUsers = playerUsers;
 
         setFirstGroundsForPlayers();
+        setRivers();
     }
-
+    GlobalVariables globalVariables = new GlobalVariables();
+    private void setRivers(){
+        Random random= new Random();
+        int numberOfRivers=random.nextInt(0,GlobalVariables.numberOfTiles/2)+5;
+        for (int i=0;i<numberOfRivers;i++){
+            int first=random.nextInt(0,GlobalVariables.numberOfTiles)+1,second=random.nextInt(0,GlobalVariables.numberOfTiles)+1;
+            while(first==second || !River.couldWePutRiverBetweenTheseTwoGround(Ground.getGroundByNumber(first), Ground.getGroundByNumber(second))){
+                first=random.nextInt(0,GlobalVariables.numberOfTiles)+1;
+                second=random.nextInt(0,GlobalVariables.numberOfTiles)+1;
+            }
+            River river= new River(Ground.getGroundByNumber(first),Ground.getGroundByNumber(second));
+        }
+    }
     private void setFirstGroundsForPlayers() {
         Random rand = new Random();
         for (User playerUser : playerUsers) {
@@ -72,7 +88,7 @@ public class GameView {
     }
 
     private void showMap(Player player){
-        GlobalVariables globalVariables = new GlobalVariables();
+
         String[][] showMap = new String[globalVariables.surfaceHeight][globalVariables.surfaceWidth];
         for (int i = 0; i < globalVariables.surfaceHeight ; i++) {
             for (int j = 0; j < globalVariables.surfaceWidth ; j++) {
@@ -184,6 +200,30 @@ public class GameView {
                     showMap[i][j]=GlobalVariables.ANSI_BLACK+"█";
                 }
             }
+        }
+        for (int i=0;i<River.allRivers.size();i++){
+            Ground firstGround=River.allRivers.get(i).getFirstGround(),secondGround=River.allRivers.get(i).getSecondGround();
+
+            if (firstGround.getyLocation()==secondGround.getyLocation()){
+                //System.out.println(firstGround.number + " " + secondGround.number);
+                for (int y=firstGround.getyLocation()-globalVariables.arz6Zelie/3-1;y<=firstGround.getyLocation()+ globalVariables.arz6Zelie/3+1;y++){
+                    showMap[(firstGround.getxLocation()+secondGround.getxLocation())/2][y]=GlobalVariables.ANSI_BLUE+"█";
+                }
+            }
+            else{
+                int smallerX=min(firstGround.getxLocation(),secondGround.getxLocation());
+                int biggerX=max(firstGround.getxLocation(),secondGround.getxLocation());
+                int smallerY=min(firstGround.getyLocation(),secondGround.getyLocation());
+                int biggerY=max(firstGround.getyLocation(),secondGround.getyLocation());
+                for (int x=smallerX;x<=biggerX;x++){
+                    for (int y=smallerY;y<=biggerY;y++){
+                        if (globalVariables.isEqual(globalVariables.distanceOfTwoPoints(x,y,firstGround.getxLocation(),firstGround.getyLocation()),globalVariables.distanceOfTwoPoints(x,y,secondGround.getxLocation(),secondGround.getyLocation()))==1){
+                            showMap[x][y]=GlobalVariables.ANSI_BLUE+"█";
+                        }
+                    }
+                }
+            }
+
         }
         printMap(showMap, globalVariables);
         this.run();
