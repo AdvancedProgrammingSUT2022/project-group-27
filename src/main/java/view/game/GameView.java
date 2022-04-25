@@ -12,6 +12,7 @@ import java.util.regex.Matcher;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import Enum.GroundType;
 
 public class GameView {
     //singleton pattern
@@ -25,8 +26,40 @@ public class GameView {
 
         setFirstGroundsForPlayers();
         setRivers();
+        setGroundsType();
     }
     GlobalVariables globalVariables = new GlobalVariables();
+    private void setGroundsType(){
+        Random random= new Random();
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            int rand=random.nextInt(0,200);
+            if (rand<50){
+                Ground.getGroundByNumber(i).groundType= GroundType.DESERT;
+            }
+            else if (rand<100){
+                Ground.getGroundByNumber(i).groundType=GroundType.GRASS_PLOT;
+            }
+            else if (rand<120){
+                Ground.getGroundByNumber(i).groundType=GroundType.HILL;
+            }
+            else if (rand<135){
+                Ground.getGroundByNumber(i).groundType=GroundType.MOUNTAIN;
+            }
+            else if (rand<150){
+                Ground.getGroundByNumber(i).groundType=GroundType.OCEAN;
+            }
+            else if (rand<170){
+                Ground.getGroundByNumber(i).groundType=GroundType.SNOW;
+            }
+            else if (rand<185){
+                Ground.getGroundByNumber(i).groundType=GroundType.TUNDRA;
+            }
+            else if (rand<200){
+                Ground.getGroundByNumber(i).groundType=GroundType.PLAIN;
+            }
+
+        }
+    }
     private void setRivers(){
         Random random= new Random();
         int numberOfRivers=random.nextInt(0,GlobalVariables.numberOfTiles/2)+5;
@@ -136,7 +169,7 @@ public class GameView {
                 if (pair.firstInt>=globalVariables.surfaceHeight || pair.secondInt>=globalVariables.surfaceWidth) continue;
                 if (showMap[pair.firstInt][pair.secondInt].charAt(0) >= '0' && showMap[pair.firstInt][pair.secondInt].charAt(0) <= '9') continue;
               //  System.out.println(i + " fne " + j + " " + player.wasClearedToSeeGrounds.get(i).number);
-                showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_CYAN + "█";
+                showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_RED + "█";
             }
         }
         for (int i = 0; i < player.clearToSeeGrounds.size(); i++){
@@ -146,7 +179,7 @@ public class GameView {
                 if (pair.firstInt>=globalVariables.surfaceHeight || pair.secondInt>=globalVariables.surfaceWidth) continue;
                 if (showMap[pair.firstInt][pair.secondInt].charAt(0) >= '0' && showMap[pair.firstInt][pair.secondInt].charAt(0) <= '9') continue;
 
-                showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_RED + "█";
+                showMap[pair.firstInt][pair.secondInt] = player.clearToSeeGrounds.get(i).groundType.getColor() + "█";
             }
         }
         for (int i = 0; i < player.clearToSeeGrounds.size(); i++){

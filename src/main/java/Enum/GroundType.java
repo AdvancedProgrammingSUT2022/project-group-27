@@ -1,14 +1,14 @@
 package Enum;
 
 public enum GroundType {
-    DESERT(0, 0, 0, -33, 1, false),
-    GRASS_PLOT(2, 0, 0, -33, 1, false),
-    HILL(0, 2, 0, 25, 2, false),
-    MOUNTAIN(0, 0, 0, 25, 0, true),
-    OCEAN(0, 0, 0, 25, 0, true),
-    PLAIN(1, 1, 0, -33, 1, false),
-    SNOW(0, 0, 0, -33, 1, false),
-    TUNDRA(1, 0, 0, -33, 1, false);
+    DESERT(0, 0, 0, -33, 1, false,"\u001B[33m"),
+    GRASS_PLOT(2, 0, 0, -33, 1, false,"\u001B[32m"),
+    HILL(0, 2, 0, 25, 2, false,"\u001B[33m"),
+    MOUNTAIN(0, 0, 0, 25, 0, true,"\u001B[33m"),
+    OCEAN(0, 0, 0, 25, 0, true,"\u001B[36m"),
+    PLAIN(1, 1, 0, -33, 1, false,"\u001B[36m"),
+    SNOW(0, 0, 0, -33, 1, false,"\u001B[36m"),
+    TUNDRA(1, 0, 0, -33, 1, false,"\u001B[36m");
 
     private final int food;
     private final int production;
@@ -17,13 +17,16 @@ public enum GroundType {
     private final int movementCost;
     private final boolean isBlock;
 
-    GroundType(int food, int production, int gold, int combatCoefficient, int movementCost, boolean isBlock) {
+    private final String color;
+
+    GroundType(int food, int production, int gold, int combatCoefficient, int movementCost, boolean isBlock,String color) {
         this.gold = gold;
         this.food = food;
         this.production = production;
         this.combatCoefficient = combatCoefficient;
         this.movementCost = movementCost;
         this.isBlock = isBlock;
+        this.color=color;
     }
 
     public int getFood() {
@@ -48,5 +51,9 @@ public enum GroundType {
 
     public boolean isBlock() {
         return isBlock;
+    }
+
+    public String getColor() {
+        return color;
     }
 }
