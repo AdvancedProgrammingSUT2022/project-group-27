@@ -3,10 +3,12 @@ package controller;
 import Enum.Message;
 import view.Menu;
 
-public class ProfileController extends Controller{
+public class ProfileController extends Controller {
     //singleton pattern
     private static ProfileController instance = null;
-    private ProfileController() {}
+
+    private ProfileController() {
+    }
 
     private static void setInstance(ProfileController instance) {
         ProfileController.instance = instance;

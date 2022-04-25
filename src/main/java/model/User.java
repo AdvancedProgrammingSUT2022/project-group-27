@@ -27,7 +27,7 @@ public class User {
     }
 
     public static User findUser(String username, String password) {
-        for (User user: listOfUsers) {
+        for (User user : listOfUsers) {
             if (user.username.equals(username) && user.password.equals(password)) return user;
         }
 
@@ -35,7 +35,7 @@ public class User {
     }
 
     public static User findUser(String username) {
-        for (User user: listOfUsers) {
+        for (User user : listOfUsers) {
             if (user.username.equals(username)) return user;
         }
 
@@ -47,7 +47,7 @@ public class User {
     }
 
     public static boolean isNicknameExist(String name) {
-        for (User user: listOfUsers) {
+        for (User user : listOfUsers) {
             if (user.nickname.equals(name)) return true;
         }
 
@@ -55,7 +55,7 @@ public class User {
     }
 
     public static boolean isUsernameExist(String name) {
-        for (User user: listOfUsers) {
+        for (User user : listOfUsers) {
             if (user.username.equals(name)) return true;
         }
 

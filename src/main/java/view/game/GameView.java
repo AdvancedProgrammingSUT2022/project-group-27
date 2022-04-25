@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+
 import Enum.GroundType;
 
 public class GameView {
@@ -29,50 +30,47 @@ public class GameView {
         setRivers();
         setGroundsType();
     }
+
     GlobalVariables globalVariables = new GlobalVariables();
-    private void setGroundsType(){
-        Random random= new Random();
-        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
-            int rand=random.nextInt(0,200);
-            if (rand<70){
+
+    private void setGroundsType() {
+        Random random = new Random();
+        for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
+            int rand = random.nextInt(0, 200);
+            if (rand < 70) {
                 Ground.getGroundByNumber(i).setGroundType(GroundType.DESERT);
-            }
-            else if (rand<140){
+            } else if (rand < 140) {
                 Ground.getGroundByNumber(i).setGroundType(GroundType.GRASS_PLOT);
-            }
-            else if (rand<150){
+            } else if (rand < 150) {
                 Ground.getGroundByNumber(i).setGroundType(GroundType.HILL);
-            }
-            else if (rand<160){
+            } else if (rand < 160) {
                 Ground.getGroundByNumber(i).setGroundType(GroundType.MOUNTAIN);
-            }
-            else if (rand<170){
+            } else if (rand < 170) {
                 Ground.getGroundByNumber(i).setGroundType(GroundType.OCEAN);
-            }
-            else if (rand<180){
+            } else if (rand < 180) {
                 Ground.getGroundByNumber(i).setGroundType(GroundType.SNOW);
-            }
-            else if (rand<190){
+            } else if (rand < 190) {
                 Ground.getGroundByNumber(i).setGroundType(GroundType.TUNDRA);
-            }
-            else if (rand<200){
+            } else if (rand < 200) {
                 Ground.getGroundByNumber(i).setGroundType(GroundType.PLAIN);
             }
 
         }
     }
-    private void setRivers(){
-        Random random= new Random();
-        int numberOfRivers=random.nextInt(0,GlobalVariables.numberOfTiles/2)+5;
-        for (int i=0;i<numberOfRivers;i++){
-            int first=random.nextInt(0,GlobalVariables.numberOfTiles)+1,second=random.nextInt(0,GlobalVariables.numberOfTiles)+1;
-            while(first==second || !River.couldWePutRiverBetweenTheseTwoGround(Ground.getGroundByNumber(first), Ground.getGroundByNumber(second))){
-                first=random.nextInt(0,GlobalVariables.numberOfTiles)+1;
-                second=random.nextInt(0,GlobalVariables.numberOfTiles)+1;
+
+    private void setRivers() {
+        Random random = new Random();
+        int numberOfRivers = random.nextInt(0, GlobalVariables.numberOfTiles / 2) + 5;
+        for (int i = 0; i < numberOfRivers; i++) {
+            int first = random.nextInt(0, GlobalVariables.numberOfTiles) + 1, second = random.nextInt(0, GlobalVariables.numberOfTiles) + 1;
+            while (first == second || !River.couldWePutRiverBetweenTheseTwoGround(Ground.getGroundByNumber(first), Ground.getGroundByNumber(second))) {
+                first = random.nextInt(0, GlobalVariables.numberOfTiles) + 1;
+                second = random.nextInt(0, GlobalVariables.numberOfTiles) + 1;
             }
-            River river= new River(Ground.getGroundByNumber(first),Ground.getGroundByNumber(second));
+            River river = new River(Ground.getGroundByNumber(first), Ground.getGroundByNumber(second));
         }
     }
+
     private void setFirstGroundsForPlayers() {
         Random rand = new Random();
         for (User playerUser : playerUsers) {
@@ -108,12 +106,10 @@ public class GameView {
         if (input.matches("^show map$")) {
             showMap(Player.whichPlayerTurnIs());
             this.run();
-        }
-        else if (input.matches("next turn")){
+        } else if (input.matches("next turn")) {
             Player.nextTurn();
             this.run();
-        }
-        else if (input.matches("^move unit .+$")){
+        } else if (input.matches("^move unit .+$")) {
             matcher = controller.getInput("move unit",
                     new ArrayList<String>(List.of("((--origin)|(-o)) (?<origin>\\d+)", "((--destination)|(-d)) (?<destination>\\d+)", "(?<type>(Military)|(UnMilitary))")), input);
             if (matcher != null) moveUnits(matcher);
@@ -121,8 +117,7 @@ public class GameView {
                 System.out.println(Message.INVALID_COMMAND);
                 this.run();
             }
-        }
-        else {
+        } else {
             System.out.println(Message.INVALID_COMMAND);
             this.run();
         }
@@ -153,9 +148,10 @@ public class GameView {
                 }
             }
         }
-        showMapAndHandlingCenters(player,showMap);
+        showMapAndHandlingCenters(player, showMap);
     }
-    public void showMapAndHandlingCenters(Player player,String[][] showMap) {
+
+    public void showMapAndHandlingCenters(Player player, String[][] showMap) {
         for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {
             for (int j = 1; j < globalVariables.surfaceWidth - 1; j++) {
                 Ground ground = Ground.getPixelInWhichGround().get(Ground.PairToInt(i, j));
@@ -186,9 +182,10 @@ public class GameView {
                 showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_RED + "█";
             }
         }
-        showMapVisibleTile(player,showMap);
+        showMapVisibleTile(player, showMap);
     }
-    public void showMapVisibleTile(Player player,String[][] showMap) {
+
+    public void showMapVisibleTile(Player player, String[][] showMap) {
         for (int i = 0; i < player.getClearToSeeGrounds().size(); i++) {
             for (int j = 0; j < player.getClearToSeeGrounds().get(i).getPixelsOfThisGround().size(); j++) {
                 Pair pair = player.getClearToSeeGrounds().get(i).getPixelsOfThisGround().get(j);
@@ -234,9 +231,10 @@ public class GameView {
                 showMap[ground.getxLocation() - 2][ground.getyLocation()] = GlobalVariables.ANSI_BLUE + "T";
             }
         }
-        showMapUnit(player,showMap);
+        showMapUnit(player, showMap);
     }
-    public void showMapUnit(Player player,String[][] showMap) {
+
+    public void showMapUnit(Player player, String[][] showMap) {
         for (int i = 0; i < Player.getAllPlayers().size(); i++) {
             ///TODO: is the below if correct?
             if (player.equals(Player.getAllPlayers().get(i))) continue;
@@ -265,9 +263,10 @@ public class GameView {
 
             }
         }
-        showMapSurrounds(player,showMap,visit);
+        showMapSurrounds(player, showMap, visit);
     }
-    public void showMapSurrounds(Player player,String[][] showMap,int[][] visit) {
+
+    public void showMapSurrounds(Player player, String[][] showMap, int[][] visit) {
         for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {
             for (int j = 1; j < globalVariables.surfaceWidth - 1; j++) {
                 if (Ground.getPixelInWhichGround().containsKey(Ground.PairToInt(i, j))) continue;
@@ -296,27 +295,27 @@ public class GameView {
                 }
             }
         }
-        showMapRiver(player,showMap);
+        showMapRiver(player, showMap);
     }
-    public void showMapRiver(Player player,String[][] showMap){
-        for (int i = 0; i < River.getAllRivers().size(); i++){
+
+    public void showMapRiver(Player player, String[][] showMap) {
+        for (int i = 0; i < River.getAllRivers().size(); i++) {
             Ground firstGround = River.getAllRivers().get(i).getFirstGround(), secondGround = River.getAllRivers().get(i).getSecondGround();
 
-            if (firstGround.getyLocation()==secondGround.getyLocation()){
+            if (firstGround.getyLocation() == secondGround.getyLocation()) {
                 //System.out.println(firstGround.number + " " + secondGround.number);
-                for (int y=firstGround.getyLocation()-globalVariables.arz6Zelie/3-1;y<=firstGround.getyLocation()+ globalVariables.arz6Zelie/3+1;y++){
-                    showMap[(firstGround.getxLocation()+secondGround.getxLocation())/2][y]=GlobalVariables.ANSI_BLUE+"█";
+                for (int y = firstGround.getyLocation() - globalVariables.arz6Zelie / 3 - 1; y <= firstGround.getyLocation() + globalVariables.arz6Zelie / 3 + 1; y++) {
+                    showMap[(firstGround.getxLocation() + secondGround.getxLocation()) / 2][y] = GlobalVariables.ANSI_BLUE + "█";
                 }
-            }
-            else{
-                int smallerX=min(firstGround.getxLocation(),secondGround.getxLocation());
-                int biggerX=max(firstGround.getxLocation(),secondGround.getxLocation());
-                int smallerY=min(firstGround.getyLocation(),secondGround.getyLocation());
-                int biggerY=max(firstGround.getyLocation(),secondGround.getyLocation());
-                for (int x=smallerX;x<=biggerX;x++){
-                    for (int y=smallerY;y<=biggerY;y++){
-                        if (globalVariables.isEqual(globalVariables.distanceOfTwoPoints(x,y,firstGround.getxLocation(),firstGround.getyLocation()),globalVariables.distanceOfTwoPoints(x,y,secondGround.getxLocation(),secondGround.getyLocation()))==1){
-                            showMap[x][y]=GlobalVariables.ANSI_BLUE+"█";
+            } else {
+                int smallerX = min(firstGround.getxLocation(), secondGround.getxLocation());
+                int biggerX = max(firstGround.getxLocation(), secondGround.getxLocation());
+                int smallerY = min(firstGround.getyLocation(), secondGround.getyLocation());
+                int biggerY = max(firstGround.getyLocation(), secondGround.getyLocation());
+                for (int x = smallerX; x <= biggerX; x++) {
+                    for (int y = smallerY; y <= biggerY; y++) {
+                        if (globalVariables.isEqual(globalVariables.distanceOfTwoPoints(x, y, firstGround.getxLocation(), firstGround.getyLocation()), globalVariables.distanceOfTwoPoints(x, y, secondGround.getxLocation(), secondGround.getyLocation())) == 1) {
+                            showMap[x][y] = GlobalVariables.ANSI_BLUE + "█";
                         }
                     }
                 }
@@ -324,7 +323,7 @@ public class GameView {
 
         }
         printMap(showMap, globalVariables);
-       // this.run();
+        // this.run();
     }
 
     private void printMap(String[][] showMap, GlobalVariables globalVariables) {
@@ -336,12 +335,12 @@ public class GameView {
         }
     }
 
-    private void moveUnits(Matcher matcher){
+    private void moveUnits(Matcher matcher) {
         int firstGroundNumber = Integer.parseInt(matcher.group("origin"));
         int secondGroundNumber = Integer.parseInt(matcher.group("destination"));
         String type = matcher.group("type");
 
-        this.controller.moveUnits(firstGroundNumber,secondGroundNumber,type);
+        this.controller.moveUnits(firstGroundNumber, secondGroundNumber, type);
         this.run();
     }
 }

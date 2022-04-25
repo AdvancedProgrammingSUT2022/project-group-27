@@ -5,7 +5,9 @@ import view.Menu;
 public class MainController extends Controller {
     //singleton pattern
     private static MainController instance = null;
-    private MainController() {}
+
+    private MainController() {
+    }
 
     private static void setInstance(MainController instance) {
         MainController.instance = instance;

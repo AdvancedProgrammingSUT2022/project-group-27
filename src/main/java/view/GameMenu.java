@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GameMenu extends Menu{
+public class GameMenu extends Menu {
     //singleton pattern
     private static GameMenu instance = null;
     private GameController controller;
@@ -53,8 +53,7 @@ public class GameMenu extends Menu{
                 System.out.println(Message.INVALID_COMMAND);
                 this.run();
             }
-        }
-        else {
+        } else {
             System.out.println(Message.INVALID_COMMAND);
             this.run();
         }
@@ -74,10 +73,10 @@ public class GameMenu extends Menu{
             case "Profile_Menu", "Login_Menu":
                 System.out.println(Message.INVALID_NAVIGATION);
                 break;
-            case "Game_Menu" :
+            case "Game_Menu":
                 System.out.println(Message.CURRENT_MENU);
                 break;
-            default :
+            default:
                 System.out.println(Message.INVALID_MENU_NAME);
                 break;
         }
@@ -94,12 +93,13 @@ public class GameMenu extends Menu{
         Pattern pattern = Pattern.compile("--player(?<number>\\d+) (?<username>\\S+)");
         Matcher playerMatcher = pattern.matcher(input);
 
-        while (playerMatcher.find() && isValid){
+        while (playerMatcher.find() && isValid) {
             username = playerMatcher.group("username");
             number = Integer.parseInt(playerMatcher.group("number"));
 
             User user = User.findUser(username);
-            if (number <= playerUsers.length && playerUsers[number - 1] == null && user != null) playerUsers[number - 1] = user;
+            if (number <= playerUsers.length && playerUsers[number - 1] == null && user != null)
+                playerUsers[number - 1] = user;
             else if (number > playerUsers.length || playerUsers[number - 1] != null) {
                 System.out.println(Message.INVALID_COMMAND);
                 isValid = false;
@@ -109,9 +109,9 @@ public class GameMenu extends Menu{
             }
         }
 
-        if (isValid){
-            GameView gameView= GameView.getInstance(new ArrayList<User>(Arrays.asList(playerUsers)));
-            GlobalVariables.gameView=gameView;
+        if (isValid) {
+            GameView gameView = GameView.getInstance(new ArrayList<User>(Arrays.asList(playerUsers)));
+            GlobalVariables.gameView = gameView;
             gameView.run();
         }
 

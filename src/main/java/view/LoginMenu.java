@@ -53,8 +53,7 @@ public class LoginMenu extends Menu {
                 System.out.println(Message.INVALID_COMMAND);
                 this.run();
             }
-        }
-        else {
+        } else {
             System.out.println(Message.INVALID_COMMAND);
             this.run();
         }
@@ -73,13 +72,13 @@ public class LoginMenu extends Menu {
                 System.out.println(Message.LOGIN_FIRST);
                 break;
             }
-            case "Game_Menu", "Profile_Menu" :
+            case "Game_Menu", "Profile_Menu":
                 System.out.println(Message.INVALID_NAVIGATION);
                 break;
-            case "Login_Menu" :
+            case "Login_Menu":
                 System.out.println(Message.CURRENT_MENU);
                 break;
-            default :
+            default:
                 System.out.println(Message.INVALID_MENU_NAME);
                 break;
         }

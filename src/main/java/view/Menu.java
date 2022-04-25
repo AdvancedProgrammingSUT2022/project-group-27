@@ -21,10 +21,12 @@ public abstract class Menu {
     }
 
     public abstract void run();
+
     protected abstract void enterMenu(String newMenuName);
+
     protected abstract void showMenu();
 
-    protected void exitMenu(){
+    protected void exitMenu() {
         //nothing should do here
     }
 }

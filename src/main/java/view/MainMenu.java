@@ -65,12 +65,12 @@ public class MainMenu extends Menu {
                 ProfileMenu.getInstance().run();
                 break;
             }
-            case "Login_Menu" :
+            case "Login_Menu":
                 return;
-            case "Main_Menu" :
+            case "Main_Menu":
                 System.out.println(Message.CURRENT_MENU);
                 break;
-            default :
+            default:
                 System.out.println(Message.INVALID_MENU_NAME);
                 break;
         }

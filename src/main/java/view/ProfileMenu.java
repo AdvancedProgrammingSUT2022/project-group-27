@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public class ProfileMenu extends Menu{
+public class ProfileMenu extends Menu {
     //singleton pattern
     private static ProfileMenu instance = null;
     private ProfileController controller;
@@ -55,8 +55,7 @@ public class ProfileMenu extends Menu{
                 System.out.println(Message.INVALID_COMMAND);
                 this.run();
             }
-        }
-        else {
+        } else {
             System.out.println(Message.INVALID_COMMAND);
             this.run();
         }
@@ -70,10 +69,10 @@ public class ProfileMenu extends Menu{
             case "Game_Menu", "Login_Menu":
                 System.out.println(Message.INVALID_NAVIGATION);
                 break;
-            case "Profile_Menu"  :
+            case "Profile_Menu":
                 System.out.println(Message.CURRENT_MENU);
                 break;
-            default :
+            default:
                 System.out.println(Message.INVALID_MENU_NAME);
                 break;
         }

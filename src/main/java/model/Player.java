@@ -13,8 +13,8 @@ public class Player {
     private User user;
     private boolean isAlive = true;
 
-    public Player (User user){
-        this.user=user;
+    public Player(User user) {
+        this.user = user;
         allPlayers.add(this);
     }
 
@@ -50,13 +50,14 @@ public class Player {
         return isAlive;
     }
 
-    public void handleClearToSeeGrounds1depth(ArrayList <Ground> clearToSeeGrounds) {
+    public void handleClearToSeeGrounds1depth(ArrayList<Ground> clearToSeeGrounds) {
         GlobalVariables globalVariables = new GlobalVariables();
-        ArrayList <Ground> newArray = new ArrayList<>();
+        ArrayList<Ground> newArray = new ArrayList<>();
         for (int i = 0; i < clearToSeeGrounds.size(); i++) {
             Ground ground = clearToSeeGrounds.get(i);
             /// TODO : check kardan Kooh o ina
-            if (ground.getGroundType().isBlock() && ground.unitsOfASpecificPlayerInThisGround(this).size()==0) continue;
+            if (ground.getGroundType().isBlock() && ground.unitsOfASpecificPlayerInThisGround(this).size() == 0)
+                continue;
             for (int x = ground.getxLocation() - globalVariables.tool6Zelie; x <= ground.getxLocation() + globalVariables.tool6Zelie; x++) {
                 for (int y = ground.getyLocation() - globalVariables.arz6Zelie; y <= ground.getyLocation() + globalVariables.arz6Zelie; y++) {
                     if (x == 0 && y == 0) continue;
@@ -92,7 +93,7 @@ public class Player {
         clearToSeeGrounds.addAll(newArray);
     }
 
-    public void handleClearToSee(){
+    public void handleClearToSee() {
         this.clearToSeeGrounds = new ArrayList<>();
         for (Unit unit : this.units) {
             this.clearToSeeGrounds.add(unit.getGround());
@@ -102,22 +103,22 @@ public class Player {
         handleClearToSeeGrounds1depth(this.clearToSeeGrounds); //for the second depth
     }
 
-    public static void nextTurn(){
+    public static void nextTurn() {
         counterOfNextRound++;
         while (!whichPlayerTurnIs().isAlive) counterOfNextRound++;
 
-        Player player=Player.whichPlayerTurnIs();
-        for (int i = 0; i < player.units.size(); i++){
+        Player player = Player.whichPlayerTurnIs();
+        for (int i = 0; i < player.units.size(); i++) {
             player.units.get(i).putMp(10);
             player.units.get(i).checkDestination();
         }
     }
 
-    public static Player whichPlayerTurnIs(){
+    public static Player whichPlayerTurnIs() {
         return allPlayers.get(counterOfNextRound % allPlayers.size());
     }
 
-    public void addGroundToVisitedGround(Ground ground){
+    public void addGroundToVisitedGround(Ground ground) {
         boolean exist = false;
         for (Ground wasClearedToSeeGround : wasClearedToSeeGrounds) {
             if (wasClearedToSeeGround.getNumber() == ground.getNumber()) {
@@ -131,7 +132,7 @@ public class Player {
         wasClearedToSeeGrounds.add(copyGround);
     }
 
-    public void moveUnitFromThisPlayerGroundsToAnotherGround(Ground firstGround,Ground secondGround){
+    public void moveUnitFromThisPlayerGroundsToAnotherGround(Ground firstGround, Ground secondGround) {
         ///TODO which Type Of Unit must be asked
         ///TODO error sentence
         for (Unit unit : units) {
@@ -140,7 +141,8 @@ public class Player {
             }
         }
     }
-    public boolean isThisGroundVisible(Ground ground){
+
+    public boolean isThisGroundVisible(Ground ground) {
         for (Ground clearToSeeGround : clearToSeeGrounds) {
             if (clearToSeeGround.getNumber() == ground.getNumber()) return true;
         }

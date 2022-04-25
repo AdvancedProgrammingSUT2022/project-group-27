@@ -16,8 +16,8 @@ public enum LuxuryResource {
     IVORY(0, 0, 2, new ArrayList<>(List.of(GroundType.PLAIN)), null, ImprovementType.CAMP),
     MARBLE(0, 0, 2, new ArrayList<>(List.of(GroundType.PLAIN, GroundType.DESERT, GroundType.GRASS_PLOT,
             GroundType.HILL, GroundType.TUNDRA)), null, ImprovementType.MINE_OF_STONE),
-    SILK(0, 0, 2,  null, new ArrayList<>(List.of(FeatureType.FOREST)), ImprovementType.AGRICULTURE),
-    SILVER(0, 0, 2,  new ArrayList<>(List.of(GroundType.TUNDRA, GroundType.DESERT, GroundType.HILL)), null, ImprovementType.MINE),
+    SILK(0, 0, 2, null, new ArrayList<>(List.of(FeatureType.FOREST)), ImprovementType.AGRICULTURE),
+    SILVER(0, 0, 2, new ArrayList<>(List.of(GroundType.TUNDRA, GroundType.DESERT, GroundType.HILL)), null, ImprovementType.MINE),
     SUGAR(0, 0, 2, null, new ArrayList<>(List.of(FeatureType.WATERSHED, FeatureType.MARSH)), ImprovementType.AGRICULTURE);
 
     private final int food;

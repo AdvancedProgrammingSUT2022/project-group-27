@@ -8,7 +8,9 @@ import java.util.ArrayList;
 public class GameController extends Controller {
     //singleton pattern
     private static GameController instance = null;
-    private GameController() {}
+
+    private GameController() {
+    }
 
     private static void setInstance(GameController instance) {
         GameController.instance = instance;
@@ -20,7 +22,7 @@ public class GameController extends Controller {
     }
 
     public Message startGame(ArrayList<String> usernames) {
-        for (String username: usernames) {
+        for (String username : usernames) {
             if (!User.isUsernameExist(username)) return Message.USERNAME_NOT_EXIST;
         }
 

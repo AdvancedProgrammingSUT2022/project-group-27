@@ -19,7 +19,7 @@ public enum StrategicResource {
     private final ImprovementType improvement;
     private final TechnologyType technology;
 
-    StrategicResource(int food, int production, int gold, ArrayList<GroundType> groundTypes, ArrayList<FeatureType> groundFeatureTypes,ImprovementType improvement,
+    StrategicResource(int food, int production, int gold, ArrayList<GroundType> groundTypes, ArrayList<FeatureType> groundFeatureTypes, ImprovementType improvement,
                       TechnologyType technology) {
         this.food = food;
         this.production = production;

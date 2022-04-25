@@ -7,10 +7,10 @@ import static java.lang.Math.sqrt;
 
 public class GlobalVariables {
     public int surfaceWidth = 209, surfaceHeight = 57;
-    public static int numberOfTiles=78;
+    public static int numberOfTiles = 78;
     public int tool6Zelie = 8, arz6Zelie = 16;
     public double epsilon = 0.1;
-    public static GameView gameView=null;
+    public static GameView gameView = null;
 
     public int isEqual(double x, double y) {
         if (abs(x - y) < this.epsilon) return 1;
@@ -18,7 +18,7 @@ public class GlobalVariables {
     }
 
     public double distanceOfTwoPoints(int x1, int y1, int x2, int y2) {
-        return abs(x1-x2)+abs(y1-y2);
+        return abs(x1 - x2) + abs(y1 - y2);
         //return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }
 

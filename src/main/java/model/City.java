@@ -7,11 +7,10 @@ public class City {
     public Player owner;
 
 
-
-    public void addGround(Ground ground){
+    public void addGround(Ground ground) {
         // check
-        for (int i=0;i<this.groundsInCity.size();i++){
-            if (this.groundsInCity.get(i).equals(ground)) return ;
+        for (int i = 0; i < this.groundsInCity.size(); i++) {
+            if (this.groundsInCity.get(i).equals(ground)) return;
         }
         this.groundsInCity.add(ground);
 

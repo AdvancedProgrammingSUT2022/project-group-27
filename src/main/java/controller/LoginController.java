@@ -4,10 +4,12 @@ import Enum.Message;
 import model.User;
 import view.Menu;
 
-public class LoginController extends Controller{
+public class LoginController extends Controller {
     //singleton pattern
     private static LoginController instance = null;
-    private LoginController() {}
+
+    private LoginController() {
+    }
 
     private static void setInstance(LoginController instance) {
         LoginController.instance = instance;
