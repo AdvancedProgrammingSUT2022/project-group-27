@@ -76,7 +76,7 @@ public class GameView {
         Random rand = new Random();
         for (User playerUser : playerUsers) {
             int idStartGround = rand.nextInt(GlobalVariables.numberOfTiles) + 1;
-            while (!Ground.getGroundByNumber(idStartGround).isFreeOfUnit()) {
+            while (!Ground.getGroundByNumber(idStartGround).isFreeOfMilitaryUnit()) {
                 idStartGround = rand.nextInt(GlobalVariables.numberOfTiles) + 1;
             }
 
@@ -190,9 +190,33 @@ public class GameView {
             ArrayList <Unit> unitArrayList=player.getClearToSeeGrounds().get(i).unitsOfASpecificPlayerInThisGround(player);
             for (Unit unit : unitArrayList){
                 if (unit instanceof MilitaryUnit){
-                    showMap[ground.getxLocation()+1][ground.getyLocation()-1]=GlobalVariables.ANSI_CYAN+"M";
+                    showMap[ground.getxLocation()+2][ground.getyLocation()-4]=GlobalVariables.ANSI_CYAN+"M";
                 }
-                else showMap[ground.getxLocation()+1][ground.getyLocation()+1]=GlobalVariables.ANSI_CYAN+"U";
+                else showMap[ground.getxLocation()+2][ground.getyLocation()+4]=GlobalVariables.ANSI_CYAN+"U";
+            }
+            if (ground.getGroundType()==GroundType.DESERT){
+                showMap[ground.getxLocation()-2][ground.getyLocation()]=GlobalVariables.ANSI_YELLOW+"D";
+            }
+            if (ground.getGroundType()==GroundType.GRASS_PLOT){
+                showMap[ground.getxLocation()-2][ground.getyLocation()]=GlobalVariables.ANSI_GREEN+"G";
+            }
+            if (ground.getGroundType()==GroundType.HILL){
+                showMap[ground.getxLocation()-2][ground.getyLocation()]=GlobalVariables.ANSI_YELLOW+"H";
+            }
+            if (ground.getGroundType()==GroundType.MOUNTAIN){
+                showMap[ground.getxLocation()-2][ground.getyLocation()]=GlobalVariables.ANSI_YELLOW+"M";
+            }
+            if (ground.getGroundType()==GroundType.OCEAN){
+                showMap[ground.getxLocation()-2][ground.getyLocation()]=GlobalVariables.ANSI_CYAN+"O";
+            }
+            if (ground.getGroundType()==GroundType.PLAIN){
+                showMap[ground.getxLocation()-2][ground.getyLocation()]=GlobalVariables.ANSI_BLUE+"P";
+            }
+            if (ground.getGroundType()==GroundType.SNOW){
+                showMap[ground.getxLocation()-2][ground.getyLocation()]=GlobalVariables.ANSI_BLUE+"S";
+            }
+            if (ground.getGroundType()==GroundType.TUNDRA){
+                showMap[ground.getxLocation()-2][ground.getyLocation()]=GlobalVariables.ANSI_BLUE+"T";
             }
         }
         for (int i=0;i<Player.getAllPlayers().size();i++){

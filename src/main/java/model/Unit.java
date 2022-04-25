@@ -62,6 +62,10 @@ public abstract class Unit  {
         if (dis[this.getGround().getNumber()] >= 1000) return ;
         while(this.mp > 0 && this.ground.getNumber() != this.destination.getNumber()){
             int father = par[this.getGround().getNumber()];
+            if (this.getMp()-Ground.distanceOfTheseTwoGround(this.getGround(),Ground.getGroundByNumber(father))==0){
+                if (this instanceof MilitaryUnit &&  Ground.getGroundByNumber(father).isFreeOfMilitaryUnit()==false) break;
+                if (this instanceof UnMilitaryUnit &&  Ground.getGroundByNumber(father).isFreeOfUnMilitaryUnit()==false) break;
+            }
             System.out.println("father : " + father);
             this.decreaseMp(Ground.distanceOfTheseTwoGround(this.getGround(),Ground.getGroundByNumber(father)));
             this.ground=Ground.getGroundByNumber(father);

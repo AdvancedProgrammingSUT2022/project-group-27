@@ -112,11 +112,19 @@ public class Ground {
 
         return null;
     }
-    public boolean isFreeOfUnit(){
+    public boolean isFreeOfMilitaryUnit(){
+        for (int i = 0; i < Player.getAllPlayers().size(); i++){
+            for (int j = 0; j < Player.getAllPlayers().get(i).getUnits().size(); j++){
+                if (Player.getAllPlayers().get(i).getUnits().get(j).ground.number == this.number && Player.getAllPlayers().get(i).getUnits().get(j) instanceof MilitaryUnit) return false;
+            }
+        }
+        return true;
+    }
+    public boolean isFreeOfUnMilitaryUnit(){
         //TODO: vaghti unit ha do no shodan avaz she
         for (int i = 0; i < Player.getAllPlayers().size(); i++){
             for (int j = 0; j < Player.getAllPlayers().get(i).getUnits().size(); j++){
-                if (Player.getAllPlayers().get(i).getUnits().get(j).ground.number == this.number) return false;
+                if (Player.getAllPlayers().get(i).getUnits().get(j).ground.number == this.number && Player.getAllPlayers().get(i).getUnits().get(j) instanceof UnMilitaryUnit) return false;
             }
         }
         return true;

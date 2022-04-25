@@ -56,6 +56,7 @@ public class Player {
         for (int i = 0; i < clearToSeeGrounds.size(); i++) {
             Ground ground = clearToSeeGrounds.get(i);
             /// TODO : check kardan Kooh o ina
+            if (ground.getGroundType().isBlock() && ground.unitsOfASpecificPlayerInThisGround(this).size()==0) continue;
             for (int x = ground.getxLocation() - globalVariables.tool6Zelie; x <= ground.getxLocation() + globalVariables.tool6Zelie; x++) {
                 for (int y = ground.getyLocation() - globalVariables.arz6Zelie; y <= ground.getyLocation() + globalVariables.arz6Zelie; y++) {
                     if (x == 0 && y == 0) continue;

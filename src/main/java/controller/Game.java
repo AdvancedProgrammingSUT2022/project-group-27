@@ -79,13 +79,20 @@ public class Game extends Controller {
         Player player=Player.whichPlayerTurnIs();
         ArrayList<Unit> unitArrayList=Ground.getGroundByNumber(firstGroundNumber).unitsOfASpecificPlayerInThisGround(player);
         /// TODO : type of unit
+        boolean exit=false;
+        for (Unit unit : Ground.getGroundByNumber(secondGroundNumber).unitsInThisGround()){
+            if (unit.getGround().getNumber()==secondGroundNumber){// && ((unit instanceof MilitaryUnit && type.equals("Military")) || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary")))){
+                exit=true;
+            }
+        }
+        if (exit) return ;
         for (Unit unit : unitArrayList){
             if ((unit instanceof MilitaryUnit && type.equals("Military")) || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary")))
             unit.setDestination(Ground.getGroundByNumber(secondGroundNumber));
             unit.checkDestination();
         }
 
-        player.addGroundToVisitedGround(Ground.getGroundByNumber(firstGroundNumber));
-        player.addGroundToVisitedGround(Ground.getGroundByNumber(secondGroundNumber));
+       // player.addGroundToVisitedGround(Ground.getGroundByNumber(firstGroundNumber));
+        //player.addGroundToVisitedGround(Ground.getGroundByNumber(secondGroundNumber));
     }
 }
