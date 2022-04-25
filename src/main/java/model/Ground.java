@@ -160,7 +160,7 @@ public class Ground {
     public static int distanceOfTheseTwoGround(Ground firstGround,Ground secondGround){
         int inf = 10000;
         if (!AreTheseTwoGroundAdjacent(firstGround,secondGround)) return inf;
-        if (firstGround.groundType==GroundType.OCEAN || firstGround.groundType==GroundType.MOUNTAIN || firstGround.groundType==GroundType.HILL){
+        if (secondGround.groundType==GroundType.OCEAN || secondGround.groundType==GroundType.MOUNTAIN){
             return inf;
         }
         int amount = 0;
@@ -173,7 +173,7 @@ public class Ground {
             }
         }
         amount *= 9;
-        amount +=1;
+        amount +=secondGround.groundType.getMovementCost();
         return amount;
 
     }
