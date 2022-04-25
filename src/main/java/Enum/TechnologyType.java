@@ -52,11 +52,19 @@ public enum TechnologyType {
     RADIO(2200, new ArrayList<>(List.of(TechnologyType.ELECTRICITY))),
     TELEGRAPH(2200, new ArrayList<>(List.of(TechnologyType.ELECTRICITY)));
 
-    public final int cost;
-    public final ArrayList<TechnologyType> prerequisites;
+    private final int cost;
+    private final ArrayList<TechnologyType> prerequisites;
 
     TechnologyType(int cost, ArrayList<TechnologyType> prerequisites) {
         this.cost = cost;
         this.prerequisites = prerequisites;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public ArrayList<TechnologyType> getPrerequisites() {
+        return prerequisites;
     }
 }

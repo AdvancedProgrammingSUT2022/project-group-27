@@ -32,16 +32,16 @@ public enum ImprovementType {
             GroundType.PLAIN, GroundType.DESERT, GroundType.GRASS_PLOT, GroundType.SNOW)), null, null, null,
             null, 0);
 
-    public final int food;
-    public final int production;
-    public final int gold;
-    public final TechnologyType technologyTypes;
-    public final ArrayList<GroundType> groundTypes;
-    public final ArrayList<FeatureType> groundFeatureTypes;
-    public final ArrayList<LuxuryResource> luxuryResources;
-    public final ArrayList<StrategicResource> strategicResources;
-    public final ArrayList<BonusResource> bonusResources;
-    public int turn;
+    private final int food;
+    private final int production;
+    private final int gold;
+    private final TechnologyType technologyTypes;
+    private final ArrayList<GroundType> groundTypes;
+    private final ArrayList<FeatureType> groundFeatureTypes;
+    private final ArrayList<LuxuryResource> luxuryResources;
+    private final ArrayList<StrategicResource> strategicResources;
+    private final ArrayList<BonusResource> bonusResources;
+    private int turn;
 
     ImprovementType(int food, int production, int gold, TechnologyType technologyTypes, ArrayList<GroundType> groundTypes,
                     ArrayList<FeatureType> groundFeatureTypes, ArrayList<LuxuryResource> luxuryResources,
@@ -56,5 +56,49 @@ public enum ImprovementType {
         this.strategicResources = strategicResources;
         this.bonusResources = bonusResources;
         this.turn = turn; //TODO... set the correct turn for each one
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public int getProduction() {
+        return production;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public TechnologyType getTechnologyTypes() {
+        return technologyTypes;
+    }
+
+    public ArrayList<GroundType> getGroundTypes() {
+        return groundTypes;
+    }
+
+    public ArrayList<FeatureType> getGroundFeatureTypes() {
+        return groundFeatureTypes;
+    }
+
+    public ArrayList<LuxuryResource> getLuxuryResources() {
+        return luxuryResources;
+    }
+
+    public ArrayList<StrategicResource> getStrategicResources() {
+        return strategicResources;
+    }
+
+    public ArrayList<BonusResource> getBonusResources() {
+        return bonusResources;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 }

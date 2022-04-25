@@ -12,12 +12,12 @@ public enum BonusResource {
             GroundType.DESERT, GroundType.PLAIN)), null, ImprovementType.PASTURE),
     WHEAT(1, 0, 0, new ArrayList<>(List.of(GroundType.PLAIN)), new ArrayList<>(List.of(FeatureType.WATERSHED)), ImprovementType.FARM);
 
-    public final int food;
-    public final int production;
-    public final int gold;
-    public final ArrayList<GroundType> groundTypes;
-    public final ArrayList<FeatureType> groundFeatureTypes;
-    public final ImprovementType improvement;
+    private final int food;
+    private final int production;
+    private final int gold;
+    private final ArrayList<GroundType> groundTypes;
+    private final ArrayList<FeatureType> groundFeatureTypes;
+    private final ImprovementType improvement;
 
     BonusResource(int food, int production, int gold, ArrayList<GroundType> groundTypes, ArrayList<FeatureType> groundFeatureTypes,ImprovementType improvement) {
         this.food = food;
@@ -26,5 +26,29 @@ public enum BonusResource {
         this.groundTypes = groundTypes;
         this.groundFeatureTypes = groundFeatureTypes;
         this.improvement = improvement;
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public int getProduction() {
+        return production;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public ArrayList<GroundType> getGroundTypes() {
+        return groundTypes;
+    }
+
+    public ArrayList<FeatureType> getGroundFeatureTypes() {
+        return groundFeatureTypes;
+    }
+
+    public ImprovementType getImprovement() {
+        return improvement;
     }
 }

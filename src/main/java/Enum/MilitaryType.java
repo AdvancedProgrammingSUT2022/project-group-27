@@ -28,10 +28,10 @@ public enum MilitaryType {
     PANZER(450, "Armored", 60, 0, 0, 5, new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.COMBUSTION))),
     TANK(450, "Armored", 50, 0, 0, 4,new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.COMBUSTION)));
 
-    public final int cost, combatStrength, rangedCombatStrength, range, movement;
-    public final String combatType;
-    public final ArrayList<StrategicResource> strategicResources;
-    public final ArrayList<TechnologyType> technologyTypes;
+    private final int cost, combatStrength, rangedCombatStrength, range, movement;
+    private final String combatType;
+    private final ArrayList<StrategicResource> strategicResources;
+    private final ArrayList<TechnologyType> technologyTypes;
 
 
     MilitaryType(int cost, String combatType, int combatStrength, int rangedCombatStrength, int range, int movement, ArrayList<StrategicResource> strategicResources, ArrayList<TechnologyType> technologyTypes) {
@@ -43,5 +43,37 @@ public enum MilitaryType {
         this.movement = movement;
         this.strategicResources = strategicResources;
         this.technologyTypes = technologyTypes;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public int getCombatStrength() {
+        return combatStrength;
+    }
+
+    public int getRangedCombatStrength() {
+        return rangedCombatStrength;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public int getMovement() {
+        return movement;
+    }
+
+    public String getCombatType() {
+        return combatType;
+    }
+
+    public ArrayList<StrategicResource> getStrategicResources() {
+        return strategicResources;
+    }
+
+    public ArrayList<TechnologyType> getTechnologyTypes() {
+        return technologyTypes;
     }
 }
