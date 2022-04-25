@@ -159,6 +159,19 @@ public class GameView {
                 else showMap[ground.getxLocation()+1][ground.getyLocation()+1]=GlobalVariables.ANSI_CYAN+"U";
             }
         }
+        for (int i=0;i<Player.allPlayers.size();i++){
+            if (player.equals(Player.allPlayers.get(i))) continue;
+            for (int j=0;j<Player.allPlayers.get(i).units.size();j++){
+                Ground ground=Player.allPlayers.get(i).units.get(j).getGround();
+                if (player.isThisGroundVisible(ground)){
+                    if (Player.allPlayers.get(i).units.get(j) instanceof MilitaryUnit){
+                        showMap[ground.getxLocation()+1][ground.getyLocation()-1]=GlobalVariables.ANSI_RED+"M";
+                    }
+                    else showMap[ground.getxLocation()+1][ground.getyLocation()+1]=GlobalVariables.ANSI_RED+"U";
+                }
+
+            }
+        }
         int[][] visit = new int[globalVariables.surfaceHeight][globalVariables.surfaceWidth];
         for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {
             for (int j = 1; j < globalVariables.surfaceWidth - 1; j++) {

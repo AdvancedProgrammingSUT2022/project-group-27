@@ -1,7 +1,7 @@
 package model;
 import java.util.ArrayList;
 import java.util.HashMap;
-import Enum.GroundType
+import Enum.GroundType;
 
 public class Ground {
     public static ArrayList <Ground> allGround = new ArrayList<>();

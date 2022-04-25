@@ -95,5 +95,10 @@ public class Player {
             }
         }
     }
-
+    public boolean isThisGroundVisible(Ground ground){
+        for (int i=0;i<clearToSeeGrounds.size();i++){
+            if (clearToSeeGrounds.get(i).number==ground.number) return true;
+        }
+        return false;
+    }
 }
