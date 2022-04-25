@@ -10,12 +10,12 @@ public enum GroundType {
     SNOW(0, 0, 0, -33, 1, false),
     TUNDRA(1, 0, 0, -33, 1, false);
 
-    public final int food;
-    public final int production;
-    public final int gold;
-    public final int combatCoefficient;
-    public final int movementCost;
-    public final boolean isBlock;
+    private final int food;
+    private final int production;
+    private final int gold;
+    private final int combatCoefficient;
+    private final int movementCost;
+    private final boolean isBlock;
 
     GroundType(int food, int production, int gold, int combatCoefficient, int movementCost, boolean isBlock) {
         this.gold = gold;
@@ -24,5 +24,29 @@ public enum GroundType {
         this.combatCoefficient = combatCoefficient;
         this.movementCost = movementCost;
         this.isBlock = isBlock;
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public int getProduction() {
+        return production;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public int getCombatCoefficient() {
+        return combatCoefficient;
+    }
+
+    public int getMovementCost() {
+        return movementCost;
+    }
+
+    public boolean isBlock() {
+        return isBlock;
     }
 }

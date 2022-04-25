@@ -11,13 +11,13 @@ public enum StrategicResource {
     IRON(0, 1, 0, new ArrayList<>(List.of(GroundType.TUNDRA, GroundType.PLAIN, GroundType.DESERT,
             GroundType.HILL, GroundType.GRASS_PLOT, GroundType.SNOW)), null, ImprovementType.MINE, TechnologyType.IRON_WORKING);
 
-    public final int food;
-    public final int production;
-    public final int gold;
-    public final ArrayList<GroundType> groundTypes;
-    public final ArrayList<FeatureType> groundFeatureTypes;
-    public final ImprovementType improvement;
-    public final TechnologyType technology;
+    private final int food;
+    private final int production;
+    private final int gold;
+    private final ArrayList<GroundType> groundTypes;
+    private final ArrayList<FeatureType> groundFeatureTypes;
+    private final ImprovementType improvement;
+    private final TechnologyType technology;
 
     StrategicResource(int food, int production, int gold, ArrayList<GroundType> groundTypes, ArrayList<FeatureType> groundFeatureTypes,ImprovementType improvement,
                       TechnologyType technology) {
@@ -28,5 +28,33 @@ public enum StrategicResource {
         this.groundFeatureTypes = groundFeatureTypes;
         this.improvement = improvement;
         this.technology = technology;
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public int getProduction() {
+        return production;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public ArrayList<GroundType> getGroundTypes() {
+        return groundTypes;
+    }
+
+    public ArrayList<FeatureType> getGroundFeatureTypes() {
+        return groundFeatureTypes;
+    }
+
+    public ImprovementType getImprovement() {
+        return improvement;
+    }
+
+    public TechnologyType getTechnology() {
+        return technology;
     }
 }

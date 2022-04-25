@@ -20,12 +20,12 @@ public enum LuxuryResource {
     SILVER(0, 0, 2,  new ArrayList<>(List.of(GroundType.TUNDRA, GroundType.DESERT, GroundType.HILL)), null, ImprovementType.MINE),
     SUGAR(0, 0, 2, null, new ArrayList<>(List.of(FeatureType.WATERSHED, FeatureType.MARSH)), ImprovementType.AGRICULTURE);
 
-    public final int food;
-    public final int production;
-    public final int gold;
-    public final ArrayList<GroundType> groundTypes;
-    public final ArrayList<FeatureType> groundFeatureTypes;
-    public final ImprovementType improvement;
+    private final int food;
+    private final int production;
+    private final int gold;
+    private final ArrayList<GroundType> groundTypes;
+    private final ArrayList<FeatureType> groundFeatureTypes;
+    private final ImprovementType improvement;
 
     LuxuryResource(int food, int production, int gold, ArrayList<GroundType> groundTypes, ArrayList<FeatureType> groundFeatureTypes, ImprovementType improvement) {
         this.food = food;
@@ -34,5 +34,29 @@ public enum LuxuryResource {
         this.groundTypes = groundTypes;
         this.groundFeatureTypes = groundFeatureTypes;
         this.improvement = improvement;
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public int getProduction() {
+        return production;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public ArrayList<GroundType> getGroundTypes() {
+        return groundTypes;
+    }
+
+    public ArrayList<FeatureType> getGroundFeatureTypes() {
+        return groundFeatureTypes;
+    }
+
+    public ImprovementType getImprovement() {
+        return improvement;
     }
 }
