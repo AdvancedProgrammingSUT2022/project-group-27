@@ -1,6 +1,7 @@
 package model;
 import java.util.ArrayList;
 import java.util.HashMap;
+import Enum.GroundType
 
 public class Ground {
     public static ArrayList <Ground> allGround = new ArrayList<>();
@@ -11,6 +12,7 @@ public class Ground {
     private final int xLocation;
     private final int yLocation;
     public int number;
+    public GroundType groundType;
 
     public Ground(int x, int y,int number){
         this.xLocation = x;
