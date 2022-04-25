@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import Enum.GroundType;
 
+import static java.lang.Math.abs;
+
 public class Ground {
     public static ArrayList <Ground> allGround = new ArrayList<>();
     public static HashMap<Integer,Ground> pixelInWhichGround = new HashMap<>();
@@ -84,5 +86,31 @@ public class Ground {
         }
 
         return answer;
+    }
+    public static boolean AreTheseTwoGroundAdjacent(Ground firstGround,Ground secondGround){
+        GlobalVariables globalVariables= new GlobalVariables();
+        if (abs(firstGround.getxLocation()-secondGround.getxLocation())<=globalVariables.tool6Zelie
+                && abs(firstGround.getyLocation()-secondGround.getyLocation())<=globalVariables.arz6Zelie) return true;
+        return false;
+    }
+    public static int distanceOfTheseTwoGround(Ground firstGround,Ground secondGround){
+        int inf = 10000;
+        if (!AreTheseTwoGroundAdjacent(firstGround,secondGround)) return inf;
+        if (firstGround.groundType==GroundType.OCEAN || firstGround.groundType==GroundType.MOUNTAIN || firstGround.groundType==GroundType.HILL){
+            return inf;
+        }
+        int amount = 0;
+        for (int i = 0 ;i<River.allRivers.size();i++){
+            if (River.allRivers.get(i).getFirstGround().number==firstGround.number && River.allRivers.get(i).getSecondGround().number==secondGround.number){
+                amount=1;
+            }
+            if (River.allRivers.get(i).getFirstGround().number==secondGround.number && River.allRivers.get(i).getSecondGround().number==firstGround.number){
+                amount=1;
+            }
+        }
+        amount *= 9;
+        amount +=1;
+        return amount;
+
     }
 }

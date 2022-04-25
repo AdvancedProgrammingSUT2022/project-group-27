@@ -72,6 +72,11 @@ public class Player {
     public static void nextTurn(){
         counterOfNextRound++;
         while (!whichPlayerTurnIs().isAlive) counterOfNextRound++;
+        Player player=Player.whichPlayerTurnIs();
+        for (int i=0;i<player.units.size();i++){
+            player.units.get(i).putMp(10);
+            player.units.get(i).checkDestination();
+        }
     }
 
     public static Player whichPlayerTurnIs(){

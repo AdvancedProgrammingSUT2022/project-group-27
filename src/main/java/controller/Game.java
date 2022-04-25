@@ -81,7 +81,8 @@ public class Game extends Controller {
         /// TODO : type of unit
         for (Unit unit : unitArrayList){
             if ((unit instanceof MilitaryUnit && type.equals("Military")) || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary")))
-            unit.moveUnitToAdjacentGround(Ground.getGroundByNumber(secondGroundNumber));
+            unit.setDestination(Ground.getGroundByNumber(secondGroundNumber));
+            unit.checkDestination();
         }
         player.addGroundToVisitedGround(Ground.getGroundByNumber(firstGroundNumber));
         player.addGroundToVisitedGround(Ground.getGroundByNumber(secondGroundNumber));

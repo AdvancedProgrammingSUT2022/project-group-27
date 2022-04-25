@@ -1,5 +1,7 @@
 package model;
 
+import view.game.GameView;
+
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
@@ -8,6 +10,7 @@ public class GlobalVariables {
     public static int numberOfTiles=78;
     public int tool6Zelie = 8, arz6Zelie = 16;
     public double epsilon = 0.1;
+    public static GameView gameView=null;
 
     public int isEqual(double x, double y) {
         if (abs(x - y) < this.epsilon) return 1;

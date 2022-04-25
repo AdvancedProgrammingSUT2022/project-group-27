@@ -1,8 +1,10 @@
 package view;
 
 import controller.Controller;
+import controller.Game;
 import controller.GameController;
 import Enum.Message;
+import model.GlobalVariables;
 import model.User;
 import view.game.GameView;
 
@@ -107,7 +109,11 @@ public class GameMenu extends Menu{
             }
         }
 
-        if (isValid) GameView.getInstance(new ArrayList<User>(Arrays.asList(playerUsers))).run();
+        if (isValid){
+            GameView gameView= GameView.getInstance(new ArrayList<User>(Arrays.asList(playerUsers)));
+            GlobalVariables.gameView=gameView;
+            gameView.run();
+        }
 
         this.run();
     }

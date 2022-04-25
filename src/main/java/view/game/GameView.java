@@ -33,25 +33,25 @@ public class GameView {
         Random random= new Random();
         for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
             int rand=random.nextInt(0,200);
-            if (rand<50){
+            if (rand<70){
                 Ground.getGroundByNumber(i).groundType= GroundType.DESERT;
             }
-            else if (rand<100){
+            else if (rand<140){
                 Ground.getGroundByNumber(i).groundType=GroundType.GRASS_PLOT;
             }
-            else if (rand<120){
+            else if (rand<150){
                 Ground.getGroundByNumber(i).groundType=GroundType.HILL;
             }
-            else if (rand<135){
+            else if (rand<160){
                 Ground.getGroundByNumber(i).groundType=GroundType.MOUNTAIN;
             }
-            else if (rand<150){
+            else if (rand<170){
                 Ground.getGroundByNumber(i).groundType=GroundType.OCEAN;
             }
-            else if (rand<170){
+            else if (rand<180){
                 Ground.getGroundByNumber(i).groundType=GroundType.SNOW;
             }
-            else if (rand<185){
+            else if (rand<190){
                 Ground.getGroundByNumber(i).groundType=GroundType.TUNDRA;
             }
             else if (rand<200){
@@ -104,7 +104,10 @@ public class GameView {
         Matcher matcher;
         String regex;
 
-        if (input.matches("^show map$")) showMap(Player.whichPlayerTurnIs());
+        if (input.matches("^show map$")) {
+            showMap(Player.whichPlayerTurnIs());
+            this.run();
+        }
         else if (input.matches("next turn")){
             Player.nextTurn();
             this.run();
@@ -120,7 +123,7 @@ public class GameView {
         }
     }
 
-    private void showMap(Player player){
+    public void showMap(Player player){
 
         String[][] showMap = new String[globalVariables.surfaceHeight][globalVariables.surfaceWidth];
         for (int i = 0; i < globalVariables.surfaceHeight ; i++) {
@@ -193,6 +196,7 @@ public class GameView {
             }
         }
         for (int i=0;i<Player.allPlayers.size();i++){
+            ///TODO: is the below if correct?
             if (player.equals(Player.allPlayers.get(i))) continue;
             for (int j=0;j<Player.allPlayers.get(i).units.size();j++){
                 Ground ground=Player.allPlayers.get(i).units.get(j).getGround();
@@ -272,7 +276,7 @@ public class GameView {
 
         }
         printMap(showMap, globalVariables);
-        this.run();
+       // this.run();
     }
 
     private void printMap(String[][] showMap, GlobalVariables globalVariables) {
