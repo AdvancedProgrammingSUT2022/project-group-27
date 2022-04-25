@@ -37,7 +37,7 @@ public abstract class Unit  {
             par[i]=0;
             vis[i]=0;
         }
-        dis[this.destination.number]=0;
+        dis[this.destination.getNumber()]=0;
 
         for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
             int best=1000;
@@ -58,10 +58,10 @@ public abstract class Unit  {
             }
             vis[id]=1;
         }
-        System.out.println(this.destination.number + " " + this.ground.number + " " + dis[this.ground.number] + " " + par[this.ground.number]+ " " + this.mp);
-        if (dis[this.getGround().number]>=1000) return ;
-        while(this.mp>0 && this.ground.number!=this.destination.number){
-            int father=par[this.getGround().number];
+        System.out.println(this.destination.getNumber() + " " + this.ground.getNumber() + " " + dis[this.ground.getNumber()] + " " + par[this.ground.getNumber()]+ " " + this.mp);
+        if (dis[this.getGround().getNumber()] >= 1000) return ;
+        while(this.mp > 0 && this.ground.getNumber() != this.destination.getNumber()){
+            int father = par[this.getGround().getNumber()];
             System.out.println("father : " + father);
             this.decreaseMp(Ground.distanceOfTheseTwoGround(this.getGround(),Ground.getGroundByNumber(father)));
             this.ground=Ground.getGroundByNumber(father);
@@ -69,8 +69,8 @@ public abstract class Unit  {
             GlobalVariables.gameView.showMap(player);
             System.out.printf("MP : "+ this.getMp());
         }
-        System.out.println(this.ground.number);
-        if (this.getGround().number==this.destination.number) this.destination=null;
+        System.out.println(this.ground.getNumber());
+        if (this.getGround().getNumber() == this.destination.getNumber()) this.destination = null;
 
     }
 

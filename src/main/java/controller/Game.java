@@ -35,11 +35,11 @@ public class Game extends Controller {
                 Ground ground = new Ground(j, i, numberOfCity++);
                 //TODO
                 if (!ground.checkIsGroundInPage()){
-                    ground.number=0;
+                    ground.setNumber(0);
                     numberOfCity--;
                 }
 
-                Ground.allGround.add(ground);
+                Ground.getAllGround().add(ground);
             }
         }
         for (int i = 0; i < globalVariables.surfaceHeight; i++){
@@ -68,8 +68,8 @@ public class Game extends Controller {
                         System.out.println("Didn't find the ground!!!!");
                     } else {
                         Pair pixel = new Pair(i, j);
-                        ground.pixelsOfThisGround.add(pixel);
-                        Ground.pixelInWhichGround.put(Ground.PairToInt(pixel.firstInt, pixel.secondInt), ground);
+                        ground.getPixelsOfThisGround().add(pixel);
+                        Ground.getPixelInWhichGround().put(Ground.PairToInt(pixel.firstInt, pixel.secondInt), ground);
                     }
                 }
             }
@@ -84,6 +84,7 @@ public class Game extends Controller {
             unit.setDestination(Ground.getGroundByNumber(secondGroundNumber));
             unit.checkDestination();
         }
+
         player.addGroundToVisitedGround(Ground.getGroundByNumber(firstGroundNumber));
         player.addGroundToVisitedGround(Ground.getGroundByNumber(secondGroundNumber));
     }

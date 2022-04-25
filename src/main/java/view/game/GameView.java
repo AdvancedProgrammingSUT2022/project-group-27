@@ -34,28 +34,28 @@ public class GameView {
         for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
             int rand=random.nextInt(0,200);
             if (rand<70){
-                Ground.getGroundByNumber(i).groundType= GroundType.DESERT;
+                Ground.getGroundByNumber(i).setGroundType(GroundType.DESERT);
             }
             else if (rand<140){
-                Ground.getGroundByNumber(i).groundType=GroundType.GRASS_PLOT;
+                Ground.getGroundByNumber(i).setGroundType(GroundType.GRASS_PLOT);
             }
             else if (rand<150){
-                Ground.getGroundByNumber(i).groundType=GroundType.HILL;
+                Ground.getGroundByNumber(i).setGroundType(GroundType.HILL);
             }
             else if (rand<160){
-                Ground.getGroundByNumber(i).groundType=GroundType.MOUNTAIN;
+                Ground.getGroundByNumber(i).setGroundType(GroundType.MOUNTAIN);
             }
             else if (rand<170){
-                Ground.getGroundByNumber(i).groundType=GroundType.OCEAN;
+                Ground.getGroundByNumber(i).setGroundType(GroundType.OCEAN);
             }
             else if (rand<180){
-                Ground.getGroundByNumber(i).groundType=GroundType.SNOW;
+                Ground.getGroundByNumber(i).setGroundType(GroundType.SNOW);
             }
             else if (rand<190){
-                Ground.getGroundByNumber(i).groundType=GroundType.TUNDRA;
+                Ground.getGroundByNumber(i).setGroundType(GroundType.TUNDRA);
             }
             else if (rand<200){
-                Ground.getGroundByNumber(i).groundType=GroundType.PLAIN;
+                Ground.getGroundByNumber(i).setGroundType(GroundType.PLAIN);
             }
 
         }
@@ -84,8 +84,8 @@ public class GameView {
             Player player = new Player(playerUser);
             UnMilitaryUnit unMilitaryUnit = new UnMilitaryUnit(ground, player);
             MilitaryUnit militaryUnit = new MilitaryUnit(ground, player);
-            player.units.add(militaryUnit);
-            player.units.add(unMilitaryUnit);
+            player.getUnits().add(militaryUnit);
+            player.getUnits().add(unMilitaryUnit);
         }
     }
 
@@ -133,14 +133,14 @@ public class GameView {
         }
         for (int i = 1; i < globalVariables.surfaceHeight - 1; i++){
             for (int j = 1; j < globalVariables.surfaceWidth - 1; j++){
-                Ground ground = Ground.pixelInWhichGround.get(Ground.PairToInt(i, j));
+                Ground ground = Ground.getPixelInWhichGround().get(Ground.PairToInt(i, j));
                 if (Ground.getGroundByXY(i, j) != null){
-                    Integer number = ground.number;
+                    Integer number = ground.getNumber();
                     String numberString=number.toString();
                     for (int k=-1;k<numberString.length()-1;k++){
                         showMap[i][j+k]=""+numberString.charAt(k+1);
                     }
-                } else if (!Ground.pixelInWhichGround.containsKey(Ground.PairToInt(i, j))) showMap[i][j]=GlobalVariables . ANSI_BLACK+"█" ;
+                } else if (!Ground.getPixelInWhichGround().containsKey(Ground.PairToInt(i, j))) showMap[i][j]=GlobalVariables . ANSI_BLACK+"█" ;
                 else if (!ground.checkIsGroundInPage()) showMap[i][j]=GlobalVariables.ANSI_BLACK + "█" ;
                 else {
                     showMap[i][j] = GlobalVariables.ANSI_WHITE + "█";
@@ -149,9 +149,9 @@ public class GameView {
         }
         for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {
             for (int j = 1; j < globalVariables.surfaceWidth - 1; j++) {
-                Ground ground = Ground.pixelInWhichGround.get(Ground.PairToInt(i, j));
+                Ground ground = Ground.getPixelInWhichGround().get(Ground.PairToInt(i, j));
                 if (Ground.getGroundByXY(i, j) != null) {
-                    Integer number = ground.number;
+                    Integer number = ground.getNumber();
                     String numberString = number.toString();
                     while(numberString.length()<3) numberString="0"+numberString;
                     for (int k = -1; k < numberString.length() - 1; k++) {
@@ -162,12 +162,12 @@ public class GameView {
         }
 
                     player.handleClearToSee();
-        for (int i = 0; i < player.clearToSeeGrounds.size(); i++){
-            player.addGroundToVisitedGround(player.clearToSeeGrounds.get(i));
+        for (int i = 0; i < player.getClearToSeeGrounds().size(); i++){
+            player.addGroundToVisitedGround(player.getClearToSeeGrounds().get(i));
         }
-        for (int i = 0; i < player.wasClearedToSeeGrounds.size(); i++){
-            for (int j = 0; j < player.wasClearedToSeeGrounds.get(i).pixelsOfThisGround.size(); j++){
-                Pair pair = player.wasClearedToSeeGrounds.get(i).pixelsOfThisGround.get(j);
+        for (int i = 0; i < player.getWasClearedToSeeGrounds().size(); i++){
+            for (int j = 0; j < player.getWasClearedToSeeGrounds().get(i).getPixelsOfThisGround().size(); j++){
+                Pair pair = player.getWasClearedToSeeGrounds().get(i).getPixelsOfThisGround().get(j);
 
                 if (pair.firstInt>=globalVariables.surfaceHeight || pair.secondInt>=globalVariables.surfaceWidth) continue;
                 if (showMap[pair.firstInt][pair.secondInt].charAt(0) >= '0' && showMap[pair.firstInt][pair.secondInt].charAt(0) <= '9') continue;
@@ -175,19 +175,19 @@ public class GameView {
                 showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_RED + "█";
             }
         }
-        for (int i = 0; i < player.clearToSeeGrounds.size(); i++){
-            for (int j = 0; j < player.clearToSeeGrounds.get(i).pixelsOfThisGround.size(); j++){
-                Pair pair = player.clearToSeeGrounds.get(i).pixelsOfThisGround.get(j);
+        for (int i = 0; i < player.getClearToSeeGrounds().size(); i++){
+            for (int j = 0; j < player.getClearToSeeGrounds().get(i).getPixelsOfThisGround().size(); j++){
+                Pair pair = player.getClearToSeeGrounds().get(i).getPixelsOfThisGround().get(j);
 
                 if (pair.firstInt>=globalVariables.surfaceHeight || pair.secondInt>=globalVariables.surfaceWidth) continue;
                 if (showMap[pair.firstInt][pair.secondInt].charAt(0) >= '0' && showMap[pair.firstInt][pair.secondInt].charAt(0) <= '9') continue;
 
-                showMap[pair.firstInt][pair.secondInt] = player.clearToSeeGrounds.get(i).groundType.getColor() + "█";
+                showMap[pair.firstInt][pair.secondInt] = player.getClearToSeeGrounds().get(i).getGroundType().getColor() + "█";
             }
         }
-        for (int i = 0; i < player.clearToSeeGrounds.size(); i++){
-            Ground ground=player.clearToSeeGrounds.get(i);
-            ArrayList <Unit> unitArrayList=player.clearToSeeGrounds.get(i).unitsOfASpecificPlayerInThisGround(player);
+        for (int i = 0; i < player.getClearToSeeGrounds().size(); i++){
+            Ground ground=player.getClearToSeeGrounds().get(i);
+            ArrayList <Unit> unitArrayList=player.getClearToSeeGrounds().get(i).unitsOfASpecificPlayerInThisGround(player);
             for (Unit unit : unitArrayList){
                 if (unit instanceof MilitaryUnit){
                     showMap[ground.getxLocation()+1][ground.getyLocation()-1]=GlobalVariables.ANSI_CYAN+"M";
@@ -195,13 +195,13 @@ public class GameView {
                 else showMap[ground.getxLocation()+1][ground.getyLocation()+1]=GlobalVariables.ANSI_CYAN+"U";
             }
         }
-        for (int i=0;i<Player.allPlayers.size();i++){
+        for (int i=0;i<Player.getAllPlayers().size();i++){
             ///TODO: is the below if correct?
-            if (player.equals(Player.allPlayers.get(i))) continue;
-            for (int j=0;j<Player.allPlayers.get(i).units.size();j++){
-                Ground ground=Player.allPlayers.get(i).units.get(j).getGround();
+            if (player.equals(Player.getAllPlayers().get(i))) continue;
+            for (int j=0;j<Player.getAllPlayers().get(i).getUnits().size();j++){
+                Ground ground=Player.getAllPlayers().get(i).getUnits().get(j).getGround();
                 if (player.isThisGroundVisible(ground)){
-                    if (Player.allPlayers.get(i).units.get(j) instanceof MilitaryUnit){
+                    if (Player.getAllPlayers().get(i).getUnits().get(j) instanceof MilitaryUnit){
                         showMap[ground.getxLocation()+1][ground.getyLocation()-1]=GlobalVariables.ANSI_RED+"M";
                     }
                     else showMap[ground.getxLocation()+1][ground.getyLocation()+1]=GlobalVariables.ANSI_RED+"U";
@@ -225,7 +225,7 @@ public class GameView {
         }
         for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {
             for (int j = 1; j < globalVariables.surfaceWidth - 1; j++) {
-                if (Ground.pixelInWhichGround.containsKey(Ground.PairToInt(i,j))) continue;
+                if (Ground.getPixelInWhichGround().containsKey(Ground.PairToInt(i,j))) continue;
                 if (visit[i][j]==1){
                     showMap[i][j]=GlobalVariables.ANSI_BLUE+'\\';
                 }
@@ -251,8 +251,8 @@ public class GameView {
                 }
             }
         }
-        for (int i=0;i<River.allRivers.size();i++){
-            Ground firstGround=River.allRivers.get(i).getFirstGround(),secondGround=River.allRivers.get(i).getSecondGround();
+        for (int i = 0; i < River.getAllRivers().size(); i++){
+            Ground firstGround = River.getAllRivers().get(i).getFirstGround(), secondGround = River.getAllRivers().get(i).getSecondGround();
 
             if (firstGround.getyLocation()==secondGround.getyLocation()){
                 //System.out.println(firstGround.number + " " + secondGround.number);
@@ -290,7 +290,6 @@ public class GameView {
     ///TODO: should move units be in controller?
     private void moveUnits(int firstGroundNumber,int secondGroundNumber,String type){
         this.controller.moveUnits(firstGroundNumber,secondGroundNumber,type);
-        Player player=Player.whichPlayerTurnIs();
     }
 }
 

@@ -3,19 +3,51 @@ package model;
 import java.util.ArrayList;
 
 public class Player {
-    public static ArrayList<Player> allPlayers = new ArrayList<>();
-    public ArrayList<City> cities = new ArrayList<>();
-    public ArrayList<Unit> units = new ArrayList<>();
-    public ArrayList<Ground> clearToSeeGrounds = new ArrayList<>();
-    public ArrayList<Ground> wasClearedToSeeGrounds = new ArrayList<>();
+    private static final ArrayList<Player> allPlayers = new ArrayList<>();
+    private final ArrayList<City> cities = new ArrayList<>();
+    private final ArrayList<Unit> units = new ArrayList<>();
+    private ArrayList<Ground> clearToSeeGrounds = new ArrayList<>();
+    private ArrayList<Ground> wasClearedToSeeGrounds = new ArrayList<>();
 
-    public static int counterOfNextRound = 0;
-    public User user;
-    public boolean isAlive = true;
+    private static int counterOfNextRound = 0;
+    private User user;
+    private boolean isAlive = true;
 
     public Player (User user){
         this.user=user;
         allPlayers.add(this);
+    }
+
+    public ArrayList<Ground> getClearToSeeGrounds() {
+        return clearToSeeGrounds;
+    }
+
+    public ArrayList<Ground> getWasClearedToSeeGrounds() {
+        return wasClearedToSeeGrounds;
+    }
+
+    public static ArrayList<Player> getAllPlayers() {
+        return allPlayers;
+    }
+
+    public ArrayList<City> getCities() {
+        return cities;
+    }
+
+    public ArrayList<Unit> getUnits() {
+        return units;
+    }
+
+    public static int getCounterOfNextRound() {
+        return counterOfNextRound;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
     }
 
     public void handleClearToSeeGrounds1depth(ArrayList <Ground> clearToSeeGrounds) {
@@ -60,7 +92,7 @@ public class Player {
     }
 
     public void handleClearToSee(){
-        this.clearToSeeGrounds=new ArrayList<>();
+        this.clearToSeeGrounds = new ArrayList<>();
         for (Unit unit : this.units) {
             this.clearToSeeGrounds.add(unit.getGround());
         }
@@ -72,8 +104,9 @@ public class Player {
     public static void nextTurn(){
         counterOfNextRound++;
         while (!whichPlayerTurnIs().isAlive) counterOfNextRound++;
+
         Player player=Player.whichPlayerTurnIs();
-        for (int i=0;i<player.units.size();i++){
+        for (int i = 0; i < player.units.size(); i++){
             player.units.get(i).putMp(10);
             player.units.get(i).checkDestination();
         }
@@ -82,27 +115,33 @@ public class Player {
     public static Player whichPlayerTurnIs(){
         return allPlayers.get(counterOfNextRound % allPlayers.size());
     }
+
     public void addGroundToVisitedGround(Ground ground){
-        boolean exist=false;
-        for (int i=0;i<wasClearedToSeeGrounds.size();i++){
-            if (wasClearedToSeeGrounds.get(i).number==ground.number) exist=true;
+        boolean exist = false;
+        for (Ground wasClearedToSeeGround : wasClearedToSeeGrounds) {
+            if (wasClearedToSeeGround.getNumber() == ground.getNumber()) {
+                exist = true;
+                break;
+            }
         }
-        if (exist) return ;
-        wasClearedToSeeGrounds.add(ground);
+
+        if (exist) return;
+        Ground copyGround = ground.copyOfCurrentGround();
+        wasClearedToSeeGrounds.add(copyGround);
     }
 
     public void moveUnitFromThisPlayerGroundsToAnotherGround(Ground firstGround,Ground secondGround){
         ///TODO which Type Of Unit must be asked
         ///TODO error sentence
-        for (int i=0;i<units.size();i++){
-            if (units.get(i).ground.number==firstGround.number){
-                units.get(i).moveUnitToAdjacentGround(secondGround);
+        for (Unit unit : units) {
+            if (unit.ground.getNumber() == firstGround.getNumber()) {
+                unit.moveUnitToAdjacentGround(secondGround);
             }
         }
     }
     public boolean isThisGroundVisible(Ground ground){
-        for (int i=0;i<clearToSeeGrounds.size();i++){
-            if (clearToSeeGrounds.get(i).number==ground.number) return true;
+        for (Ground clearToSeeGround : clearToSeeGrounds) {
+            if (clearToSeeGround.getNumber() == ground.getNumber()) return true;
         }
         return false;
     }
