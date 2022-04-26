@@ -1,11 +1,13 @@
 package model;
 
+import controller.InitializeMap;
+import view.game.ShowMap;
+
 import static java.lang.Math.min;
 
 public abstract class Unit {
     protected Ground ground;
     protected Player player;
-
     protected Ground destination = null;
     protected double mp = 10;
 
@@ -72,17 +74,17 @@ public abstract class Unit {
         while (this.mp > 0 && this.ground.getNumber() != this.destination.getNumber()) {
             int father = par[this.getGround().getNumber()];
             if (this.getMp() - Ground.distanceOfTheseTwoGround(this.getGround(), Ground.getGroundByNumber(father)) == 0) {
-                if (this instanceof MilitaryUnit && Ground.getGroundByNumber(father).isFreeOfMilitaryUnit() == false)
+                if (this instanceof MilitaryUnit && !Ground.getGroundByNumber(father).isFreeOfMilitaryUnit())
                     break;
-                if (this instanceof UnMilitaryUnit && Ground.getGroundByNumber(father).isFreeOfUnMilitaryUnit() == false)
+                if (this instanceof UnMilitaryUnit && !Ground.getGroundByNumber(father).isFreeOfUnMilitaryUnit())
                     break;
             }
             System.out.println("father : " + father);
             this.decreaseMp(Ground.distanceOfTheseTwoGround(this.getGround(), Ground.getGroundByNumber(father)));
             this.ground = Ground.getGroundByNumber(father);
             System.out.println("mp : " + this.getMp());
-            GlobalVariables.gameView.showMap(player);
-            System.out.printf("MP : " + this.getMp());
+            ShowMap showMap = new ShowMap(player);
+            showMap.run();
         }
         System.out.println(this.ground.getNumber());
         if (this.getGround().getNumber() == this.destination.getNumber()) this.destination = null;

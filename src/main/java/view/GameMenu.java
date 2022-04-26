@@ -110,8 +110,7 @@ public class GameMenu extends Menu {
         }
 
         if (isValid) {
-            GameView gameView = GameView.getInstance(new ArrayList<User>(Arrays.asList(playerUsers)));
-            GlobalVariables.gameView = gameView;
+            GameView gameView = new GameView(new ArrayList<User>(Arrays.asList(playerUsers)));
             gameView.run();
         }
 

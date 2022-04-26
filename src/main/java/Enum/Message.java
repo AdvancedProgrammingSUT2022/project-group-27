@@ -19,7 +19,6 @@ public enum Message {
     START_GAME("Game starts..."),
     USER_DOESNT_EXIST("Some of your selected users doesn't exist!"),
     LOGOUT("User logged out successfully");
-
     private String message;
 
     Message(String message) {
