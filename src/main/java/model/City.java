@@ -8,7 +8,6 @@ public class City {
 
 
     public void addGround(Ground ground) {
-        // check
         for (Ground value : this.groundsInCity) {
             if (value.equals(ground)) return;
         }

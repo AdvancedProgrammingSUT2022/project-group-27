@@ -65,9 +65,7 @@ public class Game extends Controller {
 
                 if (checkPixelType == 0) {
                     Ground ground = Ground.getGroundByXY(idOfBestMatch.getFirstInt(), idOfBestMatch.getSecondInt());
-                    if (ground == null) {
-                        System.out.println("Didn't find the ground!!!!");
-                    } else {
+                    if (ground != null) {
                         Pair pixel = new Pair(i, j);
                         ground.getPixelsOfThisGround().add(pixel);
                         Ground.getPixelInWhichGround().put(Ground.PairToInt(pixel.getFirstInt(), pixel.getSecondInt()), ground);
@@ -83,8 +81,10 @@ public class Game extends Controller {
         /// TODO : type of unit
         boolean exit = false;
         for (Unit unit : Ground.getGroundByNumber(secondGroundNumber).unitsInThisGround()) {
-            if (unit.getGround().getNumber() == secondGroundNumber) {// && ((unit instanceof MilitaryUnit && type.equals("Military")) || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary")))){
+            if (unit.getGround().getNumber() == secondGroundNumber && ((unit instanceof MilitaryUnit && type.equals("Military"))
+                    || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary")))) {
                 exit = true;
+                break;
             }
         }
         if (exit) {
@@ -96,7 +96,5 @@ public class Game extends Controller {
             unit.checkDestination();
         }
         return "unit moved successfully";
-        // player.addGroundToVisitedGround(Ground.getGroundByNumber(firstGroundNumber));
-        //player.addGroundToVisitedGround(Ground.getGroundByNumber(secondGroundNumber));
     }
 }

@@ -49,7 +49,8 @@ public class ProfileMenu extends Menu {
             }
         } else if (input.matches("profile change .+")) {
             matcher = controller.getInput("profile change",
-                    new ArrayList<String>(List.of("((--password)|(-p))", "((--current)|(-c)) (?<currentPassword>\\S+)", "((--new)|(-n)) (?<newPassword>\\S+)")), input);
+                    new ArrayList<String>(List.of("((--password)|(-p))", "((--current)|(-c)) (?<currentPassword>\\S+)",
+                            "((--new)|(-n)) (?<newPassword>\\S+)")), input);
             if (matcher != null) changePassword(matcher);
             else {
                 System.out.println(Message.INVALID_COMMAND);

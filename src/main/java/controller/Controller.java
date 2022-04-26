@@ -31,7 +31,10 @@ public abstract class Controller {
             boolean checkItsPermutation = false;
             for (int j = 0; j < tool; j++) {
                 for (int k = 0; k < tool; k++) {
-                    if (j != k && bits.get(j) == bits.get(k)) checkItsPermutation = true;
+                    if (j != k && bits.get(j) == bits.get(k)) {
+                        checkItsPermutation = true;
+                        break;
+                    }
                 }
             }
             if (!checkItsPermutation) {

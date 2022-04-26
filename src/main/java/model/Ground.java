@@ -131,7 +131,8 @@ public class Ground {
     public boolean isFreeOfMilitaryUnit() {
         for (int i = 0; i < Player.getAllPlayers().size(); i++) {
             for (int j = 0; j < Player.getAllPlayers().get(i).getUnits().size(); j++) {
-                if (Player.getAllPlayers().get(i).getUnits().get(j).ground.number == this.number && Player.getAllPlayers().get(i).getUnits().get(j) instanceof MilitaryUnit)
+                if (Player.getAllPlayers().get(i).getUnits().get(j).ground.number == this.number
+                        && Player.getAllPlayers().get(i).getUnits().get(j) instanceof MilitaryUnit)
                     return false;
             }
         }
@@ -142,7 +143,8 @@ public class Ground {
         //TODO: vaghti unit ha do no shodan avaz she
         for (int i = 0; i < Player.getAllPlayers().size(); i++) {
             for (int j = 0; j < Player.getAllPlayers().get(i).getUnits().size(); j++) {
-                if (Player.getAllPlayers().get(i).getUnits().get(j).ground.number == this.number && Player.getAllPlayers().get(i).getUnits().get(j) instanceof UnMilitaryUnit)
+                if (Player.getAllPlayers().get(i).getUnits().get(j).ground.number == this.number
+                        && Player.getAllPlayers().get(i).getUnits().get(j) instanceof UnMilitaryUnit)
                     return false;
             }
         }
@@ -175,10 +177,8 @@ public class Ground {
 
     public static boolean AreTheseTwoGroundAdjacent(Ground firstGround, Ground secondGround) {
         GlobalVariables globalVariables = new GlobalVariables();
-        if (abs(firstGround.getxLocation() - secondGround.getxLocation()) <= globalVariables.tool6Zelie
-                && abs(firstGround.getyLocation() - secondGround.getyLocation()) <= globalVariables.arz6Zelie)
-            return true;
-        return false;
+        return abs(firstGround.getxLocation() - secondGround.getxLocation()) <= globalVariables.tool6Zelie
+                && abs(firstGround.getyLocation() - secondGround.getyLocation()) <= globalVariables.arz6Zelie;
     }
 
     public static int distanceOfTheseTwoGround(Ground firstGround, Ground secondGround) {
@@ -189,10 +189,12 @@ public class Ground {
         }
         int amount = 0;
         for (int i = 0; i < River.getAllRivers().size(); i++) {
-            if (River.getAllRivers().get(i).getFirstGround().number == firstGround.number && River.getAllRivers().get(i).getSecondGround().number == secondGround.number) {
+            if (River.getAllRivers().get(i).getFirstGround().number == firstGround.number
+                    && River.getAllRivers().get(i).getSecondGround().number == secondGround.number) {
                 amount = 1;
             }
-            if (River.getAllRivers().get(i).getFirstGround().number == secondGround.number && River.getAllRivers().get(i).getSecondGround().number == firstGround.number) {
+            if (River.getAllRivers().get(i).getFirstGround().number == secondGround.number
+                    && River.getAllRivers().get(i).getSecondGround().number == firstGround.number) {
                 amount = 1;
             }
         }

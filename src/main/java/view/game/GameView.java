@@ -45,7 +45,8 @@ public class GameView {
             this.run();
         } else if (input.matches("^move unit .+$")) {
             matcher = controller.getInput("move unit",
-                    new ArrayList<String>(List.of("((--origin)|(-o)) (?<origin>\\d+)", "((--destination)|(-d)) (?<destination>\\d+)", "(?<type>(Military)|(UnMilitary))")), input);
+                    new ArrayList<String>(List.of("((--origin)|(-o)) (?<origin>\\d+)", "((--destination)|(-d)) (?<destination>\\d+)",
+                            "(?<type>(Military)|(UnMilitary))")), input);
             if (matcher != null) moveUnits(matcher);
             else {
                 System.out.println(Message.INVALID_COMMAND);

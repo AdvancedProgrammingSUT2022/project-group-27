@@ -230,7 +230,8 @@ public class ShowMap {
 
             if (firstGround.getyLocation() == secondGround.getyLocation()) {
 
-                for (int y = firstGround.getyLocation() - globalVariables.arz6Zelie / 3 - 1; y <= firstGround.getyLocation() + globalVariables.arz6Zelie / 3 + 1; y++) {
+                for (int y = firstGround.getyLocation() - globalVariables.arz6Zelie / 3 - 1;
+                     y <= firstGround.getyLocation() + globalVariables.arz6Zelie / 3 + 1; y++) {
                     showMap[(firstGround.getxLocation() + secondGround.getxLocation()) / 2][y] = GlobalVariables.ANSI_BLUE + "█";
                 }
             } else {

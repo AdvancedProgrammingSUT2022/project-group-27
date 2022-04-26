@@ -6,5 +6,5 @@ public class MilitaryUnit extends Unit {
         this.player = player;
         this.ground = ground;
     }
-    /// agha yadet bashe caghti sakhtish set player ham bokonim
+    /// agha yadet bashe vaghti sakhtish set player ham bokonim
 }

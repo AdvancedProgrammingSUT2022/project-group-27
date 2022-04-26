@@ -39,7 +39,8 @@ public class LoginMenu extends Menu {
             else System.out.println(Message.INVALID_COMMAND);
         } else if (input.matches("user create .+")) {
             matcher = controller.getInput("user create",
-                    new ArrayList<String>(List.of("((--username)|(-u)) (?<username>\\S+)", "((--nickname)|(-n)) (?<nickname>.+)", "((--password)|(-p)) (?<password>\\S+)")), input);
+                    new ArrayList<String>(List.of("((--username)|(-u)) (?<username>\\S+)", "((--nickname)|(-n)) (?<nickname>.+)",
+                            "((--password)|(-p)) (?<password>\\S+)")), input);
             if (matcher != null) createUser(matcher);
             else {
                 System.out.println(Message.INVALID_COMMAND);

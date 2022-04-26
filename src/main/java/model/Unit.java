@@ -69,7 +69,6 @@ public abstract class Unit {
             }
             vis[id] = 1;
         }
-        System.out.println(this.destination.getNumber() + " " + this.ground.getNumber() + " " + dis[this.ground.getNumber()] + " " + par[this.ground.getNumber()] + " " + this.mp);
         if (dis[this.getGround().getNumber()] >= 1000) return;
         while (this.mp > 0 && this.ground.getNumber() != this.destination.getNumber()) {
             int father = par[this.getGround().getNumber()];
