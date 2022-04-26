@@ -32,7 +32,7 @@ public class GameView {
         setGroundsType();
     }
 
-    GlobalVariables globalVariables = new GlobalVariables();
+    private GlobalVariables globalVariables = new GlobalVariables();
 
     private void setGroundsType() {
         Random random = new Random();
@@ -192,12 +192,12 @@ public class GameView {
             for (int j = 0; j < player.getWasClearedToSeeGrounds().get(i).getPixelsOfThisGround().size(); j++) {
                 Pair pair = player.getWasClearedToSeeGrounds().get(i).getPixelsOfThisGround().get(j);
 
-                if (pair.firstInt >= globalVariables.surfaceHeight || pair.secondInt >= globalVariables.surfaceWidth)
+                if (pair.getFirstInt() >= globalVariables.surfaceHeight || pair.getSecondInt() >= globalVariables.surfaceWidth)
                     continue;
-                if (showMap[pair.firstInt][pair.secondInt].charAt(0) >= '0' && showMap[pair.firstInt][pair.secondInt].charAt(0) <= '9')
+                if (showMap[pair.getFirstInt()][pair.getSecondInt()].charAt(0) >= '0' && showMap[pair.getFirstInt()][pair.getSecondInt()].charAt(0) <= '9')
                     continue;
                 //  System.out.println(i + " fne " + j + " " + player.wasClearedToSeeGrounds.get(i).number);
-                showMap[pair.firstInt][pair.secondInt] = GlobalVariables.ANSI_RED + "█";
+                showMap[pair.getFirstInt()][pair.getSecondInt()] = GlobalVariables.ANSI_RED + "█";
             }
         }
         showMapVisibleTile(player, showMap);
@@ -208,12 +208,12 @@ public class GameView {
             for (int j = 0; j < player.getClearToSeeGrounds().get(i).getPixelsOfThisGround().size(); j++) {
                 Pair pair = player.getClearToSeeGrounds().get(i).getPixelsOfThisGround().get(j);
 
-                if (pair.firstInt >= globalVariables.surfaceHeight || pair.secondInt >= globalVariables.surfaceWidth)
+                if (pair.getFirstInt() >= globalVariables.surfaceHeight || pair.getSecondInt() >= globalVariables.surfaceWidth)
                     continue;
-                if (showMap[pair.firstInt][pair.secondInt].charAt(0) >= '0' && showMap[pair.firstInt][pair.secondInt].charAt(0) <= '9')
+                if (showMap[pair.getFirstInt()][pair.getSecondInt()].charAt(0) >= '0' && showMap[pair.getFirstInt()][pair.getSecondInt()].charAt(0) <= '9')
                     continue;
 
-                showMap[pair.firstInt][pair.secondInt] = player.getClearToSeeGrounds().get(i).getGroundType().getColor() + "█";
+                showMap[pair.getFirstInt()][pair.getSecondInt()] = player.getClearToSeeGrounds().get(i).getGroundType().getColor() + "█";
             }
         }
         for (int i = 0; i < player.getClearToSeeGrounds().size(); i++) {

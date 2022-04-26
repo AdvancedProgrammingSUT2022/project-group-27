@@ -3,11 +3,19 @@ package model;
 import java.util.Objects;
 
 public class Pair {
-    public int firstInt, secondInt;
+    private int firstInt, secondInt;
 
     public Pair(int firstInt, int secondInt) {
         this.firstInt = firstInt;
         this.secondInt = secondInt;
+    }
+
+    public int getFirstInt() {
+        return firstInt;
+    }
+
+    public int getSecondInt() {
+        return secondInt;
     }
 
     @Override

@@ -64,13 +64,13 @@ public class Game extends Controller {
                 }
 
                 if (checkPixelType == 0) {
-                    Ground ground = Ground.getGroundByXY(idOfBestMatch.firstInt, idOfBestMatch.secondInt);
+                    Ground ground = Ground.getGroundByXY(idOfBestMatch.getFirstInt(), idOfBestMatch.getSecondInt());
                     if (ground == null) {
                         System.out.println("Didn't find the ground!!!!");
                     } else {
                         Pair pixel = new Pair(i, j);
                         ground.getPixelsOfThisGround().add(pixel);
-                        Ground.getPixelInWhichGround().put(Ground.PairToInt(pixel.firstInt, pixel.secondInt), ground);
+                        Ground.getPixelInWhichGround().put(Ground.PairToInt(pixel.getFirstInt(), pixel.getSecondInt()), ground);
                     }
                 }
             }
