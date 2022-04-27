@@ -9,14 +9,10 @@ import view.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.regex.Matcher;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-
-import Enum.GroundType;
-import Enum.FeatureType;
 
 public class GameView {
     private Game controller;
@@ -40,7 +36,7 @@ public class GameView {
             ShowMap showMap = new ShowMap(Player.whichPlayerTurnIs());
             showMap.run();
             this.run();
-        } else if (input.matches("next turn")) {
+        } else if (input.matches("^next turn$")) {
             Player.nextTurn();
             this.run();
         } else if (input.matches("^move unit .+$")) {
@@ -52,6 +48,9 @@ public class GameView {
                 System.out.println(Message.INVALID_COMMAND);
                 this.run();
             }
+        } else if (input.matches("^city menu$")) {
+            (new CityView()).cityMenus(Player.whichPlayerTurnIs());
+            this.run();
         } else {
             System.out.println(Message.INVALID_COMMAND);
             this.run();

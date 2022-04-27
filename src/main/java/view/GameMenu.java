@@ -111,6 +111,7 @@ public class GameMenu extends Menu {
 
         if (isValid) {
             GameView gameView = new GameView(new ArrayList<User>(Arrays.asList(playerUsers)));
+            System.out.println(Message.START_GAME);
             gameView.run();
         }
 

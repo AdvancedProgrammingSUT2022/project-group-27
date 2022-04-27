@@ -18,7 +18,12 @@ public enum Message {
     USERNAME_NOT_EXIST("One of the usernames you choice doesn't exist"),
     START_GAME("Game starts..."),
     USER_DOESNT_EXIST("Some of your selected users doesn't exist!"),
-    LOGOUT("User logged out successfully");
+    LOGOUT("User logged out successfully"),
+    INVALID_GROUND_NUMBER("Sorry but there isn't any ground with this number."),
+    NO_CITIZEN_WITHOUT_WORK("Sorry but this city doesn't have any citizens who doesn't have any work."),
+    GROUND_NOT_IN_CITY("Sorry but the ground you choice is not in the city."),
+    SUCCESS_WORK("Everything happens successfully:)");
+
     private String message;
 
     Message(String message) {

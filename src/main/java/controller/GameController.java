@@ -22,6 +22,7 @@ public class GameController extends Controller {
     }
 
     public Message startGame(ArrayList<String> usernames) {
+        //TODO deciding about remain it or not
         for (String username : usernames) {
             if (!User.isUsernameExist(username)) return Message.USERNAME_NOT_EXIST;
         }
