@@ -8,6 +8,7 @@ import java.util.zip.GZIPOutputStream;
 
 import Enum.GroundType;
 import Enum.FeatureType;
+import Enum.MilitaryType;
 
 public class InitializeMap {
     private ArrayList<User> playerUsers;
@@ -86,8 +87,8 @@ public class InitializeMap {
 
             Ground ground = Ground.getGroundByNumber(idStartGround);
             Player player = new Player(playerUser);
-            UnMilitaryUnit unMilitaryUnit = new UnMilitaryUnit(ground, player);
-            MilitaryUnit militaryUnit = new MilitaryUnit(ground, player);
+            SettlerUnit unMilitaryUnit = new SettlerUnit(ground, player);
+            MeleeUnit militaryUnit = new MeleeUnit(ground, player, MilitaryType.WARRIOR);
             player.getUnits().add(militaryUnit);
             player.getUnits().add(unMilitaryUnit);
         }
