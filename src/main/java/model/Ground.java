@@ -15,13 +15,20 @@ public class Ground {
     private static ArrayList<Ground> allGround = new ArrayList<>();
     private static HashMap<Integer, Ground> pixelInWhichGround = new HashMap<>();
     private ArrayList<Pair> pixelsOfThisGround = new ArrayList<>();
-
+    private ArrayList<Ground> adjacentGrounds=new ArrayList<>();
     private Player owner;
     private final int xLocation;
     private final int yLocation;
     private int number;
     private GroundType groundType;
     private FeatureType featureType;
+
+    public ArrayList<Ground> getAdjacentGrounds() {
+        return adjacentGrounds;
+    }
+    public void addGroundToAdjacentGround(Ground ground){
+        this.adjacentGrounds.add(ground);
+    }
 
     public Ground(int x, int y, int number) {
         this.xLocation = x;
@@ -208,6 +215,19 @@ public class Ground {
         for (int i = 0; i < River.getAllRivers().size(); i++) {
             if (River.getAllRivers().get(i).getFirstGround().number == this.number) return true;
             if (River.getAllRivers().get(i).getSecondGround().number == this.number) return true;
+        }
+        return false;
+    }
+
+    public boolean isInRangeOfCity(){
+        for (int i=0;i<Player.getAllPlayers().size();i++){
+            for (int j=0;j<Player.getAllPlayers().get(i).getCities().size();j++){
+                for (int k=0;k<Player.getAllPlayers().get(i).getCities().get(j).getRangeOfCity().size();k++){
+                    if (this.number==Player.getAllPlayers().get(i).getCities().get(j).getRangeOfCity().get(k).number){
+                        return true;
+                    }
+                }
+            }
         }
         return false;
     }

@@ -197,11 +197,11 @@ public class ShowMap {
             for (int j = 1; j < globalVariables.surfaceWidth - 1; j++) {
                 if (Ground.getPixelInWhichGround().containsKey(Ground.PairToInt(i, j))) continue;
                 if (visit[i][j] == 1) {
-                    showMap[i][j] = "\\";
+                    showMap[i][j] = GlobalVariables.ANSI_RESET + "\\";
                 } else if (visit[i][j] == 2) {
-                    showMap[i][j] = "/";
+                    showMap[i][j] = GlobalVariables.ANSI_RESET + "/";
                 } else if (showMap[i][j] == GlobalVariables.ANSI_BLACK + "█") {
-                    showMap[i][j] =  "-";
+                    showMap[i][j] = GlobalVariables.ANSI_RESET +  "-";
                 }
 
             }
@@ -221,38 +221,43 @@ public class ShowMap {
                 }
             }
         }
-        showMapRiver(player, showMap);
+        showMapCityRange(showMap);
     }
-    private void showMapCityRange(Player player,String[][] showMap){
-        for (int i=0;i<player.getCities().size();i++){
-            for (int j=0;j<player.getCities().get(i).getRangeOfCity().size();j++) {
-                Ground ground = player.getCities().get(i).getRangeOfCity().get(j);
-                for (int X = ground.getxLocation() - globalVariables.tool6Zelie; X <= ground.getxLocation() + globalVariables.tool6Zelie; X++) {
-                    for (int Y = ground.getyLocation() - globalVariables.arz6Zelie; Y <= ground.getyLocation() + globalVariables.arz6Zelie; Y++) {
-                        if (X == 0 && Y == 0) continue;
+    private void showMapCityRange(String[][] showMap){
+        for (int I=0;I<Player.getAllPlayers().size();I++) {
+            for (int i = 0; i < Player.getAllPlayers().get(I).getCities().size(); i++) {
+                Player player=Player.getAllPlayers().get(I);
+                System.out.println(i + " ground " + player.getCities().get(i).getGround().getNumber());
+                for (int j = 0; j < player.getCities().get(i).getRangeOfCity().size(); j++) {
+                    Ground ground = player.getCities().get(i).getRangeOfCity().get(j);
+                    for (int X = ground.getxLocation() - globalVariables.tool6Zelie; X <= ground.getxLocation() + globalVariables.tool6Zelie; X++) {
+                        for (int Y = ground.getyLocation() - globalVariables.arz6Zelie; Y <= ground.getyLocation() + globalVariables.arz6Zelie; Y++) {
+                            if (X == 0 && Y == 0) continue;
 
-                        Ground newGround = Ground.getGroundByXY(X, Y);
-                        if (newGround == null) continue;
+                            Ground newGround = Ground.getGroundByXY(X, Y);
+                            if (newGround == null) continue;
 
-                        if (newGround.getxLocation() == 0 || newGround.getxLocation() == globalVariables.surfaceHeight - 1 || newGround.getyLocation() == 0
-                                || newGround.getyLocation() == globalVariables.surfaceWidth - 1) continue;
-                        if (player.getCities().get(i).isThisGroundInThisCityRange(newGround)) continue;
-                        if (ground.getyLocation() == newGround.getyLocation()) {
+                            if (newGround.getxLocation() == 0 || newGround.getxLocation() == globalVariables.surfaceHeight - 1 || newGround.getyLocation() == 0
+                                    || newGround.getyLocation() == globalVariables.surfaceWidth - 1) continue;
+                            if (player.getCities().get(i).isThisGroundInThisCityRange(newGround)) continue;
+                            if (!player.isThisGroundVisible(ground) && !player.isThisGroundVisible(newGround)) continue;
+                            if (ground.getyLocation() == newGround.getyLocation()) {
 
-                            for (int y = ground.getyLocation() - globalVariables.arz6Zelie / 3 - 1;
-                                 y <= ground.getyLocation() + globalVariables.arz6Zelie / 3 + 1; y++) {
-                                showMap[(ground.getxLocation() + newGround.getxLocation()) / 2][y] = GlobalVariables.ANSI_RED + "█";
-                            }
-                        } else {
-                            int smallerX = min(ground.getxLocation(), newGround.getxLocation());
-                            int biggerX = max(ground.getxLocation(), newGround.getxLocation());
-                            int smallerY = min(ground.getyLocation(), newGround.getyLocation());
-                            int biggerY = max(ground.getyLocation(), newGround.getyLocation());
-                            for (int x = smallerX; x <= biggerX; x++) {
-                                for (int y = smallerY; y <= biggerY; y++) {
-                                    if (globalVariables.isEqual(globalVariables.distanceOfTwoPoints(x, y, ground.getxLocation(), ground.getyLocation())
-                                            , globalVariables.distanceOfTwoPoints(x, y, newGround.getxLocation(), newGround.getyLocation())) == 1) {
-                                        showMap[x][y] = GlobalVariables.ANSI_RED + "█";
+                                for (int y = ground.getyLocation() - globalVariables.arz6Zelie / 3 - 1;
+                                     y <= ground.getyLocation() + globalVariables.arz6Zelie / 3 + 1; y++) {
+                                    showMap[(ground.getxLocation() + newGround.getxLocation()) / 2][y] = GlobalVariables.ANSI_RED + "█";
+                                }
+                            } else {
+                                int smallerX = min(ground.getxLocation(), newGround.getxLocation());
+                                int biggerX = max(ground.getxLocation(), newGround.getxLocation());
+                                int smallerY = min(ground.getyLocation(), newGround.getyLocation());
+                                int biggerY = max(ground.getyLocation(), newGround.getyLocation());
+                                for (int x = smallerX; x <= biggerX; x++) {
+                                    for (int y = smallerY; y <= biggerY; y++) {
+                                        if (globalVariables.isEqual(globalVariables.distanceOfTwoPoints(x, y, ground.getxLocation(), ground.getyLocation())
+                                                , globalVariables.distanceOfTwoPoints(x, y, newGround.getxLocation(), newGround.getyLocation())) == 1) {
+                                            showMap[x][y] = GlobalVariables.ANSI_RED + "█";
+                                        }
                                     }
                                 }
                             }
@@ -261,12 +266,13 @@ public class ShowMap {
                 }
             }
         }
+        Player player=Player.whichPlayerTurnIs();
         showMapRiver(player,showMap);
     }
     private void showMapRiver(Player player, String[][] showMap) {
         for (int i = 0; i < River.getAllRivers().size(); i++) {
             Ground firstGround = River.getAllRivers().get(i).getFirstGround(), secondGround = River.getAllRivers().get(i).getSecondGround();
-
+            if (!player.isThisGroundVisible(firstGround) && !player.isThisGroundVisible(secondGround)) continue;
             if (firstGround.getyLocation() == secondGround.getyLocation()) {
 
                 for (int y = firstGround.getyLocation() - globalVariables.arz6Zelie / 3 - 1;
@@ -289,6 +295,7 @@ public class ShowMap {
             }
 
         }
+
         printMap(showMap, globalVariables);
     }
 

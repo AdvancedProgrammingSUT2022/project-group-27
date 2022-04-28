@@ -51,6 +51,10 @@ public class GameView {
         } else if (input.matches("^city menu$")) {
             (new CityView()).cityMenus(Player.whichPlayerTurnIs());
             this.run();
+        } else if (input.matches("create city in \\d+")){
+            String[] s=input.split(" +");
+            createCity(Integer.parseInt(s[3]));
+            this.run();
         } else {
             System.out.println(Message.INVALID_COMMAND);
             this.run();
@@ -65,6 +69,12 @@ public class GameView {
         String answer = this.controller.moveUnits(firstGroundNumber, secondGroundNumber, type);
         System.out.println(answer);
         this.run();
+    }
+    private void createCity(int groundNumber){
+        Player player=Player.whichPlayerTurnIs();
+        player.addCityToThisGround(Ground.getGroundByNumber(groundNumber));
+        System.out.println(player.getCities().size());
+
     }
 }
 

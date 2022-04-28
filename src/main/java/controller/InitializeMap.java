@@ -4,6 +4,7 @@ import model.*;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.zip.GZIPOutputStream;
 
 import Enum.GroundType;
 import Enum.FeatureType;
@@ -18,6 +19,7 @@ public class InitializeMap {
         setFirstGroundsForPlayers();
         setRivers();
         setGroundsType();
+        setGroundsAdjacent();
     }
 
     private void setGroundsType() {
@@ -88,6 +90,16 @@ public class InitializeMap {
             MilitaryUnit militaryUnit = new MilitaryUnit(ground, player);
             player.getUnits().add(militaryUnit);
             player.getUnits().add(unMilitaryUnit);
+        }
+    }
+    private void setGroundsAdjacent(){
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            for (int j=i+1;j<=GlobalVariables.numberOfTiles;j++){
+                if (Ground.AreTheseTwoGroundAdjacent(Ground.getGroundByNumber(i),Ground.getGroundByNumber(j))){
+                    Ground.getGroundByNumber(i).addGroundToAdjacentGround(Ground.getGroundByNumber(j));
+                    Ground.getGroundByNumber(j).addGroundToAdjacentGround(Ground.getGroundByNumber(i));
+                }
+            }
         }
     }
 }

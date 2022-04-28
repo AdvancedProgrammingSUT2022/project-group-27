@@ -108,12 +108,12 @@ public class Player {
         for (Unit unit : this.units) {
             this.addGroundToClearGround(unit.getGround());
         }
+        handleClearToSeeGrounds1depth(this.clearToSeeGrounds);
         for (int i=0;i<this.cities.size();i++){
             for (int j=0;j<this.cities.get(i).getRangeOfCity().size();j++){
                 this.addGroundToClearGround(this.cities.get(i).getRangeOfCity().get(j));
             }
         }
-        handleClearToSeeGrounds1depth(this.clearToSeeGrounds);
         handleClearToSeeGrounds1depth(this.clearToSeeGrounds); //for the second depth
     }
 
@@ -145,20 +145,28 @@ public class Player {
         Ground copyGround = ground.copyOfCurrentGround();
         wasClearedToSeeGrounds.add(copyGround);
     }
-    public void moveUnitFromThisPlayerGroundsToAnotherGround(Ground firstGround, Ground secondGround) {
-        ///TODO which Type Of Unit must be asked
-        ///TODO error sentence
-        for (Unit unit : units) {
-            if (unit.ground.getNumber() == firstGround.getNumber()) {
-                unit.moveUnitToAdjacentGround(secondGround);
-            }
-        }
-    }
 
     public boolean isThisGroundVisible(Ground ground) {
         for (Ground clearToSeeGround : clearToSeeGrounds) {
             if (clearToSeeGround.getNumber() == ground.getNumber()) return true;
         }
         return false;
+    }
+
+    public void addCityToThisGround(Ground ground){
+        ///TODO : check UnMilitary Type is Settler
+        boolean canWeCreateCity=false;
+        for (Ground adjacentGround : ground.getAdjacentGrounds()){
+            if (adjacentGround.isInRangeOfCity()) return ;
+        }
+        for (int i=0;i<this.units.size();i++){
+            if (this.units.get(i) instanceof UnMilitaryUnit && this.units.get(i).ground.getNumber()==ground.getNumber()) canWeCreateCity=true;
+        }
+        if (canWeCreateCity){
+            /// TODO : change something;
+            City city = new City(ground,"something");
+            this.cities.add(city);
+        }
+
     }
 }

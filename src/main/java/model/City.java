@@ -21,6 +21,9 @@ public class City {
         this.name = name;
         this.ground=ground;
         this.rangeOfCity.add(ground);
+        for (Ground rangeGround : ground.getAdjacentGrounds()){
+            this.getRangeOfCity().add(rangeGround);
+        }
     }
 
     public Ground getGround() {
@@ -79,7 +82,13 @@ public class City {
     }
 
     public boolean isThisGroundNearThisCity(Ground ground) {
-        //TODO check if it's near return true
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            if (!Ground.AreTheseTwoGroundAdjacent(ground,Ground.getGroundByNumber(i))) continue;
+            for (int j=1;j<=GlobalVariables.numberOfTiles;j++){
+                if (!Ground.AreTheseTwoGroundAdjacent(Ground.getGroundByNumber(j),Ground.getGroundByNumber(i))) continue;
+                if (Ground.getGroundByNumber(j).isInRangeOfCity()) return true;
+            }
+        }
         return false;
     }
 
