@@ -17,12 +17,12 @@ public class City {
     private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
     private ArrayList<Ground> rangeOfCity=new ArrayList<>();
 
-    public City(Ground ground, String name){
+    public City(Ground ground, String name, Player player){
         this.name = name;
-        this.ground=ground;
+        this.ground = ground;
         this.rangeOfCity.add(ground);
         for (Ground rangeGround : ground.getAdjacentGrounds()){
-            this.getRangeOfCity().add(rangeGround);
+            this.rangeOfCity.add(rangeGround);
         }
     }
 

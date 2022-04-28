@@ -15,7 +15,7 @@ public class Ground {
     private static ArrayList<Ground> allGround = new ArrayList<>();
     private static HashMap<Integer, Ground> pixelInWhichGround = new HashMap<>();
     private ArrayList<Pair> pixelsOfThisGround = new ArrayList<>();
-    private ArrayList<Ground> adjacentGrounds=new ArrayList<>();
+    private ArrayList<Ground> adjacentGrounds = new ArrayList<>();
     private Player owner;
     private final int xLocation;
     private final int yLocation;

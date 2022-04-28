@@ -155,16 +155,16 @@ public class Player {
 
     public void addCityToThisGround(Ground ground){
         ///TODO : check UnMilitary Type is Settler
-        boolean canWeCreateCity=false;
+        boolean canWeCreateCity = false;
         for (Ground adjacentGround : ground.getAdjacentGrounds()){
             if (adjacentGround.isInRangeOfCity()) return ;
         }
-        for (int i=0;i<this.units.size();i++){
+        for (int i = 0;i < this.units.size(); i++){
             if (this.units.get(i) instanceof UnMilitaryUnit && this.units.get(i).ground.getNumber()==ground.getNumber()) canWeCreateCity=true;
         }
         if (canWeCreateCity){
             /// TODO : change something;
-            City city = new City(ground,"something");
+            City city = new City(ground,"something", this);
             this.cities.add(city);
         }
 
