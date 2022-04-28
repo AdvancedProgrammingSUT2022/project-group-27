@@ -10,6 +10,8 @@ public abstract class MilitaryUnit extends Unit {
         this.militaryType = militaryType;
     }
 
+    public abstract void combat(Ground ground);
+    public abstract void combat(City city);
     /// agha yadet bashe vaghti sakhtish set player ham bokonim
 
 
