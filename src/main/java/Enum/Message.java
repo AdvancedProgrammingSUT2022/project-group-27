@@ -22,6 +22,7 @@ public enum Message {
     INVALID_GROUND_NUMBER("Sorry but there isn't any ground with this number."),
     NO_CITIZEN_WITHOUT_WORK("Sorry but this city doesn't have any citizens who doesn't have any work."),
     GROUND_NOT_IN_CITY("Sorry but the ground you choice is not in the city."),
+    GROUND_NOT_NEAR_CITY("Sorry but the ground you select it's not near your city."),
     SUCCESS_WORK("Everything happens successfully:)");
 
     private String message;

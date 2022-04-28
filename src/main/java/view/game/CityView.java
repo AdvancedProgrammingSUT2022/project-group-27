@@ -1,6 +1,7 @@
 package view.game;
 
 import controller.CityMenuController;
+import model.Citizen;
 import model.City;
 import model.Ground;
 import model.Player;
@@ -21,8 +22,7 @@ public class CityView {
 
     private void run(City city) {
         System.out.println("Name of city: " + city.getName());
-        System.out.println("City strength in combats: " + city.getCityStrength());
-        //TODO add other methods it should have...
+        System.out.println("City strength in combats: " + city.getPower());
         String input;
         String regex;
         Matcher matcher;
@@ -30,24 +30,80 @@ public class CityView {
         if (input.matches("^show grounds$")) {
             this.showGrounds(city);
             this.run(city);
-        } else if (input.matches("^exit menu$")) return;
+        } else if (input.matches("^exit menu$")) this.exitMenu();
         else if (input.matches("^how far it remains$")) {
             this.showRemainTimes(city);
             this.run(city);
-        } else if (input.matches((regex = "^lock a citizen to ground (?<groundNumber>\\d+)$"))) {
+        } else if (input.matches((regex = "^lock a citizen to ground --groundNumber (?<groundNumber>\\d+)$"))) {
             matcher = controller.findMatcherFromString(input, regex);
             lockCitizen(matcher, city);
-        }
-        else if (input.matches("choice another city")) this.cityMenus(city.getPlayer());
+        } else if (input.matches((regex = "^remove a citizen from work of --groundNumber (?<groundNumber>\\d+)$"))) {
+            matcher = controller.findMatcherFromString(input, regex);
+            this.removeFromWork(matcher, city);
+        } else if (input.matches("^output of city$")) this.showOutputOfCity(city);
+        else if (input.matches("^output of civilization$")) this.showOutputOfCivilization(city);
+        else if (input.matches("^show without work citizens$")) this.showWithoutWorkCitizens(city);
+        else if (input.matches("^buy ground$")) this.buyGround(city);
+        else if (input.matches("^lets buy$")) this.buy(city);
+        else if (input.matches("^choice another city$")) this.cityMenus(city.getPlayer());
         else {
             System.out.println(Message.INVALID_COMMAND);
             this.run(city);
         }
     }
 
+    private void exitMenu() {
+        //Don't do anything special
+    }
+
+    private void buy(City city) {
+        //TODO show the list of things to buy and prices
+        String input = Menu.getScanner().nextLine();
+        Message message = controller.buyThings(city, input);
+        System.out.println(message);
+        this.run(city);
+    }
+
+    private void buyGround(City city) {
+        //TODO show the grounds near city and prices
+        int groundNumber = Menu.getScanner().nextInt();
+        Message message = controller.buyGround(city, groundNumber);
+        System.out.println(message);
+        this.run(city);
+    }
+
+    private void showWithoutWorkCitizens(City city) {
+        ArrayList<Citizen> listOfWithoutWork = Citizen.withoutWorkCitizens(city);
+        //TODO show them to player
+        this.run(city);
+    }
+
+    private void showOutputOfCivilization(City city) {
+        Player player = city.getPlayer();
+        //TODO show science per turn, gold and income, happiness and next era, and strategic resources
+        this.run(city);
+    }
+
+    private void showOutputOfCity(City city) {
+        //TODO maybe should change these with how much in one turn
+        System.out.println("How much food does this city store? " + city.getSavedFood());
+        System.out.println("How much production does this city have? " + city.getProduction());
+        System.out.println("How much gold does this city have? " + city.getGold());
+        System.out.println("How much science does this city have? " + city.getScience());
+        //TODO add turns of increasing for citizens
+    }
+
+    private void removeFromWork(Matcher matcher, City city) {
+        int groundNumber = Integer.parseInt(matcher.group("groundNumber"));
+        Message message = controller.removeFromWork(city, groundNumber);
+        System.out.println(message);
+        this.run(city);
+    }
+
     private void lockCitizen(Matcher matcher, City city) {
         int groundNumber = Integer.parseInt(matcher.group("groundNumber"));
         Message message = controller.lockCitizenToGround(city, groundNumber);
+        System.out.println(message);
         this.run(city);
     }
 

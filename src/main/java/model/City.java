@@ -5,11 +5,18 @@ import java.util.ArrayList;
 public class City {
     private Player player;
     private String name;
-    private int cityStrength;
+    private int power;
+    private int savedFood;
+    private int production;
+    private int science;
+    private int gold;
+    private int income;
     private Ground ground;
+
 
     private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
     private ArrayList<Ground> rangeOfCity=new ArrayList<>();
+
     public City(Ground ground, String name){
         this.name = name;
         this.ground=ground;
@@ -24,8 +31,8 @@ public class City {
         return name;
     }
 
-    public int getCityStrength() {
-        return cityStrength;
+    public int getPower() {
+        return power;
     }
 
     public Player getPlayer() {
@@ -40,6 +47,26 @@ public class City {
         return rangeOfCity;
     }
 
+    public int getSavedFood() {
+        return savedFood;
+    }
+
+    public int getProduction() {
+        return production;
+    }
+
+    public int getScience() {
+        return science;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public int getIncome() {
+        return income;
+    }
+
     public void addGroundToRangeOfCity(Ground ground){
         this.rangeOfCity.add(ground);
     }
@@ -49,5 +76,15 @@ public class City {
             if (ground.getNumber() == value.getNumber()) return true;
         }
         return false;
+    }
+
+    public boolean isThisGroundNearThisCity(Ground ground) {
+        //TODO check if it's near return true
+        return false;
+    }
+
+    public int howMuchFoodIsProduced() {
+        //TODO write the body for it
+        return 0;
     }
 }
