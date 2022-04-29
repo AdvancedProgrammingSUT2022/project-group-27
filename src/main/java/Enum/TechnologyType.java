@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum TechnologyType {
-    AGRICULTURE(20, null),
+    AGRICULTURE(20, new ArrayList<>()),
     ANIMAL_HUSBANDRY(35, new ArrayList<>(List.of(TechnologyType.AGRICULTURE))),
     ARCHERY(35, new ArrayList<>(List.of(TechnologyType.AGRICULTURE))),
     MINING(35, new ArrayList<>(List.of(TechnologyType.AGRICULTURE))),
