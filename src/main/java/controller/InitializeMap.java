@@ -9,7 +9,7 @@ import java.util.zip.GZIPOutputStream;
 import Enum.GroundType;
 import Enum.FeatureType;
 import Enum.MilitaryType;
-
+import Enum.BonusResource;
 public class InitializeMap {
     private ArrayList<User> playerUsers;
 
@@ -21,6 +21,7 @@ public class InitializeMap {
         setRivers();
         setGroundsType();
         setGroundsAdjacent();
+        setBonusType();
     }
 
     private void setGroundsType() {
@@ -101,6 +102,42 @@ public class InitializeMap {
                     Ground.getGroundByNumber(j).addGroundToAdjacentGround(Ground.getGroundByNumber(i));
                 }
             }
+        }
+    }
+    private void setBonusType(){
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            Random random = new Random();
+           int rand=random.nextInt(0,200);
+           if (rand<40){
+               if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.BANANA)){
+                   System.out.println("yes");
+                   Ground.getGroundByNumber(i).addBonusResource(BonusResource.BANANA);
+               }
+           }
+           else if (rand<80){
+               if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.COW)){
+                   System.out.println("yes");
+                   Ground.getGroundByNumber(i).addBonusResource(BonusResource.COW);
+               }
+           }
+           else if (rand<120){
+               if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.GAZELLE)){
+                   System.out.println("yes");
+                   Ground.getGroundByNumber(i).addBonusResource(BonusResource.GAZELLE);
+               }
+           }
+           else if (rand<160){
+               if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.SHEEP)){
+                   System.out.println("yes");
+                   Ground.getGroundByNumber(i).addBonusResource(BonusResource.SHEEP);
+               }
+           }
+           else if (rand<200){
+               if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.WHEAT)){
+                   System.out.println("yes");
+                   Ground.getGroundByNumber(i).addBonusResource(BonusResource.WHEAT);
+               }
+           }
         }
     }
 }

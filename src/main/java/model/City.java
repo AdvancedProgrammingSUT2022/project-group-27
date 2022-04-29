@@ -96,4 +96,22 @@ public class City {
         //TODO write the body for it
         return 0;
     }
+    public void updateCityGoldAndFoodAndOtherThings(){
+        for (Ground ground : getRangeOfCity()){
+            this.savedFood+=ground.getGroundType().getFood()+ground.getFeatureType().getFood();
+            this.gold+=ground.getGroundType().getGold()+ground.getFeatureType().getGold();
+            //TODO : other things
+            for (int j=0;j<ground.getBonusResource().size();j++){
+                this.savedFood+=ground.getBonusResource().get(j).getFood();
+                this.gold+=ground.getBonusResource().get(j).getGold();
+                //TODO : other things
+            }
+        }
+    }
+    public void addGroundToRangeGround(Ground ground){
+        //TODO : fix amount
+        if (player.getGold()<10) return ;
+        if (ground.isInRangeOfCity()) return ;
+        this.rangeOfCity.add(ground);
+    }
 }

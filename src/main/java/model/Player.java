@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 
 public class Player {
+    private int gold;
+    private int science;
+    private int food;
     private static final ArrayList<Player> allPlayers = new ArrayList<>();
     private final ArrayList<City> cities = new ArrayList<>();
     private final ArrayList<Unit> units = new ArrayList<>();
@@ -15,6 +18,18 @@ public class Player {
     public Player(User user) {
         this.user = user;
         allPlayers.add(this);
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public int getScience() {
+        return science;
     }
 
     public ArrayList<Ground> getClearToSeeGrounds() {
@@ -125,6 +140,14 @@ public class Player {
         for (int i = 0; i < player.units.size(); i++) {
             player.units.get(i).putMp(10);
             player.units.get(i).checkDestination();
+        }
+        player.gold=0;
+        player.food=0;
+        /// TODO : otherthings
+        for (int i=0;i<player.getCities().size();i++){
+            player.getCities().get(i).updateCityGoldAndFoodAndOtherThings();
+            player.gold += player.getCities().get(i).getGold();
+            player.food += player.getFood();
         }
     }
 

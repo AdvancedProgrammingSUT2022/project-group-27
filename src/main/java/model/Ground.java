@@ -9,6 +9,8 @@ import static java.lang.Math.abs;
 
 import Enum.FeatureType;
 
+import Enum.BonusResource;
+
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
 public class Ground {
@@ -22,6 +24,7 @@ public class Ground {
     private int number;
     private GroundType groundType;
     private FeatureType featureType;
+    private ArrayList<BonusResource> bonusResource=new ArrayList<>();
 
     public ArrayList<Ground> getAdjacentGrounds() {
         return adjacentGrounds;
@@ -35,6 +38,13 @@ public class Ground {
         this.yLocation = y;
         this.number = number;
         allGround.add(this);
+    }
+
+    public ArrayList<BonusResource> getBonusResource() {
+        return bonusResource;
+    }
+    public void addBonusResource(BonusResource bonusResource) {
+        this.bonusResource.add(bonusResource);
     }
 
     public FeatureType getFeatureType() {
@@ -228,6 +238,15 @@ public class Ground {
                     }
                 }
             }
+        }
+        return false;
+    }
+    public boolean canWeAddThisBonusResourceToThisGround(BonusResource bonusResource){
+        for (int i=0;i<bonusResource.getGroundTypes().size();i++){
+            if (bonusResource.getGroundTypes().get(i)==this.groundType) return false;
+        }
+        for (int i=0;i<bonusResource.getGroundFeatureTypes().size();i++){
+            if (bonusResource.getGroundFeatureTypes().get(i)==this.featureType) return true;
         }
         return false;
     }
