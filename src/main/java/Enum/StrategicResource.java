@@ -44,4 +44,13 @@ public enum StrategicResource {
     public TechnologyType getTechnology() {
         return technology;
     }
+
+    @Override
+    public String toString() {
+        String name;
+        if (this == StrategicResource.HORSE) name = "Horse";
+        else if (this == StrategicResource.IRON) name = "Iron";
+        else name = "Coal";
+        return name;
+    }
 }

@@ -7,7 +7,9 @@ import model.Ground;
 import model.Player;
 import view.Menu;
 import Enum.Message;
+import Enum.StrategicResource;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
@@ -80,8 +82,26 @@ public class CityView {
 
     private void showOutputOfCivilization(City city) {
         Player player = city.getPlayer();
-        //TODO show science per turn, gold and income, happiness and next era, and strategic resources
+        System.out.println("Science per turn by this city: " + city.getScience());
+        System.out.println("Gold of civilization produced by this city: " + city.getGold());
+        System.out.println("The city incomes: " + city.getIncome());
+        System.out.println("Happiness of civilization: " + player.getHappiness());
+        showStrategicResourceOfCity(city);
         this.run(city);
+    }
+
+    private void showStrategicResourceOfCity(City city) {
+        ArrayList<StrategicResource> listOfStrategicResource = new ArrayList<>();
+        for (Ground ground : city.getRangeOfCity()) {
+            listOfStrategicResource.addAll(ground.getStrategicResources());
+        }
+
+        System.out.println("Strategic resources of city:");
+        int index = 1;
+        for (StrategicResource strategicResource : listOfStrategicResource) {
+            System.out.println(index + ": " + strategicResource);
+            index++;
+        }
     }
 
     private void showOutputOfCity(City city) {

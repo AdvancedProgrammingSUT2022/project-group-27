@@ -6,6 +6,7 @@ public class Player {
     private int gold;
     private int science;
     private int food;
+    private int happiness;
     private static final ArrayList<Player> allPlayers = new ArrayList<>();
     private final ArrayList<City> cities = new ArrayList<>();
     private final ArrayList<Unit> units = new ArrayList<>();
@@ -30,6 +31,10 @@ public class Player {
 
     public int getScience() {
         return science;
+    }
+
+    public int getHappiness() {
+        return happiness;
     }
 
     public ArrayList<Ground> getClearToSeeGrounds() {
@@ -182,8 +187,11 @@ public class Player {
         for (Ground adjacentGround : ground.getAdjacentGrounds()){
             if (adjacentGround.isInRangeOfCity()) return ;
         }
-        for (int i = 0;i < this.units.size(); i++){
-            if (this.units.get(i) instanceof UnMilitaryUnit && this.units.get(i).ground.getNumber()==ground.getNumber()) canWeCreateCity=true;
+        for (Unit unit : this.units) {
+            if (unit instanceof UnMilitaryUnit && unit.ground.getNumber() == ground.getNumber()) {
+                canWeCreateCity = true;
+                break;
+            }
         }
         if (canWeCreateCity){
             /// TODO : change something;

@@ -10,6 +10,7 @@ import static java.lang.Math.abs;
 import Enum.FeatureType;
 
 import Enum.BonusResource;
+import Enum.StrategicResource;
 
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
@@ -25,6 +26,7 @@ public class Ground {
     private GroundType groundType;
     private FeatureType featureType;
     private ArrayList<BonusResource> bonusResource=new ArrayList<>();
+    private ArrayList<StrategicResource> strategicResources = new ArrayList<>();
 
     public ArrayList<Ground> getAdjacentGrounds() {
         return adjacentGrounds;
@@ -43,8 +45,13 @@ public class Ground {
     public ArrayList<BonusResource> getBonusResource() {
         return bonusResource;
     }
+
     public void addBonusResource(BonusResource bonusResource) {
         this.bonusResource.add(bonusResource);
+    }
+
+    public ArrayList<StrategicResource> getStrategicResources() {
+        return strategicResources;
     }
 
     public FeatureType getFeatureType() {
