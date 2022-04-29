@@ -36,8 +36,10 @@ public class CityMenuController extends Controller{
         if (ground == null) return Message.INVALID_GROUND_NUMBER;
         else if (!city.isThisGroundNearThisCity(ground)) return Message.GROUND_NOT_NEAR_CITY;
         else {
-            //TODO check if player have enough money to buy
-            //TODO buy ground for city
+            if (!city.getPlayer().haveEnoughMoney(ground.getCost())) return Message.NOT_ENOUGH_MONEY;
+
+            city.getPlayer().giveMoneyForBuying(ground.getCost());
+            city.addGroundToRangeOfCity(ground);
             return Message.SUCCESS_WORK;
         }
     }

@@ -17,12 +17,14 @@ import javax.swing.plaf.basic.BasicRootPaneUI;
 public class Ground {
     private static ArrayList<Ground> allGround = new ArrayList<>();
     private static HashMap<Integer, Ground> pixelInWhichGround = new HashMap<>();
+
     private ArrayList<Pair> pixelsOfThisGround = new ArrayList<>();
     private ArrayList<Ground> adjacentGrounds = new ArrayList<>();
     private Player owner;
     private final int xLocation;
     private final int yLocation;
     private int number;
+    private int cost; //TODO initialize it at first of game
     private GroundType groundType;
     private FeatureType featureType;
     private ArrayList<BonusResource> bonusResource=new ArrayList<>();
@@ -72,6 +74,10 @@ public class Ground {
 
     public int getNumber() {
         return number;
+    }
+
+    public int getCost() {
+        return cost;
     }
 
     public Player getOwner() {

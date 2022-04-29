@@ -23,6 +23,7 @@ public enum Message {
     NO_CITIZEN_WITHOUT_WORK("Sorry but this city doesn't have any citizens who doesn't have any work."),
     GROUND_NOT_IN_CITY("Sorry but the ground you choice is not in the city."),
     GROUND_NOT_NEAR_CITY("Sorry but the ground you select it's not near your city."),
+    NOT_ENOUGH_MONEY("Sorry but you don't have enough gold for buy this:("),
     SUCCESS_WORK("Everything happens successfully:)");
 
     private String message;

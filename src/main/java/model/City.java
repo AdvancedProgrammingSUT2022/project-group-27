@@ -72,6 +72,7 @@ public class City {
 
     public void addGroundToRangeOfCity(Ground ground){
         this.rangeOfCity.add(ground);
+        ground.setOwner(this.player);
     }
 
     public boolean isThisGroundInThisCityRange(Ground ground){

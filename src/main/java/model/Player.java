@@ -69,6 +69,14 @@ public class Player {
         return isAlive;
     }
 
+    public boolean haveEnoughMoney(int amount) {
+        return this.gold >= amount;
+    }
+
+    public void giveMoneyForBuying(int amount) {
+        this.gold -= amount;
+    }
+
     public void handleClearToSeeGrounds1depth(ArrayList<Ground> clearToSeeGrounds) {
         GlobalVariables globalVariables = new GlobalVariables();
         ArrayList<Ground> newArray = new ArrayList<>();
