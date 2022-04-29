@@ -82,6 +82,23 @@ public class City {
         return false;
     }
 
+    public ArrayList<Citizen> withoutWorkCitizens() {
+        ArrayList<Citizen> listOfWithoutWork = new ArrayList<>();
+        for (Citizen citizen: this.getListOfCitizens()) {
+            if (!citizen.isHaveWork()) listOfWithoutWork.add(citizen);
+        }
+
+        return listOfWithoutWork;
+    }
+
+    public Citizen isAnyoneWorkOnGround(Ground ground) {
+        for (Citizen citizen : this.listOfCitizens) {
+            if (citizen.getGround().getNumber() == ground.getNumber()) return citizen;
+        }
+
+        return null;
+    }
+
     public boolean isThisGroundNearThisCity(Ground ground) {
         for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
             if (!Ground.AreTheseTwoGroundAdjacent(ground,Ground.getGroundByNumber(i))) continue;

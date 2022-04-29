@@ -25,6 +25,7 @@ public class Ground {
     private final int yLocation;
     private int number;
     private int cost; //TODO initialize it at first of game
+    private boolean isWorkedOn = false;
     private GroundType groundType;
     private FeatureType featureType;
     private ArrayList<BonusResource> bonusResource=new ArrayList<>();
@@ -80,6 +81,10 @@ public class Ground {
         return cost;
     }
 
+    public boolean isWorkedOn() {
+        return isWorkedOn;
+    }
+
     public Player getOwner() {
         return owner;
     }
@@ -106,6 +111,10 @@ public class Ground {
 
     public void setOwner(Player owner) {
         this.owner = owner;
+    }
+
+    public void setWorkedOn() {
+        isWorkedOn = true;
     }
 
     public static void setAllGround(ArrayList<Ground> allGround) {

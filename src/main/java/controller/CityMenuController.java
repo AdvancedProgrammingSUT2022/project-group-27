@@ -5,14 +5,18 @@ import model.City;
 import model.Ground;
 import Enum.Message;
 
+import java.util.ArrayList;
+
 public class CityMenuController extends Controller{
     public Message lockCitizenToGround(City city, int groundNumber) {
         Ground ground = Ground.getGroundByNumber(groundNumber);
         Message message = isGroundValidForCity(city, ground);
         if (message == null) {
-            Citizen citizen = Citizen.isAnyCitizensWithoutWork(city);
-            if (citizen == null) return Message.NO_CITIZEN_WITHOUT_WORK;
-            //TODO locking citizen to ground
+            ArrayList<Citizen> listOfWithoutWork = city.withoutWorkCitizens();
+            if (listOfWithoutWork.size() == 0) return Message.NO_CITIZEN_WITHOUT_WORK;
+
+            boolean canSet = listOfWithoutWork.get(0).setGround(ground);
+            if (!canSet) return Message.IS_WORK_GROUND;
             message = Message.SUCCESS_WORK;
         }
 
@@ -23,8 +27,9 @@ public class CityMenuController extends Controller{
         Ground ground = Ground.getGroundByNumber(groundNumber);
         Message message = isGroundValidForCity(city, ground);
         if (message == null) {
-            //TODO check if any citizens are there
-            //TODO remove citizen from ground and add to withoutWork citizens
+            Citizen citizen = city.isAnyoneWorkOnGround(ground);
+            if (citizen == null) return Message.NO_CITIZEN_ON_GROUND;
+            citizen.removeFromGround();
             message = Message.SUCCESS_WORK;
         }
 

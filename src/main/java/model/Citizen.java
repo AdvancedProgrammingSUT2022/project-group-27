@@ -1,24 +1,28 @@
 package model;
 
-import java.util.ArrayList;
 
 public class Citizen {
     private boolean haveWork = false;
+    private Ground ground = null;
 
-    public static Citizen isAnyCitizensWithoutWork(City city) {
-        for (Citizen citizen: city.getListOfCitizens()) {
-            if (!citizen.haveWork) return citizen;
-        }
-
-        return null;
+    public Ground getGround() {
+        return ground;
     }
 
-    public static ArrayList<Citizen> withoutWorkCitizens(City city) {
-        ArrayList<Citizen> listOfWithoutWork = new ArrayList<>();
-        for (Citizen citizen: city.getListOfCitizens()) {
-            if (!citizen.haveWork) listOfWithoutWork.add(citizen);
-        }
+    public boolean setGround(Ground ground) {
+        if (ground.isWorkedOn()) return false;
+        this.ground = ground;
+        haveWork = true;
+        ground.setWorkedOn();
+        return true;
+    }
 
-        return listOfWithoutWork;
+    public void removeFromGround() {
+        this.ground = null;
+        haveWork = false;
+    }
+
+    public boolean isHaveWork() {
+        return haveWork;
     }
 }

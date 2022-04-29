@@ -75,7 +75,7 @@ public class CityView {
     }
 
     private void showWithoutWorkCitizens(City city) {
-        ArrayList<Citizen> listOfWithoutWork = Citizen.withoutWorkCitizens(city);
+        ArrayList<Citizen> listOfWithoutWork = city.withoutWorkCitizens();
         //TODO show them to player
         this.run(city);
     }
