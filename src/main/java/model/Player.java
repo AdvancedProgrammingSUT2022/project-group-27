@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import Enum.TechnologyType;
 public class Player {
     private int gold;
     private int science;
@@ -14,13 +16,65 @@ public class Player {
     private ArrayList<Ground> wasClearedToSeeGrounds = new ArrayList<>();
     private static int counterOfNextRound = 0;
     private User user;
+    private TechnologyType underConstructionTechnology=null;
     private boolean isAlive = true;
+
+    private ArrayList<TechnologyType> technologyType=new ArrayList<>();
+
+    private ArrayList<Technology> AllTechnologyTypes=new ArrayList<>();
 
     public Player(User user) {
         this.user = user;
         allPlayers.add(this);
-    }
+        AllTechnologyTypes.add(new Technology(TechnologyType.AGRICULTURE));
+        AllTechnologyTypes.add(new Technology(TechnologyType.ANIMAL_HUSBANDRY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.ARCHERY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.MINING));
+        AllTechnologyTypes.add(new Technology(TechnologyType.POTTERY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.BRONZE_WORKING));
+        AllTechnologyTypes.add(new Technology(TechnologyType.MASONRY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.THE_WHEEL));
+        AllTechnologyTypes.add(new Technology(TechnologyType.TRAPPING));
+        AllTechnologyTypes.add(new Technology(TechnologyType.WRITING));
+        AllTechnologyTypes.add(new Technology(TechnologyType.CALENDAR));
+        AllTechnologyTypes.add(new Technology(TechnologyType.CONSTRUCTION));
+        AllTechnologyTypes.add(new Technology(TechnologyType.HORSEBACK_RIDING));
+        AllTechnologyTypes.add(new Technology(TechnologyType.MATHEMATICS));
+        AllTechnologyTypes.add(new Technology(TechnologyType.PHILOSOPHY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.IRON_WORKING));
+        AllTechnologyTypes.add(new Technology(TechnologyType.METAL_CASTING));
+        AllTechnologyTypes.add(new Technology(TechnologyType.CURRENCY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.ENGINEERING));
+        AllTechnologyTypes.add(new Technology(TechnologyType.THEOLOGY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.CIVIL_SERVICE));
+        AllTechnologyTypes.add(new Technology(TechnologyType.CHIVALRY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.EDUCATION));
+        AllTechnologyTypes.add(new Technology(TechnologyType.MACHINERY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.PHYSICS));
+        AllTechnologyTypes.add(new Technology(TechnologyType.STEEL));
+        AllTechnologyTypes.add(new Technology(TechnologyType.ACOUSTICS));
+        AllTechnologyTypes.add(new Technology(TechnologyType.BANKING));
+        AllTechnologyTypes.add(new Technology(TechnologyType.PRINTING_PRESS));
+        AllTechnologyTypes.add(new Technology(TechnologyType.GUNPOWDER));
+        AllTechnologyTypes.add(new Technology(TechnologyType.CHEMISTRY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.ECONOMICS));
+        AllTechnologyTypes.add(new Technology(TechnologyType.METALLURGY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.ARCHAEOLOGY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.FERTILIZER));
+        AllTechnologyTypes.add(new Technology(TechnologyType.MILITARY_SCIENCE));
+        AllTechnologyTypes.add(new Technology(TechnologyType.SCIENTIFIC_THEORY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.RIFLING));
+        AllTechnologyTypes.add(new Technology(TechnologyType.BIOLOGY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.STEAM_POWER));
+        AllTechnologyTypes.add(new Technology(TechnologyType.DYNAMITE));
+        AllTechnologyTypes.add(new Technology(TechnologyType.ELECTRICITY));
+        AllTechnologyTypes.add(new Technology(TechnologyType.RAILROAD));
+        AllTechnologyTypes.add(new Technology(TechnologyType.REPLACEABLE_PARTS));
+        AllTechnologyTypes.add(new Technology(TechnologyType.COMBUSTION));
+        AllTechnologyTypes.add(new Technology(TechnologyType.RADIO));
+        AllTechnologyTypes.add(new Technology(TechnologyType.TELEGRAPH));
 
+    }
     public int getFood() {
         return food;
     }
@@ -161,6 +215,17 @@ public class Player {
             player.getCities().get(i).updateCityGoldAndFoodAndOtherThings();
             player.gold += player.getCities().get(i).getGold();
             player.food += player.getFood();
+            player.science+=3;
+            //TODO : 1 science for each Citizen
+        }
+        for (int i=0;i<player.AllTechnologyTypes.size();i++){
+            if (player.underConstructionTechnology==null) continue;
+            if (player.underConstructionTechnology==player.AllTechnologyTypes.get(i).getTechnologyType()){
+                player.AllTechnologyTypes.get(i).decreaseTimeRemain(1);
+                if (player.AllTechnologyTypes.get(i).getTimeRemain()==0){
+                    player.addTechnology(player.AllTechnologyTypes.get(i).getTechnologyType());
+                }
+            }
         }
     }
 
@@ -207,5 +272,35 @@ public class Player {
             this.cities.add(city);
         }
 
+    }
+    public boolean doWeHaveThisTechnology(TechnologyType technologyType){
+        for (int i=0;i<this.technologyType.size();i++){
+            if (this.technologyType.get(i)==technologyType) return true;
+        }
+        return false;
+    }
+    public boolean canWeAddThisTechnology(TechnologyType technologyType){
+        for (int i=0;i<technologyType.getPrerequisites().size();i++){
+            if (!doWeHaveThisTechnology(technologyType.getPrerequisites().get(i))) return false;
+        }
+        return true ;
+    }
+    public ArrayList<Technology> technologiesThatCanBeObtained(){
+        ArrayList<Technology> answer=new ArrayList<>();
+        for (int i=0;i<AllTechnologyTypes.size();i++){
+            if (doWeHaveThisTechnology(AllTechnologyTypes.get(i).getTechnologyType())) continue;
+            if (canWeAddThisTechnology(AllTechnologyTypes.get(i).getTechnologyType())) answer.add(AllTechnologyTypes.get(i));
+        }
+        return answer;
+    }
+    public void setUnderConstructionTechnology(TechnologyType technologyType){
+        underConstructionTechnology=technologyType;
+    }
+    public void addTechnology(TechnologyType technologyType){
+        this.technologyType.add(technologyType);
+    }
+
+    public ArrayList<TechnologyType> getTechnologyType() {
+        return technologyType;
     }
 }

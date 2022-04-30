@@ -104,7 +104,11 @@ public class ShowMap {
             for (Unit unit : unitArrayList) {
                 if (unit instanceof MilitaryUnit) {
                     showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_CYAN + "M";
-                } else showMap[ground.getxLocation() + 2][ground.getyLocation() + 4] = GlobalVariables.ANSI_CYAN + "U";
+                } else {
+                    if (unit instanceof SettlerUnit) showMap[ground.getxLocation() + 2][ground.getyLocation() + 4] = GlobalVariables.ANSI_BLUE + "S";
+                    else showMap[ground.getxLocation() + 2][ground.getyLocation() + 4] = GlobalVariables.ANSI_BLUE + "W";
+                }
+
             }
             if (ground.getGroundType() == GroundType.DESERT) {
                 showMap[ground.getxLocation() - 2][ground.getyLocation()] = GlobalVariables.ANSI_YELLOW + "D";
@@ -167,8 +171,10 @@ public class ShowMap {
                 if (player.isThisGroundVisible(ground)) {
                     if (Player.getAllPlayers().get(i).getUnits().get(j) instanceof MilitaryUnit) {
                         showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "M";
-                    } else
-                        showMap[ground.getxLocation() + 1][ground.getyLocation() + 1] = GlobalVariables.ANSI_RED + "U";
+                    } else{
+                        if (Player.getAllPlayers().get(i).getUnits().get(j) instanceof SettlerUnit) showMap[ground.getxLocation() + 1][ground.getyLocation() + 1] = GlobalVariables.ANSI_RED + "S";
+                        else showMap[ground.getxLocation() + 1][ground.getyLocation() + 1] = GlobalVariables.ANSI_RED + "W";
+                    }
                 }
 
             }
