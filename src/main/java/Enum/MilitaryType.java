@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum MilitaryType {
+    WORKER(6, 70, "Civilian", 0, 0, 0, 2,
+            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>()),
+    SETTLER(9, 89, "Civilian", 0, 0, 0, 2,
+            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>()),
     ARCHER(6, 70, "Archery", 4, 6, 2, 2,
             new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.ARCHERY))),
     CHARIOTARCHER(5, 60, "Mounted", 3, 6, 2, 4,

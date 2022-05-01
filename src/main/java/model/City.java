@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import Enum.MilitaryType;
 
 public class City {
     private Player player;
@@ -11,17 +12,20 @@ public class City {
     private int science;
     private int gold;
     private int income;
+    private int remainedTurnsToBuild;
+    private MilitaryType buildingUnit;
     private Ground ground;
 
 
     private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
     private ArrayList<Ground> rangeOfCity=new ArrayList<>();
 
-    public City(Ground ground, String name, Player player){
+    public City(Ground ground, String name, Player player) {
+        this.remainedTurnsToBuild = 0;
         this.name = name;
         this.ground = ground;
         this.rangeOfCity.add(ground);
-        for (Ground rangeGround : ground.getAdjacentGrounds()){
+        for (Ground rangeGround : ground.getAdjacentGrounds()) {
             this.rangeOfCity.add(rangeGround);
         }
     }
@@ -68,6 +72,22 @@ public class City {
 
     public int getIncome() {
         return income;
+    }
+
+    public MilitaryType getBuildingUnit() {
+        return buildingUnit;
+    }
+
+    public void setBuildingUnit(MilitaryType buildingUnit) {
+        this.buildingUnit = buildingUnit;
+    }
+
+    public int getRemainedTurnsToBuild() {
+        return remainedTurnsToBuild;
+    }
+
+    public void setRemainedTurnsToBuild(int remainedTurnsToBuild) {
+        this.remainedTurnsToBuild = remainedTurnsToBuild;
     }
 
     public void addGroundToRangeOfCity(Ground ground){
