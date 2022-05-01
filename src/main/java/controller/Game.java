@@ -97,4 +97,7 @@ public class Game extends Controller {
         }
         return "unit moved successfully";
     }
+    public void deleteUnit(Unit unit) {
+
+    }
 }
