@@ -26,6 +26,12 @@ public class Game extends Controller {
 
     public void nextTurn() {
         Player player = Player.whichPlayerTurnIs();
+        for (int i=0;i<player.getCities().size();i++){
+            player.getCities().get(i).setRemainedTurnsToBuild(player.getCities().get(i).getRemainedTurnsToBuild()-1);
+            if (player.getCities().get(i).getRemainedTurnsToBuild()==0){
+                UnitController.spawnUnit(player.getCities().get(i));
+            }
+        }
         for (int i = 0; i < player.getUnits().size(); i++) {
             player.getUnits().get(i).putMp(10);
             player.getUnits().get(i).checkDestination();
@@ -55,8 +61,8 @@ public class Game extends Controller {
                 if (((Worker) player.getUnits().get(i)).getIsWorking()){
                     Ground ground=player.getUnits().get(i).getGround();
                     if (ground.getImprovementTypeInProgress()!=null){
-                        ground.getImprovementType().decreaseTurn(1);
-                        if (ground.getImprovementType().getTurn()==0){
+                        ground.getImprovementTypeInProgress().decreaseTurn(1);
+                        if (ground.getImprovementTypeInProgress().getTurn()==0){
                             ground.putImprovementTypeInThisGround();
                         }
                     }
@@ -118,9 +124,12 @@ public class Game extends Controller {
 
     public String moveUnits(int firstGroundNumber, int secondGroundNumber, String type) {
         Player player = Player.whichPlayerTurnIs();
+        if (Ground.getGroundByNumber(firstGroundNumber).getImprovementTypeInProgress()!=null)
+            Ground.getGroundByNumber(firstGroundNumber).setImprovementTypeInProgress(null);
         ArrayList<Unit> unitArrayList = Ground.getGroundByNumber(firstGroundNumber).unitsOfASpecificPlayerInThisGround(player);
         /// TODO : type of unit
         boolean exit = false;
+        if (Ground.getGroundByNumber(secondGroundNumber).getGroundType().isBlock()) exit=true;
         for (Unit unit : Ground.getGroundByNumber(secondGroundNumber).unitsInThisGround()) {
             if (unit.getGround().getNumber() == secondGroundNumber && ((unit instanceof MilitaryUnit && type.equals("Military"))
                     || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary")))) {
@@ -132,8 +141,10 @@ public class Game extends Controller {
             return "unit can not go to that ground:(";
         }
         for (Unit unit : unitArrayList) {
-            if ((unit instanceof MilitaryUnit && type.equals("Military")) || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary")))
+            if ((unit instanceof MilitaryUnit && type.equals("Military")) || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary"))) {
                 unit.setDestination(Ground.getGroundByNumber(secondGroundNumber));
+                if (unit instanceof Worker) ((Worker) unit).setWorking(false);
+            }
             unit.checkDestination();
         }
         return "unit moved successfully";

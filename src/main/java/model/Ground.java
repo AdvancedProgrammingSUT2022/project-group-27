@@ -301,7 +301,7 @@ public class Ground {
     public UnMilitaryUnit getUnMilitaryUnit() {
         ArrayList<Unit> units = this.unitsInThisGround();
         for (Unit unit : units) {
-            if (unit instanceof MilitaryUnit) {
+            if (unit instanceof UnMilitaryUnit) {
                 return (UnMilitaryUnit) unit;
             }
         }
@@ -309,6 +309,36 @@ public class Ground {
     }
     public boolean canWeAddThisImprovement(ImprovementType improvementType){
         Player player=Player.whichPlayerTurnIs();
+        if (improvementType==ImprovementType.FARM){
+            if (this.featureType==FeatureType.FOREST){
+                if (!player.doWeHaveThisTechnology(TechnologyType.MINING)){
+                    return false;
+                }
+
+            }
+            if (this.featureType==FeatureType.JUNGLE){
+                if (!player.doWeHaveThisTechnology(TechnologyType.BRONZE_WORKING)) {
+                    return false;
+                }
+            }
+            if (this.featureType==FeatureType.MARSH){
+                if (!player.doWeHaveThisTechnology(TechnologyType.MASONRY)) {
+                    return false;
+                }
+            }
+        }
+        if (improvementType==ImprovementType.MINE){
+            if (this.featureType==FeatureType.JUNGLE){
+                if (!player.doWeHaveThisTechnology(TechnologyType.BRONZE_WORKING)) {
+                    return false;
+                }
+            }
+            if (this.featureType==FeatureType.MARSH){
+                if (!player.doWeHaveThisTechnology(TechnologyType.MASONRY)) {
+                    return false;
+                }
+            }
+        }
         if (!player.doWeHaveThisTechnology(improvementType.getTechnologyTypes())) return false;
         for (int i=0;i<improvementType.getGroundTypes().size();i++){
             if (this.groundType==improvementType.getGroundTypes().get(i)) return true;
@@ -323,6 +353,7 @@ public class Ground {
         for (ImprovementType improvementType1 : ImprovementType.values()){
             if (canWeAddThisImprovement(improvementType1)) answer.add(improvementType1);
         }
+
         return answer;
     }
     public void setImprovementTypeInProgress(ImprovementType improvementTypeInProgress){

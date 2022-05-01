@@ -9,7 +9,7 @@ import static java.lang.Math.min;
 
 import Enum.FeatureType;
 import Enum.GroundType;
-
+import Enum.ImprovementType;
 public class ShowMap {
     private GlobalVariables globalVariables = new GlobalVariables();
     private Player player;
@@ -160,6 +160,32 @@ public class ShowMap {
                 showMap[ground.getxLocation() - 3][ground.getyLocation()] = GlobalVariables.ANSI_CYAN + "M";
             }
         }
+        showMapImprovement(player, showMap);
+    }
+    private void showMapImprovement(Player player, String[][] showMap){
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            Ground ground=Ground.getGroundByNumber(i);
+            if (Ground.getGroundByNumber(i).getImprovementType()!=null){
+                if (Ground.getGroundByNumber(i).getImprovementType()== ImprovementType.MINE)
+                    showMap[ground.getxLocation() - 1][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "M";
+                if (Ground.getGroundByNumber(i).getImprovementType()== ImprovementType.AGRICULTURE)
+                    showMap[ground.getxLocation() - 1][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "A";
+                if (Ground.getGroundByNumber(i).getImprovementType()== ImprovementType.FARM)
+                    showMap[ground.getxLocation() - 1][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "F";
+                if (Ground.getGroundByNumber(i).getImprovementType()== ImprovementType.MINE_OF_STONE)
+                    showMap[ground.getxLocation() - 1][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "S";
+                if (Ground.getGroundByNumber(i).getImprovementType()== ImprovementType.CAMP)
+                    showMap[ground.getxLocation() - 1][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "C";
+                if (Ground.getGroundByNumber(i).getImprovementType()== ImprovementType.FACTORY)
+                    showMap[ground.getxLocation() - 1][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "T";
+                if (Ground.getGroundByNumber(i).getImprovementType()== ImprovementType.PASTURE)
+                    showMap[ground.getxLocation() - 1][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "P";
+                if (Ground.getGroundByNumber(i).getImprovementType()== ImprovementType.LUMBER_MILL)
+                    showMap[ground.getxLocation() - 1][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "L";
+                if (Ground.getGroundByNumber(i).getImprovementType()== ImprovementType.TRADING_POST)
+                    showMap[ground.getxLocation() - 1][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "R";
+            }
+        }
         showMapUnit(player, showMap);
     }
 
@@ -304,6 +330,7 @@ public class ShowMap {
 
         printMap(showMap, globalVariables);
     }
+
 
     private void printMap(String[][] showMap, GlobalVariables globalVariables) {
         for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {

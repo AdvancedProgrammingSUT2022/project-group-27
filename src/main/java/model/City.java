@@ -28,7 +28,13 @@ public class City {
         for (Ground rangeGround : ground.getAdjacentGrounds()) {
             this.rangeOfCity.add(rangeGround);
         }
+        this.player=player;
     }
+
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
 
     public Ground getGround() {
         return ground;

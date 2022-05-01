@@ -4,16 +4,18 @@ package view.game;
 import Enum.Message;
 import controller.Game;
 import controller.InitializeMap;
+import controller.UnitController;
 import model.*;
 import view.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
+import Enum.MilitaryType;
 import Enum.TechnologyType;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-
+import Enum.ImprovementType;
 public class GameView {
     private Game controller;
     private ArrayList<User> playerUsers = new ArrayList<>();
@@ -36,8 +38,9 @@ public class GameView {
             ShowMap showMap = new ShowMap(Player.whichPlayerTurnIs());
             showMap.run();
             this.run();
-        } else if (input.matches("^next turn$")) {
-            Player.nextTurn();
+        } else if (input.matches("^next turn \\d+")) {
+            String[] s=input.split(" +");
+            for (int i=0;i<Integer.parseInt(s[2]);i++) Player.nextTurn();
             this.run();
         } else if (input.matches("^move unit .+$")) {
             matcher = controller.getInput("move unit",
@@ -55,7 +58,57 @@ public class GameView {
             String[] s=input.split(" +");
             createCity(Integer.parseInt(s[3]));
             this.run();
-        } else if (input.matches("technology menu")){
+        } else if (input.matches("create worker in \\d+")){
+            String[] s=input.split(" +");
+            createWorker(Integer.parseInt(s[3]));
+            this.run();
+        }
+        else if (input.matches("increase gold \\d+")){
+            String[] s=input.split(" +");
+            Player player=Player.whichPlayerTurnIs();
+            for (int i=0;i<player.getCities().size();i++){
+                player.getCities().get(i).setGold(player.getCities().get(i).getGold()+Integer.parseInt(s[2]));
+            }
+            this.run();
+        }
+        else if (input.matches("put improvement in \\d+")){
+            String[] s=input.split(" +");
+            Player player=Player.whichPlayerTurnIs();
+            Ground ground=Ground.getGroundByNumber(Integer.parseInt(s[3]));
+            boolean workerExist=false;
+            for (int i=0;i<player.getUnits().size();i++){
+                if (player.getUnits().get(i).getGround().getNumber()==Integer.parseInt(s[3]) && player.getUnits().get(i) instanceof Worker){
+                    workerExist=true;
+                }
+            }
+            if (!workerExist){
+                System.out.println("404 not worker");
+                this.run();
+            }
+            ArrayList <ImprovementType> list=ground.listOfImprovementTypes();
+            for (int i=0;i<list.size();i++){
+                System.out.println(i+1+"- : " + list.get(i));
+            }
+            String secondInput=Menu.getScanner().nextLine();
+            if (secondInput.matches("\\d+")){
+                int intInput=Integer.parseInt(secondInput);
+                if (intInput>=1 && intInput<=list.size()){
+                    intInput--;
+                    ground.setImprovementTypeInProgress(list.get(intInput));
+                    for (int i=0;i<player.getUnits().size();i++){
+                        if (player.getUnits().get(i).getGround().getNumber()==Integer.parseInt(s[3]) && player.getUnits().get(i) instanceof Worker){
+                            ((Worker) player.getUnits().get(i)).setWorking(true);
+                        }
+                    }
+                    this.run();
+                }
+            }
+            if (secondInput.equals("end")) this.run();
+            System.out.println(Message.INVALID_COMMAND);
+            this.run();
+
+        }
+        else if (input.matches("technology menu")){
             Player player=Player.whichPlayerTurnIs();
             System.out.println("lists of technologies:");
             for (int i=0;i<player.getTechnologyType().size();i++){
@@ -100,6 +153,13 @@ public class GameView {
         player.addCityToThisGround(Ground.getGroundByNumber(groundNumber));
         System.out.println(player.getCities().size());
 
+    }
+    private void createWorker(int groundNumber){
+        Player player=Player.whichPlayerTurnIs();
+        for (int i=0;i<player.getCities().size();i++) {
+            if (player.getCities().get(i).getGround().getNumber()==groundNumber)
+                UnitController.buildUnit(player.getCities().get(i),MilitaryType.WORKER);
+        }
     }
 }
 
