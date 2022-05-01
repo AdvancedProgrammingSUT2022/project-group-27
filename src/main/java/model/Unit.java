@@ -1,15 +1,22 @@
 package model;
 
-import controller.InitializeMap;
 import view.game.ShowMap;
 
 import static java.lang.Math.min;
+import Enum.MilitaryType;
 
 public abstract class Unit {
+    protected MilitaryType militaryType;
     protected Ground ground;
     protected Player player;
     protected Ground destination = null;
     protected double mp = 10;
+
+    public Unit(Ground ground, Player player, MilitaryType militaryType) {
+        this.player = player;
+        this.ground = ground;
+        this.militaryType = militaryType;
+    }
 
     public double getMp() {
         return mp;
@@ -32,30 +39,15 @@ public abstract class Unit {
     }
 
     public int getCost() {
-        if (this instanceof Worker) {
-            return 89;
-        }
-        if (this instanceof Worker) {
-            return 70;
-        }
-        return ((MilitaryUnit) this).militaryType.getCost();
+        return this.militaryType.getCost();
     }
 
     public int getMovement() {
-        if (this instanceof MilitaryUnit) {
-            return this.getMovement();
-        }
-        return 2;
+        return this.militaryType.getMovement();
     }
 
     public int getTurn() {
-        if (this instanceof Worker) {
-            return 9;
-        }
-        if (this instanceof Worker) {
-            return 6;
-        }
-        return ((MilitaryUnit) this).militaryType.getTurn();
+        return this.militaryType.getTurn();
     }
 
     //TODO : vaghti dota shodan dota tabe niyaze

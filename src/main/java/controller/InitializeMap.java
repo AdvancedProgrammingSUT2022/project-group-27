@@ -88,7 +88,7 @@ public class InitializeMap {
 
             Ground ground = Ground.getGroundByNumber(idStartGround);
             Player player = new Player(playerUser);
-            SettlerUnit unMilitaryUnit = new SettlerUnit(ground, player);
+            SettlerUnit unMilitaryUnit = new SettlerUnit(ground, player, MilitaryType.SETTLER);
             MeleeUnit militaryUnit = new MeleeUnit(ground, player, MilitaryType.WARRIOR);
             player.getUnits().add(militaryUnit);
             player.getUnits().add(unMilitaryUnit);
