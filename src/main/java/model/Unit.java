@@ -31,6 +31,33 @@ public abstract class Unit {
         return player;
     }
 
+    public int getCost() {
+        if (this instanceof Worker) {
+            return 89;
+        }
+        if (this instanceof Worker) {
+            return 70;
+        }
+        return ((MilitaryUnit) this).militaryType.getCost();
+    }
+
+    public int getMovement() {
+        if (this instanceof MilitaryUnit) {
+            return this.getMovement();
+        }
+        return 2;
+    }
+
+    public int getTurn() {
+        if (this instanceof Worker) {
+            return 9;
+        }
+        if (this instanceof Worker) {
+            return 6;
+        }
+        return ((MilitaryUnit) this).militaryType.getTurn();
+    }
+
     //TODO : vaghti dota shodan dota tabe niyaze
     public void moveUnitToAdjacentGround(Ground ground) {
         decreaseMp(Ground.distanceOfTheseTwoGround(this.ground, ground));
