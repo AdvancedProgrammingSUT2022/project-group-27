@@ -146,10 +146,4 @@ public class City {
             }
         }
     }
-    public void addGroundToRangeGround(Ground ground){
-        //TODO : fix amount
-        if (player.getGold()<10) return ;
-        if (ground.isInRangeOfCity()) return ;
-        this.rangeOfCity.add(ground);
-    }
 }

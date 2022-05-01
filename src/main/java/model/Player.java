@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Enum.TechnologyType;
+import controller.Game;
+
 public class Player {
     private int gold;
     private int science;
@@ -135,6 +137,14 @@ public class Player {
         return user;
     }
 
+    public ArrayList<Technology> getAllTechnologyTypes() {
+        return AllTechnologyTypes;
+    }
+
+    public TechnologyType getUnderConstructionTechnology() {
+        return underConstructionTechnology;
+    }
+
     public boolean isAlive() {
         return isAlive;
     }
@@ -152,7 +162,7 @@ public class Player {
         ArrayList<Ground> newArray = new ArrayList<>();
         for (int i = 0; i < clearToSeeGrounds.size(); i++) {
             Ground ground = clearToSeeGrounds.get(i);
-            /// TODO : check kardan Kooh o ina
+
             if (ground.getGroundType().isBlock() && ground.unitsOfASpecificPlayerInThisGround(this).size() == 0)
                 continue;
             for (int x = ground.getxLocation() - globalVariables.tool6Zelie; x <= ground.getxLocation() + globalVariables.tool6Zelie; x++) {
@@ -207,9 +217,9 @@ public class Player {
             this.addGroundToClearGround(unit.getGround());
         }
         handleClearToSeeGrounds1depth(this.clearToSeeGrounds);
-        for (int i=0;i<this.cities.size();i++){
-            for (int j=0;j<this.cities.get(i).getRangeOfCity().size();j++){
-                this.addGroundToClearGround(this.cities.get(i).getRangeOfCity().get(j));
+        for (City city : this.cities) {
+            for (int j = 0; j < city.getRangeOfCity().size(); j++) {
+                this.addGroundToClearGround(city.getRangeOfCity().get(j));
             }
         }
         handleClearToSeeGrounds1depth(this.clearToSeeGrounds); //for the second depth
@@ -219,43 +229,7 @@ public class Player {
         counterOfNextRound++;
         while (!whichPlayerTurnIs().isAlive) counterOfNextRound++;
 
-        Player player = Player.whichPlayerTurnIs();
-        for (int i = 0; i < player.units.size(); i++) {
-            player.units.get(i).putMp(10);
-            player.units.get(i).checkDestination();
-        }
-        player.gold=0;
-        player.food=0;
-        /// TODO : otherthings
-        for (int i=0;i<player.getCities().size();i++){
-            player.getCities().get(i).updateCityGoldAndFoodAndOtherThings();
-            player.gold += player.getCities().get(i).getGold();
-            player.food += player.getFood();
-            player.science+=3;
-            //TODO : 1 science for each Citizen
-        }
-        for (int i=0;i<player.AllTechnologyTypes.size();i++){
-            if (player.underConstructionTechnology==null) continue;
-            if (player.underConstructionTechnology==player.AllTechnologyTypes.get(i).getTechnologyType()){
-                player.AllTechnologyTypes.get(i).decreaseTimeRemain(1);
-                if (player.AllTechnologyTypes.get(i).getTimeRemain()==0){
-                    player.addTechnology(player.AllTechnologyTypes.get(i).getTechnologyType());
-                }
-            }
-        }
-        for (int i=0;i<player.units.size();i++){
-            if (player.units.get(i) instanceof Worker){
-                if (((Worker) player.units.get(i)).getIsWorking()){
-                    Ground ground=player.units.get(i).getGround();
-                    if (ground.getImprovementTypeInProgress()!=null){
-                        ground.getImprovementType().decreaseTurn(1);
-                        if (ground.getImprovementType().getTurn()==0){
-                            ground.putImprovementTypeInThisGround();
-                        }
-                    }
-                }
-            }
-        }
+        Game.getInstance().nextTurn();
     }
 
     public static Player whichPlayerTurnIs() {
@@ -303,8 +277,8 @@ public class Player {
 
     }
     public boolean doWeHaveThisTechnology(TechnologyType technologyType){
-        for (int i=0;i<this.technologyType.size();i++){
-            if (this.technologyType.get(i)==technologyType) return true;
+        for (TechnologyType type : this.technologyType) {
+            if (type == technologyType) return true;
         }
         return false;
     }

@@ -24,6 +24,47 @@ public class Game extends Controller {
         return Game.instance;
     }
 
+    public void nextTurn() {
+        Player player = Player.whichPlayerTurnIs();
+        for (int i = 0; i < player.getUnits().size(); i++) {
+            player.getUnits().get(i).putMp(10);
+            player.getUnits().get(i).checkDestination();
+        }
+
+        player.setGold(0);
+        player.setFood(0);
+        /// TODO : otherthings
+        for (int i=0;i<player.getCities().size();i++){
+            player.getCities().get(i).updateCityGoldAndFoodAndOtherThings();
+            player.setGold(player.getGold() + player.getCities().get(i).getGold());
+            player.setFood(player.getFood() + player.getFood());
+            player.setScience(player.getScience() + 3);
+            //TODO : 1 science for each Citizen
+        }
+        for (int i=0;i<player.getAllTechnologyTypes().size();i++){
+            if (player.getUnderConstructionTechnology()==null) continue;
+            if (player.getUnderConstructionTechnology() == player.getAllTechnologyTypes().get(i).getTechnologyType()){
+                player.getAllTechnologyTypes().get(i).decreaseTimeRemain(1);
+                if (player.getAllTechnologyTypes().get(i).getTimeRemain()==0){
+                    player.addTechnology(player.getAllTechnologyTypes().get(i).getTechnologyType());
+                }
+            }
+        }
+        for (int i=0;i<player.getUnits().size();i++){
+            if (player.getUnits().get(i) instanceof Worker){
+                if (((Worker) player.getUnits().get(i)).getIsWorking()){
+                    Ground ground=player.getUnits().get(i).getGround();
+                    if (ground.getImprovementTypeInProgress()!=null){
+                        ground.getImprovementType().decreaseTurn(1);
+                        if (ground.getImprovementType().getTurn()==0){
+                            ground.putImprovementTypeInThisGround();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void createMap() {
         //TODO.. change it to bfs method
         GlobalVariables globalVariables = new GlobalVariables();
