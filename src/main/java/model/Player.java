@@ -19,6 +19,22 @@ public class Player {
     private TechnologyType underConstructionTechnology=null;
     private boolean isAlive = true;
 
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
+    public void setScience(int science) {
+        this.science = science;
+    }
+
+    public void setFood(int food) {
+        this.food = food;
+    }
+
+    public void setHappiness(int happiness) {
+        this.happiness = happiness;
+    }
+
     private ArrayList<TechnologyType> technologyType=new ArrayList<>();
 
     private ArrayList<Technology> AllTechnologyTypes=new ArrayList<>();
