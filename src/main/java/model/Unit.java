@@ -27,6 +27,10 @@ public abstract class Unit {
         this.mp -= amount;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
     //TODO : vaghti dota shodan dota tabe niyaze
     public void moveUnitToAdjacentGround(Ground ground) {
         decreaseMp(Ground.distanceOfTheseTwoGround(this.ground, ground));
@@ -88,6 +92,9 @@ public abstract class Unit {
         System.out.println(this.ground.getNumber());
         if (this.getGround().getNumber() == this.destination.getNumber()) this.destination = null;
 
+    }
+    public void removeUnit() {
+        this.player.getUnits().remove(this);
     }
 
 }
