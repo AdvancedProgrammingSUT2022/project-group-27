@@ -272,4 +272,25 @@ public class Ground {
         }
         return false;
     }
+
+    public MilitaryUnit getMilitaryUnit() {
+        ArrayList<Unit> units = this.unitsInThisGround();
+        for (Unit unit : units) {
+            if (unit instanceof MilitaryUnit) {
+                return (MilitaryUnit) unit;
+            }
+        }
+        return null;
+    }
+
+    public UnMilitaryUnit getUnMilitaryUnit() {
+        ArrayList<Unit> units = this.unitsInThisGround();
+        for (Unit unit : units) {
+            if (unit instanceof MilitaryUnit) {
+                return (UnMilitaryUnit) unit;
+            }
+        }
+        return null;
+    }
+
 }

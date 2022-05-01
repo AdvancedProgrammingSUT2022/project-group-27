@@ -1,6 +1,7 @@
 package controller;
 
 import model.City;
+import model.Ground;
 import model.Player;
 import model.Unit;
 import Enum.MilitaryType;
@@ -21,6 +22,10 @@ public class UnitController {
     }
 
     public void spawnUnit(City city) {
+        //note: keep main ground first in range of city
         MilitaryType militaryType = city.getBuildingUnit();
+        for (Ground rangedCity : city.getRangeOfCity()) {
+
+        }
     }
 }
