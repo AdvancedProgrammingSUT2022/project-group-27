@@ -11,11 +11,16 @@ public class UnitController {
     }
 
     public void buildUnit(City city, MilitaryType militaryType) {
+        Player player = city.getPlayer();
         if (city.getRemainedTurnsToBuild() != 0) {
+            return;
+        }
+        if (player.getGold() < militaryType.getCost()) {
             return;
         }
         city.setRemainedTurnsToBuild(militaryType.getTurn());
         city.setBuildingUnit(militaryType);
+        player.setGold(player.getGold() - militaryType.getCost());
     }
 
     public void addUnit(Player player, Ground ground, MilitaryType militaryType) {
