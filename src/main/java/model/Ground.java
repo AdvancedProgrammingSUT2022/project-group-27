@@ -11,13 +11,16 @@ import Enum.FeatureType;
 
 import Enum.BonusResource;
 import Enum.StrategicResource;
+import Enum.ImprovementType;
+import Enum.TechnologyType;
 
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
 public class Ground {
     private static ArrayList<Ground> allGround = new ArrayList<>();
     private static HashMap<Integer, Ground> pixelInWhichGround = new HashMap<>();
-
+    private ImprovementType improvementType=null;
+    private ImprovementType improvementTypeInProgress=null;
     private ArrayList<Pair> pixelsOfThisGround = new ArrayList<>();
     private ArrayList<Ground> adjacentGrounds = new ArrayList<>();
     private Player owner;
@@ -43,6 +46,14 @@ public class Ground {
         this.yLocation = y;
         this.number = number;
         allGround.add(this);
+    }
+
+    public ImprovementType getImprovementType() {
+        return improvementType;
+    }
+
+    public void setImprovementType(ImprovementType improvementType) {
+        this.improvementType = improvementType;
     }
 
     public ArrayList<BonusResource> getBonusResource() {
@@ -243,6 +254,10 @@ public class Ground {
 
     }
 
+    public ImprovementType getImprovementTypeInProgress() {
+        return improvementTypeInProgress;
+    }
+
     public boolean containRiver() {
         for (int i = 0; i < River.getAllRivers().size(); i++) {
             if (River.getAllRivers().get(i).getFirstGround().number == this.number) return true;
@@ -291,6 +306,84 @@ public class Ground {
             }
         }
         return null;
+    }
+    public boolean canWeAddThisImprovement(ImprovementType improvementType){
+        Player player=Player.whichPlayerTurnIs();
+        if (!player.doWeHaveThisTechnology(improvementType.getTechnologyTypes())) return false;
+        for (int i=0;i<improvementType.getGroundTypes().size();i++){
+            if (this.groundType==improvementType.getGroundTypes().get(i)) return true;
+        }
+        for (int i=0;i<improvementType.getGroundFeatureTypes().size();i++){
+            if (this.getFeatureType()==improvementType.getGroundFeatureTypes().get(i)) return true;
+        }
+        return false;
+    }
+    public ArrayList<ImprovementType> listOfImprovementTypes(){
+        ArrayList<ImprovementType> answer=new ArrayList<>();
+        for (ImprovementType improvementType1 : ImprovementType.values()){
+            if (canWeAddThisImprovement(improvementType1)) answer.add(improvementType1);
+        }
+        return answer;
+    }
+    public void setImprovementTypeInProgress(ImprovementType improvementTypeInProgress){
+        Player player=Player.whichPlayerTurnIs();
+        this.improvementTypeInProgress=improvementTypeInProgress;
+        this.improvementTypeInProgress.setTurn(6);
+        if (improvementTypeInProgress==ImprovementType.FARM){
+            if (this.featureType==FeatureType.FOREST){
+                if (player.doWeHaveThisTechnology(TechnologyType.MINING)){
+                    this.improvementTypeInProgress.setTurn(10);
+                }
+                else{
+                    this.improvementTypeInProgress=null;
+                }
+            }
+            if (this.featureType==FeatureType.JUNGLE){
+                if (player.doWeHaveThisTechnology(TechnologyType.BRONZE_WORKING)){
+                    this.improvementTypeInProgress.setTurn(13);
+                }
+                else{
+                    this.improvementTypeInProgress=null;
+                }
+            }
+            if (this.featureType==FeatureType.MARSH){
+                if (player.doWeHaveThisTechnology(TechnologyType.MASONRY)){
+                    this.improvementTypeInProgress.setTurn(12);
+                }
+                else{
+                    this.improvementTypeInProgress=null;
+                }
+            }
+        }
+        if (improvementTypeInProgress==ImprovementType.MINE){
+            if (this.featureType==FeatureType.FOREST){
+                this.improvementTypeInProgress.setTurn(10);
+            }
+            if (this.featureType==FeatureType.JUNGLE){
+                if (player.doWeHaveThisTechnology(TechnologyType.BRONZE_WORKING)){
+                    this.improvementTypeInProgress.setTurn(13);
+                }
+                else{
+                    this.improvementTypeInProgress=null;
+                }
+            }
+            if (this.featureType==FeatureType.MARSH){
+                if (player.doWeHaveThisTechnology(TechnologyType.MASONRY)){
+                    this.improvementTypeInProgress.setTurn(12);
+                }
+                else{
+                    this.improvementTypeInProgress=null;
+                }
+            }
+        }
+        if (this.improvementTypeInProgress==null){
+            System.out.println("nemishe");
+            //ToDO : bere to controller
+        }
+    }
+    public void putImprovementTypeInThisGround(){
+        this.improvementType=improvementTypeInProgress;
+        this.featureType=FeatureType.NOTHING;
     }
 
 }

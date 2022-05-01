@@ -243,6 +243,19 @@ public class Player {
                 }
             }
         }
+        for (int i=0;i<player.units.size();i++){
+            if (player.units.get(i) instanceof Worker){
+                if (((Worker) player.units.get(i)).getIsWorking()){
+                    Ground ground=player.units.get(i).getGround();
+                    if (ground.getImprovementTypeInProgress()!=null){
+                        ground.getImprovementType().decreaseTurn(1);
+                        if (ground.getImprovementType().getTurn()==0){
+                            ground.putImprovementTypeInThisGround();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static Player whichPlayerTurnIs() {
@@ -319,4 +332,5 @@ public class Player {
     public ArrayList<TechnologyType> getTechnologyType() {
         return technologyType;
     }
+
 }

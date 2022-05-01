@@ -45,7 +45,7 @@ public class InitializeMap {
             } else if (rand < 200) {
                 Ground.getGroundByNumber(i).setGroundType(GroundType.PLAIN);
             }
-            rand = random.nextInt(0, 200);
+            rand = random.nextInt(0, 300);
             if (rand < 25) {
                 Ground.getGroundByNumber(i).setFeatureType(FeatureType.FOREST);
             } else if (rand < 50) {
@@ -62,6 +62,9 @@ public class InitializeMap {
                 if (Ground.getGroundByNumber(i).containRiver())
                     Ground.getGroundByNumber(i).setFeatureType(FeatureType.MARSH);
                 else Ground.getGroundByNumber(i).setFeatureType(FeatureType.JUNGLE);
+            }
+            else{
+                Ground.getGroundByNumber(i).setFeatureType(FeatureType.NOTHING);
             }
         }
     }

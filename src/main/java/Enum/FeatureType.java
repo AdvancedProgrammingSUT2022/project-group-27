@@ -1,6 +1,7 @@
 package Enum;
 
 public enum FeatureType {
+    NOTHING(0,0,0,0,1,false),
     WATERSHED(2, 0, 0, -33, 1, false),
     FOREST(1, 1, 0, 25, 2, false),
     ICE(0, 0, 0, 0, 0, true),
