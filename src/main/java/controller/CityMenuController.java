@@ -4,10 +4,11 @@ import model.Citizen;
 import model.City;
 import model.Ground;
 import Enum.Message;
+import model.Unit;
 
 import java.util.ArrayList;
 
-public class CityMenuController extends Controller{
+public class CityMenuController extends CityController{
     public Message lockCitizenToGround(City city, int groundNumber) {
         Ground ground = Ground.getGroundByNumber(groundNumber);
         Message message = isGroundValidForCity(city, ground);
@@ -52,8 +53,14 @@ public class CityMenuController extends Controller{
     }
 
     public Message buyThings(City city, String whatPlayerWantToBuy) {
-        //TODO check validation of string and then money and then buy it for player
-        return Message.SUCCESS_WORK;
+        Unit unit = checkValidationOfUnitName(city, whatPlayerWantToBuy);
+        if (unit != null) {
+            if (city.getGold() < unit.getCost()) return Message.NOT_ENOUGH_MONEY;
+
+            city.giveMoneyForBuying(unit.getCost());
+            city.getListOfUnitsInCity().add(unit);
+            return Message.SUCCESS_WORK;
+        } else return Message.INVALID_UNIT_NAME;
     }
 
     private Message isGroundValidForCity(City city, Ground ground) {

@@ -70,7 +70,7 @@ public class GameView {
             String[] s=input.split(" +");
             Player player=Player.whichPlayerTurnIs();
             for (int i=0;i<player.getCities().size();i++){
-                player.getCities().get(i).setGold(player.getCities().get(i).getGold()+Integer.parseInt(s[2]));
+                player.getCities().get(i).increaseGold(Integer.parseInt(s[2]));
             }
             this.run();
         }

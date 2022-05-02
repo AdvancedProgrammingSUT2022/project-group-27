@@ -22,7 +22,7 @@ public class UnitController {
         }
         city.setRemainedTurnsToBuild(militaryType.getTurn());
         city.setBuildingUnit(militaryType);
-        city.setGold(city.getGold() - militaryType.getCost());
+        city.giveMoneyForBuying(militaryType.getCost());
     }
 
     public static void addUnit(Player player, Ground ground, MilitaryType militaryType) {

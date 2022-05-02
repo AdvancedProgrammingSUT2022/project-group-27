@@ -16,7 +16,7 @@ public class City {
     private MilitaryType buildingUnit;
     private Ground ground;
 
-
+    private final ArrayList<Unit> listOfUnitsInCity = new ArrayList<>();
     private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
     private final ArrayList<Ground> rangeOfCity = new ArrayList<>();
 
@@ -29,8 +29,12 @@ public class City {
         this.player=player;
     }
 
-    public void setGold(int gold) {
-        this.gold = gold;
+    public void increaseGold(int amount) {
+        this.gold += amount;
+    }
+
+    public ArrayList<Unit> getListOfUnitsInCity() {
+        return listOfUnitsInCity;
     }
 
     public Ground getGround() {
@@ -91,6 +95,10 @@ public class City {
 
     public void setRemainedTurnsToBuild(int remainedTurnsToBuild) {
         this.remainedTurnsToBuild = remainedTurnsToBuild;
+    }
+
+    public void giveMoneyForBuying(int amount) {
+        this.gold -= amount;
     }
 
     public void addGroundToRangeOfCity(Ground ground){

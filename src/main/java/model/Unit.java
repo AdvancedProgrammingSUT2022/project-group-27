@@ -112,6 +112,7 @@ public abstract class Unit {
         if (this.getGround().getNumber() == this.destination.getNumber()) this.destination = null;
 
     }
+
     public void removeUnit() {
         this.player.getUnits().remove(this);
     }

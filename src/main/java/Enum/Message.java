@@ -27,6 +27,7 @@ public enum Message {
     IS_WORK_GROUND("The ground you choice has been already worked on."),
     NO_CITIZEN_ON_GROUND("There is no citizen who works on this ground."),
     BACKING_TO_PREVIOUS_MENU("Ok, backing to previous direction."),
+    INVALID_UNIT_NAME("Sorry but the unit you want doesn't exist."),
     SUCCESS_WORK("Everything happens successfully:)");
 
     private String message;
