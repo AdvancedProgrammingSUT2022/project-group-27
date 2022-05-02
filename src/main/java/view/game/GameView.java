@@ -54,7 +54,10 @@ public class GameView {
         } else if (input.matches("^city menu$")) {
             (new CityView()).cityMenus(Player.whichPlayerTurnIs());
             this.run();
-        } else if (input.matches("create city in \\d+")){
+        } else if (input.matches("^BuildCity menu$")) {
+            (new BuildCityMenu()).buildCityMenu(Player.whichPlayerTurnIs());
+            this.run();
+        }else if (input.matches("create city in \\d+")){
             String[] s=input.split(" +");
             createCity(Integer.parseInt(s[3]));
             this.run();

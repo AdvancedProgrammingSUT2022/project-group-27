@@ -9,17 +9,16 @@ import view.Menu;
 import Enum.Message;
 import Enum.StrategicResource;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
-public class CityView {
+public class CityView extends ViewOfCity{
     private final CityMenuController controller = new CityMenuController();
 
     public void cityMenus(Player player) {
         System.out.println("You enter the menu of cities.");
         System.out.println("Now you can choice the city you want.");
-        City choiceCity = listOfCities(player);
+        City choiceCity = whichCityPlayerWant(player);
         this.run(choiceCity);
     }
 
@@ -147,34 +146,6 @@ public class CityView {
     private void showGrounds(City city) {
         for (Ground ground: city.getRangeOfCity()) {
             System.out.println("Ground number is: " + ground.getNumber());
-        }
-    }
-
-    private City listOfCities(Player player) {
-        ArrayList<City> listOfCities = player.getCities();
-        this.showTheListOfCities(listOfCities);
-        int index = getTheCityFromUser(listOfCities.size());
-        return listOfCities.get(index - 1);
-    }
-
-    private int getTheCityFromUser(int maxAmountOfCities) {
-        System.out.println("Enter the number of the city you want: ");
-        int index = Menu.getScanner().nextInt();
-        if (index > maxAmountOfCities || index < 1) {
-            System.out.println("you enter an invalid number");
-            this.getTheCityFromUser(maxAmountOfCities);
-        }
-
-        return index;
-    }
-
-    private void showTheListOfCities(ArrayList<City> listOfCities) {
-        int index = 1;
-        for (City city: listOfCities) {
-            System.out.println(index + ":");
-            System.out.println("name of city: " + city.getName());
-            System.out.println("Ground number : " + city.getGround().getNumber());
-            index++;
         }
     }
 }
