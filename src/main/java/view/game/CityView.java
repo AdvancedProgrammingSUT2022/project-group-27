@@ -76,7 +76,12 @@ public class CityView {
 
     private void showWithoutWorkCitizens(City city) {
         ArrayList<Citizen> listOfWithoutWork = city.withoutWorkCitizens();
-        //TODO show them to player
+
+        int index = 1;
+        for (Citizen citizen: listOfWithoutWork) {
+            System.out.println(index + "- citizen id: " + citizen.getId());
+            index++;
+        }
         this.run(city);
     }
 
