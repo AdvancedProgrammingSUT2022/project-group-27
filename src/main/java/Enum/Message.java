@@ -26,6 +26,7 @@ public enum Message {
     NOT_ENOUGH_MONEY("Sorry but you don't have enough gold for buy this:("),
     IS_WORK_GROUND("The ground you choice has been already worked on."),
     NO_CITIZEN_ON_GROUND("There is no citizen who works on this ground."),
+    BACKING_TO_PREVIOUS_MENU("Ok, backing to previous direction."),
     SUCCESS_WORK("Everything happens successfully:)");
 
     private String message;

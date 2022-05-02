@@ -27,7 +27,7 @@ public class Ground {
     private final int xLocation;
     private final int yLocation;
     private int number;
-    private int cost; //TODO initialize it at first of game
+    private int cost;
     private boolean isWorkedOn = false;
     private GroundType groundType;
     private FeatureType featureType;
@@ -37,6 +37,7 @@ public class Ground {
     public ArrayList<Ground> getAdjacentGrounds() {
         return adjacentGrounds;
     }
+
     public void addGroundToAdjacentGround(Ground ground){
         this.adjacentGrounds.add(ground);
     }
@@ -45,6 +46,7 @@ public class Ground {
         this.xLocation = x;
         this.yLocation = y;
         this.number = number;
+        this.cost = 50; //TODO if it become random make it more fun
         allGround.add(this);
     }
 
@@ -267,10 +269,10 @@ public class Ground {
     }
 
     public boolean isInRangeOfCity(){
-        for (int i=0;i<Player.getAllPlayers().size();i++){
-            for (int j=0;j<Player.getAllPlayers().get(i).getCities().size();j++){
-                for (int k=0;k<Player.getAllPlayers().get(i).getCities().get(j).getRangeOfCity().size();k++){
-                    if (this.number==Player.getAllPlayers().get(i).getCities().get(j).getRangeOfCity().get(k).number){
+        for (int i = 0; i < Player.getAllPlayers().size(); i++){
+            for (int j = 0; j < Player.getAllPlayers().get(i).getCities().size(); j++){
+                for (int k = 0; k < Player.getAllPlayers().get(i).getCities().get(j).getRangeOfCity().size(); k++){
+                    if (this.number == Player.getAllPlayers().get(i).getCities().get(j).getRangeOfCity().get(k).number){
                         return true;
                     }
                 }
@@ -278,6 +280,7 @@ public class Ground {
         }
         return false;
     }
+
     public boolean canWeAddThisBonusResourceToThisGround(BonusResource bonusResource){
         for (int i=0;i<bonusResource.getGroundTypes().size();i++){
             if (bonusResource.getGroundTypes().get(i)==this.groundType) return false;
@@ -307,6 +310,7 @@ public class Ground {
         }
         return null;
     }
+
     public boolean canWeAddThisImprovement(ImprovementType improvementType){
         Player player=Player.whichPlayerTurnIs();
         if (improvementType==ImprovementType.FARM){
@@ -348,6 +352,7 @@ public class Ground {
         }
         return false;
     }
+
     public ArrayList<ImprovementType> listOfImprovementTypes(){
         ArrayList<ImprovementType> answer=new ArrayList<>();
         for (ImprovementType improvementType1 : ImprovementType.values()){
@@ -356,6 +361,7 @@ public class Ground {
 
         return answer;
     }
+
     public void setImprovementTypeInProgress(ImprovementType improvementTypeInProgress){
         Player player=Player.whichPlayerTurnIs();
         this.improvementTypeInProgress=improvementTypeInProgress;
@@ -412,9 +418,9 @@ public class Ground {
             //ToDO : bere to controller
         }
     }
+
     public void putImprovementTypeInThisGround(){
         this.improvementType=improvementTypeInProgress;
         this.featureType=FeatureType.NOTHING;
     }
-
 }

@@ -123,10 +123,10 @@ public class City {
     }
 
     public boolean isThisGroundNearThisCity(Ground ground) {
-        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+        for (int i = 1; i <= GlobalVariables.numberOfTiles; i++){
             if (!Ground.AreTheseTwoGroundAdjacent(ground,Ground.getGroundByNumber(i))) continue;
-            for (int j=1;j<=GlobalVariables.numberOfTiles;j++){
-                if (!Ground.AreTheseTwoGroundAdjacent(Ground.getGroundByNumber(j),Ground.getGroundByNumber(i))) continue;
+            for (int j = 1; j <= GlobalVariables.numberOfTiles; j++){
+                if (!Ground.AreTheseTwoGroundAdjacent(Ground.getGroundByNumber(j), Ground.getGroundByNumber(i))) continue;
                 if (Ground.getGroundByNumber(j).isInRangeOfCity()) return true;
             }
         }
@@ -138,10 +138,21 @@ public class City {
         //TODO... do all the things that happen by increasing citizens
     }
 
+    public ArrayList<Ground> groundsNearTheCity() {
+        ArrayList<Ground> nearCity = new ArrayList<>();
+        for (Ground ground: this.getRangeOfCity()) {
+            nearCity.addAll(ground.getAdjacentGrounds());
+        }
+
+        nearCity.removeIf(ground -> this.getRangeOfCity().contains(ground));
+        return nearCity;
+    }
+
     public int howMuchFoodIsProduced() {
         //TODO write the body for it
         return 0;
     }
+
     public void updateCityGoldAndFoodAndOtherThings(){
         for (Ground ground : getRangeOfCity()){
             this.savedFood+=ground.getGroundType().getFood()+ground.getFeatureType().getFood();

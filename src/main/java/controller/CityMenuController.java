@@ -37,6 +37,8 @@ public class CityMenuController extends Controller{
     }
 
     public Message buyGround(City city, int groundNumber) {
+        if (groundNumber == -1) return Message.BACKING_TO_PREVIOUS_MENU;
+
         Ground ground = Ground.getGroundByNumber(groundNumber);
         if (ground == null) return Message.INVALID_GROUND_NUMBER;
         else if (!city.isThisGroundNearThisCity(ground)) return Message.GROUND_NOT_NEAR_CITY;

@@ -67,7 +67,14 @@ public class CityView {
     }
 
     private void buyGround(City city) {
-        //TODO show the grounds near city and prices
+        System.out.println("Please enter the number of the ground you want.");
+        System.out.println("If you regretful from buying enter -1 below.");
+
+        for (Ground ground: city.groundsNearTheCity()) {
+            System.out.println("** ground number is " + ground.getNumber() +
+                    "and the price of it is equal to " + ground.getCost());
+        }
+
         int groundNumber = Menu.getScanner().nextInt();
         Message message = controller.buyGround(city, groundNumber);
         System.out.println(message);
