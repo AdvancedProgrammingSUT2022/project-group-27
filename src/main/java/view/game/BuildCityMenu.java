@@ -19,7 +19,7 @@ public class BuildCityMenu extends ViewOfCity{
     }
 
     private void run(City city) {
-        this.showThingsToBuild(city);
+        this.showThingsToBuild(city.getPlayer());
         String input =  Menu.getScanner().nextLine();
         String regex;
         Matcher matcher;
@@ -41,11 +41,13 @@ public class BuildCityMenu extends ViewOfCity{
         //Don't do anything special
     }
 
-    private void showThingsToBuild(City city) {
+    private void showThingsToBuild(Player player) {
+        System.out.println("**Units which you can buy:");
         for (MilitaryType militaryType: MilitaryType.values()) {
-            
+            if (player.doWeHaveThisTechnology(militaryType.getTechnologyTypes().get(0))) { //TODO change technology type to object not arraylist
+                System.out.println("Unit name: " + militaryType.getCombatType());
+            }
         }
-        //TODO... show every units that can build with the technologies that player have right now
     }
 
     private void buildUnit(Matcher matcher, City city) {

@@ -1,7 +1,7 @@
 package model;
 import Enum.TechnologyType;
 public class Technology {
-    private TechnologyType technologyType;
+    private final TechnologyType technologyType;
     private int timeRemain;
 
     public int getTimeRemain() {
@@ -15,8 +15,9 @@ public class Technology {
     public TechnologyType getTechnologyType() {
         return technologyType;
     }
+
     public Technology(TechnologyType technologyType){
-        this.technologyType=technologyType;
-        this.timeRemain=technologyType.getTime();
+        this.technologyType = technologyType;
+        this.timeRemain = technologyType.getTime();
     }
 }

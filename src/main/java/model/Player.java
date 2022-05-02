@@ -282,12 +282,14 @@ public class Player {
         }
         return false;
     }
+
     public boolean canWeAddThisTechnology(TechnologyType technologyType){
         for (int i=0;i<technologyType.getPrerequisites().size();i++){
             if (!doWeHaveThisTechnology(technologyType.getPrerequisites().get(i))) return false;
         }
         return true ;
     }
+
     public ArrayList<Technology> technologiesThatCanBeObtained(){
         ArrayList<Technology> answer=new ArrayList<>();
         for (Technology allTechnologyType : AllTechnologyTypes) {
@@ -296,9 +298,11 @@ public class Player {
         }
         return answer;
     }
+
     public void setUnderConstructionTechnology(TechnologyType technologyType){
         underConstructionTechnology=technologyType;
     }
+
     public void addTechnology(TechnologyType technologyType){
         this.technologyType.add(technologyType);
     }
