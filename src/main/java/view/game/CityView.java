@@ -15,6 +15,7 @@ import java.util.regex.Matcher;
 
 public class CityView {
     private final CityMenuController controller = new CityMenuController();
+
     public void cityMenus(Player player) {
         System.out.println("You enter the menu of cities.");
         System.out.println("Now you can choice the city you want.");
@@ -38,7 +39,7 @@ public class CityView {
             this.run(city);
         } else if (input.matches((regex = "^lock a citizen to ground --groundNumber (?<groundNumber>\\d+)$"))) {
             matcher = controller.findMatcherFromString(input, regex);
-            lockCitizen(matcher, city);
+            this.lockCitizen(matcher, city);
         } else if (input.matches((regex = "^remove a citizen from work of --groundNumber (?<groundNumber>\\d+)$"))) {
             matcher = controller.findMatcherFromString(input, regex);
             this.removeFromWork(matcher, city);
