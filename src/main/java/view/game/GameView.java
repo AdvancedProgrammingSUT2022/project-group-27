@@ -57,16 +57,16 @@ public class GameView {
         } else if (input.matches("^BuildCity menu$")) {
             (new BuildCityMenu()).buildCityMenu(Player.whichPlayerTurnIs());
             this.run();
-        }else if (input.matches("create city in \\d+")){
+        }else if (input.matches("^create city in \\d+$")){
             String[] s=input.split(" +");
             createCity(Integer.parseInt(s[3]));
             this.run();
-        } else if (input.matches("create worker in \\d+")){
+        } else if (input.matches("^create worker in \\d+$")){
             String[] s=input.split(" +");
             createWorker(Integer.parseInt(s[3]));
             this.run();
         }
-        else if (input.matches("increase gold \\d+")){
+        else if (input.matches("^increase gold \\d+$")){
             String[] s=input.split(" +");
             Player player=Player.whichPlayerTurnIs();
             for (int i=0;i<player.getCities().size();i++){

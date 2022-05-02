@@ -26,7 +26,7 @@ public class ImprovementMenu {
         if (improvementInProgress != null) System.out.println("The improvement that you have here is: " +
                 improvementInProgress.name() + "turns in progress: " + improvementInProgress.getTurn()); //TODO test if .name work as we want
 
-        if (controller.haveWorker(player, groundNumber)) {
+        if (!controller.haveWorker(player, groundNumber)) {
             System.out.println("404, there's no worker");
             return;
         }

@@ -13,6 +13,7 @@ import Enum.BonusResource;
 import Enum.StrategicResource;
 import Enum.ImprovementType;
 import Enum.TechnologyType;
+import controller.ImprovementSettingController;
 
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
@@ -311,52 +312,12 @@ public class Ground {
         return null;
     }
 
-    public boolean canWeAddThisImprovement(ImprovementType improvementType){
-        Player player=Player.whichPlayerTurnIs();
-        if (improvementType==ImprovementType.FARM){
-            if (this.featureType==FeatureType.FOREST){
-                if (!player.doWeHaveThisTechnology(TechnologyType.MINING)){
-                    return false;
-                }
 
-            }
-            if (this.featureType==FeatureType.JUNGLE){
-                if (!player.doWeHaveThisTechnology(TechnologyType.BRONZE_WORKING)) {
-                    return false;
-                }
-            }
-            if (this.featureType==FeatureType.MARSH){
-                if (!player.doWeHaveThisTechnology(TechnologyType.MASONRY)) {
-                    return false;
-                }
-            }
-        }
-        if (improvementType==ImprovementType.MINE){
-            if (this.featureType==FeatureType.JUNGLE){
-                if (!player.doWeHaveThisTechnology(TechnologyType.BRONZE_WORKING)) {
-                    return false;
-                }
-            }
-            if (this.featureType==FeatureType.MARSH){
-                if (!player.doWeHaveThisTechnology(TechnologyType.MASONRY)) {
-                    return false;
-                }
-            }
-        }
-        if (!player.doWeHaveThisTechnology(improvementType.getTechnologyTypes())) return false;
-        for (int i=0;i<improvementType.getGroundTypes().size();i++){
-            if (this.groundType==improvementType.getGroundTypes().get(i)) return true;
-        }
-        for (int i=0;i<improvementType.getGroundFeatureTypes().size();i++){
-            if (this.getFeatureType()==improvementType.getGroundFeatureTypes().get(i)) return true;
-        }
-        return false;
-    }
 
     public ArrayList<ImprovementType> listOfImprovementTypes(){
         ArrayList<ImprovementType> answer=new ArrayList<>();
         for (ImprovementType improvementType1 : ImprovementType.values()){
-            if (canWeAddThisImprovement(improvementType1)) answer.add(improvementType1);
+            if (ImprovementSettingController.canWeAddThisImprovement(improvementType1, this)) answer.add(improvementType1);
         }
 
         return answer;
