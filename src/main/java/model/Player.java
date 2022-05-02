@@ -44,53 +44,7 @@ public class Player {
     public Player(User user) {
         this.user = user;
         allPlayers.add(this);
-        AllTechnologyTypes.add(new Technology(TechnologyType.AGRICULTURE));
-        AllTechnologyTypes.add(new Technology(TechnologyType.ANIMAL_HUSBANDRY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.ARCHERY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.MINING));
-        AllTechnologyTypes.add(new Technology(TechnologyType.POTTERY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.BRONZE_WORKING));
-        AllTechnologyTypes.add(new Technology(TechnologyType.MASONRY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.THE_WHEEL));
-        AllTechnologyTypes.add(new Technology(TechnologyType.TRAPPING));
-        AllTechnologyTypes.add(new Technology(TechnologyType.WRITING));
-        AllTechnologyTypes.add(new Technology(TechnologyType.CALENDAR));
-        AllTechnologyTypes.add(new Technology(TechnologyType.CONSTRUCTION));
-        AllTechnologyTypes.add(new Technology(TechnologyType.HORSEBACK_RIDING));
-        AllTechnologyTypes.add(new Technology(TechnologyType.MATHEMATICS));
-        AllTechnologyTypes.add(new Technology(TechnologyType.PHILOSOPHY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.IRON_WORKING));
-        AllTechnologyTypes.add(new Technology(TechnologyType.METAL_CASTING));
-        AllTechnologyTypes.add(new Technology(TechnologyType.CURRENCY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.ENGINEERING));
-        AllTechnologyTypes.add(new Technology(TechnologyType.THEOLOGY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.CIVIL_SERVICE));
-        AllTechnologyTypes.add(new Technology(TechnologyType.CHIVALRY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.EDUCATION));
-        AllTechnologyTypes.add(new Technology(TechnologyType.MACHINERY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.PHYSICS));
-        AllTechnologyTypes.add(new Technology(TechnologyType.STEEL));
-        AllTechnologyTypes.add(new Technology(TechnologyType.ACOUSTICS));
-        AllTechnologyTypes.add(new Technology(TechnologyType.BANKING));
-        AllTechnologyTypes.add(new Technology(TechnologyType.PRINTING_PRESS));
-        AllTechnologyTypes.add(new Technology(TechnologyType.GUNPOWDER));
-        AllTechnologyTypes.add(new Technology(TechnologyType.CHEMISTRY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.ECONOMICS));
-        AllTechnologyTypes.add(new Technology(TechnologyType.METALLURGY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.ARCHAEOLOGY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.FERTILIZER));
-        AllTechnologyTypes.add(new Technology(TechnologyType.MILITARY_SCIENCE));
-        AllTechnologyTypes.add(new Technology(TechnologyType.SCIENTIFIC_THEORY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.RIFLING));
-        AllTechnologyTypes.add(new Technology(TechnologyType.BIOLOGY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.STEAM_POWER));
-        AllTechnologyTypes.add(new Technology(TechnologyType.DYNAMITE));
-        AllTechnologyTypes.add(new Technology(TechnologyType.ELECTRICITY));
-        AllTechnologyTypes.add(new Technology(TechnologyType.RAILROAD));
-        AllTechnologyTypes.add(new Technology(TechnologyType.REPLACEABLE_PARTS));
-        AllTechnologyTypes.add(new Technology(TechnologyType.COMBUSTION));
-        AllTechnologyTypes.add(new Technology(TechnologyType.RADIO));
-        AllTechnologyTypes.add(new Technology(TechnologyType.TELEGRAPH));
+        for (TechnologyType technologyType : TechnologyType.values()) AllTechnologyTypes.add(new Technology(technologyType));
 
     }
     public int getFood() {
