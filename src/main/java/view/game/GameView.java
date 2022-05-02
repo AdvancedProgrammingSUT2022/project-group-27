@@ -111,31 +111,10 @@ public class GameView {
             this.run();
 
         }
-        else if (input.matches("technology menu")){
+        else if (input.matches("^technology menu$")){
             Player player=Player.whichPlayerTurnIs();
-            System.out.println("lists of technologies:");
-            for (int i=0;i<player.getTechnologyType().size();i++){
-                System.out.println(player.getTechnologyType().get(i));
-            }
-            System.out.println("list of technologies that can be obtained:");
-            for (int i=0;i<player.technologiesThatCanBeObtained().size();i++){
-                System.out.println(i+1 + " - type: "+player.technologiesThatCanBeObtained().get(i).getTechnologyType()
-                        +"  time remain: "+player.technologiesThatCanBeObtained().get(i).getTimeRemain());
-            }
-            String secondInput=Menu.getScanner().nextLine();
-            if (secondInput.matches("\\d+")){
-                int intInput=Integer.parseInt(secondInput);
-                ArrayList <Technology> technologies=player.technologiesThatCanBeObtained();
-                if (intInput>=1 && intInput<=technologies.size()){
-                    intInput--;
-                    player.setUnderConstructionTechnology(technologies.get(intInput).getTechnologyType());
-                    this.run();
-                }
-            }
-            if (secondInput.equals("end")) this.run();
-            System.out.println(Message.INVALID_COMMAND);
+            new TechnologyMenu(player);
             this.run();
-
         }else {
             System.out.println(Message.INVALID_COMMAND);
             this.run();
