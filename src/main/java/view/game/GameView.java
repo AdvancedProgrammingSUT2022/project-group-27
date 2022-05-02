@@ -74,42 +74,9 @@ public class GameView {
             }
             this.run();
         }
-        else if (input.matches("put improvement in \\d+")){
-            String[] s=input.split(" +");
-            Player player=Player.whichPlayerTurnIs();
-            Ground ground=Ground.getGroundByNumber(Integer.parseInt(s[3]));
-            boolean workerExist=false;
-            for (int i=0;i<player.getUnits().size();i++){
-                if (player.getUnits().get(i).getGround().getNumber()==Integer.parseInt(s[3]) && player.getUnits().get(i) instanceof Worker){
-                    workerExist=true;
-                }
-            }
-            if (!workerExist){
-                System.out.println("404 not worker");
-                this.run();
-            }
-            ArrayList <ImprovementType> list=ground.listOfImprovementTypes();
-            for (int i=0;i<list.size();i++){
-                System.out.println(i+1+"- : " + list.get(i));
-            }
-            String secondInput=Menu.getScanner().nextLine();
-            if (secondInput.matches("\\d+")){
-                int intInput=Integer.parseInt(secondInput);
-                if (intInput>=1 && intInput<=list.size()){
-                    intInput--;
-                    ground.setImprovementTypeInProgress(list.get(intInput));
-                    for (int i=0;i<player.getUnits().size();i++){
-                        if (player.getUnits().get(i).getGround().getNumber()==Integer.parseInt(s[3]) && player.getUnits().get(i) instanceof Worker){
-                            ((Worker) player.getUnits().get(i)).setWorking(true);
-                        }
-                    }
-                    this.run();
-                }
-            }
-            if (secondInput.equals("end")) this.run();
-            System.out.println(Message.INVALID_COMMAND);
-            this.run();
-
+        else if (input.matches((regex = "^put improvement in (?<groundNumber>\\d+)$"))){
+            matcher = controller.findMatcherFromString(input, regex);
+            this.improvementMenu(matcher);
         }
         else if (input.matches("^technology menu$")){
             Player player=Player.whichPlayerTurnIs();
@@ -119,6 +86,14 @@ public class GameView {
             System.out.println(Message.INVALID_COMMAND);
             this.run();
         }
+    }
+
+    private void improvementMenu(Matcher matcher) {
+        Player player=Player.whichPlayerTurnIs();
+        int groundNumber = Integer.parseInt(matcher.group("groundNumber"));
+
+        new ImprovementMenu(player, groundNumber);
+        this.run();
     }
 
     private void moveUnits(Matcher matcher) {
