@@ -290,9 +290,9 @@ public class Player {
     }
     public ArrayList<Technology> technologiesThatCanBeObtained(){
         ArrayList<Technology> answer=new ArrayList<>();
-        for (int i=0;i<AllTechnologyTypes.size();i++){
-            if (doWeHaveThisTechnology(AllTechnologyTypes.get(i).getTechnologyType())) continue;
-            if (canWeAddThisTechnology(AllTechnologyTypes.get(i).getTechnologyType())) answer.add(AllTechnologyTypes.get(i));
+        for (Technology allTechnologyType : AllTechnologyTypes) {
+            if (doWeHaveThisTechnology(allTechnologyType.getTechnologyType())) continue;
+            if (canWeAddThisTechnology(allTechnologyType.getTechnologyType())) answer.add(allTechnologyType);
         }
         return answer;
     }

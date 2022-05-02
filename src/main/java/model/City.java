@@ -18,23 +18,20 @@ public class City {
 
 
     private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
-    private ArrayList<Ground> rangeOfCity=new ArrayList<>();
+    private final ArrayList<Ground> rangeOfCity = new ArrayList<>();
 
     public City(Ground ground, String name, Player player) {
         this.remainedTurnsToBuild = 0;
         this.name = name;
         this.ground = ground;
         this.rangeOfCity.add(ground);
-        for (Ground rangeGround : ground.getAdjacentGrounds()) {
-            this.rangeOfCity.add(rangeGround);
-        }
+        this.rangeOfCity.addAll(ground.getAdjacentGrounds());
         this.player=player;
     }
 
     public void setGold(int gold) {
         this.gold = gold;
     }
-
 
     public Ground getGround() {
         return ground;
@@ -134,6 +131,11 @@ public class City {
             }
         }
         return false;
+    }
+
+    public void increasingCitizens() {
+        Citizen.addCitizen(this);
+        //TODO... do all the things that happen by increasing citizens
     }
 
     public int howMuchFoodIsProduced() {
