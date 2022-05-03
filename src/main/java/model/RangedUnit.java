@@ -10,10 +10,14 @@ public class RangedUnit extends MilitaryUnit{
     public void rangedCombat(Ground ground) {
         MilitaryUnit militaryUnit = ground.getMilitaryUnit();
         UnMilitaryUnit unMilitaryUnit = ground.getUnMilitaryUnit();
-        if (militaryUnit == null && unMilitaryUnit == null)
-            return;
-        if (militaryUnit == null) {
-
-        }
+        double decreasedHp = (this.hp + 10) / 20 * this.militaryType.getRangedCombatStrength();
+        decreasedHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
+        if (militaryUnit.turnsFortified >= 2)
+            decreasedHp /= 2;
+        if (militaryUnit.turnsFortified == 1)
+            decreasedHp *= 0.75;
+        militaryUnit.hp -= decreasedHp;
+        if (militaryUnit.hp <= 0.000001)
+            militaryUnit.removeUnit();
     }
 }

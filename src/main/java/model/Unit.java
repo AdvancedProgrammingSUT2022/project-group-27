@@ -12,6 +12,7 @@ public abstract class Unit {
     protected Ground destination = null;
     protected double mp = 10;
     protected double hp = 10;
+    protected int turnsFortified = 0;
 
     public Unit(Ground ground, Player player, MilitaryType militaryType) {
         this.player = player;
