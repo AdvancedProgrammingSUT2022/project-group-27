@@ -173,4 +173,24 @@ public class City {
             }
         }
     }
+
+    public double getCityStrength() {
+        double cityStrength = (double) this.rangeOfCity.size() / 2;
+        if (this.ground.getMilitaryUnit() != null)
+            cityStrength += 1.5;
+        return cityStrength;
+    }
+
+    public void combat(Ground ground) {
+        MilitaryUnit militaryUnit = ground.getMilitaryUnit();
+        double decreasedHp = this.getCityStrength();
+        decreasedHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
+        if (militaryUnit.turnsFortified >= 2)
+            decreasedHp /= 2;
+        if (militaryUnit.turnsFortified == 1)
+            decreasedHp *= 0.75;
+        militaryUnit.hp -= decreasedHp;
+        if (militaryUnit.hp <= 0.000001)
+            militaryUnit.removeUnit();
+    }
 }
