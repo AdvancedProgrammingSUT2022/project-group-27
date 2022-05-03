@@ -7,9 +7,9 @@ public class RangedUnit extends MilitaryUnit{
         super(ground, player, militaryType);
     }
 
-    public void rangedCombat(Ground ground) {
+    @Override
+    public void combat(Ground ground) {
         MilitaryUnit militaryUnit = ground.getMilitaryUnit();
-        UnMilitaryUnit unMilitaryUnit = ground.getUnMilitaryUnit();
         double decreasedHp = (this.hp + 10) / 20 * this.militaryType.getRangedCombatStrength();
         decreasedHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
         if (militaryUnit.turnsFortified >= 2)
@@ -19,5 +19,9 @@ public class RangedUnit extends MilitaryUnit{
         militaryUnit.hp -= decreasedHp;
         if (militaryUnit.hp <= 0.000001)
             militaryUnit.removeUnit();
+    }
+    @Override
+    public void combat(City city) {
+
     }
 }

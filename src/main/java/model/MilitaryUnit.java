@@ -7,12 +7,8 @@ public abstract class MilitaryUnit extends Unit {
         super(ground, player, militaryType);
     }
 
-    public void combat(Ground ground) {
-
-    }
-    public void combat(City city) {
-
-    }
+    public abstract void combat(Ground ground);
+    public abstract void combat(City city);
     /// agha yadet bashe vaghti sakhtish set player ham bokonim
 
 
