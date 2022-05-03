@@ -5,6 +5,7 @@ import java.util.List;
 
 import Enum.TechnologyType;
 import controller.Game;
+import Enum.MilitaryType;
 
 public class Player {
     private int gold;
@@ -263,6 +264,17 @@ public class Player {
 
     public ArrayList<TechnologyType> getTechnologyType() {
         return technologyType;
+    }
+
+    public int getGoldDifference() {
+        double goldDifference = 0;
+        for (City city : this.getCities()) {
+            goldDifference += city.getGold();
+        }
+        for (Unit unit : this.getUnits()) {
+            goldDifference -= (double) unit.getMilitaryType().getCost() / 100;
+        }
+        return (int) (goldDifference + 0.5);
     }
 
 }

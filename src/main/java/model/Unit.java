@@ -52,6 +52,14 @@ public abstract class Unit {
         return this.militaryType.getTurn();
     }
 
+    public MilitaryType getMilitaryType() {
+        return militaryType;
+    }
+
+    public void setMilitaryType(MilitaryType militaryType) {
+        this.militaryType = militaryType;
+    }
+
     //TODO : vaghti dota shodan dota tabe niyaze
     public void moveUnitToAdjacentGround(Ground ground) {
         decreaseMp(Ground.distanceOfTheseTwoGround(this.ground, ground));

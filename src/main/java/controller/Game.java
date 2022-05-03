@@ -26,11 +26,14 @@ public class Game extends Controller {
 
     public void nextTurn() {
         Player player = Player.whichPlayerTurnIs();
+        player.setGold(player.getGold() + player.getGoldDifference());
         for (int i=0;i<player.getCities().size();i++){
             player.getCities().get(i).setRemainedTurnsToBuild(player.getCities().get(i).getRemainedTurnsToBuild()-1);
             if (player.getCities().get(i).getRemainedTurnsToBuild()==0){
                 UnitController.spawnUnit(player.getCities().get(i));
             }
+
+
         }
         for (int i = 0; i < player.getUnits().size(); i++) {
             player.getUnits().get(i).putMp(10);
