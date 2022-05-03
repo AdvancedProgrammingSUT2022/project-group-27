@@ -7,12 +7,13 @@ public class RangedUnit extends MilitaryUnit{
         super(ground, player, militaryType);
     }
 
-    @Override
-    public void combat(Ground ground) {
+    public void rangedCombat(Ground ground) {
+        MilitaryUnit militaryUnit = ground.getMilitaryUnit();
+        UnMilitaryUnit unMilitaryUnit = ground.getUnMilitaryUnit();
+        if (militaryUnit == null && unMilitaryUnit == null)
+            return;
+        if (militaryUnit == null) {
 
-    }
-    @Override
-    public void combat(City city) {
-
+        }
     }
 }

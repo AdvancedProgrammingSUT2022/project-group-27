@@ -11,6 +11,7 @@ public abstract class Unit {
     protected Player player;
     protected Ground destination = null;
     protected double mp = 10;
+    protected double hp = 10;
 
     public Unit(Ground ground, Player player, MilitaryType militaryType) {
         this.player = player;
@@ -115,6 +116,11 @@ public abstract class Unit {
 
     public void removeUnit() {
         this.player.getUnits().remove(this);
+    }
+
+    public void changeOwner(Player player) {
+        this.getPlayer().getUnits().remove(this);
+        player.getUnits().add(this);
     }
 
 }

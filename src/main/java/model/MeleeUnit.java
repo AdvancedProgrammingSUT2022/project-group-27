@@ -7,12 +7,4 @@ public class MeleeUnit extends MilitaryUnit {
         super(ground, player, militaryType);
     }
 
-    @Override
-    public void combat(Ground ground) {
-
-    }
-    @Override
-    public void combat(City city) {
-
-    }
 }
