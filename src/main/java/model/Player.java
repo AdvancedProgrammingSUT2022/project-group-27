@@ -6,6 +6,7 @@ import java.util.List;
 import Enum.TechnologyType;
 import controller.Game;
 import Enum.MilitaryType;
+import controller.UnitController;
 
 public class Player {
     private int gold;
@@ -213,7 +214,12 @@ public class Player {
     }
 
     public void addCityToThisGround(Ground ground){
-        ///TODO : check UnMilitary Type is Settler
+
+        boolean settlerExist=false;
+        for (Unit unit : this.getUnits()){
+            if (unit instanceof SettlerUnit && unit.ground.getNumber()==ground.getNumber()) settlerExist=true;
+        }
+        if (!settlerExist) return ;
         boolean canWeCreateCity = false;
         for (Ground adjacentGround : ground.getAdjacentGrounds()){
             if (adjacentGround.isInRangeOfCity()) return ;
@@ -228,6 +234,12 @@ public class Player {
             /// TODO : change something;
             City city = new City(ground,"something", this);
             this.cities.add(city);
+        }
+
+        for (int i=0;i<this.getUnits().size();i++){
+            if (this.getUnits().get(i) instanceof SettlerUnit && this.getUnits().get(i).getGround().getNumber()==ground.getNumber()){
+                UnitController.deleteUnit(this.getUnits().get(i));
+            }
         }
 
     }
