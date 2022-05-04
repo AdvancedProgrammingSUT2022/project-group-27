@@ -16,7 +16,8 @@ public class BuildCityController extends CityController{
     public Message buildUnit(City city, String unitName) {
         Unit unit = checkValidationOfUnitName(city, unitName);
         if (unit != null) {
-            //TODO start to create it
+            if (city.getGold() < unit.getCost()) return Message.NOT_ENOUGH_MONEY;
+            city.getListOfUnitsInCity().add(unit);
             return Message.SUCCESS_WORK;
         } else return Message.INVALID_UNIT_NAME;
     }
