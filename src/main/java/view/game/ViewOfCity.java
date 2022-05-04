@@ -3,10 +3,21 @@ package view.game;
 import model.City;
 import model.Player;
 import view.Menu;
+import Enum.*;
 
 import java.util.ArrayList;
 
 public abstract class ViewOfCity {
+    protected void unitListCanBuy(Player player) {
+        System.out.println("unit list: ");
+        for (MilitaryType militaryType: MilitaryType.values()) {
+            if (player.doWeHaveThisTechnology(militaryType.getTechnologyTypes())) {
+                System.out.println("type: " + militaryType.name() + " cost: " + militaryType.getCost() +
+                        " remain time: " + militaryType.getTurn());
+            }
+        }
+    }
+
     protected City whichCityPlayerWant(Player player) {
         ArrayList<City> listOfCities = player.getCities();
         if (listOfCities.size() == 0) {

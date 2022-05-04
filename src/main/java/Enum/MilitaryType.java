@@ -5,64 +5,64 @@ import java.util.List;
 
 public enum MilitaryType {
     WORKER(6, 70, "Civilian", 0, 0, 0, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>()),
+            new ArrayList<StrategicResource>(), null),
     SETTLER(9, 89, "Civilian", 0, 0, 0, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>()),
+            new ArrayList<StrategicResource>(), null),
     ARCHER(6, 70, "Archery", 4, 6, 2, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.ARCHERY))),
+            new ArrayList<StrategicResource>(), TechnologyType.ARCHERY),
     CHARIOTARCHER(5, 60, "Mounted", 3, 6, 2, 4,
-            new ArrayList<StrategicResource>(List.of(StrategicResource.HORSE)), new ArrayList<TechnologyType>(List.of(TechnologyType.THE_WHEEL))),
+            new ArrayList<StrategicResource>(List.of(StrategicResource.HORSE)), TechnologyType.THE_WHEEL),
     SCOUT(4, 25, "Recon", 4, 0, 0, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>()),
+            new ArrayList<StrategicResource>(), null),
     SPEARMAN(4, 50, "Melee", 7, 0, 0, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.BRONZE_WORKING))),
+            new ArrayList<StrategicResource>(), TechnologyType.BRONZE_WORKING),
     WARRIOR(5, 40, "Melee", 6, 0, 0, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>()),
+            new ArrayList<StrategicResource>(), null),
     CATAPULT(6, 100, "Siege", 4, 14, 2, 2,
-            new ArrayList<StrategicResource>(List.of(StrategicResource.IRON)), new ArrayList<TechnologyType>(List.of(TechnologyType.MATHEMATICS))),
+            new ArrayList<StrategicResource>(List.of(StrategicResource.IRON)), TechnologyType.MATHEMATICS),
     HORSEMAN(6, 80, "Mounted", 12, 0, 0, 4,
-            new ArrayList<StrategicResource>(List.of(StrategicResource.HORSE)), new ArrayList<TechnologyType>(List.of(TechnologyType.HORSEBACK_RIDING))),
+            new ArrayList<StrategicResource>(List.of(StrategicResource.HORSE)), TechnologyType.HORSEBACK_RIDING),
     SWORDSMAN(7, 80, "Melee", 11, 0, 0, 2,
-            new ArrayList<StrategicResource>(List.of(StrategicResource.IRON)), new ArrayList<TechnologyType>(List.of(TechnologyType.IRON_WORKING))),
+            new ArrayList<StrategicResource>(List.of(StrategicResource.IRON)), TechnologyType.IRON_WORKING),
     CROSSBOWMAN(7, 120, "Archery", 6, 12, 2, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.MACHINERY))),
+            new ArrayList<StrategicResource>(), TechnologyType.MACHINERY),
     KNIGHT(8, 150, "Mounted", 18, 0, 0, 3,
-            new ArrayList<StrategicResource>(List.of(StrategicResource.HORSE)), new ArrayList<TechnologyType>(List.of(TechnologyType.CHIVALRY))),
+            new ArrayList<StrategicResource>(List.of(StrategicResource.HORSE)), TechnologyType.CHIVALRY),
     LONGSWORDSMAN(8, 150, "Melee", 18, 0, 0, 3,
-            new ArrayList<StrategicResource>(List.of(StrategicResource.IRON)), new ArrayList<TechnologyType>(List.of(TechnologyType.STEEL))),
+            new ArrayList<StrategicResource>(List.of(StrategicResource.IRON)), TechnologyType.STEEL),
     PIKEMAN(7, 100, "Melee", 10, 0, 0, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.CIVIL_SERVICE))),
+            new ArrayList<StrategicResource>(), TechnologyType.CIVIL_SERVICE),
     TREBUCHET(8, 170, "Siege", 6, 20, 2, 2,
-            new ArrayList<StrategicResource>(List.of(StrategicResource.IRON)), new ArrayList<TechnologyType>(List.of(TechnologyType.PHYSICS))),
+            new ArrayList<StrategicResource>(List.of(StrategicResource.IRON)), TechnologyType.PHYSICS),
     CANON(9, 250, "Siege", 10, 26, 2, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.CHEMISTRY))),
+            new ArrayList<StrategicResource>(), TechnologyType.CHEMISTRY),
     CAVALRY(9, 260, "Mounted", 25, 0, 0, 3,
-            new ArrayList<StrategicResource>(List.of(StrategicResource.HORSE)), new ArrayList<TechnologyType>(List.of(TechnologyType.MILITARY_SCIENCE))),
+            new ArrayList<StrategicResource>(List.of(StrategicResource.HORSE)), TechnologyType.MILITARY_SCIENCE),
     LANCER(8, 220, "Mounted", 22, 0, 0, 4,
-            new ArrayList<StrategicResource>(List.of(StrategicResource.HORSE)), new ArrayList<TechnologyType>(List.of(TechnologyType.METALLURGY))),
+            new ArrayList<StrategicResource>(List.of(StrategicResource.HORSE)), TechnologyType.METALLURGY),
     MUSKETMAN(5, 120, "Gunpowder", 16, 0, 0, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.GUNPOWDER))),
+            new ArrayList<StrategicResource>(), TechnologyType.GUNPOWDER),
     RIFLEMAN(7, 200, "Gunpowder", 25, 0, 0, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.RIFLING))),
+            new ArrayList<StrategicResource>(), TechnologyType.RIFLING),
     ANTITANKGUN(9, 300, "Gunpowder", 32, 0, 0, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.REPLACEABLE_PARTS))),
+            new ArrayList<StrategicResource>(), TechnologyType.REPLACEABLE_PARTS),
     ARTILLERY(10, 420, "Siege", 16, 32, 3, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.DYNAMITE))),
+            new ArrayList<StrategicResource>(), TechnologyType.DYNAMITE),
     INFANTRY(10, 300, "Gunpowder", 36, 0, 0, 2,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.REPLACEABLE_PARTS))),
+            new ArrayList<StrategicResource>(), TechnologyType.REPLACEABLE_PARTS),
     PANZER(10, 450, "Armored", 60, 0, 0, 5,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.COMBUSTION))),
+            new ArrayList<StrategicResource>(), TechnologyType.COMBUSTION),
     TANK(9, 450, "Armored", 50, 0, 0, 4,
-            new ArrayList<StrategicResource>(), new ArrayList<TechnologyType>(List.of(TechnologyType.COMBUSTION)));
+            new ArrayList<StrategicResource>(), TechnologyType.COMBUSTION);
 
     private final int turn, cost, combatStrength, rangedCombatStrength, range, movement;
     private final String combatType;
     private final ArrayList<StrategicResource> strategicResources;
-    private final ArrayList<TechnologyType> technologyTypes;
+    private final TechnologyType technologyTypes;
 
 
     MilitaryType(int turn, int cost, String combatType, int combatStrength, int rangedCombatStrength, int range
-            , int movement, ArrayList<StrategicResource> strategicResources, ArrayList<TechnologyType> technologyTypes) {
+            , int movement, ArrayList<StrategicResource> strategicResources, TechnologyType technologyTypes) {
         this.turn = turn;
         this.cost = cost;
         this.combatType = combatType;
@@ -106,7 +106,7 @@ public enum MilitaryType {
         return strategicResources;
     }
 
-    public ArrayList<TechnologyType> getTechnologyTypes() {
+    public TechnologyType getTechnologyTypes() {
         return technologyTypes;
     }
 }

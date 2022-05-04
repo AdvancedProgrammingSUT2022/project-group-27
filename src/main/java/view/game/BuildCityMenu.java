@@ -25,11 +25,11 @@ public class BuildCityMenu extends ViewOfCity{
         String regex;
         Matcher matcher;
         if (input.matches("^exit menu$")) exitMenu();
-        else if (input.matches((regex = "^build unit --unitName (?<unitName>\\S+)$"))) {
+        else if (input.matches((regex = "^build unit ((--unitName)|(-u)) (?<unitName>\\S+)$"))) {
             matcher = controller.findMatcherFromString(input, regex);
             buildUnit(matcher, city);
         }
-        else if (input.matches((regex = "^change production to --nameOfNewProduct (?<newBuild>\\S+)$"))) {
+        else if (input.matches((regex = "^change production to ((--nameOfNewProduct)|(-p)) (?<newBuild>\\S+)$"))) {
             matcher = controller.findMatcherFromString(input, regex);
             changeProduction(matcher, city);
         } else {
@@ -45,13 +45,14 @@ public class BuildCityMenu extends ViewOfCity{
     private void showThingsToBuild(Player player) {
         System.out.println("**Units which you can buy:");
         for (MilitaryType militaryType: MilitaryType.values()) {
-            if (player.doWeHaveThisTechnology(militaryType.getTechnologyTypes().get(0))) { //TODO change technology type to object not arraylist
+            if (player.doWeHaveThisTechnology(militaryType.getTechnologyTypes())) {
                 System.out.println("Unit name: " + militaryType.getCombatType());
             }
         }
     }
 
     private void buildUnit(Matcher matcher, City city) {
+        this.unitListCanBuy(city.getPlayer());
         String unitName = matcher.group("unitName");
         Message message = controller.buildUnit(city, unitName);
         System.out.println(message);

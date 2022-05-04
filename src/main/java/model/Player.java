@@ -232,6 +232,7 @@ public class Player {
 
     }
     public boolean doWeHaveThisTechnology(TechnologyType technologyType){
+        if (technologyType == null) return true;
         for (TechnologyType type : this.technologyType) {
             if (type == technologyType) return true;
         }

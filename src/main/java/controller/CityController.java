@@ -7,7 +7,7 @@ public class CityController extends Controller{
     protected Unit checkValidationOfUnitName(City city, String unitName) {
         MilitaryType unitType = null;
         for (MilitaryType militaryType: MilitaryType.values()) {
-            if (city.getPlayer().doWeHaveThisTechnology(militaryType.getTechnologyTypes().get(0))) { //TODO change technology type to object not arraylist
+            if (city.getPlayer().doWeHaveThisTechnology(militaryType.getTechnologyTypes())) {
                 if (militaryType.getCombatType().equals(unitName)) {
                     unitType = militaryType;
                     break;

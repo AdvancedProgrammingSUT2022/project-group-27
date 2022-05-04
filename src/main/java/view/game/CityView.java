@@ -58,7 +58,7 @@ public class CityView extends ViewOfCity{
     }
 
     private void buy(City city) {
-        //TODO show the list of things to buy and prices
+        this.unitListCanBuy(city.getPlayer());
         String input = Menu.getScanner().nextLine();
         Message message = controller.buyThings(city, input);
         System.out.println(message);
@@ -141,6 +141,7 @@ public class CityView extends ViewOfCity{
     private void showRemainTimes(City city) {
         System.out.println("Technologies which remain:");
         for (Technology technology: city.getPlayer().technologiesThatCanBeObtained()){
+            if (city.getPlayer().getUnderConstructionTechnology() == null) break;
             if (technology.getTechnologyType().name().equals(city.getPlayer().getUnderConstructionTechnology().name()))
                 System.out.println(technology.getTechnologyType().name() + "remain time is: " +
                         technology.getTimeRemain());
