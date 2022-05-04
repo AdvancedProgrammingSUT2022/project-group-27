@@ -9,17 +9,27 @@ import java.util.ArrayList;
 public abstract class ViewOfCity {
     protected City whichCityPlayerWant(Player player) {
         ArrayList<City> listOfCities = player.getCities();
+        if (listOfCities.size() == 0) {
+            System.out.println("Sorry but you don't have any cities:(");
+            return null;
+        }
         this.showTheListOfCities(listOfCities);
-        int index = getTheCityFromUser(listOfCities.size());
+        int index;
+        while ((index = getTheCityFromUser(listOfCities.size())) == 0);
         return listOfCities.get(index - 1);
     }
 
     private int getTheCityFromUser(int maxAmountOfCities) {
         System.out.println("Enter the number of the city you want: ");
-        int index = Menu.getScanner().nextInt();
+        String input = Menu.getScanner().nextLine();
+        if (!input.matches("^\\d+$")) {
+            System.out.println("You enter an invalid input");
+            return 0;
+        }
+        int index = Integer.parseInt(input);
         if (index > maxAmountOfCities || index < 1) {
             System.out.println("You enter an invalid number");
-            this.getTheCityFromUser(maxAmountOfCities);
+            return 0;
         }
 
         return index;

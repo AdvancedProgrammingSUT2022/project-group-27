@@ -15,6 +15,7 @@ public class BuildCityMenu extends ViewOfCity{
     public void buildCityMenu(Player player) {
         System.out.println("Welcome to BuildCity Menu.");
         City choiceCity = whichCityPlayerWant(player);
+        if (choiceCity == null) return;
         this.run(choiceCity);
     }
 

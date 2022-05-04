@@ -1,13 +1,11 @@
 package view.game;
 
 import controller.CityMenuController;
-import model.Citizen;
-import model.City;
-import model.Ground;
-import model.Player;
+import model.*;
 import view.Menu;
 import Enum.Message;
 import Enum.StrategicResource;
+import Enum.TechnologyType;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -19,6 +17,7 @@ public class CityView extends ViewOfCity{
         System.out.println("You enter the menu of cities.");
         System.out.println("Now you can choice the city you want.");
         City choiceCity = whichCityPlayerWant(player);
+        if (choiceCity == null) return;
         this.run(choiceCity);
     }
 
@@ -140,7 +139,18 @@ public class CityView extends ViewOfCity{
     }
 
     private void showRemainTimes(City city) {
-        //TODO... show the time remains to complete technology, buildings, units and new citizen
+        System.out.println("Technologies which remain:");
+        for (Technology technology: city.getPlayer().technologiesThatCanBeObtained()){
+            if (technology.getTechnologyType().name().equals(city.getPlayer().getUnderConstructionTechnology().name()))
+                System.out.println(technology.getTechnologyType().name() + "remain time is: " +
+                        technology.getTimeRemain());
+        }
+
+        System.out.println("Units which remain:");
+        for (Unit unit: city.getListOfUnitsInCity()) {
+            if (unit.getTurn() > 0)
+                System.out.println(unit.getMilitaryType().name() + "remain time is: " + unit.getTurn());
+        }
     }
 
     private void showGrounds(City city) {
