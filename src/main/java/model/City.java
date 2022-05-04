@@ -16,6 +16,7 @@ public class City {
     private MilitaryType buildingUnit;
     private Ground ground;
     private Object construction;
+    private boolean isPuppet = false;
 
     private final ArrayList<Unit> listOfUnitsInCity = new ArrayList<>();
     private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
@@ -36,6 +37,14 @@ public class City {
 
     public Object getConstruction() {
         return construction;
+    }
+
+    public void setPuppet(boolean puppet) {
+        isPuppet = puppet;
+    }
+
+    public boolean isPuppet() {
+        return isPuppet;
     }
 
     public void increaseGold(int amount) {
