@@ -75,7 +75,4 @@ public enum ImprovementType {
     public int getTurn() {
         return turn;
     }
-    public void decreaseTurn(int amount){
-        turn-=amount;
-    }
 }

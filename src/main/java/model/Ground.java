@@ -21,7 +21,7 @@ public class Ground {
     private static ArrayList<Ground> allGround = new ArrayList<>();
     private static HashMap<Integer, Ground> pixelInWhichGround = new HashMap<>();
     private ImprovementType improvementType=null;
-    private ImprovementType improvementTypeInProgress=null;
+    private Improvement improvementTypeInProgress=null;
     private ArrayList<Pair> pixelsOfThisGround = new ArrayList<>();
     private ArrayList<Ground> adjacentGrounds = new ArrayList<>();
     private Player owner;
@@ -257,7 +257,7 @@ public class Ground {
 
     }
 
-    public ImprovementType getImprovementTypeInProgress() {
+    public Improvement getImprovementTypeInProgress() {
         return improvementTypeInProgress;
     }
 
@@ -325,12 +325,12 @@ public class Ground {
 
     public void setImprovementTypeInProgress(ImprovementType improvementTypeInProgress){
         Player player=Player.whichPlayerTurnIs();
-        this.improvementTypeInProgress=improvementTypeInProgress;
-        this.improvementTypeInProgress.setTurn(6);
+        this.improvementTypeInProgress=new Improvement(improvementTypeInProgress,6);
+        System.out.println("test1 : "+this.improvementTypeInProgress.getImprovementType());
         if (improvementTypeInProgress==ImprovementType.FARM){
             if (this.featureType==FeatureType.FOREST){
                 if (player.doWeHaveThisTechnology(TechnologyType.MINING)){
-                    this.improvementTypeInProgress.setTurn(10);
+                    this.improvementTypeInProgress.setTurnRemained(10);
                 }
                 else{
                     this.improvementTypeInProgress=null;
@@ -338,7 +338,7 @@ public class Ground {
             }
             if (this.featureType==FeatureType.JUNGLE){
                 if (player.doWeHaveThisTechnology(TechnologyType.BRONZE_WORKING)){
-                    this.improvementTypeInProgress.setTurn(13);
+                    this.improvementTypeInProgress.setTurnRemained(13);
                 }
                 else{
                     this.improvementTypeInProgress=null;
@@ -346,7 +346,7 @@ public class Ground {
             }
             if (this.featureType==FeatureType.MARSH){
                 if (player.doWeHaveThisTechnology(TechnologyType.MASONRY)){
-                    this.improvementTypeInProgress.setTurn(12);
+                    this.improvementTypeInProgress.setTurnRemained(12);
                 }
                 else{
                     this.improvementTypeInProgress=null;
@@ -355,11 +355,11 @@ public class Ground {
         }
         if (improvementTypeInProgress==ImprovementType.MINE){
             if (this.featureType==FeatureType.FOREST){
-                this.improvementTypeInProgress.setTurn(10);
+                this.improvementTypeInProgress.setTurnRemained(10);
             }
             if (this.featureType==FeatureType.JUNGLE){
                 if (player.doWeHaveThisTechnology(TechnologyType.BRONZE_WORKING)){
-                    this.improvementTypeInProgress.setTurn(13);
+                    this.improvementTypeInProgress.setTurnRemained(13);
                 }
                 else{
                     this.improvementTypeInProgress=null;
@@ -367,21 +367,22 @@ public class Ground {
             }
             if (this.featureType==FeatureType.MARSH){
                 if (player.doWeHaveThisTechnology(TechnologyType.MASONRY)){
-                    this.improvementTypeInProgress.setTurn(12);
+                    this.improvementTypeInProgress.setTurnRemained(12);
                 }
                 else{
                     this.improvementTypeInProgress=null;
                 }
             }
         }
-        if (this.improvementTypeInProgress==null){
+        if (this.improvementTypeInProgress.getImprovementType()==null){
             System.out.println("nemishe");
             //ToDO : bere to controller
         }
     }
 
     public void putImprovementTypeInThisGround(){
-        this.improvementType=improvementTypeInProgress;
+        this.improvementType=improvementTypeInProgress.getImprovementType();
+        System.out.println(this.improvementType);
         this.featureType=FeatureType.NOTHING;
     }
 }

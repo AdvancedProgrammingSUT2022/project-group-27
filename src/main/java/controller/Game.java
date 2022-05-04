@@ -62,8 +62,8 @@ public class Game extends Controller {
                 if (((Worker) player.getUnits().get(i)).getIsWorking()){
                     Ground ground=player.getUnits().get(i).getGround();
                     if (ground.getImprovementTypeInProgress()!=null){
-                        ground.getImprovementTypeInProgress().decreaseTurn(1);
-                        if (ground.getImprovementTypeInProgress().getTurn()==0){
+                        ground.getImprovementTypeInProgress().decreaseAmount(1);
+                        if (ground.getImprovementTypeInProgress().getTurnRemained()==0){
                             ground.putImprovementTypeInThisGround();
                         }
                     }

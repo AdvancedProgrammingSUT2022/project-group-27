@@ -1,11 +1,8 @@
 package view.game;
 
 import controller.ImprovementMenuController;
-import model.Ground;
-import model.Player;
+import model.*;
 import Enum.ImprovementType;
-import model.Unit;
-import model.Worker;
 import view.Menu;
 import Enum.Message;
 
@@ -22,9 +19,9 @@ public class ImprovementMenu {
             return;
         }
 
-        ImprovementType improvementInProgress = ground.getImprovementTypeInProgress();
+        Improvement improvementInProgress = ground.getImprovementTypeInProgress();
         if (improvementInProgress != null) System.out.println("The improvement that you have here is: " +
-                improvementInProgress.name() + "turns in progress: " + improvementInProgress.getTurn()); //TODO test if .name work as we want
+                improvementInProgress.getImprovementType().name() + "turns in progress: " + improvementInProgress.getTurnRemained()); //TODO test if .name work as we want
 
         if (!controller.haveWorker(player, groundNumber)) {
             System.out.println("404, there's no worker");
