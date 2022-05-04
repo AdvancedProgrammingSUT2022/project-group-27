@@ -32,8 +32,6 @@ public class Game extends Controller {
             if (player.getCities().get(i).getRemainedTurnsToBuild()==0){
                 UnitController.spawnUnit(player.getCities().get(i));
             }
-
-
         }
         for (int i = 0; i < player.getUnits().size(); i++) {
             player.getUnits().get(i).putMp(10);
