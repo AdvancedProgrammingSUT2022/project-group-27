@@ -61,7 +61,7 @@ public class BuildCityMenu extends ViewOfCity{
 
     private void changeProduction(Matcher matcher, City city) {
         String productionName = matcher.group("newBuild");
-        Message message = controller.changeProduct(city, productionName);
+        Message message = controller.changeConstruction(city, productionName);
         System.out.println(message);
         this.run(city);
     }

@@ -15,6 +15,7 @@ public class City {
     private int remainedTurnsToBuild;
     private MilitaryType buildingUnit;
     private Ground ground;
+    private Object construction;
 
     private final ArrayList<Unit> listOfUnitsInCity = new ArrayList<>();
     private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
@@ -27,6 +28,14 @@ public class City {
         this.rangeOfCity.add(ground);
         this.rangeOfCity.addAll(ground.getAdjacentGrounds());
         this.player=player;
+    }
+
+    public void changeConstruction(Object construction) {
+        this.construction = construction;
+    }
+
+    public Object getConstruction() {
+        return construction;
     }
 
     public void increaseGold(int amount) {
