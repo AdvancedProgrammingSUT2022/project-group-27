@@ -34,13 +34,19 @@ public class GameView {
         Matcher matcher;
         String regex;
 
-        if (input.matches("^show map$")) {
+        if (input.matches("^exit$")) {
+            this.exit();
+        }
+        else if (input.matches("^show map$")) {
             ShowMap showMap = new ShowMap(Player.whichPlayerTurnIs());
             showMap.run();
             this.run();
-        } else if (input.matches("^next turn \\d+")) {
+        } else if (input.matches("^next turn ((--numberOfTurns)|(-n)) \\d+$")) {
             String[] s=input.split(" +");
-            for (int i=0;i<Integer.parseInt(s[2]);i++) Player.nextTurn();
+            for (int i=0;i<Integer.parseInt(s[3]);i++) Player.nextTurn();
+            this.run();
+        } else if (input.matches("^next turn$")) {
+            Player.nextTurn();
             this.run();
         } else if (input.matches("^move unit .+$")) {
             matcher = controller.getInput("move unit",
@@ -57,24 +63,24 @@ public class GameView {
         } else if (input.matches("^BuildCity menu$")) {
             (new BuildCityMenu()).buildCityMenu(Player.whichPlayerTurnIs());
             this.run();
-        }else if (input.matches("^create city in \\d+$")){
+        }else if (input.matches("^create city in ((--groundNumber)|(-n)) \\d+$")){
             String[] s=input.split(" +");
-            createCity(Integer.parseInt(s[3]));
+            createCity(Integer.parseInt(s[4]));
             this.run();
-        } else if (input.matches("^create worker in \\d+$")){
+        } else if (input.matches("^create worker in ((--groundNumber)|(-n)) \\d+$")){
             String[] s=input.split(" +");
-            createWorker(Integer.parseInt(s[3]));
+            createWorker(Integer.parseInt(s[4]));
             this.run();
         }
-        else if (input.matches("^increase gold \\d+$")){
+        else if (input.matches("^increase gold ((--numberOfGolds)|(-n)) \\d+$")){
             String[] s=input.split(" +");
             Player player=Player.whichPlayerTurnIs();
             for (int i=0;i<player.getCities().size();i++){
-                player.getCities().get(i).increaseGold(Integer.parseInt(s[2]));
+                player.getCities().get(i).increaseGold(Integer.parseInt(s[3]));
             }
             this.run();
         }
-        else if (input.matches((regex = "^put improvement in (?<groundNumber>\\d+)$"))){
+        else if (input.matches((regex = "^put improvement in ((--groundNumber)|(-n)) (?<groundNumber>\\d+)$"))){
             matcher = controller.findMatcherFromString(input, regex);
             this.improvementMenu(matcher);
         }
@@ -86,6 +92,12 @@ public class GameView {
             System.out.println(Message.INVALID_COMMAND);
             this.run();
         }
+    }
+
+    private void exit() {
+        System.out.println("The end");
+        System.out.println("Hope you enjoyed the game");
+        System.out.println("Hope to see you again in an other exiting game:)");
     }
 
     private void improvementMenu(Matcher matcher) {
