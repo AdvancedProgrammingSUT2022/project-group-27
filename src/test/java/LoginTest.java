@@ -12,8 +12,6 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 import Enum.*;
 
-import java.util.ArrayList;
-
 @ExtendWith(MockitoExtension.class)
 public class LoginTest {
 
@@ -45,5 +43,32 @@ public class LoginTest {
         LoginController loginController = LoginController.getInstance();
         Message result = loginController.createUser("arefe", "1234", "pargol");
         Assertions.assertEquals(result, Message.CREATE_USER_SUCCESSFUL);
+    }
+
+    @Test
+    public void testLoginUserIsValid() {
+        new User("a", "a", "a");
+        new User("b", "b", "b");
+        LoginController loginController = LoginController.getInstance();
+        Message result = loginController.loginUser("a", "a");
+        Assertions.assertEquals(result, Message.LOGIN_SUCCESSFUL);
+    }
+
+    @Test
+    public void testLoginUserNotValidUsername() {
+        new User("a", "a", "a");
+        new User("b", "b", "b");
+        LoginController loginController = LoginController.getInstance();
+        Message result = loginController.loginUser("c", "a");
+        Assertions.assertEquals(result, Message.USER_IS_INVALID);
+    }
+
+    @Test
+    public void testLoginUserNotValidPassword() {
+        new User("a", "a", "a");
+        new User("b", "b", "b");
+        LoginController loginController = LoginController.getInstance();
+        Message result = loginController.loginUser("a", "c");
+        Assertions.assertEquals(result, Message.USER_IS_INVALID);
     }
 }
