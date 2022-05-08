@@ -11,6 +11,7 @@ import Enum.FeatureType;
 
 import Enum.BonusResource;
 import Enum.StrategicResource;
+import Enum.LuxuryResource;
 import Enum.ImprovementType;
 import Enum.TechnologyType;
 import controller.ImprovementSettingController;
@@ -32,8 +33,10 @@ public class Ground {
     private boolean isWorkedOn = false;
     private GroundType groundType;
     private FeatureType featureType;
-    private ArrayList<BonusResource> bonusResource=new ArrayList<>();
+    private ArrayList<BonusResource> bonusResource = new ArrayList<>();
     private ArrayList<StrategicResource> strategicResources = new ArrayList<>();
+    private ArrayList<LuxuryResource> luxuryResources = new ArrayList<>();
+    //TODO: luxuryResources to be completed
 
     public ArrayList<Ground> getAdjacentGrounds() {
         return adjacentGrounds;
@@ -113,6 +116,22 @@ public class Ground {
 
     public ArrayList<Pair> getPixelsOfThisGround() {
         return pixelsOfThisGround;
+    }
+
+    public void setBonusResource(ArrayList<BonusResource> bonusResource) {
+        this.bonusResource = bonusResource;
+    }
+
+    public void setStrategicResources(ArrayList<StrategicResource> strategicResources) {
+        this.strategicResources = strategicResources;
+    }
+
+    public ArrayList<LuxuryResource> getLuxuryResources() {
+        return luxuryResources;
+    }
+
+    public void setLuxuryResources(ArrayList<LuxuryResource> luxuryResources) {
+        this.luxuryResources = luxuryResources;
     }
 
     public GroundType getGroundType() {

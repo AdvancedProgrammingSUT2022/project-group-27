@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 import Enum.MilitaryType;
+import Enum.LuxuryResource;
+import Enum.BonusResource;
+import Enum.StrategicResource;
 
 public class City {
     private Player player;
@@ -10,7 +13,7 @@ public class City {
     private int savedFood;
     private int production;
     private int science;
-    private int gold;
+    //private int gold;
     private int income;
     private int remainedTurnsToBuild;
     private MilitaryType buildingUnit;
@@ -47,9 +50,9 @@ public class City {
         return isPuppet;
     }
 
-    public void increaseGold(int amount) {
-        this.gold += amount;
-    }
+    //public void increaseGold(int amount) {
+      //  this.gold += amount;
+   // }
 
     public ArrayList<Unit> getListOfUnitsInCity() {
         return listOfUnitsInCity;
@@ -91,9 +94,9 @@ public class City {
         return science;
     }
 
-    public int getGold() {
-        return gold;
-    }
+    //public int getGold() {
+    //    return gold;
+  //  }
 
     public int getIncome() {
         return income;
@@ -115,9 +118,9 @@ public class City {
         this.remainedTurnsToBuild = remainedTurnsToBuild;
     }
 
-    public void giveMoneyForBuying(int amount) {
-        this.gold -= amount;
-    }
+    //public void giveMoneyForBuying(int amount) {
+   //     this.gold -= amount;
+   // }
 
     public void addGroundToRangeOfCity(Ground ground){
         this.rangeOfCity.add(ground);
@@ -179,18 +182,6 @@ public class City {
         return 0;
     }
 
-    public void updateCityGoldAndFoodAndOtherThings(){
-        for (Ground ground : getRangeOfCity()){
-            this.savedFood+=ground.getGroundType().getFood()+ground.getFeatureType().getFood();
-            this.gold+=ground.getGroundType().getGold()+ground.getFeatureType().getGold();
-            //TODO : other things
-            for (int j=0;j<ground.getBonusResource().size();j++){
-                this.savedFood+=ground.getBonusResource().get(j).getFood();
-                this.gold+=ground.getBonusResource().get(j).getGold();
-                //TODO : other things
-            }
-        }
-    }
 
     public double getCityStrength() {
         double cityStrength = (double) this.rangeOfCity.size() / 2;
@@ -211,4 +202,25 @@ public class City {
         if (militaryUnit.hp <= 0.000001)
             militaryUnit.removeUnit();
     }
+
+    public int getGold() {
+        int gold = 0;
+        for (Ground ground : getRangeOfCity()) {
+            if (ground.isWorkedOn()) {
+                gold += ground.getGroundType().getGold();
+                gold += ground.getFeatureType().getGold();
+                for (LuxuryResource luxuryResource : ground.getLuxuryResources()) {
+                    gold += luxuryResource.getGold();
+                }
+                for (BonusResource bonusResource : ground.getBonusResource()) {
+                    gold += bonusResource.getGold();
+                }
+                for (StrategicResource strategicResource : ground.getStrategicResources()) {
+                    gold += strategicResource.getGold();
+                }
+            }
+        }
+        return gold;
+    }
+
 }

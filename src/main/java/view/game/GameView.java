@@ -75,9 +75,7 @@ public class GameView {
         else if (input.matches("^increase gold ((--numberOfGolds)|(-n)) \\d+$")){
             String[] s=input.split(" +");
             Player player=Player.whichPlayerTurnIs();
-            for (int i=0;i<player.getCities().size();i++){
-                player.getCities().get(i).increaseGold(Integer.parseInt(s[3]));
-            }
+            player.increaseGold(Integer.parseInt(s[3]));
             this.run();
         }
         else if (input.matches((regex = "^put improvement in ((--groundNumber)|(-n)) (?<groundNumber>\\d+)$"))){

@@ -57,7 +57,7 @@ public class CityMenuController extends CityController{
         if (unit != null) {
             if (city.getGold() < unit.getCost()) return Message.NOT_ENOUGH_MONEY;
 
-            city.giveMoneyForBuying(unit.getCost());
+            city.getPlayer().giveMoneyForBuying(unit.getCost());
             city.getListOfUnitsInCity().add(unit);
             return Message.SUCCESS_WORK;
         } else return Message.INVALID_UNIT_NAME;

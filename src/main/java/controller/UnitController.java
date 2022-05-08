@@ -25,13 +25,13 @@ public class UnitController extends Controller {
             System.out.println("WTF");
             return;
         }
-        if (city.getGold() < militaryType.getCost()) {
-            System.out.println("pool kame");
-            return;
-        }
+    //    if (city.getGold() < militaryType.getCost()) {
+     //       System.out.println("pool kame");
+     //       return;
+      //  }
         city.setRemainedTurnsToBuild(militaryType.getTurn());
         city.setBuildingUnit(militaryType);
-        city.giveMoneyForBuying(militaryType.getCost());
+       // city.giveMoneyForBuying(militaryType.getCost());
     }
 
     public static void addUnit(Player player, Ground ground, MilitaryType militaryType) {

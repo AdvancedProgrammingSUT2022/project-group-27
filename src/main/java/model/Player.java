@@ -290,4 +290,7 @@ public class Player {
         return (int) (goldDifference + 0.5);
     }
 
+    public void increaseGold(int amount) {
+        this.gold += amount;
+    }
 }
