@@ -1,9 +1,18 @@
 package controller;
 
 import model.*;
-import Enum.MilitaryType;
+import Enum.*;
 
-public class UnitController {
+public class UnitController extends Controller {
+    public static Message findUnitFromMatcher(int groundNumber, String type) {
+        Ground ground = Ground.getGroundByNumber(groundNumber);
+        if (ground == null) return Message.INVALID_GROUND_NUMBER;
+        if (type.equals("Military") && ground.isFreeOfMilitaryUnit()) return Message.INVALID_TYPE;
+        if (type.equals("UnMilitary") && ground.isFreeOfUnMilitaryUnit()) return Message.INVALID_TYPE;
+        
+        return Message.UNIT_CHOICE_SUCCESSFUL;
+    }
+    
     public static void deleteUnit(Unit unit) {
         Player player = unit.getPlayer();
         player.setGold(player.getGold() + unit.getCost() / 10);
@@ -56,5 +65,20 @@ public class UnitController {
                 return;
             }
         }
+    }
+
+    public static Message established(Unit unit) {
+    }
+
+    public static Message readyToFight(Unit unit) {
+    }
+
+    public static Message readyToRangedFight(Unit unit) {
+    }
+
+    public static Message plundering(Unit unit) {
+    }
+
+    public static String removeOneOrder(Unit unit) {
     }
 }

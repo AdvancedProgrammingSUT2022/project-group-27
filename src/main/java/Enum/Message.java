@@ -28,6 +28,8 @@ public enum Message {
     NO_CITIZEN_ON_GROUND("There is no citizen who works on this ground."),
     BACKING_TO_PREVIOUS_MENU("Ok, backing to previous direction."),
     INVALID_UNIT_NAME("Sorry but the unit you want doesn't exist."),
+    INVALID_TYPE("The type you want is not exist in this ground."),
+    UNIT_CHOICE_SUCCESSFUL("Unit choices successfully"),
     SUCCESS_WORK("Everything happens successfully:)");
 
     private String message;

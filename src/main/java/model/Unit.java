@@ -4,6 +4,7 @@ import view.game.ShowMap;
 
 import static java.lang.Math.min;
 import Enum.MilitaryType;
+import Enum.UnitStatus;
 
 public abstract class Unit {
     protected MilitaryType militaryType;
@@ -13,11 +14,20 @@ public abstract class Unit {
     protected double mp = 10;
     protected double hp = 10;
     protected int turnsFortified = 0;
+    protected UnitStatus status;
 
     public Unit(Ground ground, Player player, MilitaryType militaryType) {
         this.player = player;
         this.ground = ground;
         this.militaryType = militaryType;
+    }
+
+    public UnitStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UnitStatus status) {
+        this.status = status;
     }
 
     public double getMp() {
