@@ -11,7 +11,7 @@ public class City {
     private String name;
     private int power;
     private int savedFood;
-    private int production;
+    //private int production;
     private int science;
     //private int gold;
     private int income;
@@ -86,9 +86,9 @@ public class City {
         return savedFood;
     }
 
-    public int getProduction() {
-        return production;
-    }
+    //public int getProduction() {
+     //   return production;
+   // }
 
     public int getScience() {
         return science;
@@ -221,6 +221,26 @@ public class City {
             }
         }
         return gold;
+    }
+
+    public int getProduction() {
+        int production = 3;
+        for (Ground ground : getRangeOfCity()) {
+            if (ground.isWorkedOn()) {
+                production += ground.getGroundType().getProduction();
+                production += ground.getFeatureType().getProduction();
+                for (LuxuryResource luxuryResource : ground.getLuxuryResources()) {
+                    production += luxuryResource.getProduction();
+                }
+                for (BonusResource bonusResource : ground.getBonusResource()) {
+                    production += bonusResource.getProduction();
+                }
+                for (StrategicResource strategicResource : ground.getStrategicResources()) {
+                    production += strategicResource.getProduction();
+                }
+            }
+        }
+        return production;
     }
 
 }
