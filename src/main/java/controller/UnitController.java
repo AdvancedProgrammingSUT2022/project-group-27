@@ -68,17 +68,22 @@ public class UnitController extends Controller {
     }
 
     public static Message established(Unit unit) {
+        return Message.SUCCESS_WORK;
     }
 
     public static Message readyToFight(Unit unit) {
+        return Message.SUCCESS_WORK;
     }
 
     public static Message readyToRangedFight(Unit unit) {
+        return Message.SUCCESS_WORK;
     }
 
     public static Message plundering(Unit unit) {
+        return Message.SUCCESS_WORK;
     }
 
     public static String removeOneOrder(Unit unit) {
+        return unit.getMilitaryType().name();
     }
 }
