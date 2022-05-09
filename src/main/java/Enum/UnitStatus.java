@@ -13,6 +13,10 @@ public enum UnitStatus {
 
     UnitStatus(String status) {
         this.status = status;
-        System.out.println(status);
+    }
+
+    @Override
+    public String toString() {
+        return status;
     }
 }

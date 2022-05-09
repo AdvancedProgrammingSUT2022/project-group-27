@@ -17,6 +17,7 @@ public class UnitMenu {
         System.out.println("From here you can control your units");
         Unit unit = this.getUnitFromUser(player);
         if (unit != null) this.run(unit);
+        else System.out.println("Sorry but enter invalid command and should exit:(");
     }
 
     private void run(Unit unit) {
@@ -37,6 +38,7 @@ public class UnitMenu {
         else if (input.matches("^delete$")) {
             UnitController.deleteUnit(unit);
             System.out.println("The unit is deleted successfully");
+            isExit = true;
         } else if (input.matches("^exit$")) isExit = true;
         else System.out.println(Message.INVALID_COMMAND);
 
@@ -47,6 +49,7 @@ public class UnitMenu {
         String input = Menu.getScanner().nextLine();
         Matcher matcher = controller.findMatcherFromString(input,
                 "(?<type>((Military)|(UnMilitary))) --groundNumber (?<groundNumber>\\d+)");
+        if (matcher == null) return null;
         return findUnit(matcher, player);
     }
 

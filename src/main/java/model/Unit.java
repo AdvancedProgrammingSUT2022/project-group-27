@@ -28,6 +28,7 @@ public abstract class Unit {
 
     public void setStatus(UnitStatus status) {
         this.status = status;
+        System.out.println(status); //we should put it in view.
     }
 
     public double getMp() {
