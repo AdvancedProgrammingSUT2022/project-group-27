@@ -79,7 +79,12 @@ public class Game extends Controller {
         player.setFood(0);
         /// TODO : otherthings
         for (int i=0;i<player.getCities().size();i++){
-            player.setFood(player.getFood() + player.getFood());
+            City city = player.getCities().get(i);
+            city.setSavedFood(city.getSavedFood() + city.getFoodPerTurn());
+            if (city.getSavedFood() > city.getListOfCitizens().size() * 10) {
+                city.setSavedFood(city.getSavedFood() - city.getListOfCitizens().size() * 10);
+                city.increasingCitizens();
+            }
             player.setScience(player.getScience() + 3);
             //TODO : 1 science for each Citizen
         }

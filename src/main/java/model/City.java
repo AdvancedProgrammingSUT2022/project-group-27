@@ -31,6 +31,7 @@ public class City {
         this.rangeOfCity.add(ground);
         this.rangeOfCity.addAll(ground.getAdjacentGrounds());
         this.player=player;
+        this.increasingCitizens();
     }
 
     public void changeConstruction(Unit construction) {
@@ -258,7 +259,7 @@ public class City {
         return production;
     }
 
-    int getFoodPerTurn() {
+    public int getFoodPerTurn() {
         int food = 3;
         for (Ground ground : getRangeOfCity()) {
             if (ground.isWorkedOn()) {
