@@ -14,7 +14,6 @@ public class City {
     //private int production;
     private int science;
     //private int gold;
-    private int income;
     private RemainedTurns remainedTurnsToBuild = new RemainedTurns(0);
     private MilitaryType buildingUnit = null;
     private Ground ground;
@@ -106,10 +105,6 @@ public class City {
     //public int getGold() {
     //    return gold;
   //  }
-
-    public int getIncome() {
-        return income;
-    }
 
     public MilitaryType getBuildingUnit() {
         return buildingUnit;

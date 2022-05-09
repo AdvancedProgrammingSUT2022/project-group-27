@@ -94,7 +94,7 @@ public class CityView extends ViewOfCity{
         Player player = city.getPlayer();
         System.out.println("Science per turn by this city: " + city.getScience());
         System.out.println("Gold of civilization produced by this city: " + city.getGold());
-        System.out.println("The city incomes: " + city.getIncome());
+        System.out.println("The city production: " + city.getProduction());
         System.out.println("Happiness of civilization: " + player.getHappiness());
         showStrategicResourceOfCity(city);
         this.run(city);
