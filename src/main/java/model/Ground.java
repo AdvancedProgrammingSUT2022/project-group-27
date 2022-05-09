@@ -69,7 +69,12 @@ public class Ground {
     public void addBonusResource(BonusResource bonusResource) {
         this.bonusResource.add(bonusResource);
     }
-
+    public void addLuxuryResource(LuxuryResource luxuryResource) {
+        this.luxuryResources.add(luxuryResource);
+    }
+    public void addStrategicResource(StrategicResource strategicResource) {
+        this.strategicResources.add(strategicResource);
+    }
     public ArrayList<StrategicResource> getStrategicResources() {
         return strategicResources;
     }
@@ -300,14 +305,60 @@ public class Ground {
         }
         return false;
     }
-
+    public Player ownerOfThisGround(){
+        for (int i = 0; i < Player.getAllPlayers().size(); i++){
+            for (int j = 0; j < Player.getAllPlayers().get(i).getCities().size(); j++){
+                for (int k = 0; k < Player.getAllPlayers().get(i).getCities().get(j).getRangeOfCity().size(); k++){
+                    if (this.number == Player.getAllPlayers().get(i).getCities().get(j).getRangeOfCity().get(k).number){
+                        return Player.getAllPlayers().get(i);
+                    }
+                }
+            }
+        }
+        return null;
+    }
     public boolean canWeAddThisBonusResourceToThisGround(BonusResource bonusResource){
         for (int i=0;i<bonusResource.getGroundTypes().size();i++){
-            if (bonusResource.getGroundTypes().get(i)==this.groundType) return false;
+            if (bonusResource.getGroundTypes().get(i)==this.groundType) return true;
         }
         for (int i=0;i<bonusResource.getGroundFeatureTypes().size();i++){
             if (bonusResource.getGroundFeatureTypes().get(i)==this.featureType) return true;
         }
+        return false;
+    }
+    public boolean canWeAddThisLuxuryResourceToThisGround(LuxuryResource luxuryResource){
+        for (int i=0;i<luxuryResource.getGroundTypes().size();i++){
+            if (luxuryResource.getGroundTypes().get(i)==this.groundType) return true;
+        }
+        for (int i=0;i<luxuryResource.getGroundFeatureTypes().size();i++){
+            if (luxuryResource.getGroundFeatureTypes().get(i)==this.featureType) return true;
+        }
+        return false;
+    }
+    public boolean canWeAddThisStrategicResourceToThisGround(StrategicResource strategicResource){
+        for (int i=0;i<strategicResource.getGroundTypes().size();i++){
+            if (strategicResource.getGroundTypes().get(i)==this.groundType) return true;
+        }
+        return false;
+    }
+    public boolean canWeSeeThisStrategicResource(){
+        Player player=this.ownerOfThisGround();
+        System.out.println("mamad1" + (player!=null));
+        if (player==null || this.getStrategicResources().size()==0) return false;
+        if (player.doWeHaveThisTechnology(this.getStrategicResources().get(0).getTechnology())) return true;
+        System.out.println("mamad2");
+        return false;
+    }
+    public boolean canWeUseThisBonusResource(){
+        if (this.bonusResource.size()!=0 &&  this.bonusResource.get(0).getImprovementType()==this.improvementType) return true;
+        return false;
+    }
+    public boolean canWeUseThisStrategicResource(){
+        if (this.strategicResources.size()!=0 &&  this.strategicResources.get(0).getImprovementType()==this.improvementType) return true;
+        return false;
+    }
+    public boolean canWeUseThisLuxuryResource(){
+        if (this.luxuryResources.size()!=0 &&  this.luxuryResources.get(0).getImprovementType()==this.improvementType) return true;
         return false;
     }
 

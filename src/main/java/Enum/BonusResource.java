@@ -1,5 +1,7 @@
 package Enum;
 
+import model.Improvement;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,8 @@ public enum BonusResource {
     SHEEP(2, 0, 0, new ArrayList<>(List.of(GroundType.HILL, GroundType.GRASS_PLOT, GroundType.DESERT,
             GroundType.PLAIN)), new ArrayList<>(), ImprovementType.PASTURE),
     WHEAT(1, 0, 0, new ArrayList<>(List.of(GroundType.PLAIN)), new ArrayList<>(List.of(FeatureType.WATERSHED)),
-            ImprovementType.FARM);
-
+            ImprovementType.FARM),
+    NOTHING(0,0,0,new ArrayList<>(),new ArrayList<>(), null);
     private final int food;
     private final int production;
     private final int gold;

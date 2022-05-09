@@ -9,7 +9,8 @@ public enum StrategicResource {
     HORSE(0, 1, 0, new ArrayList<>(List.of(GroundType.TUNDRA, GroundType.PLAIN, GroundType.GRASS_PLOT)),
             TechnologyType.ANIMAL_HUSBANDRY, ImprovementType.PASTURE),
     IRON(0, 1, 0, new ArrayList<>(List.of(GroundType.TUNDRA, GroundType.PLAIN, GroundType.DESERT,
-            GroundType.HILL, GroundType.GRASS_PLOT, GroundType.SNOW)), TechnologyType.IRON_WORKING, ImprovementType.MINE);
+            GroundType.HILL, GroundType.GRASS_PLOT, GroundType.SNOW)), TechnologyType.IRON_WORKING, ImprovementType.MINE),
+    NOTHING(0,0,0,new ArrayList<>(),null,null);
 
     private final int food;
     private final int production;

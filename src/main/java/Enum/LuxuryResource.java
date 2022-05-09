@@ -23,7 +23,8 @@ public enum LuxuryResource {
     SILVER(0, 0, 2, new ArrayList<>(List.of(GroundType.TUNDRA, GroundType.DESERT, GroundType.HILL)),
             new ArrayList<>(), ImprovementType.MINE),
     SUGAR(0, 0, 2, new ArrayList<>(), new ArrayList<>(List.of(FeatureType.WATERSHED, FeatureType.MARSH)),
-            ImprovementType.AGRICULTURE);
+            ImprovementType.AGRICULTURE),
+    NOTHING(0,0,0,new ArrayList<>(),new ArrayList<>(),null);
 
     private final int food;
     private final int production;

@@ -10,6 +10,9 @@ import static java.lang.Math.min;
 import Enum.FeatureType;
 import Enum.GroundType;
 import Enum.ImprovementType;
+import Enum.BonusResource;
+import Enum.LuxuryResource;
+import Enum.StrategicResource;
 public class ShowMap {
     private GlobalVariables globalVariables = new GlobalVariables();
     private Player player;
@@ -186,9 +189,75 @@ public class ShowMap {
                     showMap[ground.getxLocation() - 1][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "R";
             }
         }
+        showMapBonusResource(player, showMap);
+    }
+    private void showMapBonusResource(Player player, String[][] showMap){
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            Ground ground=Ground.getGroundByNumber(i);
+            for (BonusResource bonusResource:ground.getBonusResource()){
+                if (bonusResource==BonusResource.BANANA)
+                    showMap[ground.getxLocation()][ground.getyLocation()-5] = GlobalVariables.ANSI_GREEN + "B";
+                if (bonusResource==BonusResource.GAZELLE)
+                    showMap[ground.getxLocation()][ground.getyLocation()-5] = GlobalVariables.ANSI_GREEN + "G";
+                if (bonusResource==BonusResource.SHEEP)
+                    showMap[ground.getxLocation()][ground.getyLocation()-5] = GlobalVariables.ANSI_GREEN + "S";
+                if (bonusResource==BonusResource.COW)
+                    showMap[ground.getxLocation()][ground.getyLocation()-5] = GlobalVariables.ANSI_GREEN + "C";
+                if (bonusResource==BonusResource.WHEAT)
+                    showMap[ground.getxLocation()][ground.getyLocation()-5] = GlobalVariables.ANSI_GREEN + "W";
+            }
+        }
+        showMapLuxuryResource(player, showMap);
+    }
+    private void showMapLuxuryResource(Player player, String[][] showMap){
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            Ground ground=Ground.getGroundByNumber(i);
+            for (LuxuryResource luxuryResource:ground.getLuxuryResources()){
+               // if (ground.getImprovementType()!=luxuryResource.getImprovementType()) continue;
+                if (luxuryResource==LuxuryResource.BEKHOOR)
+                    showMap[ground.getxLocation()][ground.getyLocation()+5] = GlobalVariables.ANSI_GREEN + "B";
+                if (luxuryResource==LuxuryResource.COLOR)
+                    showMap[ground.getxLocation()][ground.getyLocation()+5] = GlobalVariables.ANSI_GREEN + "C";
+                if (luxuryResource==LuxuryResource.COTTON)
+                    showMap[ground.getxLocation()][ground.getyLocation()+5] = GlobalVariables.ANSI_RESET + "C";
+                if (luxuryResource==LuxuryResource.FUR)
+                    showMap[ground.getxLocation()][ground.getyLocation()+5] = GlobalVariables.ANSI_GREEN + "F";
+                if (luxuryResource==LuxuryResource.GOLD)
+                    showMap[ground.getxLocation()][ground.getyLocation()+5] = GlobalVariables.ANSI_YELLOW + "G";
+                if (luxuryResource==LuxuryResource.IVORY)
+                    showMap[ground.getxLocation()][ground.getyLocation()+5] = GlobalVariables.ANSI_GREEN + "I";
+                if (luxuryResource==LuxuryResource.MARBLE)
+                    showMap[ground.getxLocation()][ground.getyLocation()+5] = GlobalVariables.ANSI_GREEN + "M";
+                if (luxuryResource==LuxuryResource.SILK)
+                    showMap[ground.getxLocation()][ground.getyLocation()+5] = GlobalVariables.ANSI_GREEN + "S";
+                if (luxuryResource==LuxuryResource.SILVER)
+                    showMap[ground.getxLocation()][ground.getyLocation()+5] = GlobalVariables.ANSI_WHITE + "S";
+                if (luxuryResource==LuxuryResource.STONE)
+                    showMap[ground.getxLocation()][ground.getyLocation()+5] = GlobalVariables.ANSI_RESET + "S";
+                if (luxuryResource==LuxuryResource.SUGAR)
+                    showMap[ground.getxLocation()][ground.getyLocation()+5] = GlobalVariables.ANSI_GREEN + "U";
+            }
+        }
+        showMapStrategicResource(player, showMap);
+    }
+    private void showMapStrategicResource(Player player,String[][] showMap){
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            Ground ground=Ground.getGroundByNumber(i);
+            for (StrategicResource strategicResource:ground.getStrategicResources()){
+                if (!ground.canWeSeeThisStrategicResource()) continue;
+                if (strategicResource==StrategicResource.IRON){
+                    showMap[ground.getxLocation()+5][ground.getyLocation()] = GlobalVariables.ANSI_WHITE + "I";
+                }
+                if (strategicResource==StrategicResource.HORSE){
+                    showMap[ground.getxLocation()+5][ground.getyLocation()] = GlobalVariables.ANSI_WHITE + "H";
+                }
+                if (strategicResource==StrategicResource.COAL){
+                    showMap[ground.getxLocation()+5][ground.getyLocation()] = GlobalVariables.ANSI_WHITE + "C";
+                }
+            }
+        }
         showMapUnit(player, showMap);
     }
-
     private void showMapUnit(Player player, String[][] showMap) {
         for (int i = 0; i < Player.getAllPlayers().size(); i++) {
             if (player.equals(Player.getAllPlayers().get(i))) continue;

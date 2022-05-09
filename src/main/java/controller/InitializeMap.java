@@ -10,18 +10,24 @@ import Enum.GroundType;
 import Enum.FeatureType;
 import Enum.MilitaryType;
 import Enum.BonusResource;
+import Enum.LuxuryResource;
+import Enum.StrategicResource;
+
 public class InitializeMap {
     private ArrayList<User> playerUsers;
 
     public InitializeMap(ArrayList<User> playerUsers) {
         this.playerUsers = playerUsers;
     }
-    public void run(){
+
+    public void run() {
         setFirstGroundsForPlayers();
         setRivers();
         setGroundsType();
         setGroundsAdjacent();
         setBonusType();
+        setLuxuryType();
+        setStrategicType();
     }
 
     private void setGroundsType() {
@@ -62,8 +68,7 @@ public class InitializeMap {
                 if (Ground.getGroundByNumber(i).containRiver())
                     Ground.getGroundByNumber(i).setFeatureType(FeatureType.MARSH);
                 else Ground.getGroundByNumber(i).setFeatureType(FeatureType.JUNGLE);
-            }
-            else{
+            } else {
                 Ground.getGroundByNumber(i).setFeatureType(FeatureType.NOTHING);
             }
         }
@@ -81,6 +86,7 @@ public class InitializeMap {
             River river = new River(Ground.getGroundByNumber(first), Ground.getGroundByNumber(second));
         }
     }
+
     private void setFirstGroundsForPlayers() {
         Random rand = new Random();
         for (User playerUser : playerUsers) {
@@ -97,50 +103,125 @@ public class InitializeMap {
             player.getUnits().add(unMilitaryUnit);
         }
     }
-    private void setGroundsAdjacent(){
-        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
-            for (int j=i+1;j<=GlobalVariables.numberOfTiles;j++){
-                if (Ground.AreTheseTwoGroundAdjacent(Ground.getGroundByNumber(i),Ground.getGroundByNumber(j))){
+
+    private void setGroundsAdjacent() {
+        for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
+            for (int j = i + 1; j <= GlobalVariables.numberOfTiles; j++) {
+                if (Ground.AreTheseTwoGroundAdjacent(Ground.getGroundByNumber(i), Ground.getGroundByNumber(j))) {
                     Ground.getGroundByNumber(i).addGroundToAdjacentGround(Ground.getGroundByNumber(j));
                     Ground.getGroundByNumber(j).addGroundToAdjacentGround(Ground.getGroundByNumber(i));
                 }
             }
         }
     }
-    private void setBonusType(){
-        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+
+    private void setBonusType() {
+        for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
             Random random = new Random();
-           int rand=random.nextInt(0,200);
-           if (rand<40){
-               if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.BANANA)){
-                   System.out.println("yes");
-                   Ground.getGroundByNumber(i).addBonusResource(BonusResource.BANANA);
-               }
-           }
-           else if (rand<80){
-               if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.COW)){
-                   System.out.println("yes");
-                   Ground.getGroundByNumber(i).addBonusResource(BonusResource.COW);
-               }
-           }
-           else if (rand<120){
-               if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.GAZELLE)){
-                   System.out.println("yes");
-                   Ground.getGroundByNumber(i).addBonusResource(BonusResource.GAZELLE);
-               }
-           }
-           else if (rand<160){
-               if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.SHEEP)){
-                   System.out.println("yes");
-                   Ground.getGroundByNumber(i).addBonusResource(BonusResource.SHEEP);
-               }
-           }
-           else if (rand<200){
-               if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.WHEAT)){
-                   System.out.println("yes");
-                   Ground.getGroundByNumber(i).addBonusResource(BonusResource.WHEAT);
-               }
-           }
+            int rand = random.nextInt(0, 200);
+            if (rand < 40) {
+                if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.BANANA)) {
+                    Ground.getGroundByNumber(i).addBonusResource(BonusResource.BANANA);
+                }
+            } else if (rand < 80) {
+                if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.COW)) {
+                    Ground.getGroundByNumber(i).addBonusResource(BonusResource.COW);
+                }
+            } else if (rand < 120) {
+                if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.GAZELLE)) {
+                    Ground.getGroundByNumber(i).addBonusResource(BonusResource.GAZELLE);
+                }
+            } else if (rand < 160) {
+                if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.SHEEP)) {
+                    Ground.getGroundByNumber(i).addBonusResource(BonusResource.SHEEP);
+                }
+            } else if (rand < 200) {
+                if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.WHEAT)) {
+                    Ground.getGroundByNumber(i).addBonusResource(BonusResource.WHEAT);
+                }
+            }
+            if (Ground.getGroundByNumber(i).getBonusResource().size() == 0)
+                Ground.getGroundByNumber(i).addBonusResource(BonusResource.NOTHING);
+        }
+    }
+
+    private void setLuxuryType() {
+        for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
+            Random random = new Random();
+            int rand = random.nextInt(0, 220);
+            if (rand < 20) {
+                if (Ground.getGroundByNumber(i).canWeAddThisLuxuryResourceToThisGround(LuxuryResource.SUGAR)) {
+                    Ground.getGroundByNumber(i).addLuxuryResource(LuxuryResource.SUGAR);
+                }
+            } else if (rand < 40) {
+                if (Ground.getGroundByNumber(i).canWeAddThisLuxuryResourceToThisGround(LuxuryResource.SILK)) {
+                    Ground.getGroundByNumber(i).addLuxuryResource(LuxuryResource.SILK);
+                }
+            } else if (rand < 60) {
+                if (Ground.getGroundByNumber(i).canWeAddThisLuxuryResourceToThisGround(LuxuryResource.SILVER)) {
+                    Ground.getGroundByNumber(i).addLuxuryResource(LuxuryResource.SILVER);
+                }
+            } else if (rand < 80) {
+                if (Ground.getGroundByNumber(i).canWeAddThisLuxuryResourceToThisGround(LuxuryResource.MARBLE)) {
+                    Ground.getGroundByNumber(i).addLuxuryResource(LuxuryResource.MARBLE);
+                }
+            } else if (rand < 100) {
+                if (Ground.getGroundByNumber(i).canWeAddThisLuxuryResourceToThisGround(LuxuryResource.IVORY)) {
+                    Ground.getGroundByNumber(i).addLuxuryResource(LuxuryResource.IVORY);
+                }
+            } else if (rand < 120) {
+                if (Ground.getGroundByNumber(i).canWeAddThisLuxuryResourceToThisGround(LuxuryResource.GOLD)) {
+                    Ground.getGroundByNumber(i).addLuxuryResource(LuxuryResource.GOLD);
+                }
+            } else if (rand < 140) {
+                if (Ground.getGroundByNumber(i).canWeAddThisLuxuryResourceToThisGround(LuxuryResource.FUR)) {
+                    Ground.getGroundByNumber(i).addLuxuryResource(LuxuryResource.FUR);
+                }
+            } else if (rand < 160) {
+                if (Ground.getGroundByNumber(i).canWeAddThisLuxuryResourceToThisGround(LuxuryResource.COTTON)) {
+                    Ground.getGroundByNumber(i).addLuxuryResource(LuxuryResource.COTTON);
+                }
+            } else if (rand < 180) {
+                if (Ground.getGroundByNumber(i).canWeAddThisLuxuryResourceToThisGround(LuxuryResource.COLOR)) {
+                    Ground.getGroundByNumber(i).addLuxuryResource(LuxuryResource.COLOR);
+                }
+            } else if (rand < 200) {
+                if (Ground.getGroundByNumber(i).canWeAddThisLuxuryResourceToThisGround(LuxuryResource.STONE)) {
+                    Ground.getGroundByNumber(i).addLuxuryResource(LuxuryResource.STONE);
+                }
+            } else if (rand < 220) {
+                if (Ground.getGroundByNumber(i).canWeAddThisLuxuryResourceToThisGround(LuxuryResource.BEKHOOR)) {
+                    Ground.getGroundByNumber(i).addLuxuryResource(LuxuryResource.BEKHOOR);
+                }
+            }
+            if (Ground.getGroundByNumber(i).getLuxuryResources().size() == 0)
+                Ground.getGroundByNumber(i).addLuxuryResource(LuxuryResource.NOTHING);
+        }
+    }
+    private void setStrategicType(){
+        for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
+            Random random = new Random();
+            int rand = random.nextInt(0, 150);
+            if (rand<150) {
+                if (Ground.getGroundByNumber(i).canWeAddThisStrategicResourceToThisGround(StrategicResource.HORSE)) {
+                    System.out.println("YES");
+                    Ground.getGroundByNumber(i).addStrategicResource(StrategicResource.HORSE);
+                }
+            }
+            else if (rand < 100) {
+                if (Ground.getGroundByNumber(i).canWeAddThisStrategicResourceToThisGround(StrategicResource.IRON)) {
+                    Ground.getGroundByNumber(i).addStrategicResource(StrategicResource.IRON);
+                }
+            }
+            else if (rand < 150) {
+                if (Ground.getGroundByNumber(i).canWeAddThisStrategicResourceToThisGround(StrategicResource.COAL)) {
+                    Ground.getGroundByNumber(i).addStrategicResource(StrategicResource.COAL);
+                }
+            }
+            else if (Ground.getGroundByNumber(i).getStrategicResources().size()==0){
+                Ground.getGroundByNumber(i).addStrategicResource(StrategicResource.NOTHING);
+            }
+
         }
     }
 }
