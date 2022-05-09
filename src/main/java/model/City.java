@@ -41,6 +41,10 @@ public class City {
         return construction;
     }
 
+    public void setSavedFood(int savedFood) {
+        this.savedFood = savedFood;
+    }
+
     public void setConstruction(Unit construction) {
         this.construction = construction;
         this.remainedTurnsToBuild = construction.getTurnRemainedToComplete();
@@ -252,6 +256,30 @@ public class City {
             }
         }
         return production;
+    }
+
+    int getFoodPerTurn() {
+        int food = 3;
+        for (Ground ground : getRangeOfCity()) {
+            if (ground.isWorkedOn()) {
+                food += ground.getGroundType().getFood();
+                food += ground.getFeatureType().getFood();
+                for (LuxuryResource luxuryResource : ground.getLuxuryResources()) {
+                    food += luxuryResource.getFood();
+                }
+                for (BonusResource bonusResource : ground.getBonusResource()) {
+                    food += bonusResource.getFood();
+                }
+                for (StrategicResource strategicResource : ground.getStrategicResources()) {
+                    food += strategicResource.getFood();
+                }
+            }
+        }
+        food -= listOfCitizens.size() * 2;
+        //TODO: happiness
+        if (food < 0)
+            food = 0;
+        return food;
     }
 
 }
