@@ -22,6 +22,11 @@ public class Player {
     private User user;
     private TechnologyType underConstructionTechnology=null;
     private boolean isAlive = true;
+    private final ArrayList<Notification> notificationHistory = new ArrayList<>();
+
+    public ArrayList<Notification> getNotificationHistory() {
+        return notificationHistory;
+    }
 
     public void setGold(int gold) {
         this.gold = gold;

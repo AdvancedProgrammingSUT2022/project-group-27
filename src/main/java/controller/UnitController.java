@@ -4,11 +4,13 @@ import model.*;
 import Enum.*;
 
 public class UnitController extends Controller {
-    public static Message findUnitFromMatcher(int groundNumber, String type) {
+    public static Message findUnitFromMatcher(int groundNumber, String type, Player player) {
         Ground ground = Ground.getGroundByNumber(groundNumber);
         if (ground == null) return Message.INVALID_GROUND_NUMBER;
-        if (type.equals("Military") && ground.isFreeOfMilitaryUnit()) return Message.INVALID_TYPE;
-        if (type.equals("UnMilitary") && ground.isFreeOfUnMilitaryUnit()) return Message.INVALID_TYPE;
+        if (type.equals("Military") && (ground.isFreeOfMilitaryUnit() || ground.getMilitaryUnit().getPlayer() != player))
+            return Message.INVALID_TYPE;
+        if (type.equals("UnMilitary") && (ground.isFreeOfUnMilitaryUnit() || ground.getUnMilitaryUnit().getPlayer() != player))
+            return Message.INVALID_TYPE;
         
         return Message.UNIT_CHOICE_SUCCESSFUL;
     }

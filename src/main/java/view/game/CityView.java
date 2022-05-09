@@ -5,7 +5,6 @@ import model.*;
 import view.Menu;
 import Enum.Message;
 import Enum.StrategicResource;
-import Enum.TechnologyType;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

@@ -2,6 +2,7 @@ package view.game;
 
 import controller.UnitController;
 import model.Ground;
+import model.Player;
 import model.Unit;
 import view.Menu;
 import Enum.Message;
@@ -11,18 +12,16 @@ import java.util.regex.Matcher;
 
 public class UnitMenu {
     private final UnitController controller = new UnitController();
-    public UnitMenu() {
+    public UnitMenu(Player player) {
         System.out.println("Welcome to unit menu.");
         System.out.println("From here you can control your units");
-        Unit unit = this.getUnitFromUser();
+        Unit unit = this.getUnitFromUser(player);
         if (unit != null) this.run(unit);
     }
 
     private void run(Unit unit) {
-        boolean isNotValidCommand = false;
+        boolean isExit = false;
         String input;
-        String regex;
-        Matcher matcher;
         input = Menu.getScanner().nextLine();
         if (input.matches("^sleep$")) unit.setStatus(UnitStatus.SLEEP);
         else if (input.matches("^ready$")) unit.setStatus(UnitStatus.READY);
@@ -38,25 +37,23 @@ public class UnitMenu {
         else if (input.matches("^delete$")) {
             UnitController.deleteUnit(unit);
             System.out.println("The unit is deleted successfully");
-        } else {
-            System.out.println(Message.INVALID_COMMAND);
-            isNotValidCommand = true;
-        }
+        } else if (input.matches("^exit$")) isExit = true;
+        else System.out.println(Message.INVALID_COMMAND);
 
-        if (!isNotValidCommand) this.run(unit);
+        if (!isExit) this.run(unit);
     }
 
-    private Unit getUnitFromUser() {
+    private Unit getUnitFromUser(Player player) {
         String input = Menu.getScanner().nextLine();
         Matcher matcher = controller.findMatcherFromString(input,
                 "(?<type>((Military)|(UnMilitary))) --groundNumber (?<groundNumber>\\d+)");
-        return findUnit(matcher);
+        return findUnit(matcher, player);
     }
 
-    private Unit findUnit(Matcher matcher) {
+    private Unit findUnit(Matcher matcher, Player player) {
         String type = matcher.group("type");
         int groundNumber = Integer.parseInt(matcher.group("groundNumber"));
-        Message message = UnitController.findUnitFromMatcher(groundNumber, type);
+        Message message = UnitController.findUnitFromMatcher(groundNumber, type, player);
         System.out.println(message);
 
         if (message != Message.UNIT_CHOICE_SUCCESSFUL) return null;

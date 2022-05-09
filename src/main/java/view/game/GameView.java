@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import Enum.MilitaryType;
-import Enum.TechnologyType;
+
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import Enum.ImprovementType;
+
 public class GameView {
     private Game controller;
     private ArrayList<User> playerUsers = new ArrayList<>();
@@ -86,7 +86,11 @@ public class GameView {
             Player player=Player.whichPlayerTurnIs();
             new TechnologyMenu(player);
             this.run();
-        }else {
+        } else if (input.matches("^info$")) {
+            Player player = Player.whichPlayerTurnIs();
+            new Info(player);
+            this.run();
+        } else {
             System.out.println(Message.INVALID_COMMAND);
             this.run();
         }

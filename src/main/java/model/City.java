@@ -18,7 +18,7 @@ public class City {
     private int remainedTurnsToBuild;
     private MilitaryType buildingUnit;
     private Ground ground;
-    private Object construction;
+    private Unit construction; //in the future, we should write a class for constructions and get type here
     private boolean isPuppet = false;
 
     private final ArrayList<Unit> listOfUnitsInCity = new ArrayList<>();
@@ -34,11 +34,11 @@ public class City {
         this.player=player;
     }
 
-    public void changeConstruction(Object construction) {
+    public void changeConstruction(Unit construction) {
         this.construction = construction;
     }
 
-    public Object getConstruction() {
+    public Unit getConstruction() {
         return construction;
     }
 

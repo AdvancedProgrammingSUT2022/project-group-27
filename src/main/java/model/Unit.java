@@ -142,4 +142,8 @@ public abstract class Unit {
         player.getUnits().add(this);
     }
 
+    @Override
+    public String toString() {
+        return "Unit type: " + this.militaryType + " status: " + this.status + " ground number: " + this.ground.getNumber();
+    }
 }
