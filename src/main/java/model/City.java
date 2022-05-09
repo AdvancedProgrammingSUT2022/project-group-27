@@ -223,17 +223,14 @@ public class City {
         int gold = 0;
         for (Ground ground : getRangeOfCity()) {
             if (ground.isWorkedOn()) {
+                if (ground.canWeUseThisLuxuryResource())
+                    gold += ground.getLuxuryResources().get(0).getGold();
+                if (ground.canWeUseThisBonusResource())
+                    gold += ground.getBonusResource().get(0).getGold();
+                if (ground.canWeUseThisStrategicResource())
+                    gold += ground.getStrategicResources().get(0).getGold();
                 gold += ground.getGroundType().getGold();
                 gold += ground.getFeatureType().getGold();
-                for (LuxuryResource luxuryResource : ground.getLuxuryResources()) {
-                    gold += luxuryResource.getGold();
-                }
-                for (BonusResource bonusResource : ground.getBonusResource()) {
-                    gold += bonusResource.getGold();
-                }
-                for (StrategicResource strategicResource : ground.getStrategicResources()) {
-                    gold += strategicResource.getGold();
-                }
             }
         }
         return gold;
@@ -242,18 +239,15 @@ public class City {
     public int getProduction() {
         int production = 3;
         for (Ground ground : getRangeOfCity()) {
+            if (ground.canWeUseThisLuxuryResource())
+                production += ground.getLuxuryResources().get(0).getProduction();
+            if (ground.canWeUseThisBonusResource())
+                production += ground.getBonusResource().get(0).getProduction();
+            if (ground.canWeUseThisStrategicResource())
+                production += ground.getStrategicResources().get(0).getProduction();
             if (ground.isWorkedOn()) {
                 production += ground.getGroundType().getProduction();
                 production += ground.getFeatureType().getProduction();
-                for (LuxuryResource luxuryResource : ground.getLuxuryResources()) {
-                    production += luxuryResource.getProduction();
-                }
-                for (BonusResource bonusResource : ground.getBonusResource()) {
-                    production += bonusResource.getProduction();
-                }
-                for (StrategicResource strategicResource : ground.getStrategicResources()) {
-                    production += strategicResource.getProduction();
-                }
             }
         }
         return production;
@@ -262,23 +256,22 @@ public class City {
     public int getFoodPerTurn() {
         int food = 3;
         for (Ground ground : getRangeOfCity()) {
+            if (ground.canWeUseThisLuxuryResource())
+                food += ground.getLuxuryResources().get(0).getFood();
+            if (ground.canWeUseThisBonusResource())
+                food += ground.getBonusResource().get(0).getFood();
+            if (ground.canWeUseThisStrategicResource())
+                food += ground.getStrategicResources().get(0).getFood();
             if (ground.isWorkedOn()) {
                 food += ground.getGroundType().getFood();
                 food += ground.getFeatureType().getFood();
-                for (LuxuryResource luxuryResource : ground.getLuxuryResources()) {
-                    food += luxuryResource.getFood();
-                }
-                for (BonusResource bonusResource : ground.getBonusResource()) {
-                    food += bonusResource.getFood();
-                }
-                for (StrategicResource strategicResource : ground.getStrategicResources()) {
-                    food += strategicResource.getFood();
-                }
             }
         }
         food -= listOfCitizens.size() * 2;
         //TODO: happiness
         if (food < 0)
+            food = 0;
+        if (this.construction != null && this.construction.getMilitaryType() == MilitaryType.SETTLER)
             food = 0;
         return food;
     }
