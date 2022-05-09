@@ -59,9 +59,9 @@ public abstract class Unit {
         return this.militaryType.getMovement();
     }
 
-    public int getTurn() {
-        return this.militaryType.getTurn();
-    }
+    //public int getTurn() {
+    //    return this.militaryType.getTurn();
+   // }
 
     public MilitaryType getMilitaryType() {
         return militaryType;

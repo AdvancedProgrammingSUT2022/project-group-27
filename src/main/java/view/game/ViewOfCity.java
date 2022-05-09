@@ -12,8 +12,7 @@ public abstract class ViewOfCity {
         System.out.println("unit list: ");
         for (MilitaryType militaryType: MilitaryType.values()) {
             if (player.doWeHaveThisTechnology(militaryType.getTechnologyTypes())) {
-                System.out.println("type: " + militaryType.name() + " cost: " + militaryType.getCost() +
-                        " remain time: " + militaryType.getTurn());
+                System.out.println("type: " + militaryType.name() + " cost: " + militaryType.getCost());
             }
         }
     }

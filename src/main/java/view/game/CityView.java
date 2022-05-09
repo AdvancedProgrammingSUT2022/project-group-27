@@ -148,8 +148,8 @@ public class CityView extends ViewOfCity{
 
         System.out.println("Units which remain:");
         for (Unit unit: city.getListOfUnitsInCity()) {
-            if (unit.getTurn() > 0)
-                System.out.println(unit.getMilitaryType().name() + "remain time is: " + unit.getTurn());
+            //if (unit.getTurn() > 0)
+             //   System.out.println(unit.getMilitaryType().name() + "remain time is: " + unit.getTurn());
         }
     }
 

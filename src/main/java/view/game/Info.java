@@ -35,8 +35,8 @@ public class Info {
             System.out.println("output of food: " + city.getSavedFood());
             System.out.println("science: " + city.getScience());
             System.out.println("gold: " + city.getGold());
-            System.out.println("what is produce: " + city.getConstruction().toString() +
-                    " how much turn: " + city.getConstruction().getTurn());
+            System.out.println("what is being produced: " + city.getConstruction().toString() +
+                    " how much turn: " + city.getRemainedTurnsToBuild());
             System.out.println("***********************");
         }
 

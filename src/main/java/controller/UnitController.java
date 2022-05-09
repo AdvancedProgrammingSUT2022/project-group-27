@@ -24,16 +24,11 @@ public class UnitController extends Controller {
     public static void buildUnit(City city, MilitaryType militaryType) {
         Player player = city.getPlayer();
         if (city.getRemainedTurnsToBuild() > 0) {
-            System.out.println("WTF");
+            System.out.println("Another building is in process");
             return;
         }
-    //    if (city.getGold() < militaryType.getCost()) {
-     //       System.out.println("pool kame");
-     //       return;
-      //  }
-        city.setRemainedTurnsToBuild(militaryType.getTurn());
+        city.setRemainedTurnsToBuild((militaryType.getCost() + city.getProduction() - 1) / city.getProduction());
         city.setBuildingUnit(militaryType);
-       // city.giveMoneyForBuying(militaryType.getCost());
     }
 
     public static void addUnit(Player player, Ground ground, MilitaryType militaryType) {
