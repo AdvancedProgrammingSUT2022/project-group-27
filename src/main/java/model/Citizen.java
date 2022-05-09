@@ -11,7 +11,7 @@ public class Citizen {
     }
 
     public static void addCitizen(City city) {
-        Citizen citizen = new Citizen(city.getListOfCitizens().get(city.getListOfCitizens().size() - 1).getId() + 1);
+        Citizen citizen = new Citizen(city.getListOfCitizens().size() + 1);
         city.getListOfCitizens().add(citizen);
     }
 
