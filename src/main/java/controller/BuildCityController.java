@@ -14,8 +14,10 @@ public class BuildCityController extends CityController{
     }
 
     public Message buildUnit(City city, String unitName) {
+        if (city.getConstruction() != null) return Message.PRODUCTION_IS_ON_PROGRESS;
         Unit unit = checkValidationOfUnitName(city, unitName);
         if (unit != null) {
+            unit.setTurnRemainedToCompleted((unit.getCost() + city.getProduction() - 1) / city.getProduction());
             city.getListOfUnitsInCity().add(unit);
             return Message.SUCCESS_WORK;
         } else return Message.INVALID_UNIT_NAME;

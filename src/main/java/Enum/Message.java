@@ -30,6 +30,7 @@ public enum Message {
     INVALID_UNIT_NAME("Sorry but the unit you want doesn't exist."),
     INVALID_TYPE("The type you want is not exist in this ground."),
     UNIT_CHOICE_SUCCESSFUL("Unit choices successfully"),
+    PRODUCTION_IS_ON_PROGRESS("Sorry but production is in progress."),
     SUCCESS_WORK("Everything happens successfully:)");
 
     private String message;

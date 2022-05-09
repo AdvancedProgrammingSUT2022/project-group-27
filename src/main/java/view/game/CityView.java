@@ -146,10 +146,11 @@ public class CityView extends ViewOfCity{
                         technology.getTimeRemain());
         }
 
-        System.out.println("Units which remain:");
+        System.out.println("Unit which remains:");
+
         for (Unit unit: city.getListOfUnitsInCity()) {
-            //if (unit.getTurn() > 0)
-             //   System.out.println(unit.getMilitaryType().name() + "remain time is: " + unit.getTurn());
+            if (unit.getTurnRemainedToComplete() > 0)
+                System.out.println(unit.getMilitaryType().name() + "remain time is: " + unit.getTurnRemainedToComplete());
         }
     }
 

@@ -15,6 +15,7 @@ public abstract class Unit {
     protected double hp = 10;
     protected int turnsFortified = 0;
     protected UnitStatus status;
+    protected int turnRemainedToCompleted = 0;
 
     public Unit(Ground ground, Player player, MilitaryType militaryType) {
         this.player = player;
@@ -29,6 +30,10 @@ public abstract class Unit {
     public void setStatus(UnitStatus status) {
         this.status = status;
         System.out.println(status); //we should put it in view.
+    }
+
+    public void setTurnRemainedToCompleted(int turnRemainedToCompleted) {
+        this.turnRemainedToCompleted = turnRemainedToCompleted;
     }
 
     public double getMp() {
@@ -141,6 +146,10 @@ public abstract class Unit {
     public void changeOwner(Player player) {
         this.getPlayer().getUnits().remove(this);
         player.getUnits().add(this);
+    }
+
+    public int getTurnRemainedToComplete() {
+        return this.turnRemainedToCompleted;
     }
 
     @Override

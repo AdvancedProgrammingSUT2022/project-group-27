@@ -55,7 +55,7 @@ public class CityMenuController extends CityController{
     public Message buyThings(City city, String whatPlayerWantToBuy) {
         Unit unit = checkValidationOfUnitName(city, whatPlayerWantToBuy);
         if (unit != null) {
-            if (city.getPlayer().getGold() < unit.getCost()) return Message.NOT_ENOUGH_MONEY;
+            if (city.getPlayer().haveEnoughMoney(unit.getCost())) return Message.NOT_ENOUGH_MONEY;
 
             city.getPlayer().giveMoneyForBuying(unit.getCost());
             city.getListOfUnitsInCity().add(unit);
