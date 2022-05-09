@@ -126,6 +126,13 @@ public class City {
    //     this.gold -= amount;
    // }
 
+    public void finishedConstructed() {
+        if (this.construction == null) return;
+
+        listOfUnitsInCity.add(this.construction);
+        this.construction = null;
+    }
+
     public void addGroundToRangeOfCity(Ground ground){
         this.rangeOfCity.add(ground);
         ground.setOwner(this.player);

@@ -8,7 +8,7 @@ public class CityController extends Controller{
         MilitaryType unitType = null;
         for (MilitaryType militaryType: MilitaryType.values()) {
             if (city.getPlayer().doWeHaveThisTechnology(militaryType.getTechnologyTypes())) {
-                if (militaryType.getCombatType().equals(unitName)) {
+                if (militaryType.name().equals(unitName)) {
                     unitType = militaryType;
                     break;
                 }

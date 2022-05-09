@@ -152,6 +152,17 @@ public abstract class Unit {
         return this.turnRemainedToCompleted;
     }
 
+    public static boolean addingUnitFromArrayOfCityToCity(Player player, City city, Unit unit) {
+        if (unit instanceof MilitaryUnit) {
+            if (city.getGround().getMilitaryUnit() != null) return true;
+            player.getUnits().add(unit);
+        } else if (unit instanceof UnMilitaryUnit) {
+            if (city.getGround().getUnMilitaryUnit() != null) return true;
+            player.getUnits().add(unit);
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Unit type: " + this.militaryType + " status: " + this.status + " ground number: " + this.ground.getNumber();

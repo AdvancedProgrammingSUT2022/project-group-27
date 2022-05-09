@@ -4,9 +4,11 @@ public class Notification {
     private final String notification;
     private final int whichTurn;
 
-    public Notification(String notification, int whichTurn) {
+    public Notification(String notification, int whichTurn, Player player) {
         this.notification = notification;
         this.whichTurn = whichTurn;
+        System.out.println(notification);
+        player.getNotificationHistory().add(this);
     }
 
     @Override

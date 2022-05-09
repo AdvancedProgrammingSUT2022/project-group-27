@@ -54,10 +54,12 @@ public class UnitController extends Controller {
     public static void spawnUnit(City city) {
         //note: keep main ground first in range of city
         MilitaryType militaryType = city.getBuildingUnit();
+        if (militaryType == null) return;
         for (Ground ground : city.getRangeOfCity()) {
             if ((militaryType.getCombatType() == "Civilian" && ground.getUnMilitaryUnit() == null) ||
                     (militaryType.getCombatType() != "Civilian" && ground.getMilitaryUnit() == null)) {
                 addUnit(city.getPlayer(), ground, militaryType);
+                city.setBuildingUnit(null);
                 System.out.println(militaryType + " mili");
                 return;
             }

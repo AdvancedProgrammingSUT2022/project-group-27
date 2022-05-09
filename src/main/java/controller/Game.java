@@ -24,15 +24,52 @@ public class Game extends Controller {
         return Game.instance;
     }
 
-    public void nextTurn() {
-        Player player = Player.whichPlayerTurnIs();
-        player.setGold(player.getGold() + player.getGoldDifference());
-        for (int i=0;i<player.getCities().size();i++){
-            player.getCities().get(i).setRemainedTurnsToBuild(player.getCities().get(i).getRemainedTurnsToBuild()-1);
-            if (player.getCities().get(i).getRemainedTurnsToBuild()==0){
-                UnitController.spawnUnit(player.getCities().get(i));
+    private boolean isLimitationOkInCities(Player player) {
+        for (City city: player.getCities()) {
+            if (city.getListOfUnitsInCity().size() > 2) return false;
+            else if (city.getListOfUnitsInCity().size() == 0) continue;
+
+            Unit unit = city.getListOfUnitsInCity().get(0);
+            if (Unit.addingUnitFromArrayOfCityToCity(player, city, unit)) return false;
+
+            if (city.getListOfUnitsInCity().size() == 1) continue;
+
+            unit = city.getListOfUnitsInCity().get(1);
+            if (Unit.addingUnitFromArrayOfCityToCity(player, city, unit)) return false;
+        }
+
+        return true;
+    }
+
+    private boolean decreaseTurnOfConstruction(Player player) {
+        for (City city: player.getCities()) {
+            if (city.getRemainedTurnsToBuild() == 0) continue;
+
+            city.setRemainedTurnsToBuild(city.getRemainedTurnsToBuild() - 1);
+            if (city.getRemainedTurnsToBuild() == 0) {
+                city.finishedConstructed();
+                UnitController.spawnUnit(city);
+                return false;
             }
         }
+        return true;
+    }
+
+    public void nextTurn() {
+        Player player = Player.whichPlayerTurnIs();
+        if (!isLimitationOkInCities(player)) {
+            new Notification("One of your cities doesn't obey the rule of one unit of each type limitation.",
+                    Player.getCounterOfNextRound(), player);
+            return;
+        }
+
+        if (!decreaseTurnOfConstruction(player)) {
+            new Notification("Your construction is finished. So, you should build a new one.",
+                    Player.getCounterOfNextRound(), player);
+            return;
+        }
+
+        player.setGold(player.getGold() + player.getGoldDifference());
         for (int i = 0; i < player.getUnits().size(); i++) {
             player.getUnits().get(i).putMp(10);
             player.getUnits().get(i).checkDestination();
@@ -51,6 +88,7 @@ public class Game extends Controller {
             if (player.getUnderConstructionTechnology() == player.getAllTechnologyTypes().get(i).getTechnologyType()){
                 player.getAllTechnologyTypes().get(i).decreaseTimeRemain(1);
                 if (player.getAllTechnologyTypes().get(i).getTimeRemain()==0){
+                    new Notification("Your research is finished.", Player.getCounterOfNextRound(), player);
                     player.addTechnology(player.getAllTechnologyTypes().get(i).getTechnologyType());
                 }
             }
