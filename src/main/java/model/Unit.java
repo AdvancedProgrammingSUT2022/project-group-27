@@ -15,7 +15,7 @@ public abstract class Unit {
     protected double hp = 10;
     protected int turnsFortified = 0;
     protected UnitStatus status;
-    protected int turnRemainedToCompleted = 0;
+    protected RemainedTurns turnRemainedToCompleted = new RemainedTurns(0);
 
     public Unit(Ground ground, Player player, MilitaryType militaryType) {
         this.player = player;
@@ -33,7 +33,7 @@ public abstract class Unit {
     }
 
     public void setTurnRemainedToCompleted(int turnRemainedToCompleted) {
-        this.turnRemainedToCompleted = turnRemainedToCompleted;
+        this.turnRemainedToCompleted.setTurns(turnRemainedToCompleted);
     }
 
     public double getMp() {
@@ -148,7 +148,7 @@ public abstract class Unit {
         player.getUnits().add(this);
     }
 
-    public int getTurnRemainedToComplete() {
+    public RemainedTurns getTurnRemainedToComplete() {
         return this.turnRemainedToCompleted;
     }
 

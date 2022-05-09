@@ -15,7 +15,7 @@ public class City {
     private int science;
     //private int gold;
     private int income;
-    private int remainedTurnsToBuild;
+    private RemainedTurns remainedTurnsToBuild = new RemainedTurns(0);
     private MilitaryType buildingUnit;
     private Ground ground;
     private Unit construction; //in the future, we should write a class for constructions and get type here
@@ -26,7 +26,6 @@ public class City {
     private final ArrayList<Ground> rangeOfCity = new ArrayList<>();
 
     public City(Ground ground, String name, Player player) {
-        this.remainedTurnsToBuild = 0;
         this.name = name;
         this.ground = ground;
         this.rangeOfCity.add(ground);
@@ -40,6 +39,11 @@ public class City {
 
     public Unit getConstruction() {
         return construction;
+    }
+
+    public void setConstruction(Unit construction) {
+        this.construction = construction;
+        this.remainedTurnsToBuild = construction.getTurnRemainedToComplete();
     }
 
     public void setPuppet(boolean puppet) {
@@ -111,11 +115,11 @@ public class City {
     }
 
     public int getRemainedTurnsToBuild() {
-        return remainedTurnsToBuild;
+        return remainedTurnsToBuild.getTurns();
     }
 
     public void setRemainedTurnsToBuild(int remainedTurnsToBuild) {
-        this.remainedTurnsToBuild = remainedTurnsToBuild;
+        this.remainedTurnsToBuild.setTurns(remainedTurnsToBuild);
     }
 
     //public void giveMoneyForBuying(int amount) {

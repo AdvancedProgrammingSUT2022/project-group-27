@@ -18,7 +18,7 @@ public class BuildCityController extends CityController{
         Unit unit = checkValidationOfUnitName(city, unitName);
         if (unit != null) {
             unit.setTurnRemainedToCompleted((unit.getCost() + city.getProduction() - 1) / city.getProduction());
-            city.getListOfUnitsInCity().add(unit);
+            city.setConstruction(unit);
             return Message.SUCCESS_WORK;
         } else return Message.INVALID_UNIT_NAME;
     }
