@@ -6,13 +6,13 @@ import java.util.List;
 import Enum.TechnologyType;
 import controller.Game;
 import Enum.MilitaryType;
+import Enum.LuxuryResource;
 import controller.UnitController;
 
 public class Player {
     private int gold;
     private int science;
     private int food;
-    private int happiness;
     private static final ArrayList<Player> allPlayers = new ArrayList<>();
     private final ArrayList<City> cities = new ArrayList<>();
     private final ArrayList<Unit> units = new ArrayList<>();
@@ -23,6 +23,15 @@ public class Player {
     private TechnologyType underConstructionTechnology=null;
     private boolean isAlive = true;
     private final ArrayList<Notification> notificationHistory = new ArrayList<>();
+    private ArrayList<LuxuryResource> allLuxuryResources = new ArrayList<LuxuryResource>();
+
+    public ArrayList<LuxuryResource> getAllLuxuryResources() {
+        return allLuxuryResources;
+    }
+
+    public void setAllLuxuryResources(ArrayList<LuxuryResource> allLuxuryResources) {
+        this.allLuxuryResources = allLuxuryResources;
+    }
 
     public ArrayList<Notification> getNotificationHistory() {
         return notificationHistory;
@@ -38,10 +47,6 @@ public class Player {
 
     public void setFood(int food) {
         this.food = food;
-    }
-
-    public void setHappiness(int happiness) {
-        this.happiness = happiness;
     }
 
     private ArrayList<TechnologyType> technologyType=new ArrayList<>();
@@ -64,10 +69,6 @@ public class Player {
 
     public int getScience() {
         return science;
-    }
-
-    public int getHappiness() {
-        return happiness;
     }
 
     public ArrayList<Ground> getClearToSeeGrounds() {
@@ -297,4 +298,19 @@ public class Player {
     public void increaseGold(int amount) {
         this.gold += amount;
     }
+
+    public int getHappiness() {
+        int happiness = 20;
+        int population = 0;
+        happiness -= this.cities.size() * 3;
+        for (City city : cities) {
+            if (city.isPuppet())
+                happiness++;
+            population += city.getListOfCitizens().size();
+        }
+        happiness -= population / 7;
+        happiness += this.allLuxuryResources.size() * 3;
+        return happiness;
+    }
+
 }

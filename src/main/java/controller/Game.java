@@ -3,7 +3,7 @@ package controller;
 import model.*;
 
 import java.util.ArrayList;
-
+import Enum.LuxuryResource;
 import static java.lang.Math.min;
 import static java.lang.Math.max;
 
@@ -75,8 +75,6 @@ public class Game extends Controller {
             player.getUnits().get(i).checkDestination();
         }
 
-        player.setGold(0);
-        player.setFood(0);
         /// TODO : otherthings
         for (int i=0;i<player.getCities().size();i++){
             City city = player.getCities().get(i);
@@ -86,6 +84,20 @@ public class Game extends Controller {
                 city.increasingCitizens();
             }
             player.setScience(player.getScience() + 3);
+            for (Ground ground : city.getRangeOfCity()) {
+                if (ground.canWeUseThisLuxuryResource()) {
+                    LuxuryResource luxuryResource = ground.getLuxuryResources().get(0);
+                    boolean reachedBefore = false;
+                    for (LuxuryResource reachedLuxuryResource : player.getAllLuxuryResources()) {
+                        if (reachedLuxuryResource.equals(luxuryResource)) {
+                            reachedBefore = true;
+                        }
+                    }
+                    if (!reachedBefore)
+                        player.getAllLuxuryResources().add(luxuryResource);
+
+                }
+            }
             //TODO : 1 science for each Citizen
         }
         for (int i=0;i<player.getAllTechnologyTypes().size();i++){
