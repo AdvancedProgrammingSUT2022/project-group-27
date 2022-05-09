@@ -130,7 +130,6 @@ public class City {
         if (this.construction == null) return;
 
         listOfUnitsInCity.add(this.construction);
-        player.getUnits().add(this.construction);
         this.construction = null;
     }
 

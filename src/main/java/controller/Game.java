@@ -30,12 +30,12 @@ public class Game extends Controller {
             else if (city.getListOfUnitsInCity().size() == 0) continue;
 
             Unit unit = city.getListOfUnitsInCity().get(0);
-            if (Unit.addingUnitFromArrayOfCityToCity(player, city, unit)) return false;
+            if (!Unit.addingUnitFromArrayOfCityToCity(player, city, unit)) return false;
 
             if (city.getListOfUnitsInCity().size() == 1) continue;
 
             unit = city.getListOfUnitsInCity().get(1);
-            if (Unit.addingUnitFromArrayOfCityToCity(player, city, unit)) return false;
+            if (!Unit.addingUnitFromArrayOfCityToCity(player, city, unit)) return false;
         }
 
         return true;
