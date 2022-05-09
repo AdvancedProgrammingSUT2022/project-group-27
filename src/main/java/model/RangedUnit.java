@@ -12,7 +12,7 @@ public class RangedUnit extends MilitaryUnit{
         MilitaryUnit militaryUnit = ground.getMilitaryUnit();
         if (militaryUnit == null)
             return;
-        
+
         double decreasedHp = (this.hp + 10) / 20 * this.militaryType.getRangedCombatStrength();
         if (militaryUnit.militaryType.getCombatType() != "Mounted" && militaryUnit.militaryType.getCombatType() != "Siege")
             decreasedHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);

@@ -7,6 +7,7 @@ import Enum.TechnologyType;
 import controller.Game;
 import Enum.MilitaryType;
 import Enum.LuxuryResource;
+import Enum.StrategicResource;
 import controller.UnitController;
 
 public class Player {
@@ -23,7 +24,8 @@ public class Player {
     private TechnologyType underConstructionTechnology=null;
     private boolean isAlive = true;
     private final ArrayList<Notification> notificationHistory = new ArrayList<>();
-    private ArrayList<LuxuryResource> allLuxuryResources = new ArrayList<LuxuryResource>();
+    private ArrayList<LuxuryResource> allLuxuryResources = new ArrayList<>();
+    private ArrayList<StrategicResource> allStrategicResources = new ArrayList<>();
 
     public ArrayList<LuxuryResource> getAllLuxuryResources() {
         return allLuxuryResources;
@@ -31,6 +33,14 @@ public class Player {
 
     public void setAllLuxuryResources(ArrayList<LuxuryResource> allLuxuryResources) {
         this.allLuxuryResources = allLuxuryResources;
+    }
+
+    public ArrayList<StrategicResource> getAllStrategicResources() {
+        return allStrategicResources;
+    }
+
+    public void setAllStrategicResources(ArrayList<StrategicResource> allStrategicResources) {
+        this.allStrategicResources = allStrategicResources;
     }
 
     public ArrayList<Notification> getNotificationHistory() {
@@ -311,6 +321,14 @@ public class Player {
         happiness -= population / 7;
         happiness += this.allLuxuryResources.size() * 3;
         return happiness;
+    }
+
+    public boolean hasStrategicResource(StrategicResource strategicResource) {
+        for (StrategicResource eachStrategicResource : this.allStrategicResources) {
+            if (strategicResource.equals(eachStrategicResource))
+                return true;
+        }
+        return false;
     }
 
 }

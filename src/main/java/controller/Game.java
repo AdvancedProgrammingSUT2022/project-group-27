@@ -4,6 +4,7 @@ import model.*;
 
 import java.util.ArrayList;
 import Enum.LuxuryResource;
+import Enum.StrategicResource;
 import static java.lang.Math.min;
 import static java.lang.Math.max;
 
@@ -95,6 +96,18 @@ public class Game extends Controller {
                     }
                     if (!reachedBefore)
                         player.getAllLuxuryResources().add(luxuryResource);
+
+                }
+                if (ground.canWeUseThisStrategicResource()) {
+                    StrategicResource strategicResource = ground.getStrategicResources().get(0);
+                    boolean reachedBefore = false;
+                    for (StrategicResource reachedStrategicResource : player.getAllStrategicResources()) {
+                        if (reachedStrategicResource.equals(strategicResource)) {
+                            reachedBefore = true;
+                        }
+                    }
+                    if (!reachedBefore)
+                        player.getAllStrategicResources().add(strategicResource);
 
                 }
             }
