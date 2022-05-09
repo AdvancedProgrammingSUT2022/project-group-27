@@ -16,7 +16,7 @@ public class City {
     //private int gold;
     private int income;
     private RemainedTurns remainedTurnsToBuild = new RemainedTurns(0);
-    private MilitaryType buildingUnit;
+    private MilitaryType buildingUnit = null;
     private Ground ground;
     private Unit construction; //in the future, we should write a class for constructions and get type here
     private boolean isPuppet = false;
@@ -130,6 +130,7 @@ public class City {
         if (this.construction == null) return;
 
         listOfUnitsInCity.add(this.construction);
+        player.getUnits().add(this.construction);
         this.construction = null;
     }
 

@@ -187,10 +187,9 @@ public class Player {
     }
 
     public static void nextTurn() {
-        counterOfNextRound++;
         while (!whichPlayerTurnIs().isAlive) counterOfNextRound++;
 
-        Game.getInstance().nextTurn();
+        if (Game.getInstance().nextTurn()) counterOfNextRound++;
     }
 
     public static Player whichPlayerTurnIs() {

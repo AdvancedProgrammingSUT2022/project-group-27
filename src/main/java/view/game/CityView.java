@@ -147,11 +147,10 @@ public class CityView extends ViewOfCity{
         }
 
         System.out.println("Unit which remains:");
-
-        for (Unit unit: city.getListOfUnitsInCity()) {
-            if (unit.getTurnRemainedToComplete().getTurns() > 0)
-                System.out.println(unit.getMilitaryType().name() + "remain time is: " + unit.getTurnRemainedToComplete());
-        }
+        if (city.getConstruction() != null) System.out.println(city.getConstruction().getMilitaryType().name() +
+                "remain time is: " + city.getRemainedTurnsToBuild());
+        if (city.getBuildingUnit() != null) System.out.println(city.getBuildingUnit().name() + "remain time is: " +
+                city.getRemainedTurnsToBuild());
     }
 
     private void showGrounds(City city) {

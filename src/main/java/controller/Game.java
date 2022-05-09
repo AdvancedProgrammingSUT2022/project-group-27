@@ -43,7 +43,7 @@ public class Game extends Controller {
 
     private boolean decreaseTurnOfConstruction(Player player) {
         for (City city: player.getCities()) {
-            if (city.getRemainedTurnsToBuild() == 0) continue;
+            if (city.getRemainedTurnsToBuild() == 0) return false;
 
             city.setRemainedTurnsToBuild(city.getRemainedTurnsToBuild() - 1);
             if (city.getRemainedTurnsToBuild() == 0) {
@@ -55,18 +55,18 @@ public class Game extends Controller {
         return true;
     }
 
-    public void nextTurn() {
+    public boolean nextTurn() {
         Player player = Player.whichPlayerTurnIs();
         if (!isLimitationOkInCities(player)) {
             new Notification("One of your cities doesn't obey the rule of one unit of each type limitation.",
                     Player.getCounterOfNextRound(), player);
-            return;
+            return false;
         }
 
         if (!decreaseTurnOfConstruction(player)) {
             new Notification("Your construction is finished. So, you should build a new one.",
                     Player.getCounterOfNextRound(), player);
-            return;
+            return false;
         }
 
         player.setGold(player.getGold() + player.getGoldDifference());
@@ -106,6 +106,7 @@ public class Game extends Controller {
                 }
             }
         }
+        return true;
     }
 
     private void createMap() {

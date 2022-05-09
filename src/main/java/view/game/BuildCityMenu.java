@@ -21,6 +21,7 @@ public class BuildCityMenu extends ViewOfCity{
 
     private void run(City city) {
         this.showThingsToBuild(city.getPlayer());
+        this.unitListCanBuy(city.getPlayer());
         String input =  Menu.getScanner().nextLine();
         String regex;
         Matcher matcher;
@@ -52,7 +53,6 @@ public class BuildCityMenu extends ViewOfCity{
     }
 
     private void buildUnit(Matcher matcher, City city) {
-        this.unitListCanBuy(city.getPlayer());
         String unitName = matcher.group("unitName");
         Message message = controller.buildUnit(city, unitName);
         System.out.println(message);
