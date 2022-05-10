@@ -16,6 +16,8 @@ public abstract class Unit {
     protected int turnsFortified = 0;
     protected UnitStatus status;
     protected RemainedTurns turnRemainedToCompleted = new RemainedTurns(0);
+    protected boolean isSleeping = false;
+    protected boolean hasDoneSomething = false;
 
     public Unit(Ground ground, Player player, MilitaryType militaryType) {
         this.player = player;
@@ -58,6 +60,22 @@ public abstract class Unit {
 
     public int getCost() {
         return this.militaryType.getCost();
+    }
+
+    public boolean isSleeping() {
+        return isSleeping;
+    }
+
+    public void setSleeping(boolean sleeping) {
+        isSleeping = sleeping;
+    }
+
+    public boolean HasDoneSomething() {
+        return hasDoneSomething;
+    }
+
+    public void setHasDoneSomething(boolean hasDoneSomething) {
+        this.hasDoneSomething = hasDoneSomething;
     }
 
     public int getMovement() {
