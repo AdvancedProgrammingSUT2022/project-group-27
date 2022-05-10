@@ -12,7 +12,7 @@ public class City {
     private int power;
     private int savedFood;
     //private int production;
-    private int science;
+    //private int science;
     //private int gold;
     private RemainedTurns remainedTurnsToBuild = new RemainedTurns(0);
     private MilitaryType buildingUnit = null;
@@ -98,9 +98,9 @@ public class City {
      //   return production;
    // }
 
-    public int getScience() {
-        return science;
-    }
+    //public int getScience() {
+  //      return science;
+   // }
 
     //public int getGold() {
     //    return gold;
@@ -269,6 +269,12 @@ public class City {
         if (this.construction != null && this.construction.getMilitaryType() == MilitaryType.SETTLER)
             food = 0;
         return food;
+    }
+
+    public int getScience() {
+        int science = 5;
+        science += this.listOfCitizens.size();
+        return science;
     }
 
 }

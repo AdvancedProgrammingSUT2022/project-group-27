@@ -84,7 +84,6 @@ public class Game extends Controller {
                 city.setSavedFood(city.getSavedFood() - city.getListOfCitizens().size() * 10);
                 city.increasingCitizens();
             }
-            player.setScience(player.getScience() + 3);
             for (Ground ground : city.getRangeOfCity()) {
                 if (ground.canWeUseThisLuxuryResource()) {
                     LuxuryResource luxuryResource = ground.getLuxuryResources().get(0);

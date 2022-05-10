@@ -12,7 +12,7 @@ import controller.UnitController;
 
 public class Player {
     private int gold;
-    private int science;
+    //private int science;
     private int food;
     private static final ArrayList<Player> allPlayers = new ArrayList<>();
     private final ArrayList<City> cities = new ArrayList<>();
@@ -51,9 +51,9 @@ public class Player {
         this.gold = gold;
     }
 
-    public void setScience(int science) {
-        this.science = science;
-    }
+   // public void setScience(int science) {
+    //    this.science = science;
+   // }
 
     public void setFood(int food) {
         this.food = food;
@@ -77,9 +77,9 @@ public class Player {
         return gold;
     }
 
-    public int getScience() {
-        return science;
-    }
+  //  public int getScience() {
+  //      return science;
+   // }
 
     public ArrayList<Ground> getClearToSeeGrounds() {
         return clearToSeeGrounds;
@@ -329,6 +329,14 @@ public class Player {
                 return true;
         }
         return false;
+    }
+
+    public int getScience() {
+        int science = 0;
+        for (City city : this.cities) {
+            science += city.getScience();
+        }
+        return science;
     }
 
 }
