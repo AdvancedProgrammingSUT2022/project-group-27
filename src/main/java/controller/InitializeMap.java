@@ -202,9 +202,8 @@ public class InitializeMap {
         for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
             Random random = new Random();
             int rand = random.nextInt(0, 150);
-            if (rand<150) {
+            if (rand<50) {
                 if (Ground.getGroundByNumber(i).canWeAddThisStrategicResourceToThisGround(StrategicResource.HORSE)) {
-                    System.out.println("YES");
                     Ground.getGroundByNumber(i).addStrategicResource(StrategicResource.HORSE);
                 }
             }

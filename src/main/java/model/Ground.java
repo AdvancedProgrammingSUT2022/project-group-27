@@ -343,10 +343,8 @@ public class Ground {
     }
     public boolean canWeSeeThisStrategicResource(){
         Player player=this.ownerOfThisGround();
-        System.out.println("mamad1" + (player!=null));
         if (player==null || this.getStrategicResources().size()==0) return false;
         if (player.doWeHaveThisTechnology(this.getStrategicResources().get(0).getTechnology())) return true;
-        System.out.println("mamad2");
         return false;
     }
     public boolean canWeUseThisBonusResource(){

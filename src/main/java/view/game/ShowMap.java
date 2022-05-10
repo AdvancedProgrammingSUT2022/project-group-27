@@ -192,8 +192,8 @@ public class ShowMap {
         showMapBonusResource(player, showMap);
     }
     private void showMapBonusResource(Player player, String[][] showMap){
-        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
-            Ground ground=Ground.getGroundByNumber(i);
+        for (int i = 0; i < player.getClearToSeeGrounds().size(); i++) {
+            Ground ground=Ground.getGroundByNumber(player.getClearToSeeGrounds().get(i).getNumber());
             for (BonusResource bonusResource:ground.getBonusResource()){
                 if (bonusResource==BonusResource.BANANA)
                     showMap[ground.getxLocation()][ground.getyLocation()-5] = GlobalVariables.ANSI_GREEN + "B";
@@ -210,8 +210,8 @@ public class ShowMap {
         showMapLuxuryResource(player, showMap);
     }
     private void showMapLuxuryResource(Player player, String[][] showMap){
-        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
-            Ground ground=Ground.getGroundByNumber(i);
+        for (int i = 0; i < player.getClearToSeeGrounds().size(); i++) {
+            Ground ground=Ground.getGroundByNumber(player.getClearToSeeGrounds().get(i).getNumber());
             for (LuxuryResource luxuryResource:ground.getLuxuryResources()){
                // if (ground.getImprovementType()!=luxuryResource.getImprovementType()) continue;
                 if (luxuryResource==LuxuryResource.BEKHOOR)
@@ -241,18 +241,18 @@ public class ShowMap {
         showMapStrategicResource(player, showMap);
     }
     private void showMapStrategicResource(Player player,String[][] showMap){
-        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
-            Ground ground=Ground.getGroundByNumber(i);
+        for (int i = 0; i < player.getClearToSeeGrounds().size(); i++) {
+            Ground ground=Ground.getGroundByNumber(player.getClearToSeeGrounds().get(i).getNumber());
             for (StrategicResource strategicResource:ground.getStrategicResources()){
                 if (!ground.canWeSeeThisStrategicResource()) continue;
                 if (strategicResource==StrategicResource.IRON){
-                    showMap[ground.getxLocation()+5][ground.getyLocation()] = GlobalVariables.ANSI_WHITE + "I";
+                    showMap[ground.getxLocation()+2][ground.getyLocation()] = GlobalVariables.ANSI_WHITE + "I";
                 }
                 if (strategicResource==StrategicResource.HORSE){
-                    showMap[ground.getxLocation()+5][ground.getyLocation()] = GlobalVariables.ANSI_WHITE + "H";
+                    showMap[ground.getxLocation()+2][ground.getyLocation()] = GlobalVariables.ANSI_WHITE + "H";
                 }
                 if (strategicResource==StrategicResource.COAL){
-                    showMap[ground.getxLocation()+5][ground.getyLocation()] = GlobalVariables.ANSI_WHITE + "C";
+                    showMap[ground.getxLocation()+2][ground.getyLocation()] = GlobalVariables.ANSI_WHITE + "C";
                 }
             }
         }
