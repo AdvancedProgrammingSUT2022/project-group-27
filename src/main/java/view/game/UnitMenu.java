@@ -27,7 +27,7 @@ public class UnitMenu {
         if (input.matches("^sleep$")) unit.setStatus(UnitStatus.SLEEP);
         else if (input.matches("^ready$")) unit.setStatus(UnitStatus.READY);
         else if (input.matches("^improving$")) unit.setStatus(UnitStatus.IMPROVING);
-        else if (input.matches("^improvinf for health$")) unit.setStatus(UnitStatus.HEALTH_IMPROVING);
+        else if (input.matches("^improving for health$")) unit.setStatus(UnitStatus.HEALTH_IMPROVING);
         else if (input.matches("^stablished$")) System.out.println(UnitController.established(unit));
         else if (input.matches("^ready to fight$")) System.out.println(UnitController.readyToFight(unit));
         else if (input.matches("^ready to ranged fight$")) System.out.println(UnitController.readyToRangedFight(unit));
