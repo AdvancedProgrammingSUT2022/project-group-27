@@ -263,7 +263,8 @@ public class City {
             }
         }
         food -= listOfCitizens.size() * 2;
-        //TODO: happiness
+        if (this.player.getHappiness() < 0)
+            food /= 3;
         if (food < 0)
             food = 0;
         if (this.construction != null && this.construction.getMilitaryType() == MilitaryType.SETTLER)
