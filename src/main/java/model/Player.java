@@ -336,6 +336,8 @@ public class Player {
         for (City city : this.cities) {
             science += city.getScience();
         }
+        if (this.gold < 0)
+            science = 0;
         return science;
     }
 

@@ -71,6 +71,8 @@ public class Game extends Controller {
         }
 
         player.setGold(player.getGold() + player.getGoldDifference());
+        if (player.getGold() < 0)
+            player.setGold(0);
         for (int i = 0; i < player.getUnits().size(); i++) {
             player.getUnits().get(i).putMp(10);
             player.getUnits().get(i).checkDestination();
