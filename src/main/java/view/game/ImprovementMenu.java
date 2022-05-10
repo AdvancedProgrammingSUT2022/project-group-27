@@ -36,8 +36,9 @@ public class ImprovementMenu {
     private void run(Ground ground, Player player, ArrayList<ImprovementType> list) {
         String secondInput= Menu.getScanner().nextLine();
 
-        if (secondInput.matches("^\\d+$")){
-            int intInput = Integer.parseInt(secondInput);
+        if (secondInput.matches("^((--number)|(-n)) \\d+$")){
+            String[] strings = secondInput.split(" +");
+            int intInput = Integer.parseInt(strings[1]);
             if (intInput >= 1 && intInput <= list.size()){
                 ground.setImprovementTypeInProgress(list.get(intInput - 1));
                 for (Unit unit: player.getUnits()){

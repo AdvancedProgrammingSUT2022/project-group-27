@@ -48,7 +48,7 @@ public class UnitMenu {
     private Unit getUnitFromUser(Player player) {
         String input = Menu.getScanner().nextLine();
         Matcher matcher = controller.findMatcherFromString(input,
-                "(?<type>((Military)|(UnMilitary))) --groundNumber (?<groundNumber>\\d+)");
+                "(?<type>((Military)|(UnMilitary))) ((--groundNumber)|(-n)) (?<groundNumber>\\d+)");
         if (matcher == null) return null;
         return findUnit(matcher, player);
     }

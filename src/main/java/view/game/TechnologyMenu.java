@@ -18,8 +18,9 @@ public class TechnologyMenu {
     private void run(Player player) {
         String secondInput= Menu.getScanner().nextLine();
 
-        if (secondInput.matches("^\\d+$")){
-            int intInput = Integer.parseInt(secondInput);
+        if (secondInput.matches("^((--number)|(-n)) \\d+$")){
+            String[] strings = secondInput.split(" +");
+            int intInput = Integer.parseInt(strings[1]);
             ArrayList<Technology> technologies = player.technologiesThatCanBeObtained();
             if (intInput >= 1 && intInput <= technologies.size()){
                 intInput--;

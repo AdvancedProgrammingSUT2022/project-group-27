@@ -34,10 +34,10 @@ public class CityView extends ViewOfCity{
         else if (input.matches("^how far it remains$")) {
             this.showRemainTimes(city);
             this.run(city);
-        } else if (input.matches((regex = "^lock a citizen to ground --groundNumber (?<groundNumber>\\d+)$"))) {
+        } else if (input.matches((regex = "^lock a citizen to ground ((--groundNumber)|(-n)) (?<groundNumber>\\d+)$"))) {
             matcher = controller.findMatcherFromString(input, regex);
             this.lockCitizen(matcher, city);
-        } else if (input.matches((regex = "^remove a citizen from work of --groundNumber (?<groundNumber>\\d+)$"))) {
+        } else if (input.matches((regex = "^remove a citizen from work of ((--groundNumber)|(-n)) (?<groundNumber>\\d+)$"))) {
             matcher = controller.findMatcherFromString(input, regex);
             this.removeFromWork(matcher, city);
         } else if (input.matches("^output of city$")) this.showOutputOfCity(city);
