@@ -118,8 +118,8 @@ public class Game extends Controller {
             if (player.getUnderConstructionTechnology() == player.getAllTechnologyTypes().get(i).getTechnologyType()){
                 player.getAllTechnologyTypes().get(i).decreaseTimeRemain(1);
                 if (player.getAllTechnologyTypes().get(i).getTimeRemain()==0){
-                    new Notification("Your research is finished.", Player.getCounterOfNextRound(), player);
                     player.addTechnology(player.getAllTechnologyTypes().get(i).getTechnologyType());
+                    new Notification("Your research is finished.", Player.getCounterOfNextRound(), player);
                 }
             }
         }
