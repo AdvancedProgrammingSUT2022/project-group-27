@@ -27,10 +27,10 @@ import java.lang.reflect.Method;
 
 @ExtendWith(MockitoExtension.class)
 public class MainMenuTest {
+    MainMenu menu = spy(MainMenu.class);
 
     @Test
     public void navigationTestForFalse() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        MainMenu menu = spy(MainMenu.class);
         doNothing().when(menu).run();
         Method method = MainMenu.class.getDeclaredMethod("enterMenu", String.class);
         method.setAccessible(true);
@@ -42,7 +42,6 @@ public class MainMenuTest {
 
     @Test
     public void navigationTestForGameMenu() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        MainMenu menu = spy(MainMenu.class);
         doNothing().when(menu).run();
 
         Method method = MainMenu.class.getDeclaredMethod("enterMenu", String.class);
@@ -56,11 +55,11 @@ public class MainMenuTest {
 
         method.invoke(menu, "Game_Menu");
         verify(GameMenu.getInstance());
+        gameMenu.close();
     }
 
     @Test
     public void navigationTestForProfile() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        MainMenu menu = spy(MainMenu.class);
         doNothing().when(menu).run();
 
         Method method = MainMenu.class.getDeclaredMethod("enterMenu", String.class);
@@ -74,6 +73,7 @@ public class MainMenuTest {
 
         method.invoke(menu, "Profile_Menu");
         verify(ProfileMenu.getInstance());
+        profileMenu.close();
     }
 
     @AfterEach
