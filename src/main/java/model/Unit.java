@@ -16,9 +16,6 @@ public abstract class Unit {
     protected int turnsFortified = 0;
     protected UnitStatus status = UnitStatus.AWAKE;
     protected RemainedTurns turnRemainedToCompleted = new RemainedTurns(0);
-    protected int combatStrength = 0;
-    protected int rangedStrength = 0;
-    protected int rangeOfCombat = 0;
     //protected boolean isSleeping = false;
     //protected boolean hasDoneSomething = false;
 
@@ -36,24 +33,12 @@ public abstract class Unit {
         this.hp = hp;
     }
 
-    public void setCombatStrength(int combatStrength) {
-        this.combatStrength = combatStrength;
+    public void setTurnsFortified(int turnsFortified) {
+        this.turnsFortified = turnsFortified;
     }
 
-    public void setRangedStrength(int rangedStrength) {
-        this.rangedStrength = rangedStrength;
-    }
-
-    public int getRangeOfCombat() {
-        return rangeOfCombat;
-    }
-
-    public int getCombatStrength() {
-        return combatStrength;
-    }
-
-    public int getRangedStrength() {
-        return rangedStrength;
+    public int getTurnsFortified() {
+        return turnsFortified;
     }
 
     public UnitStatus getStatus() {
@@ -75,6 +60,9 @@ public abstract class Unit {
 
     public void setDestination(Ground ground) {
         this.destination = ground;
+        if (ground != null) {
+            if (!this.status.equals(UnitStatus.AWAKE)) this.status = UnitStatus.AWAKE;
+        }
     }
 
     public void putMp(double amount) {

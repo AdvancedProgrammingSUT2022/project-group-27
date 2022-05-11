@@ -8,9 +8,6 @@ public abstract class MilitaryUnit extends Unit {
 
     public MilitaryUnit(Ground ground, Player player, MilitaryType militaryType) {
         super(ground, player, militaryType);
-        this.combatStrength = militaryType.getCombatStrength();
-        this.rangedStrength = militaryType.getRangedCombatStrength();
-        this.rangeOfCombat = militaryType.getRange();
     }
 
     public void setReadyToFight(boolean readyToFight) {

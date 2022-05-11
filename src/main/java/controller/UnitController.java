@@ -32,12 +32,12 @@ public class UnitController extends Controller {
     }
 
     public static void addUnit(Player player, Ground ground, MilitaryType militaryType) {
-        if (militaryType.equals(militaryType.SETTLER)) {
+        if (militaryType.equals(MilitaryType.SETTLER)) {
             SettlerUnit settlerUnit = new SettlerUnit(ground, player, militaryType);
             player.getUnits().add(settlerUnit);
             return ;
         }
-        if (militaryType.equals(militaryType.WORKER)) {
+        if (militaryType.equals(MilitaryType.WORKER)) {
             Worker worker = new Worker(ground, player, militaryType);
             player.getUnits().add(worker);
             return ;
@@ -102,6 +102,7 @@ public class UnitController extends Controller {
 
     public static Message plundering(Unit unit) {
         Ground ground = unit.getGround();
+        ground.setPlunderingImprovementType(ground.getImprovementType());
         ground.setImprovementType(null);
         return Message.SUCCESS_WORK;
     }

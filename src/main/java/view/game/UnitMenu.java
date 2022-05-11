@@ -28,12 +28,26 @@ public class UnitMenu {
         else if (input.matches("^ready$")) unit.setStatus(UnitStatus.READY);
         else if (input.matches("^improving$")) unit.setStatus(UnitStatus.IMPROVING);
         else if (input.matches("^improving for health$")) unit.setStatus(UnitStatus.HEALTH_IMPROVING);
-        else if (input.matches("^stablished$")) System.out.println(UnitController.established(unit));
-        else if (input.matches("^ready to fight$")) System.out.println(UnitController.readyToFight(unit));
-        else if (input.matches("^ready to ranged fight$")) System.out.println(UnitController.readyToRangedFight(unit));
-        else if (input.matches("^plundering$")) System.out.println(UnitController.plundering(unit));
-        else if (input.matches("^delete one order$"))
+        else if (input.matches("^stablished$")) {
+            if (!unit.getStatus().equals(UnitStatus.AWAKE)) unit.setStatus(UnitStatus.AWAKE);
+            System.out.println(UnitController.established(unit));
+        }
+        else if (input.matches("^ready to fight$")) {
+            if (!unit.getStatus().equals(UnitStatus.AWAKE)) unit.setStatus(UnitStatus.AWAKE);
+            System.out.println(UnitController.readyToFight(unit));
+        }
+        else if (input.matches("^ready to ranged fight$")) {
+            if (!unit.getStatus().equals(UnitStatus.AWAKE)) unit.setStatus(UnitStatus.AWAKE);
+            System.out.println(UnitController.readyToRangedFight(unit));
+        }
+        else if (input.matches("^plundering$")) {
+            if (!unit.getStatus().equals(UnitStatus.AWAKE)) unit.setStatus(UnitStatus.AWAKE);
+            System.out.println(UnitController.plundering(unit));
+        }
+        else if (input.matches("^delete one order$")) {
+            if (!unit.getStatus().equals(UnitStatus.AWAKE)) unit.setStatus(UnitStatus.AWAKE);
             System.out.println("delete order: " + UnitController.removeOneOrder(unit));
+        }
         else if (input.matches("^awake$")) {
             if (unit.getStatus().equals(UnitStatus.SLEEP)) unit.setStatus(UnitStatus.AWAKE);
         }
