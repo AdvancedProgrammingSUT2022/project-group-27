@@ -1,5 +1,6 @@
 package model;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import Enum.MilitaryType;
 import Enum.LuxuryResource;
@@ -278,4 +279,11 @@ public class City {
         return science;
     }
 
+    public static City findCityByGround(Ground ground, Player player) {
+        for (City city: player.getCities()) {
+            if (city.isThisGroundInThisCityRange(ground)) return city;
+        }
+
+        return null;
+    }
 }

@@ -67,22 +67,47 @@ public class UnitController extends Controller {
     }
 
     public static Message established(Unit unit) {
+        Ground ground = unit.getGround();
+        City city = City.findCityByGround(ground, unit.getPlayer());
+        if (city == null) return Message.UNIT_CAN_NOT_DO;
+        if (unit instanceof MilitaryUnit) {
+            if (city.getGround().getMilitaryUnit() != null) return Message.UNIT_CAN_NOT_DO;
+            unit.setCityGround(ground);
+        }
+
+        if (unit instanceof UnMilitaryUnit) {
+            if (city.getGround().getUnMilitaryUnit() != null) return Message.UNIT_CAN_NOT_DO;
+            unit.setCityGround(ground);
+        }
+
         return Message.SUCCESS_WORK;
     }
 
     public static Message readyToFight(Unit unit) {
-        return Message.SUCCESS_WORK;
+        if (unit instanceof MilitaryUnit) {
+            ((MilitaryUnit)unit).setReadyToFight(true);
+            return Message.SUCCESS_WORK;
+        }
+
+        return Message.UNIT_CAN_NOT_DO;
     }
 
     public static Message readyToRangedFight(Unit unit) {
-        return Message.SUCCESS_WORK;
+        if (unit instanceof RangedUnit) {
+            ((RangedUnit)unit).setReadyToRangedFight(true);
+            return Message.SUCCESS_WORK;
+        }
+        return Message.UNIT_CAN_NOT_DO;
     }
 
     public static Message plundering(Unit unit) {
+        Ground ground = unit.getGround();
+        ground.setImprovementType(null);
         return Message.SUCCESS_WORK;
     }
 
     public static String removeOneOrder(Unit unit) {
+        unit.setDestination(null);
         return unit.getMilitaryType().name();
     }
 }

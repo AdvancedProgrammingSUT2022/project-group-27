@@ -136,6 +136,10 @@ public abstract class Unit {
         return this.ground;
     }
 
+    public void setCityGround (Ground ground) {
+        this.ground = ground;
+    }
+
     public void checkDestination() {
         if (destination == null) return;
         int[] dis = new int[GlobalVariables.numberOfTiles + 1];
