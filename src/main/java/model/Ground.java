@@ -19,6 +19,9 @@ import controller.ImprovementSettingController;
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
 public class Ground {
+    private int counterOfDestroyingFeature=0;
+    private Road road=null;
+    private RailWay railWay=null;
     private static ArrayList<Ground> allGround = new ArrayList<>();
     private static HashMap<Integer, Ground> pixelInWhichGround = new HashMap<>();
     private ImprovementType improvementType=null;
@@ -461,5 +464,30 @@ public class Ground {
         this.improvementType=improvementTypeInProgress.getImprovementType();
         System.out.println(this.improvementType);
         this.featureType=FeatureType.NOTHING;
+    }
+    public void buildRoad(){
+        road= new Road();
+    }
+    public void buildRailWay(){
+        railWay = new RailWay();
+    }
+
+    public RailWay getRailWay() {
+        return railWay;
+    }
+
+    public Road getRoad() {
+        return road;
+    }
+
+    public int getCounterOfDestroyingFeature() {
+        return counterOfDestroyingFeature;
+    }
+
+    public void setCounterOfDestroyingFeature(int counterOfDestroyingFeature) {
+        this.counterOfDestroyingFeature = counterOfDestroyingFeature;
+    }
+    public void increaseCounterOfDestroyingFeature(int amount){
+        this.counterOfDestroyingFeature+=amount;
     }
 }

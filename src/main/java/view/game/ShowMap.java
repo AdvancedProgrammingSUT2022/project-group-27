@@ -189,6 +189,18 @@ public class ShowMap {
                     showMap[ground.getxLocation() - 1][ground.getyLocation()] = GlobalVariables.ANSI_GREEN + "R";
             }
         }
+        showMapRoadAndRailWay(player, showMap);
+    }
+    private void showMapRoadAndRailWay(Player player,String[][] showMap){
+        for (int i = 0; i < player.getClearToSeeGrounds().size(); i++) {
+            Ground ground = Ground.getGroundByNumber(player.getClearToSeeGrounds().get(i).getNumber());
+            if (ground.getRoad()!=null && ground.getRoad().getTurn()<=0){
+                showMap[ground.getxLocation() +1 ][ground.getyLocation()] = GlobalVariables.ANSI_WHITE + "R";
+            }
+            if (ground.getRailWay()!=null && ground.getRailWay().getTurn()<=0){
+                showMap[ground.getxLocation() +1 ][ground.getyLocation()] = GlobalVariables.ANSI_WHITE + "A";
+            }
+        }
         showMapBonusResource(player, showMap);
     }
     private void showMapBonusResource(Player player, String[][] showMap){

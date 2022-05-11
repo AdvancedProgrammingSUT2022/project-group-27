@@ -8,6 +8,7 @@ import Enum.StrategicResource;
 import Enum.UnitStatus;
 import static java.lang.Math.min;
 import static java.lang.Math.max;
+import Enum.FeatureType;
 
 public class Game extends Controller {
     //singleton pattern
@@ -150,6 +151,14 @@ public class Game extends Controller {
                             ground.putImprovementTypeInThisGround();
                         }
                     }
+                    if (ground.getRailWay()!=null) ground.getRailWay().decreaseTurn(1);
+                    if (ground.getRoad()!=null) ground.getRoad().decreaseTurn(1);
+                    if (ground.getCounterOfDestroyingFeature()!=0){
+                        ground.increaseCounterOfDestroyingFeature(1);
+                        if (ground.getCounterOfDestroyingFeature()==ground.getFeatureType().getTurn()){
+                            ground.setFeatureType(FeatureType.NOTHING);
+                        }
+                    }
                 }
             }
         }
@@ -237,4 +246,14 @@ public class Game extends Controller {
     public void deleteUnit(Unit unit) {
 
     }
+    public void clearLand(Ground ground){
+        ground.setCounterOfDestroyingFeature(1);
+    }
+    public void buildRoad(Ground ground){
+        ground.buildRoad();
+    }
+    public void buildRailway(Ground ground){
+        ground.buildRailWay();
+    }
+
 }

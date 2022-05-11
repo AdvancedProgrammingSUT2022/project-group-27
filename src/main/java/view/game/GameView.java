@@ -88,7 +88,12 @@ public class GameView {
             Player player=Player.whichPlayerTurnIs();
             new TechnologyMenu(player);
             this.run();
-        } else if (input.matches("^info$")) {
+        }
+        else if (input.matches("^worker menu$")){
+            Player player=Player.whichPlayerTurnIs();
+            WorkerMenu workerMenu = new WorkerMenu(player);
+        }
+        else if (input.matches("^info$")) {
             Player player = Player.whichPlayerTurnIs();
             new Info(player);
             this.run();
