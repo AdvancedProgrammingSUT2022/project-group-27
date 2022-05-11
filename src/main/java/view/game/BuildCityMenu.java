@@ -46,7 +46,8 @@ public class BuildCityMenu extends ViewOfCity{
     private void showThingsToBuild(Player player) {
         System.out.println("**Units which you can buy:");
         for (MilitaryType militaryType: MilitaryType.values()) {
-            if (player.doWeHaveThisTechnology(militaryType.getTechnologyTypes())) {
+            if (player.doWeHaveThisTechnology(militaryType.getTechnologyTypes()) &&
+                    (militaryType.getStrategicResources().size() == 0 || player.hasStrategicResource(militaryType.getStrategicResources().get(0)))) {
                 System.out.println("Unit name: " + militaryType.name());
             }
         }
