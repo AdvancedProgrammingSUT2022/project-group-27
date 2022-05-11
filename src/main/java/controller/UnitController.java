@@ -116,4 +116,16 @@ public class UnitController extends Controller {
         unit.setDestination(null);
         return unit.getMilitaryType().name();
     }
+
+    public static Message meleeFight(Unit unit, int groundNumber) {
+        Ground ground = Ground.getGroundByNumber(groundNumber);
+        if (ground == null) return Message.INVALID_GROUND_NUMBER;
+
+        if (unit instanceof MeleeUnit) {
+            ((MeleeUnit)unit).combat(ground);
+            return Message.SUCCESS_WORK;
+        }
+
+        return Message.UNIT_CAN_NOT_DO;
+    }
 }

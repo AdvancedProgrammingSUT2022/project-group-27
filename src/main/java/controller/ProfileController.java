@@ -26,7 +26,7 @@ public class ProfileController extends Controller {
 
     public Message changePassword(String newPassword, String oldPassword) {
         if (!Menu.getLoggedInUser().isPasswordCorrect(oldPassword)) return Message.INVALID_PASSWORD;
-        Menu.getLoggedInUser().changePassword(newPassword);
+        if (!Menu.getLoggedInUser().changePassword(newPassword)) return Message.DUPLICSTED_PASSWORD;
         return Message.PASSWORD_CHANGED;
     }
 }

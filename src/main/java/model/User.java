@@ -66,8 +66,10 @@ public class User {
         return false;
     }
 
-    public void changePassword(String newPassword) {
+    public boolean changePassword(String newPassword) {
+        if (this.password.equals(newPassword)) return false;
         this.password = newPassword;
+        return true;
     }
 
     public boolean changeNickname(String newNickname) {

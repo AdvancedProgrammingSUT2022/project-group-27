@@ -14,6 +14,7 @@ public enum Message {
     CREATE_USER_SUCCESSFUL("User created successfully!"),
     USER_IS_INVALID("Username and password didn't match!"),
     INVALID_PASSWORD("Password is invalid"),
+    DUPLICSTED_PASSWORD("your new password is the same as previous one"),
     LOGIN_SUCCESSFUL("User logged in successfully!"),
     USERNAME_NOT_EXIST("One of the usernames you choice doesn't exist"),
     START_GAME("Game starts..."),

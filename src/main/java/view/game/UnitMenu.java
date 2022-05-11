@@ -37,6 +37,11 @@ public class UnitMenu {
             String[] strings = input.split(" +");
             int groundNumber = Integer.parseInt(strings[4]);
             System.out.println(UnitController.rangedFight(unit, groundNumber));
+        } else if (input.matches("^melee fight to ((--groundNumber)|(-n)) \\d+$")) {
+            if (!unit.getStatus().equals(UnitStatus.AWAKE)) unit.setStatus(UnitStatus.AWAKE);
+            String[] strings = input.split(" +");
+            int groundNumber = Integer.parseInt(strings[4]);
+            System.out.println(UnitController.meleeFight(unit, groundNumber));
         }
         else if (input.matches("^ready to ranged fight$")) {
             if (!unit.getStatus().equals(UnitStatus.AWAKE)) unit.setStatus(UnitStatus.AWAKE);
