@@ -32,9 +32,11 @@ public class UnitMenu {
             if (!unit.getStatus().equals(UnitStatus.AWAKE)) unit.setStatus(UnitStatus.AWAKE);
             System.out.println(UnitController.established(unit));
         }
-        else if (input.matches("^ready to fight$")) {
+        else if (input.matches("^range fight to ((--groundNumber)|(-n)) \\d+$")) {
             if (!unit.getStatus().equals(UnitStatus.AWAKE)) unit.setStatus(UnitStatus.AWAKE);
-            System.out.println(UnitController.readyToFight(unit));
+            String[] strings = input.split(" +");
+            int groundNumber = Integer.parseInt(strings[4]);
+            System.out.println(UnitController.rangedFight(unit, groundNumber));
         }
         else if (input.matches("^ready to ranged fight$")) {
             if (!unit.getStatus().equals(UnitStatus.AWAKE)) unit.setStatus(UnitStatus.AWAKE);

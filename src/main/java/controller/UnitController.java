@@ -83,10 +83,15 @@ public class UnitController extends Controller {
         return Message.SUCCESS_WORK;
     }
 
-    public static Message readyToFight(Unit unit) {
-        if (unit instanceof MilitaryUnit) {
-            ((MilitaryUnit)unit).setReadyToFight(true);
-            return Message.SUCCESS_WORK;
+    public static Message rangedFight(Unit unit, int groundNumber) {
+        Ground ground = Ground.getGroundByNumber(groundNumber);
+        if (ground == null) return Message.INVALID_GROUND_NUMBER;
+
+        if (unit instanceof RangedUnit) {
+            if (((RangedUnit)unit).isReadyToRangedFight()) {
+                ((RangedUnit)unit).combat(ground);
+                return Message.SUCCESS_WORK;
+            }
         }
 
         return Message.UNIT_CAN_NOT_DO;

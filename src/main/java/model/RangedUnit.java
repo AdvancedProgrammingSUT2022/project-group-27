@@ -3,8 +3,18 @@ package model;
 import Enum.MilitaryType;
 
 public class RangedUnit extends MilitaryUnit{
+    protected boolean isReadyToRangedFight = false;
+
     public RangedUnit(Ground ground, Player player, MilitaryType militaryType) {
         super(ground, player, militaryType);
+    }
+
+    public void setReadyToRangedFight(boolean readyToRangedFight) {
+        isReadyToRangedFight = readyToRangedFight;
+    }
+
+    public boolean isReadyToRangedFight() {
+        return isReadyToRangedFight;
     }
 
     @Override
@@ -24,6 +34,7 @@ public class RangedUnit extends MilitaryUnit{
         if (militaryUnit.hp <= 0.000001)
             militaryUnit.removeUnit();
     }
+
     @Override
     public void combat(City city) {
 
