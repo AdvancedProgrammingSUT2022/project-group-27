@@ -44,9 +44,11 @@ public class GameView {
         } else if (input.matches("^next turn ((--numberOfTurns)|(-n)) \\d+$")) {
             String[] s=input.split(" +");
             for (int i=0;i<Integer.parseInt(s[3]);i++) Player.nextTurn();
+            System.out.println("Player turn: " + Player.whichPlayerTurnIs().getUser().getUsername());
             this.run();
         } else if (input.matches("^next turn$")) {
             Player.nextTurn();
+            System.out.println("Player turn: " + Player.whichPlayerTurnIs().getUser().getUsername());
             this.run();
         } else if (input.matches("^move unit .+$")) {
             matcher = controller.getInput("move unit",

@@ -18,6 +18,10 @@ public class User {
         listOfUsers.add(this);
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public static void setListOfUsers(ArrayList<User> listOfUsers) {
         User.listOfUsers = listOfUsers;
     }

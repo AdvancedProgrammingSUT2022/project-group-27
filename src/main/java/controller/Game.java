@@ -5,6 +5,7 @@ import model.*;
 import java.util.ArrayList;
 import Enum.LuxuryResource;
 import Enum.StrategicResource;
+import Enum.UnitStatus;
 import static java.lang.Math.min;
 import static java.lang.Math.max;
 
@@ -56,6 +57,23 @@ public class Game extends Controller {
         return true;
     }
 
+    private void unitActionsInNextTurn(Player player) {
+        for (Unit unit: player.getUnits()) {
+            unit.putMp(10);
+            unit.checkDestination();
+            if (unit instanceof MilitaryUnit militaryUnit) {
+                if (militaryUnit.getStatus().equals(UnitStatus.IMPROVING))
+                    militaryUnit.setCombatStrength(militaryUnit.getCombatStrength() + 1);
+            }
+
+            if (unit.getStatus().equals(UnitStatus.HEALTH_IMPROVING) && unit.getHp() < 10) {
+                unit.setHp(unit.getHp() + 1);
+                if (unit.getHp() == 10)
+                    new Notification("your unit health completed", Player.getCounterOfNextRound(), player);
+            }
+        }
+    }
+
     public boolean nextTurn() {
         Player player = Player.whichPlayerTurnIs();
         if (!isLimitationOkInCities(player)) {
@@ -73,10 +91,8 @@ public class Game extends Controller {
         player.setGold(player.getGold() + player.getGoldDifference());
         if (player.getGold() < 0)
             player.setGold(0);
-        for (int i = 0; i < player.getUnits().size(); i++) {
-            player.getUnits().get(i).putMp(10);
-            player.getUnits().get(i).checkDestination();
-        }
+
+        unitActionsInNextTurn(player);
 
         /// TODO : otherthings
         for (int i=0;i<player.getCities().size();i++){

@@ -34,7 +34,9 @@ public class UnitMenu {
         else if (input.matches("^plundering$")) System.out.println(UnitController.plundering(unit));
         else if (input.matches("^delete one order$"))
             System.out.println("delete order: " + UnitController.removeOneOrder(unit));
-        else if (input.matches("^awake$")) unit.setStatus(UnitStatus.AWAKE);
+        else if (input.matches("^awake$")) {
+            if (unit.getStatus().equals(UnitStatus.SLEEP)) unit.setStatus(UnitStatus.AWAKE);
+        }
         else if (input.matches("^delete$")) {
             UnitController.deleteUnit(unit);
             System.out.println("The unit is deleted successfully");

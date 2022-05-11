@@ -14,15 +14,46 @@ public abstract class Unit {
     protected double mp = 10;
     protected double hp = 10;
     protected int turnsFortified = 0;
-    protected UnitStatus status;
+    protected UnitStatus status = UnitStatus.AWAKE;
     protected RemainedTurns turnRemainedToCompleted = new RemainedTurns(0);
-    protected boolean isSleeping = false;
-    protected boolean hasDoneSomething = false;
+    protected int combatStrength = 0;
+    protected int rangedStrength = 0;
+    protected int rangeOfCombat = 0;
+    //protected boolean isSleeping = false;
+    //protected boolean hasDoneSomething = false;
 
     public Unit(Ground ground, Player player, MilitaryType militaryType) {
         this.player = player;
         this.ground = ground;
         this.militaryType = militaryType;
+    }
+
+    public double getHp() {
+        return hp;
+    }
+
+    public void setHp(double hp) {
+        this.hp = hp;
+    }
+
+    public void setCombatStrength(int combatStrength) {
+        this.combatStrength = combatStrength;
+    }
+
+    public void setRangedStrength(int rangedStrength) {
+        this.rangedStrength = rangedStrength;
+    }
+
+    public int getRangeOfCombat() {
+        return rangeOfCombat;
+    }
+
+    public int getCombatStrength() {
+        return combatStrength;
+    }
+
+    public int getRangedStrength() {
+        return rangedStrength;
     }
 
     public UnitStatus getStatus() {
@@ -62,7 +93,7 @@ public abstract class Unit {
         return this.militaryType.getCost();
     }
 
-    public boolean isSleeping() {
+    /*public boolean isSleeping() {
         return isSleeping;
     }
 
@@ -76,7 +107,7 @@ public abstract class Unit {
 
     public void setHasDoneSomething(boolean hasDoneSomething) {
         this.hasDoneSomething = hasDoneSomething;
-    }
+    }*/
 
     public int getMovement() {
         return this.militaryType.getMovement();
