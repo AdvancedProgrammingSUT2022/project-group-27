@@ -155,9 +155,7 @@ public class Game extends Controller {
                     if (ground.getRoad()!=null) ground.getRoad().decreaseTurn(1);
                     if (ground.getCounterOfDestroyingFeature()!=0){
                         ground.increaseCounterOfDestroyingFeature(1);
-                        System.out.println("ye");
                         if (ground.getCounterOfDestroyingFeature()==ground.getFeatureType().getTurn()){
-                            System.out.println("YES");
                             ground.setFeatureType(FeatureType.NOTHING);
                         }
                     }
