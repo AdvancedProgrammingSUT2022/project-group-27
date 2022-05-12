@@ -35,7 +35,7 @@ public class Game extends Controller {
             Unit unit = city.getListOfUnitsInCity().get(0);
             if (!Unit.addingUnitFromArrayOfCityToCity(player, city, unit)) return false;
 
-            if (city.getListOfUnitsInCity().size() == 1) continue;
+            if (city.getListOfUnitsInCity().size() <= 1) continue;
 
             unit = city.getListOfUnitsInCity().get(1);
             if (!Unit.addingUnitFromArrayOfCityToCity(player, city, unit)) return false;

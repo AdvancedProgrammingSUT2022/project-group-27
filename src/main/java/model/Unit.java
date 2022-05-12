@@ -191,9 +191,11 @@ public abstract class Unit {
     public static boolean addingUnitFromArrayOfCityToCity(Player player, City city, Unit unit) {
         if (unit instanceof MilitaryUnit) {
             if (city.getGround().getMilitaryUnit() != null) return false;
+            city.getListOfUnitsInCity().remove(unit);
             player.getUnits().add(unit);
         } else if (unit instanceof UnMilitaryUnit) {
             if (city.getGround().getUnMilitaryUnit() != null) return false;
+            city.getListOfUnitsInCity().remove(unit);
             player.getUnits().add(unit);
         }
         return true;
