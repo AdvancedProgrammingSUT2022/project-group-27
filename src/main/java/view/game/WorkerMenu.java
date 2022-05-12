@@ -1,10 +1,15 @@
 package view.game;
 
+import controller.Controller;
 import controller.Game;
 import model.Player;
+import model.Unit;
 import model.Worker;
 import view.Menu;
 import Enum.Message;
+
+import java.util.regex.Matcher;
+
 public class WorkerMenu extends ViewOfCity{
     private Game controller=Game.getInstance();
     private Player player;
@@ -39,103 +44,126 @@ public class WorkerMenu extends ViewOfCity{
         }
         if (input.equals("improvement menu")){
             System.out.println("enter ground number : ");
-            int groundNumber=Integer.parseInt(Menu.getScanner().nextLine());
-            ImprovementMenu improvementMenu=new ImprovementMenu(player,groundNumber);
+            String string = Menu.getScanner().nextLine();
+            Matcher matcher = controller.findMatcherFromString(string, "\\d+");
+            if (matcher == null) System.out.println(Message.INVALID_COMMAND);
+            else {
+                int groundNumber = Integer.parseInt(string);
+                ImprovementMenu improvementMenu = new ImprovementMenu(player, groundNumber);
+            }
+
             this.run();
             return ;
         }
     }
+
+    private int showListOfWorkers() {
+        System.out.println("choose ground number : ");
+        int counter=0;
+        for (int i=0;i<player.getUnits().size();i++){
+            if (player.getUnits().get(i) instanceof Worker){
+                counter++;
+                System.out.println(counter + ": " +  player.getUnits().get(i).getGround().getNumber());
+            }
+        }
+        return counter;
+    }
+
+    private Worker getWorkerByNumber(int number) {
+        int counter = 0;
+        for (Unit unit: player.getUnits()){
+            if (unit instanceof Worker){
+                counter++;
+                if (counter == number){
+                    return (Worker) unit;
+                }
+            }
+        }
+
+        return null;
+    }
+
     private void clearLand(){
-        System.out.println("choose ground number : ");
-        int counter=0;
-        for (int i=0;i<player.getUnits().size();i++){
-            if (player.getUnits().get(i) instanceof Worker){
-                counter++;
-                System.out.println(counter + ": " +  player.getUnits().get(i).getGround().getNumber());
-            }
-        }
-        if (counter==0){
+        int numberOfWorker = showListOfWorkers();
+        if (numberOfWorker == 0) {
             System.out.println("there is no worker:(");
-            return ;
+            return;
         }
-        int input=Integer.parseInt(Menu.getScanner().nextLine());
-        if (input>counter || input<0){
+
+        String numberInput = Menu.getScanner().nextLine();
+        Matcher matcher = controller.findMatcherFromString(numberInput, "\\d+");
+        if (matcher == null) {
+            System.out.println(Message.INVALID_COMMAND);
+            this.clearLand();
+            return;
+        }
+
+        int number = Integer.parseInt(numberInput);
+        Worker worker = getWorkerByNumber(number);
+        if (worker == null) {
             System.out.println(Message.INVALID_COMMAND);
             this.clearLand();
             return ;
         }
+
         System.out.println(Message.SUCCESS_WORK);
-        counter=0;
-        for (int i=0;i<player.getUnits().size();i++){
-            if (player.getUnits().get(i) instanceof Worker){
-                counter++;
-                if (counter==input){
-                    ((Worker) player.getUnits().get(i)).setWorking(true);
-                    controller.clearLand(player.getUnits().get(i).getGround());
-                }
-            }
-        }
+        worker.setWorking(true);
+        controller.clearLand(worker.getGround());
     }
+
     private void buildRoad(){
-        System.out.println("choose ground number : ");
-        int counter=0;
-        for (int i=0;i<player.getUnits().size();i++){
-            if (player.getUnits().get(i) instanceof Worker){
-                counter++;
-                System.out.println(counter + ": " +  player.getUnits().get(i).getGround().getNumber());
-            }
-        }
-        if (counter==0){
+        int numberOfWorker = showListOfWorkers();
+        if (numberOfWorker == 0) {
             System.out.println("there is no worker:(");
-            return ;
+            return;
         }
-        int input=Integer.parseInt(Menu.getScanner().nextLine());
-        if (input>counter || input<0){
+
+        String numberInput = Menu.getScanner().nextLine();
+        Matcher matcher = controller.findMatcherFromString(numberInput, "\\d+");
+        if (matcher == null) {
             System.out.println(Message.INVALID_COMMAND);
-            this.clearLand();
+            this.buildRoad();
+            return;
+        }
+
+        int number = Integer.parseInt(numberInput);
+        Worker worker = getWorkerByNumber(number);
+        if (worker == null) {
+            System.out.println(Message.INVALID_COMMAND);
+            this.buildRoad();
             return ;
         }
+
         System.out.println(Message.SUCCESS_WORK);
-        counter=0;
-        for (int i=0;i<player.getUnits().size();i++){
-            if (player.getUnits().get(i) instanceof Worker){
-                counter++;
-                if (counter==input){
-                    ((Worker) player.getUnits().get(i)).setWorking(true);
-                    controller.buildRoad(player.getUnits().get(i).getGround());
-                }
-            }
-        }
+        worker.setWorking(true);
+        controller.buildRoad(worker.getGround());
     }
+
     private void buildRailway(){
-        System.out.println("choose ground number : ");
-        int counter=0;
-        for (int i=0;i<player.getUnits().size();i++){
-            if (player.getUnits().get(i) instanceof Worker){
-                counter++;
-                System.out.println(counter + ": " +  player.getUnits().get(i).getGround().getNumber());
-            }
-        }
-        if (counter==0){
+        int numberOfWorker = showListOfWorkers();
+        if (numberOfWorker == 0) {
             System.out.println("there is no worker:(");
-            return ;
+            return;
         }
-        int input=Integer.parseInt(Menu.getScanner().nextLine());
-        if (input>counter || input<0){
+
+        String numberInput = Menu.getScanner().nextLine();
+        Matcher matcher = controller.findMatcherFromString(numberInput, "\\d+");
+        if (matcher == null) {
             System.out.println(Message.INVALID_COMMAND);
-            this.clearLand();
+            this.buildRailway();
+            return;
+        }
+
+        int number = Integer.parseInt(numberInput);
+        Worker worker = getWorkerByNumber(number);
+        if (worker == null) {
+            System.out.println(Message.INVALID_COMMAND);
+            this.buildRailway();
             return ;
         }
+
         System.out.println(Message.SUCCESS_WORK);
-        counter=0;
-        for (int i=0;i<player.getUnits().size();i++){
-            if (player.getUnits().get(i) instanceof Worker){
-                counter++;
-                if (counter==input){
-                    ((Worker) player.getUnits().get(i)).setWorking(true);
-                    controller.buildRailway(player.getUnits().get(i).getGround());
-                }
-            }
-        }
+        worker.setWorking(true);
+        controller.buildRailway(worker.getGround());
     }
 }
