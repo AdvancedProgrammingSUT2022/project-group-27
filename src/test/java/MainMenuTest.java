@@ -74,9 +74,10 @@ public class MainMenuTest {
     }
 
     @Test
-    public void logoutTest() throws NoSuchMethodException {
+    public void logoutTest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = MainMenu.class.getDeclaredMethod("loggedOutUser");
         method.setAccessible(true);
+        method.invoke(menu);
 
         Assertions.assertNull(Menu.getLoggedInUser());
     }
