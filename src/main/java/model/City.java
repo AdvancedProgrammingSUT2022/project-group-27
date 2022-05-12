@@ -20,6 +20,7 @@ public class City {
     private Ground ground;
     private Unit construction; //in the future, we should write a class for constructions and get type here
     private boolean isPuppet = false;
+    private double hp = 20;
 
     private final ArrayList<Unit> listOfUnitsInCity = new ArrayList<>();
     private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
@@ -93,6 +94,14 @@ public class City {
 
     public int getSavedFood() {
         return savedFood;
+    }
+
+    public double getHp() {
+        return hp;
+    }
+
+    public void setHp(double hp) {
+        this.hp = hp;
     }
 
     //public int getProduction() {

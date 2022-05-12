@@ -38,6 +38,10 @@ public class RangedUnit extends MilitaryUnit{
 
     @Override
     public void combat(City city) {
-
+        double decreasedHp = (this.hp + 10) / 20 * this.militaryType.getRangedCombatStrength();
+        decreasedHp *= (double) 100.0 / (city.getGround().getGroundType().getCombatCoefficient() + 100.0);
+        city.setHp(city.getHp() - decreasedHp);
+        if (city.getHp() < 1)
+            city.setHp(1);
     }
 }
