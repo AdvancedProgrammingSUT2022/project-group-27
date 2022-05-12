@@ -6,6 +6,7 @@ import java.util.HashMap;
 import Enum.GroundType;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.min;
 
 import Enum.FeatureType;
 
@@ -270,7 +271,7 @@ public class Ground {
                 && abs(firstGround.getyLocation() - secondGround.getyLocation()) <= globalVariables.arz6Zelie;
     }
 
-    public static int distanceOfTheseTwoGround(Ground firstGround, Ground secondGround) {
+    public static int distanceOfTheseTwoGround(Ground firstGround, Ground secondGround,Player player) {
         int inf = 10000;
         if (!AreTheseTwoGroundAdjacent(firstGround, secondGround)) return inf;
         if (secondGround.groundType == GroundType.OCEAN || secondGround.groundType == GroundType.MOUNTAIN) {
@@ -287,8 +288,19 @@ public class Ground {
                 amount = 1;
             }
         }
-        amount *= 9;
+        amount *= 10;
         amount += secondGround.groundType.getMovementCost() + secondGround.getFeatureType().getMovementCost();
+        if ((secondGround.getRoad()!=null && secondGround.getRoad().getTurn()<0) || (secondGround.getRailWay()!=null &&  secondGround.getRoad().getTurn()<0)){
+            amount=1;
+        }
+        for (Player secondPlayer : Player.getAllPlayers()){
+            if (player.equals(secondPlayer)) continue;
+            for (Unit unit : secondPlayer.getUnits()){
+                if (unit instanceof UnMilitaryUnit) continue;
+                if (AreTheseTwoGroundAdjacent(secondGround,unit.getGround())) amount=10;
+            }
+        }
+        amount=min(10,amount);
         return amount;
 
     }

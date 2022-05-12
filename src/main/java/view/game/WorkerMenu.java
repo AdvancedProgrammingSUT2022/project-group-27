@@ -12,6 +12,7 @@ public class WorkerMenu extends ViewOfCity{
         System.out.println("Welcome to Worker Menu.");
         this.player=player;
         this.run();
+        System.out.println("exit successfully");
     }
     public void run(){
         System.out.println("Choose which type of services you want");
@@ -23,20 +24,24 @@ public class WorkerMenu extends ViewOfCity{
         if (input.equals("exit menu")) return ;
         if (input.equals("clear land")){
             this.clearLand();
-            return;
+            this.run();
+            return ;
         }
         if (input.equals("build road")){
             this.buildRoad();
-            return;
+            this.run();
+            return ;
         }
         if (input.equals("build railway")){
             this.buildRailway();
+            this.run();
             return ;
         }
         if (input.equals("improvement menu")){
             System.out.println("enter ground number : ");
-            int groundNumber=Menu.getScanner().nextInt();
+            int groundNumber=Integer.parseInt(Menu.getScanner().nextLine());
             ImprovementMenu improvementMenu=new ImprovementMenu(player,groundNumber);
+            this.run();
             return ;
         }
     }
@@ -49,7 +54,11 @@ public class WorkerMenu extends ViewOfCity{
                 System.out.println(counter + ": " +  player.getUnits().get(i).getGround().getNumber());
             }
         }
-        int input=Menu.getScanner().nextInt();
+        if (counter==0){
+            System.out.println("there is no worker:(");
+            return ;
+        }
+        int input=Integer.parseInt(Menu.getScanner().nextLine());
         if (input>counter || input<0){
             System.out.println(Message.INVALID_COMMAND);
             this.clearLand();
@@ -61,6 +70,7 @@ public class WorkerMenu extends ViewOfCity{
             if (player.getUnits().get(i) instanceof Worker){
                 counter++;
                 if (counter==input){
+                    ((Worker) player.getUnits().get(i)).setWorking(true);
                     controller.clearLand(player.getUnits().get(i).getGround());
                 }
             }
@@ -75,17 +85,23 @@ public class WorkerMenu extends ViewOfCity{
                 System.out.println(counter + ": " +  player.getUnits().get(i).getGround().getNumber());
             }
         }
-        int input=Menu.getScanner().nextInt();
+        if (counter==0){
+            System.out.println("there is no worker:(");
+            return ;
+        }
+        int input=Integer.parseInt(Menu.getScanner().nextLine());
         if (input>counter || input<0){
             System.out.println(Message.INVALID_COMMAND);
             this.clearLand();
             return ;
         }
+        System.out.println(Message.SUCCESS_WORK);
         counter=0;
         for (int i=0;i<player.getUnits().size();i++){
             if (player.getUnits().get(i) instanceof Worker){
                 counter++;
                 if (counter==input){
+                    ((Worker) player.getUnits().get(i)).setWorking(true);
                     controller.buildRoad(player.getUnits().get(i).getGround());
                 }
             }
@@ -100,17 +116,23 @@ public class WorkerMenu extends ViewOfCity{
                 System.out.println(counter + ": " +  player.getUnits().get(i).getGround().getNumber());
             }
         }
-        int input=Menu.getScanner().nextInt();
+        if (counter==0){
+            System.out.println("there is no worker:(");
+            return ;
+        }
+        int input=Integer.parseInt(Menu.getScanner().nextLine());
         if (input>counter || input<0){
             System.out.println(Message.INVALID_COMMAND);
             this.clearLand();
             return ;
         }
+        System.out.println(Message.SUCCESS_WORK);
         counter=0;
         for (int i=0;i<player.getUnits().size();i++){
             if (player.getUnits().get(i) instanceof Worker){
                 counter++;
                 if (counter==input){
+                    ((Worker) player.getUnits().get(i)).setWorking(true);
                     controller.buildRailway(player.getUnits().get(i).getGround());
                 }
             }

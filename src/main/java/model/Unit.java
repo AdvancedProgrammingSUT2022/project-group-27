@@ -114,11 +114,6 @@ public abstract class Unit {
     }
 
     //TODO : vaghti dota shodan dota tabe niyaze
-    public void moveUnitToAdjacentGround(Ground ground) {
-        decreaseMp(Ground.distanceOfTheseTwoGround(this.ground, ground));
-        this.ground = ground;
-        //TODO : amount dorost shavad
-    }
 
     public Ground getGround() {
         return this.ground;
@@ -152,24 +147,24 @@ public abstract class Unit {
             }
             if (id == -1) break;
             for (int j = 1; j <= GlobalVariables.numberOfTiles; j++) {
-                if (dis[j] > dis[id] + Ground.distanceOfTheseTwoGround(Ground.getGroundByNumber(id), Ground.getGroundByNumber(j))) {
+                if (dis[j] > dis[id] + Ground.distanceOfTheseTwoGround(Ground.getGroundByNumber(id), Ground.getGroundByNumber(j),player)) {
                     par[j] = id;
                 }
-                dis[j] = min(dis[j], dis[id] + Ground.distanceOfTheseTwoGround(Ground.getGroundByNumber(id), Ground.getGroundByNumber(j)));
+                dis[j] = min(dis[j], dis[id] + Ground.distanceOfTheseTwoGround(Ground.getGroundByNumber(id), Ground.getGroundByNumber(j),player));
             }
             vis[id] = 1;
         }
         if (dis[this.getGround().getNumber()] >= 1000) return;
         while (this.mp > 0 && this.ground.getNumber() != this.destination.getNumber()) {
             int father = par[this.getGround().getNumber()];
-            if (this.getMp() - Ground.distanceOfTheseTwoGround(this.getGround(), Ground.getGroundByNumber(father)) == 0) {
+            if (this.getMp() - Ground.distanceOfTheseTwoGround(this.getGround(), Ground.getGroundByNumber(father),player) == 0) {
                 if (this instanceof MilitaryUnit && !Ground.getGroundByNumber(father).isFreeOfMilitaryUnit())
                     break;
                 if (this instanceof UnMilitaryUnit && !Ground.getGroundByNumber(father).isFreeOfUnMilitaryUnit())
                     break;
             }
             System.out.println("father : " + father);
-            this.decreaseMp(Ground.distanceOfTheseTwoGround(this.getGround(), Ground.getGroundByNumber(father)));
+            this.decreaseMp(Ground.distanceOfTheseTwoGround(this.getGround(), Ground.getGroundByNumber(father),player));
             this.ground = Ground.getGroundByNumber(father);
             System.out.println("mp : " + this.getMp());
             ShowMap showMap = new ShowMap(player);

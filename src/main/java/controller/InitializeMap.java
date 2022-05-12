@@ -21,9 +21,9 @@ public class InitializeMap {
     }
 
     public void run() {
+        setGroundsType();
         setFirstGroundsForPlayers();
         setRivers();
-        setGroundsType();
         setGroundsAdjacent();
         setBonusType();
         setLuxuryType();
@@ -91,7 +91,8 @@ public class InitializeMap {
         Random rand = new Random();
         for (User playerUser : playerUsers) {
             int idStartGround = rand.nextInt(GlobalVariables.numberOfTiles) + 1;
-            while (!Ground.getGroundByNumber(idStartGround).isFreeOfMilitaryUnit()) {
+            while (!Ground.getGroundByNumber(idStartGround).isFreeOfMilitaryUnit() || Ground.getGroundByNumber(idStartGround).getGroundType()==GroundType.OCEAN
+            || Ground.getGroundByNumber(idStartGround).getGroundType()==GroundType.HILL || Ground.getGroundByNumber(idStartGround).getGroundType()==GroundType.MOUNTAIN) {
                 idStartGround = rand.nextInt(GlobalVariables.numberOfTiles) + 1;
             }
 
