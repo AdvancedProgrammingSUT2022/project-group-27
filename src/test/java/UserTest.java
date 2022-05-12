@@ -89,10 +89,12 @@ public class UserTest {
     }
 
     @Test
-    public void testChangePassword() throws NoSuchFieldException, IllegalAccessException {
-        user2.changePassword("cc");
-        Field field = User.class.getDeclaredField("password");
-        field.setAccessible(true);
-        Assertions.assertEquals("cc", field.get(user2));
+    public void testChangePasswordFalse() {
+        Assertions.assertFalse(user2.changePassword("c"));
+    }
+
+    @Test
+    public void testChangePasswordTrue() {
+        Assertions.assertTrue(user2.changePassword("ccc"));
     }
 }

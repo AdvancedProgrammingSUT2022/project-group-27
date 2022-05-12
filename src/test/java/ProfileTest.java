@@ -47,18 +47,27 @@ public class ProfileTest {
     @Test
     public void changePasswordNotValid() {
         when(user.isPasswordCorrect(anyString())).thenReturn(false);
-        doNothing().when(user).changePassword(anyString());
+        when(user.changePassword(anyString())).thenCallRealMethod();
         menuMockedStatic.when(Menu::getLoggedInUser).thenReturn(user);
         Message result = profileController.changePassword("a", "a");
         Assertions.assertEquals(result, Message.INVALID_PASSWORD);
     }
 
     @Test
-    public void changePasswordValid() {
+    public void changePasswordDuplicated() {
         when(user.isPasswordCorrect(anyString())).thenReturn(true);
-        doNothing().when(user).changePassword(anyString());
+        when(user.changePassword(anyString())).thenReturn(false);
         menuMockedStatic.when(Menu::getLoggedInUser).thenReturn(user);
         Message result = profileController.changePassword("a", "a");
+        Assertions.assertEquals(result, Message.DUPLICSTED_PASSWORD);
+    }
+
+    @Test
+    public void changePasswordValid() {
+        when(user.isPasswordCorrect(anyString())).thenReturn(true);
+        when(user.changePassword(anyString())).thenReturn(true);
+        menuMockedStatic.when(Menu::getLoggedInUser).thenReturn(user);
+        Message result = profileController.changePassword("aaa", "a");
         Assertions.assertEquals(result, Message.PASSWORD_CHANGED);
     }
 
