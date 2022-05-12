@@ -14,10 +14,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 import Enum.*;
-import view.GameMenu;
-import view.LoginMenu;
-import view.MainMenu;
-import view.ProfileMenu;
+import view.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -74,6 +71,14 @@ public class MainMenuTest {
         method.invoke(menu, "Profile_Menu");
         verify(ProfileMenu.getInstance());
         profileMenu.close();
+    }
+
+    @Test
+    public void logoutTest() throws NoSuchMethodException {
+        Method method = MainMenu.class.getDeclaredMethod("loggedOutUser");
+        method.setAccessible(true);
+
+        Assertions.assertNull(Menu.getLoggedInUser());
     }
 
     @AfterEach
