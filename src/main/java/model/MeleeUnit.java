@@ -18,12 +18,13 @@ public class MeleeUnit extends MilitaryUnit {
             return;
         }
         double decreasedEnemyHp = (this.hp + 10) / 20 * this.militaryType.getCombatStrength();
-        if (militaryUnit.militaryType.getCombatType() != "Mounted" && militaryUnit.militaryType.getCombatType() != "Siege")
-            decreasedEnemyHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
-        if (militaryUnit.turnsFortified >= 2)
-            decreasedEnemyHp /= 2;
-        if (militaryUnit.turnsFortified == 1)
-            decreasedEnemyHp *= 0.75;
+        decreasedEnemyHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
+        if (militaryUnit.militaryType.getCombatType() != "Mounted" && militaryUnit.militaryType.getCombatType() != "Siege") {
+            if (militaryUnit.turnsFortified >= 2)
+                decreasedEnemyHp /= 2;
+            if (militaryUnit.turnsFortified == 1)
+                decreasedEnemyHp *= 0.75;
+        }
         double decreasedOwnHp = (militaryUnit.hp + 10) / 20 * this.militaryType.getCombatStrength();
         this.hp -= decreasedOwnHp;
         militaryUnit.hp -= decreasedEnemyHp;

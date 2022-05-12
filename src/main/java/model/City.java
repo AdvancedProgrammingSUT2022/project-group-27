@@ -206,10 +206,12 @@ public class City {
         MilitaryUnit militaryUnit = ground.getMilitaryUnit();
         double decreasedHp = this.getCityStrength();
         decreasedHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
-        if (militaryUnit.turnsFortified >= 2)
-            decreasedHp /= 2;
-        if (militaryUnit.turnsFortified == 1)
-            decreasedHp *= 0.75;
+        if (militaryUnit.militaryType.getCombatType() != "Mounted" && militaryUnit.militaryType.getCombatType() != "Siege") {
+            if (militaryUnit.turnsFortified >= 2)
+                decreasedHp /= 2;
+            if (militaryUnit.turnsFortified == 1)
+                decreasedHp *= 0.75;
+        }
         militaryUnit.hp -= decreasedHp;
         if (militaryUnit.hp <= 0.000001)
             militaryUnit.removeUnit();
