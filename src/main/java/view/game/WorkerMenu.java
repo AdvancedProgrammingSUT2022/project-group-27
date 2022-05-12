@@ -2,6 +2,7 @@ package view.game;
 
 import controller.Controller;
 import controller.Game;
+import controller.UnitController;
 import model.Player;
 import model.Unit;
 import model.Worker;
@@ -25,6 +26,8 @@ public class WorkerMenu extends ViewOfCity{
         System.out.println("build road");
         System.out.println("build railway");
         System.out.println("improvement menu");
+        System.out.println("delete road and railway");
+        System.out.println("repair");
         String input =  Menu.getScanner().nextLine();
         if (input.equals("exit menu")) return ;
         if (input.equals("clear land")){
@@ -54,6 +57,12 @@ public class WorkerMenu extends ViewOfCity{
 
             this.run();
             return ;
+        }
+        if (input.equals("delete road and railway")){
+            this.removeRoadAndRailway();
+        }
+        if (input.equals("repair")){
+            this.repair();
         }
     }
 
@@ -166,4 +175,61 @@ public class WorkerMenu extends ViewOfCity{
         worker.setWorking(true);
         controller.buildRailway(worker.getGround());
     }
+    private void removeRoadAndRailway(){
+        int numberOfWorker = showListOfWorkers();
+        if (numberOfWorker == 0) {
+            System.out.println("there is no worker:(");
+            return;
+        }
+
+        String numberInput = Menu.getScanner().nextLine();
+        Matcher matcher = controller.findMatcherFromString(numberInput, "\\d+");
+        if (matcher == null) {
+            System.out.println(Message.INVALID_COMMAND);
+            this.buildRailway();
+            return;
+        }
+
+        int number = Integer.parseInt(numberInput);
+        Worker worker = getWorkerByNumber(number);
+        if (worker == null) {
+            System.out.println(Message.INVALID_COMMAND);
+            this.buildRailway();
+            return ;
+        }
+
+        System.out.println(Message.SUCCESS_WORK);
+        worker.setWorking(true);
+        worker.getGround().deleteRoadAndRailway();
+    }
+    public void repair(){
+        int numberOfWorker = showListOfWorkers();
+        if (numberOfWorker == 0) {
+            System.out.println("there is no worker:(");
+            return;
+        }
+
+        String numberInput = Menu.getScanner().nextLine();
+        Matcher matcher = controller.findMatcherFromString(numberInput, "\\d+");
+        if (matcher == null) {
+            System.out.println(Message.INVALID_COMMAND);
+            this.buildRailway();
+            return;
+        }
+
+        int number = Integer.parseInt(numberInput);
+        Worker worker = getWorkerByNumber(number);
+        if (worker == null) {
+            System.out.println(Message.INVALID_COMMAND);
+            this.buildRailway();
+            return ;
+        }
+        if (worker.getGround().getImprovementType()==null){
+            System.out.println("no improvement here");
+            return ;
+        }
+        worker.setWorking(true);
+        UnitController.freePlundering(worker);
+    }
+
 }

@@ -151,6 +151,12 @@ public class Game extends Controller {
                             ground.putImprovementTypeInThisGround();
                         }
                     }
+                    if (ground.getPlunderingImprovementType()!=null){
+                        ground.getPlunderingImprovementType().decreaseAmount(1);
+                        if (ground.getPlunderingImprovementType().getTurnRemained()==0){
+                            ground.setImprovementType(ground.getPlunderingImprovementType().getImprovementType());
+                        }
+                    }
                     if (ground.getRailWay()!=null) ground.getRailWay().decreaseTurn(1);
                     if (ground.getRoad()!=null) ground.getRoad().decreaseTurn(1);
                     if (ground.getCounterOfDestroyingFeature()!=0){

@@ -109,6 +109,15 @@ public class UnitController extends Controller {
         Ground ground = unit.getGround();
         ground.setPlunderingImprovementType(ground.getImprovementType());
         ground.setImprovementType(null);
+        if (ground.getRoad()!=null) ground.getRoad().setTurn(2000000);
+        if (ground.getRailWay()!=null) ground.getRailWay().setTurn(2000000);
+        return Message.SUCCESS_WORK;
+    }
+    public static Message freePlundering(Unit unit) {
+        Ground ground = unit.getGround();
+        if (ground.getRoad()!=null) ground.getRoad().setTurn(2);
+        if (ground.getRailWay()!=null) ground.getRailWay().setTurn(2);
+        if (ground.getPlunderingImprovementType()!=null) ground.getPlunderingImprovementType().setTurnRemained(3);
         return Message.SUCCESS_WORK;
     }
 

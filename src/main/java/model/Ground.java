@@ -26,7 +26,7 @@ public class Ground {
     private static ArrayList<Ground> allGround = new ArrayList<>();
     private static HashMap<Integer, Ground> pixelInWhichGround = new HashMap<>();
     private ImprovementType improvementType=null;
-    private ImprovementType plunderingImprovementType = null;
+    private Improvement plunderingImprovementType = null;
     private Improvement improvementTypeInProgress=null;
     private ArrayList<Pair> pixelsOfThisGround = new ArrayList<>();
     private ArrayList<Ground> adjacentGrounds = new ArrayList<>();
@@ -68,10 +68,10 @@ public class Ground {
     }
 
     public void setPlunderingImprovementType(ImprovementType plunderingImprovementType) {
-        this.plunderingImprovementType = plunderingImprovementType;
+        this.plunderingImprovementType = new Improvement(improvementType,1000000);
     }
 
-    public ImprovementType getPlunderingImprovementType() {
+    public Improvement getPlunderingImprovementType() {
         return plunderingImprovementType;
     }
 
@@ -483,7 +483,10 @@ public class Ground {
     public void buildRailWay(){
         railWay = new RailWay();
     }
-
+    public void deleteRoadAndRailway(){
+        this.road=null;
+        this.railWay=null;
+    }
     public RailWay getRailWay() {
         return railWay;
     }
