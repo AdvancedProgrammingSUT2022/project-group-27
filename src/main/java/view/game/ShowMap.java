@@ -13,6 +13,7 @@ import Enum.ImprovementType;
 import Enum.BonusResource;
 import Enum.LuxuryResource;
 import Enum.StrategicResource;
+import Enum.MilitaryType;
 public class ShowMap {
     private GlobalVariables globalVariables = new GlobalVariables();
     private Player player;
@@ -107,6 +108,53 @@ public class ShowMap {
             for (Unit unit : unitArrayList) {
                 if (unit instanceof MilitaryUnit) {
                     showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_CYAN + "M";
+                    if (unit.getMilitaryType()== MilitaryType.ANTITANKGUN)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "G";
+                    if (unit.getMilitaryType()== MilitaryType.ARCHER)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "A";
+                    if (unit.getMilitaryType()== MilitaryType.WARRIOR)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "W";
+                    if (unit.getMilitaryType() == MilitaryType.ARTILLERY)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "T";
+                    if (unit.getMilitaryType()== MilitaryType.CANON)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "C";
+                    if (unit.getMilitaryType()== MilitaryType.CATAPULT)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "P";
+                    if (unit.getMilitaryType()== MilitaryType.CAVALRY)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "V";
+                    if (unit.getMilitaryType()== MilitaryType.CHARIOTARCHER)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "O";
+                    if (unit.getMilitaryType()== MilitaryType.CROSSBOWMAN)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "B";
+                    if (unit.getMilitaryType()== MilitaryType.HORSEMAN)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "H";
+                    if (unit.getMilitaryType()== MilitaryType.INFANTRY)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "I";
+                    if (unit.getMilitaryType()== MilitaryType.KNIGHT)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "K";
+                    if (unit.getMilitaryType()== MilitaryType.LANCER)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "L";
+                    if (unit.getMilitaryType()== MilitaryType.LONGSWORDSMAN)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "l";
+                    if (unit.getMilitaryType()== MilitaryType.MUSKETMAN)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "M";
+                    if (unit.getMilitaryType()== MilitaryType.PANZER)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "Z";
+                    if (unit.getMilitaryType()== MilitaryType.PIKEMAN)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "p";
+                    if (unit.getMilitaryType()== MilitaryType.RIFLEMAN)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "R";
+                    if (unit.getMilitaryType()== MilitaryType.SCOUT)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "s";
+                    if (unit.getMilitaryType()== MilitaryType.SPEARMAN)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "S";
+                    if (unit.getMilitaryType()== MilitaryType.SWORDSMAN)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "W";
+                    if (unit.getMilitaryType()== MilitaryType.TANK)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "T";
+                    if (unit.getMilitaryType()== MilitaryType.TREBUCHET)
+                        showMap[ground.getxLocation() + 2][ground.getyLocation() - 4] = GlobalVariables.ANSI_BLUE + "t";
+
                 } else {
                     if (unit instanceof SettlerUnit) showMap[ground.getxLocation() + 2][ground.getyLocation() + 4] = GlobalVariables.ANSI_BLUE + "S";
                     else showMap[ground.getxLocation() + 2][ground.getyLocation() + 4] = GlobalVariables.ANSI_BLUE + "W";
@@ -277,7 +325,52 @@ public class ShowMap {
                 Ground ground = Player.getAllPlayers().get(i).getUnits().get(j).getGround();
                 if (player.isThisGroundVisible(ground)) {
                     if (Player.getAllPlayers().get(i).getUnits().get(j) instanceof MilitaryUnit) {
-                        showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "M";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.ANTITANKGUN)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "G";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.ARCHER)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "A";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.WARRIOR)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "W";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.ARTILLERY)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "T";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.CANON)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "C";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.CATAPULT)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "P";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.CAVALRY)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "V";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.CHARIOTARCHER)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "O";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.CROSSBOWMAN)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "B";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.HORSEMAN)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "H";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.INFANTRY)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "I";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.KNIGHT)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "K";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.LANCER)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "L";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.LONGSWORDSMAN)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "l";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.MUSKETMAN)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "M";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.PANZER)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "Z";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.PIKEMAN)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "p";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.RIFLEMAN)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "R";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.SCOUT)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "s";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.SPEARMAN)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "S";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.SWORDSMAN)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "W";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.TANK)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "T";
+                        if (Player.getAllPlayers().get(i).getUnits().get(j).getMilitaryType()== MilitaryType.TREBUCHET)
+                            showMap[ground.getxLocation() + 1][ground.getyLocation() - 1] = GlobalVariables.ANSI_RED + "t";
                     } else{
                         if (Player.getAllPlayers().get(i).getUnits().get(j) instanceof SettlerUnit) showMap[ground.getxLocation() + 1][ground.getyLocation() + 1] = GlobalVariables.ANSI_RED + "S";
                         else showMap[ground.getxLocation() + 1][ground.getyLocation() + 1] = GlobalVariables.ANSI_RED + "W";
