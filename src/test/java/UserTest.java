@@ -97,4 +97,20 @@ public class UserTest {
     public void testChangePasswordTrue() {
         Assertions.assertTrue(user2.changePassword("ccc"));
     }
+
+    @Test
+    public void testArraylist() {
+        ArrayList<User> list = new ArrayList<>();
+        list.add(new User("a", "a", "a"));
+
+        User.setListOfUsers(list);
+        Assertions.assertEquals(list, User.getListOfUsers());
+    }
+
+    @Test
+    public void getUserName() {
+        User user = new User("arefe", "123", "pargol");
+
+        Assertions.assertEquals("arefe", user.getUsername());
+    }
 }
