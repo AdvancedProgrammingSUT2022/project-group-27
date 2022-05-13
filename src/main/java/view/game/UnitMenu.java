@@ -63,6 +63,13 @@ public class UnitMenu {
             System.out.println("The unit is deleted successfully");
             isExit = true;
         } else if (input.matches("^exit$")) isExit = true;
+        else if (input.matches("^increase mp ((--numberOfAmount)|(-n)) \\d+$")) {
+            String[] s=input.split(" +");
+            unit.setMp(unit.getMp() + Integer.parseInt(s[3]));
+        } else if (input.matches("^increase hp ((--numberOfAmount)|(-n)) \\d+$")) {
+            String[] s=input.split(" +");
+            unit.setHp(unit.getHp() + Integer.parseInt(s[3]));
+        }
         else System.out.println(Message.INVALID_COMMAND);
 
         if (!isExit) this.run(unit);

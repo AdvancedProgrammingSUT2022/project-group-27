@@ -81,6 +81,11 @@ public class GameView {
             Player player=Player.whichPlayerTurnIs();
             player.increaseGold(Integer.parseInt(s[3]));
             this.run();
+        } else if (input.matches("^increase happiness ((--numberOfHappiness)|(-n)) \\d+$")) {
+            String[] s=input.split(" +");
+            Player player=Player.whichPlayerTurnIs();
+            player.increaseHappiness(Integer.parseInt(s[3]));
+            this.run();
         }
         else if (input.matches((regex = "^put improvement in ((--groundNumber)|(-n)) (?<groundNumber>\\d+)$"))){
             matcher = controller.findMatcherFromString(input, regex);

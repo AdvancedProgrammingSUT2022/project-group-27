@@ -73,6 +73,10 @@ public abstract class Unit {
         return mp;
     }
 
+    public void setMp(double mp) {
+        this.mp = mp;
+    }
+
     public void setDestination(Ground ground) {
         this.destination = ground;
         if (ground != null) {
