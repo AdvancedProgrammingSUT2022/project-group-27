@@ -505,4 +505,27 @@ public class Ground {
     public void increaseCounterOfDestroyingFeature(int amount){
         this.counterOfDestroyingFeature+=amount;
     }
+
+    public int getDistance(Ground ground) {
+        ArrayList<Integer> isReached = new ArrayList<Integer>(GlobalVariables.numberOfTiles);
+        for (int i = 0; i < GlobalVariables.numberOfTiles; i++) {
+            isReached.set(i, 0);
+
+        }
+        isReached.set(this.number, 1);
+        if (this.equals(ground))
+            return 0;
+        for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
+            for (int j = 1; j <= GlobalVariables.numberOfTiles; j++) {
+                for (int k = 1; k <= GlobalVariables.numberOfTiles; k++) {
+                    if (isReached.get(i - 1) == 1 && AreTheseTwoGroundAdjacent(Ground.getGroundByNumber(j), Ground.getGroundByNumber(k))) {
+                        isReached.set(k - 1, 1);
+                    }
+                }
+            }
+            if (isReached.get(ground.number) == 1)
+                return i;
+        }
+        return GlobalVariables.numberOfTiles;
+    }
 }

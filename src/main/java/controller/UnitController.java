@@ -89,7 +89,7 @@ public class UnitController extends Controller {
         if (ground == null) return Message.INVALID_GROUND_NUMBER;
 
         if (unit instanceof RangedUnit) {
-            if (!unit.getMilitaryType().getCombatType().equals("Siege") || ((RangedUnit)unit).isReadyToRangedFight()) {
+            if ((!unit.getMilitaryType().getCombatType().equals("Siege") || ((RangedUnit)unit).isReadyToRangedFight()) && unit.getGround().getDistance(ground) <= unit.getMilitaryType().getRange()) {
                 ((RangedUnit)unit).combat(ground);
                 return Message.SUCCESS_WORK;
             }
@@ -131,7 +131,7 @@ public class UnitController extends Controller {
         Ground ground = Ground.getGroundByNumber(groundNumber);
         if (ground == null) return Message.INVALID_GROUND_NUMBER;
 
-        if (unit instanceof MeleeUnit) {
+        if (unit instanceof MeleeUnit && unit.getGround().AreTheseTwoGroundAdjacent(unit.getGround(), ground)) {
             ((MeleeUnit)unit).combat(ground);
             return Message.SUCCESS_WORK;
         }
