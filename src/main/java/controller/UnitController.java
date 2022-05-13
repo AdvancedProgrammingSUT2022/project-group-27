@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 import Enum.*;
+import Enum.MilitaryType;
 
 public class UnitController extends Controller {
     public static Message findUnitFromMatcher(int groundNumber, String type, Player player) {
@@ -88,7 +89,7 @@ public class UnitController extends Controller {
         if (ground == null) return Message.INVALID_GROUND_NUMBER;
 
         if (unit instanceof RangedUnit) {
-            if (((RangedUnit)unit).isReadyToRangedFight()) {
+            if (!unit.getMilitaryType().getCombatType().equals("Siege") || ((RangedUnit)unit).isReadyToRangedFight()) {
                 ((RangedUnit)unit).combat(ground);
                 return Message.SUCCESS_WORK;
             }
@@ -98,7 +99,7 @@ public class UnitController extends Controller {
     }
 
     public static Message readyToRangedFight(Unit unit) {
-        if (unit instanceof RangedUnit) {
+        if (unit instanceof RangedUnit && unit.getMilitaryType().getCombatType().equals("Siege")) {
             ((RangedUnit)unit).setReadyToRangedFight(true);
             return Message.SUCCESS_WORK;
         }

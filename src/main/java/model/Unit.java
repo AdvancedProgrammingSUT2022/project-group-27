@@ -81,29 +81,9 @@ public abstract class Unit {
         return this.militaryType.getCost();
     }
 
-    /*public boolean isSleeping() {
-        return isSleeping;
-    }
-
-    public void setSleeping(boolean sleeping) {
-        isSleeping = sleeping;
-    }
-
-    public boolean HasDoneSomething() {
-        return hasDoneSomething;
-    }
-
-    public void setHasDoneSomething(boolean hasDoneSomething) {
-        this.hasDoneSomething = hasDoneSomething;
-    }*/
-
     public int getMovement() {
         return this.militaryType.getMovement();
     }
-
-    //public int getTurn() {
-    //    return this.militaryType.getTurn();
-   // }
 
     public MilitaryType getMilitaryType() {
         return militaryType;
