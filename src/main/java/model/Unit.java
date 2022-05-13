@@ -16,6 +16,8 @@ public abstract class Unit {
     protected int turnsFortified = 0;
     protected UnitStatus status = UnitStatus.AWAKE;
     protected RemainedTurns turnRemainedToCompleted = new RemainedTurns(0);
+    protected int combatStrength;
+    protected int rangedCombatStrength;
     //protected boolean isSleeping = false;
     //protected boolean hasDoneSomething = false;
 
@@ -23,6 +25,19 @@ public abstract class Unit {
         this.player = player;
         this.ground = ground;
         this.militaryType = militaryType;
+        combatStrength = militaryType.getCombatStrength();
+    }
+
+    public int getRangedCombatStrength() {
+        if (this.player.getHappiness() < 0) return rangedCombatStrength * 3 / 4;
+
+        return rangedCombatStrength;
+    }
+
+    public int getCombatStrength() {
+        if (this.player.getHappiness() < 0) return combatStrength * 3 / 4;
+
+        return combatStrength;
     }
 
     public double getHp() {

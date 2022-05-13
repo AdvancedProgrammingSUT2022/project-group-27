@@ -1,11 +1,9 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Enum.TechnologyType;
 import controller.Game;
-import Enum.MilitaryType;
 import Enum.LuxuryResource;
 import Enum.StrategicResource;
 import controller.UnitController;
@@ -13,6 +11,7 @@ import controller.UnitController;
 public class Player {
     private int gold;
     //private int science;
+    private int extraHappiness = 0;
     private int food;
     private static final ArrayList<Player> allPlayers = new ArrayList<>();
     private final ArrayList<City> cities = new ArrayList<>();
@@ -45,6 +44,10 @@ public class Player {
 
     public ArrayList<Notification> getNotificationHistory() {
         return notificationHistory;
+    }
+
+    public void increaseHappiness(int amount) {
+        this.extraHappiness += amount;
     }
 
     public void setGold(int gold) {
@@ -320,7 +323,7 @@ public class Player {
         }
         happiness -= population / 7;
         happiness += this.allLuxuryResources.size() * 3;
-        return happiness;
+        return happiness + this.extraHappiness;
     }
 
     public boolean hasStrategicResource(StrategicResource strategicResource) {

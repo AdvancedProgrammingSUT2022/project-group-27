@@ -23,7 +23,7 @@ public class RangedUnit extends MilitaryUnit{
         if (militaryUnit == null)
             return;
 
-        double decreasedHp = (this.hp + 10) / 20 * this.militaryType.getRangedCombatStrength();
+        double decreasedHp = (this.hp + 10) / 20 * this.getRangedCombatStrength();
         decreasedHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
         if (militaryUnit.militaryType.getCombatType() != "Mounted" && militaryUnit.militaryType.getCombatType() != "Siege") {
             if (militaryUnit.turnsFortified >= 2)
@@ -38,7 +38,7 @@ public class RangedUnit extends MilitaryUnit{
 
     @Override
     public void combat(City city) {
-        double decreasedHp = (this.hp + 10) / 20 * this.militaryType.getRangedCombatStrength();
+        double decreasedHp = (this.hp + 10) / 20 * this.getRangedCombatStrength();
         decreasedHp *= (double) 100.0 / (city.getGround().getGroundType().getCombatCoefficient() + 100.0);
         city.setHp(city.getHp() - decreasedHp);
         if (city.getHp() < 1)

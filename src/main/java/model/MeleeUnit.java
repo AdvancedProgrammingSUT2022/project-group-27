@@ -20,7 +20,7 @@ public class MeleeUnit extends MilitaryUnit {
             }
             return;
         }
-        double decreasedEnemyHp = (this.hp + 10) / 20 * this.militaryType.getCombatStrength();
+        double decreasedEnemyHp = (this.hp + 10) / 20 * this.getCombatStrength();
         decreasedEnemyHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
         if (militaryUnit.getMilitaryType().getCombatType() != "Mounted" && militaryUnit.getMilitaryType().getCombatType() != "Siege") {
             if (militaryUnit.getTurnsFortified() >= 2)
@@ -55,11 +55,11 @@ public class MeleeUnit extends MilitaryUnit {
     public void combat(City city) {
         MilitaryUnit militaryUnit = city.getGround().getMilitaryUnit();
         UnMilitaryUnit unMilitaryUnit = city.getGround().getUnMilitaryUnit();
-        double decreasedEnemyHp = (this.hp + 10) / 20 * this.militaryType.getCombatStrength();
+        double decreasedEnemyHp = (this.hp + 10) / 20 * this.getCombatStrength();
         decreasedEnemyHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
         double decreasedOwnHp = city.getCityStrength();
         if (militaryUnit != null)
-            decreasedOwnHp += (militaryUnit.hp + 10) / 20 * this.militaryType.getCombatStrength() / 3;
+            decreasedOwnHp += (militaryUnit.hp + 10) / 20 * this.getCombatStrength() / 3;
         this.hp -= decreasedOwnHp;
         city.setHp(city.getHp() - decreasedEnemyHp);
         boolean isThisDestroyed = false;
