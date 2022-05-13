@@ -99,6 +99,7 @@ public class Game extends Controller {
         /// TODO : otherthings
         for (int i=0;i<player.getCities().size();i++){
             City city = player.getCities().get(i);
+            if (city.getHp() < 20) city.setHp(city.getHp() + 1);
             city.setSavedFood(city.getSavedFood() + city.getFoodPerTurn());
             if (city.getSavedFood() > city.getListOfCitizens().size() * 10) {
                 city.setSavedFood(city.getSavedFood() - city.getListOfCitizens().size() * 10);

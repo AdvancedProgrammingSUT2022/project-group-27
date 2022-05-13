@@ -49,6 +49,9 @@ public class CityView extends ViewOfCity{
         else if (input.matches((regex = "^fight to ground ((--groundNumber)|(-n)) (?<groundNumber>\\d+)$"))) {
             matcher = controller.findMatcherFromString(input, regex);
             this.fightToGround(matcher, city);
+        } else if (input.matches("^increase hp ((--numberOfAmount)|(-n)) \\d+$")) {
+            String[] s=input.split(" +");
+            city.setHp(city.getHp() + Integer.parseInt(s[3]));
         }
         else {
             System.out.println(Message.INVALID_COMMAND);

@@ -302,6 +302,13 @@ public class Player {
         for (Unit unit : this.getUnits()) {
             goldDifference -= (double) unit.getMilitaryType().getCost() / 100;
         }
+
+        for (Ground ground: Ground.getAllGround()) {
+            if (ground.ownerOfThisGround().equals(this) && ground.getRoad() != null) {
+                goldDifference -= 0.1;
+            }
+        }
+
         return (int) (goldDifference + 0.5);
     }
 
