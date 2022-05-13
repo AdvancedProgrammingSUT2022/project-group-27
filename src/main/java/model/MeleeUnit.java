@@ -10,6 +10,8 @@ public class MeleeUnit extends MilitaryUnit {
 
     @Override
     public void combat(Ground ground) {
+        if (ground.getNumber() == this.ground.getNumber()) return;
+
         MilitaryUnit militaryUnit = ground.getMilitaryUnit();
         UnMilitaryUnit unMilitaryUnit = ground.getUnMilitaryUnit();
         if (militaryUnit == null) {
@@ -20,21 +22,21 @@ public class MeleeUnit extends MilitaryUnit {
         }
         double decreasedEnemyHp = (this.hp + 10) / 20 * this.militaryType.getCombatStrength();
         decreasedEnemyHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
-        if (militaryUnit.militaryType.getCombatType() != "Mounted" && militaryUnit.militaryType.getCombatType() != "Siege") {
-            if (militaryUnit.turnsFortified >= 2)
+        if (militaryUnit.getMilitaryType().getCombatType() != "Mounted" && militaryUnit.getMilitaryType().getCombatType() != "Siege") {
+            if (militaryUnit.getTurnsFortified() >= 2)
                 decreasedEnemyHp /= 2;
-            if (militaryUnit.turnsFortified == 1)
+            if (militaryUnit.getTurnsFortified() == 1)
                 decreasedEnemyHp *= 0.75;
         }
-        double decreasedOwnHp = (militaryUnit.hp + 10) / 20 * this.militaryType.getCombatStrength();
+        double decreasedOwnHp = (militaryUnit.getHp() + 10) / 20 * this.getMilitaryType().getCombatStrength();
         this.hp -= decreasedOwnHp;
-        militaryUnit.hp -= decreasedEnemyHp;
+        militaryUnit.setHp(militaryUnit.getHp() - decreasedEnemyHp);
         boolean isThisDestroyed = false;
         if (this.hp <= 0.0001) {
             this.removeUnit();
             isThisDestroyed = true;
         }
-        if (militaryUnit.hp <= 0.0001) {
+        if (militaryUnit.getHp() <= 0.0001) {
             militaryUnit.removeUnit();
             if (!isThisDestroyed) {
                 this.ground = ground;
@@ -43,7 +45,9 @@ public class MeleeUnit extends MilitaryUnit {
                 }
             }
         }
-        if (this.militaryType.equals(MilitaryType.HORSEMAN) || this.militaryType.equals(MilitaryType.KNIGHT) || this.militaryType.equals(MilitaryType.CAVALRY) || this.militaryType.equals(MilitaryType.LANCER) || this.militaryType.equals(MilitaryType.PANZER) || this.militaryType.equals(MilitaryType.TANK))
+        if (this.militaryType.equals(MilitaryType.HORSEMAN) || this.militaryType.equals(MilitaryType.KNIGHT) ||
+                this.militaryType.equals(MilitaryType.CAVALRY) || this.militaryType.equals(MilitaryType.LANCER) ||
+                this.militaryType.equals(MilitaryType.PANZER) || this.militaryType.equals(MilitaryType.TANK))
             mp = 10;
 
     }
@@ -73,7 +77,9 @@ public class MeleeUnit extends MilitaryUnit {
             ConquerCityMenu.run(city);
 
         }
-        if (this.militaryType.equals(MilitaryType.HORSEMAN) || this.militaryType.equals(MilitaryType.KNIGHT) || this.militaryType.equals(MilitaryType.CAVALRY) || this.militaryType.equals(MilitaryType.LANCER) || this.militaryType.equals(MilitaryType.PANZER) || this.militaryType.equals(MilitaryType.TANK))
+        if (this.militaryType.equals(MilitaryType.HORSEMAN) || this.militaryType.equals(MilitaryType.KNIGHT) ||
+                this.militaryType.equals(MilitaryType.CAVALRY) || this.militaryType.equals(MilitaryType.LANCER) ||
+                this.militaryType.equals(MilitaryType.PANZER) || this.militaryType.equals(MilitaryType.TANK))
             mp = 10;
 
     }
