@@ -31,7 +31,7 @@ public class Info {
     private void economicOverview(Player player) {
         for (City city: player.getCities()) {
             System.out.println("demography: " + city.getListOfCitizens().size());
-            System.out.println("power: " + city.getPower());
+            System.out.println("power: " + city.getCityStrength());
             System.out.println("output of food: " + city.getFoodPerTurn());
             System.out.println("science: " + city.getScience());
             System.out.println("gold: " + city.getGold());

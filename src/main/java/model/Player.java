@@ -12,7 +12,6 @@ public class Player {
     private int gold;
     //private int science;
     private int extraHappiness = 0;
-    private int food;
     private static final ArrayList<Player> allPlayers = new ArrayList<>();
     private final ArrayList<City> cities = new ArrayList<>();
     private final ArrayList<Unit> units = new ArrayList<>();
@@ -58,10 +57,6 @@ public class Player {
     //    this.science = science;
    // }
 
-    public void setFood(int food) {
-        this.food = food;
-    }
-
     private ArrayList<TechnologyType> technologyType=new ArrayList<>();
 
     private ArrayList<Technology> AllTechnologyTypes=new ArrayList<>();
@@ -73,6 +68,8 @@ public class Player {
 
     }
     public int getFood() {
+        int food = 0;
+        for (City city: getCities()) food += city.getSavedFood();
         return food;
     }
 

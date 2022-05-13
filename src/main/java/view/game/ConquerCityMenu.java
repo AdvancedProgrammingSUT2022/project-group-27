@@ -32,11 +32,11 @@ public class ConquerCityMenu {
         }
         else if (number == 2) {
             city.setPuppet(true, player);
-            player.increaseHappiness(10);
+            player.increaseHappiness(4);
             System.out.println("city is puppet to you");
         } else if (number == 3) {
             city.setPlayer(player);
-            player.increaseHappiness(-10);
+            player.increaseHappiness(-4);
             System.out.println("city is adding to you");
         } else {
             System.out.println("Invalid number");

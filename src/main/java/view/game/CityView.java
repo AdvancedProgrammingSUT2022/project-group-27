@@ -22,7 +22,7 @@ public class CityView extends ViewOfCity{
 
     private void run(City city) {
         System.out.println("Name of city: " + city.getName());
-        System.out.println("City strength in combats: " + city.getPower());
+        System.out.println("City strength in combats: " + city.getCityStrength());
         String input;
         String regex;
         Matcher matcher;
@@ -137,6 +137,7 @@ public class CityView extends ViewOfCity{
         System.out.println("How much gold does this city have? " + city.getGold());
         System.out.println("How much science does this city have? " + city.getScience());
         //TODO add turns of increasing for citizens
+        this.run(city);
     }
 
     private void removeFromWork(Matcher matcher, City city) {

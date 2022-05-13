@@ -10,7 +10,6 @@ import Enum.StrategicResource;
 public class City {
     private Player player;
     private String name;
-    private int power;
     private int savedFood;
     //private int production;
     //private int science;
@@ -87,10 +86,6 @@ public class City {
 
     public String getName() {
         return name;
-    }
-
-    public int getPower() {
-        return power;
     }
 
     public Player getPlayer() {
