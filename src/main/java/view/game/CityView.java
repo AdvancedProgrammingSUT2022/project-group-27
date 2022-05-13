@@ -52,6 +52,19 @@ public class CityView extends ViewOfCity{
         } else if (input.matches("^increase hp ((--numberOfAmount)|(-n)) \\d+$")) {
             String[] s=input.split(" +");
             city.setHp(city.getHp() + Integer.parseInt(s[3]));
+        } else if (input.matches("^buy free ground$")) {
+            buyFreeGround(city);
+            this.run(city);
+        } else if (input.matches("^increase saved food ((--numberOfAmount)|(-n)) \\d+$")) {
+            String[] s = input.split(" +");
+            city.setSavedFood(city.getSavedFood() + Integer.parseInt(s[4]));
+            this.run(city);
+        } else if (input.matches("^free worker$")) {
+            city.getListOfUnitsInCity().add(new Worker(city.getGround(), city.getPlayer()));
+            this.run(city);
+        } else if (input.matches("^free settler$")) {
+            city.getListOfUnitsInCity().add(new SettlerUnit(city.getGround(), city.getPlayer()));
+            this.run(city);
         }
         else {
             System.out.println(Message.INVALID_COMMAND);
@@ -61,6 +74,11 @@ public class CityView extends ViewOfCity{
 
     private void exitMenu() {
         //Don't do anything special
+    }
+
+    private void buyFreeGround(City city) {
+        if (city.groundsNearTheCity().size() > 0)
+            city.addGroundToRangeOfCity(city.groundsNearTheCity().get(0));
     }
 
     private void fightToGround(Matcher matcher, City city) {
@@ -73,6 +91,7 @@ public class CityView extends ViewOfCity{
 
         System.out.println("Fighting is starting...");
         city.combat(ground);
+        this.run(city);
     }
 
     private void buy(City city) {

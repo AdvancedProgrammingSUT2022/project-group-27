@@ -22,6 +22,10 @@ public class User {
         return username;
     }
 
+    public void increaseScore(int score) {
+        this.score += score;
+    }
+
     public static void setListOfUsers(ArrayList<User> listOfUsers) {
         User.listOfUsers = listOfUsers;
     }
