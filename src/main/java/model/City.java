@@ -257,7 +257,7 @@ public class City {
     }
 
     public int getProduction() {
-        int production = 3;
+        int production = listOfCitizens.size();
         for (Ground ground : getRangeOfCity()) {
             if (ground.canWeUseThisLuxuryResource())
                 production += ground.getLuxuryResources().get(0).getProduction();

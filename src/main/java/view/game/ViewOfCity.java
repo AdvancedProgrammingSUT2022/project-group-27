@@ -52,6 +52,8 @@ public abstract class ViewOfCity {
             System.out.println(index + ":");
             System.out.println("Name of city: " + city.getName());
             System.out.println("Ground number : " + city.getGround().getNumber());
+            if (city.isPuppet()) System.out.println("it is a puppet city!");
+            System.out.println("**************");
             index++;
         }
     }

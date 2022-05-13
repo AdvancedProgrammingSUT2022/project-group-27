@@ -72,12 +72,14 @@ public class UnitController extends Controller {
         City city = City.findCityByGround(ground, unit.getPlayer());
         if (city == null) return Message.UNIT_CAN_NOT_DO;
         if (unit instanceof MilitaryUnit) {
-            if (city.getGround().getMilitaryUnit() != null) return Message.UNIT_CAN_NOT_DO;
+            if (city.getGround().getMilitaryUnit() != null || city.getGround().getMilitaryUnit() != unit)
+                return Message.UNIT_CAN_NOT_DO;
             unit.setCityGround(ground);
         }
 
         if (unit instanceof UnMilitaryUnit) {
-            if (city.getGround().getUnMilitaryUnit() != null) return Message.UNIT_CAN_NOT_DO;
+            if (city.getGround().getUnMilitaryUnit() != null || city.getGround().getUnMilitaryUnit() != unit)
+                return Message.UNIT_CAN_NOT_DO;
             unit.setCityGround(ground);
         }
 
@@ -90,7 +92,10 @@ public class UnitController extends Controller {
 
         if (unit instanceof RangedUnit) {
             if ((!unit.getMilitaryType().getCombatType().equals("Siege") || ((RangedUnit)unit).isReadyToRangedFight()) && unit.getGround().getDistance(ground) <= unit.getMilitaryType().getRange()) {
-                ((RangedUnit)unit).combat(ground);
+                City city = City.findCityByGround(ground, ground.getOwner());
+                if (city == null) ((RangedUnit)unit).combat(ground);
+                else ((RangedUnit)unit).combat(city);
+
                 return Message.SUCCESS_WORK;
             }
         }
@@ -132,7 +137,9 @@ public class UnitController extends Controller {
         if (ground == null) return Message.INVALID_GROUND_NUMBER;
 
         if (unit instanceof MeleeUnit && unit.getGround().AreTheseTwoGroundAdjacent(unit.getGround(), ground)) {
-            ((MeleeUnit)unit).combat(ground);
+            City city = City.findCityByGround(ground, ground.getOwner());
+            if (city == null) ((MeleeUnit)unit).combat(ground);
+            else ((MeleeUnit)unit).combat(city);
             return Message.SUCCESS_WORK;
         }
 

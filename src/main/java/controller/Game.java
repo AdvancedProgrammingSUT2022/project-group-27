@@ -65,6 +65,7 @@ public class Game extends Controller {
             if (unit instanceof MilitaryUnit militaryUnit) {
                 if (militaryUnit.getStatus().equals(UnitStatus.IMPROVING))
                     militaryUnit.setTurnsFortified(militaryUnit.getTurnsFortified() + 1);
+                else militaryUnit.setTurnsFortified(0);
             }
 
             if (unit.getStatus().equals(UnitStatus.HEALTH_IMPROVING) && unit.getHp() < 10) {

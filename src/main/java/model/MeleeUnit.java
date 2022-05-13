@@ -74,6 +74,8 @@ public class MeleeUnit extends MilitaryUnit {
                 unMilitaryUnit.removeUnit();
             if (!isThisDestroyed)
                 this.ground = city.getGround();
+            player.setGold(player.getGold() + 40);
+            city.getPlayer().setGold((city.getPlayer().getGold() * 2) / 3);
             ConquerCityMenu.run(city, this.player);
 
         }

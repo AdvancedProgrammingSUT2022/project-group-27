@@ -46,6 +46,10 @@ public class CityView extends ViewOfCity{
         else if (input.matches("^buy ground$")) this.buyGround(city);
         else if (input.matches("^lets buy$")) this.buy(city);
         else if (input.matches("^choice another city$")) this.cityMenus(city.getPlayer());
+        else if (input.matches((regex = "^fight to ground ((--groundNumber)|(-n)) (?<groundNumber>\\d+)$"))) {
+            matcher = controller.findMatcherFromString(input, regex);
+            this.fightToGround(matcher, city);
+        }
         else {
             System.out.println(Message.INVALID_COMMAND);
             this.run(city);
@@ -54,6 +58,18 @@ public class CityView extends ViewOfCity{
 
     private void exitMenu() {
         //Don't do anything special
+    }
+
+    private void fightToGround(Matcher matcher, City city) {
+        int groundNumber = Integer.parseInt(matcher.group("groundNumber"));
+        Ground ground = Ground.getGroundByNumber(groundNumber);
+        if (ground == null) {
+            System.out.println(Message.INVALID_GROUND_NUMBER);
+            return;
+        }
+
+        System.out.println("Fighting is starting...");
+        city.combat(ground);
     }
 
     private void buy(City city) {
@@ -96,6 +112,7 @@ public class CityView extends ViewOfCity{
         System.out.println("Gold of civilization produced by this city: " + city.getGold());
         System.out.println("The city production: " + city.getProduction());
         System.out.println("Happiness of civilization: " + player.getHappiness());
+        System.out.println("Food produce per turn: " + city.getFoodPerTurn());
         showStrategicResourceOfCity(city);
         this.run(city);
     }
@@ -115,7 +132,6 @@ public class CityView extends ViewOfCity{
     }
 
     private void showOutputOfCity(City city) {
-        //TODO maybe should change these with how much in one turn
         System.out.println("How much food does this city store? " + city.getSavedFood());
         System.out.println("How much production does this city have? " + city.getProduction());
         System.out.println("How much gold does this city have? " + city.getGold());
