@@ -33,12 +33,12 @@ public class UnitController extends Controller {
 
     public static void addUnit(Player player, Ground ground, MilitaryType militaryType) {
         if (militaryType.equals(MilitaryType.SETTLER)) {
-            SettlerUnit settlerUnit = new SettlerUnit(ground, player, militaryType);
+            SettlerUnit settlerUnit = new SettlerUnit(ground, player);
             player.getUnits().add(settlerUnit);
             return ;
         }
         if (militaryType.equals(MilitaryType.WORKER)) {
-            Worker worker = new Worker(ground, player, militaryType);
+            Worker worker = new Worker(ground, player);
             player.getUnits().add(worker);
             return ;
         }

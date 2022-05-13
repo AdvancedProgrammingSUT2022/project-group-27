@@ -74,7 +74,7 @@ public class MeleeUnit extends MilitaryUnit {
                 unMilitaryUnit.removeUnit();
             if (!isThisDestroyed)
                 this.ground = city.getGround();
-            ConquerCityMenu.run(city, this);
+            ConquerCityMenu.run(city, this.player);
 
         }
         if (this.militaryType.equals(MilitaryType.HORSEMAN) || this.militaryType.equals(MilitaryType.KNIGHT) ||

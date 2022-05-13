@@ -19,8 +19,8 @@ public class CityController extends Controller{
         }
 
         if (unitType == null) return null;
-        if (unitType == MilitaryType.WORKER) return new Worker(city.getGround(), city.getPlayer(), unitType);
-        if (unitType == MilitaryType.SETTLER) return new SettlerUnit(city.getGround(), city.getPlayer(), unitType);
+        if (unitType == MilitaryType.WORKER) return new Worker(city.getGround(), city.getPlayer());
+        if (unitType == MilitaryType.SETTLER) return new SettlerUnit(city.getGround(), city.getPlayer());
         if (unitType.getCombatType().matches("Archery|Mounted|Siege")) return new RangedUnit(city.getGround(),
                 city.getPlayer(), unitType);
         if (unitType.getCombatType().matches("Recon|Melee|Gunpowder|Armored")) return new MeleeUnit(city.getGround(),
