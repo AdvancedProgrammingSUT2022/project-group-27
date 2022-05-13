@@ -52,8 +52,21 @@ public class City {
         this.remainedTurnsToBuild = construction.getTurnRemainedToComplete();
     }
 
-    public void setPuppet(boolean puppet) {
+    public void setPuppet(boolean puppet, Player player) {
         isPuppet = puppet;
+        this.setPlayer(player);
+    }
+
+    public void setPlayer(Player player) {
+        this.player.getCities().remove(this);
+
+        this.player = player;
+        this.ground.setOwner(player);
+        for (Ground ground: this.rangeOfCity) {
+            ground.setOwner(player);
+        }
+
+        player.getCities().add(this);
     }
 
     public boolean isPuppet() {
