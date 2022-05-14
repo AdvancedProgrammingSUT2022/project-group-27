@@ -91,12 +91,16 @@ public class UnitController extends Controller {
         if (ground == null) return Message.INVALID_GROUND_NUMBER;
 
         if (unit instanceof RangedUnit) {
-            if ((!unit.getMilitaryType().getCombatType().equals("Siege") || ((RangedUnit)unit).isReadyToRangedFight()) && unit.getGround().getDistance(ground) <= unit.getMilitaryType().getRange()) {
-                City city = City.findCityByGround(ground, ground.getOwner());
-                if (city == null) ((RangedUnit)unit).combat(ground);
-                else ((RangedUnit)unit).combat(city);
+            if ((!unit.getMilitaryType().getCombatType().equals("Siege") ||
+                    ((RangedUnit)unit).isReadyToRangedFight())) {
+                if ((unit.getMilitaryType().equals(MilitaryType.ARTILLERY) && unit.getGround().getDistance(ground) <= unit.getMilitaryType().getRange()) ||
+                        (!unit.getMilitaryType().equals(MilitaryType.ARTILLERY) && unit.getGround().getDistanceWithoutBlocks(ground) <= unit.getMilitaryType().getRange())) {
+                    City city = City.findCityByGround(ground, ground.getOwner());
+                    if (city == null) ((RangedUnit) unit).combat(ground);
+                    else ((RangedUnit) unit).combat(city);
 
-                return Message.SUCCESS_WORK;
+                    return Message.SUCCESS_WORK;
+                }
             }
         }
 

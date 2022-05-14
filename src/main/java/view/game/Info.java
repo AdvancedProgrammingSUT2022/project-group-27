@@ -1,9 +1,6 @@
 package view.game;
 
-import model.City;
-import model.Notification;
-import model.Player;
-import model.Unit;
+import model.*;
 import view.Menu;
 
 public class Info {

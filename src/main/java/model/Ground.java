@@ -509,23 +509,44 @@ public class Ground {
     }
 
     public int getDistance(Ground ground) {
-        ArrayList<Integer> isReached = new ArrayList<Integer>(GlobalVariables.numberOfTiles);
+        ArrayList<Integer> isReached = new ArrayList<>();
         for (int i = 0; i < GlobalVariables.numberOfTiles; i++) {
-            isReached.set(i, 0);
-
+            isReached.add(0);
         }
-        isReached.set(this.number, 1);
+        isReached.set(this.number - 1, 1);
         if (this.equals(ground))
             return 0;
         for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
             for (int j = 1; j <= GlobalVariables.numberOfTiles; j++) {
                 for (int k = 1; k <= GlobalVariables.numberOfTiles; k++) {
-                    if (isReached.get(i - 1) == 1 && AreTheseTwoGroundAdjacent(Ground.getGroundByNumber(j), Ground.getGroundByNumber(k))) {
-                        isReached.set(k - 1, 1);
+                    if (isReached.get(j - 1) == i && isReached.get(k - 1) == 0 && AreTheseTwoGroundAdjacent(Ground.getGroundByNumber(j), Ground.getGroundByNumber(k))) {
+                        isReached.set(k - 1, i + 1);
                     }
                 }
             }
-            if (isReached.get(ground.number) == 1)
+            if (isReached.get(ground.number - 1) != 0)
+                return i;
+        }
+        return GlobalVariables.numberOfTiles;
+    }
+
+    public int getDistanceWithoutBlocks(Ground ground) {
+        ArrayList<Integer> isReached = new ArrayList<>();
+        for (int i = 0; i < GlobalVariables.numberOfTiles; i++) {
+            isReached.add(0);
+        }
+        isReached.set(this.number - 1, 1);
+        if (this.equals(ground))
+            return 0;
+        for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
+            for (int j = 1; j <= GlobalVariables.numberOfTiles; j++) {
+                for (int k = 1; k <= GlobalVariables.numberOfTiles; k++) {
+                    if (isReached.get(j - 1) == i && isReached.get(k - 1) == 0 && AreTheseTwoGroundAdjacent(Ground.getGroundByNumber(j), Ground.getGroundByNumber(k)) && (this.number == j || !Ground.getGroundByNumber(j).getGroundType().isBlock())) {
+                        isReached.set(k - 1, i + 1);
+                    }
+                }
+            }
+            if (isReached.get(ground.number - 1) != 0)
                 return i;
         }
         return GlobalVariables.numberOfTiles;
