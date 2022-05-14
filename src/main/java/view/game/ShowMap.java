@@ -186,9 +186,22 @@ public class ShowMap {
                 showMap[ground.getxLocation() - 2][ground.getyLocation()] = GlobalVariables.ANSI_BLUE + "T";
             }
         }
+        showMapNumberOfPlayer(player, showMap);
+    }
+    private void showMapNumberOfPlayer(Player player,String[][] showMap){
+        for (int i=0;i<Player.getAllPlayers().size();i++){
+            for (City city : Player.getAllPlayers().get(i).getCities()){
+                for (Ground ground : city.getRangeOfCity()){
+                    showMap[ground.getxLocation()-3][ground.getyLocation()-6]=GlobalVariables.ANSI_WHITE+Integer.toString(i+1);
+                }
+            }
+            for (Unit unit : Player.getAllPlayers().get(i).getUnits()){
+                Ground ground=unit.getGround();
+                showMap[ground.getxLocation()-3][ground.getyLocation()-6]=GlobalVariables.ANSI_WHITE+Integer.toString(i+1);
+            }
+        }
         showMapFeature(player, showMap);
     }
-
     private void showMapFeature(Player player, String[][] showMap) {
         for (int i = 0; i < player.getClearToSeeGrounds().size(); i++) {
             Ground ground = player.getClearToSeeGrounds().get(i);

@@ -9,6 +9,7 @@ import Enum.StrategicResource;
 import controller.UnitController;
 
 public class Player {
+    private int numberOfPlayer;
     private int gold;
     //private int science;
     private int extraHappiness = 0;
@@ -64,6 +65,7 @@ public class Player {
     public Player(User user) {
         this.user = user;
         allPlayers.add(this);
+        this.numberOfPlayer=allPlayers.size();
         for (TechnologyType technologyType : TechnologyType.values()) AllTechnologyTypes.add(new Technology(technologyType));
 
     }
@@ -304,7 +306,7 @@ public class Player {
         }
 
         for (Ground ground: Ground.getAllGround()) {
-            if (ground.ownerOfThisGround().equals(this) && ground.getRoad() != null) {
+            if (ground.ownerOfThisGround()!=null && ground.ownerOfThisGround().equals(this) && ground.getRoad() != null) {
                 goldDifference -= 0.1;
             }
         }
@@ -348,4 +350,11 @@ public class Player {
         return science;
     }
 
+    public void setNumberOfPlayer(int numberOfPlayer) {
+        this.numberOfPlayer = numberOfPlayer;
+    }
+
+    public int getNumberOfPlayer() {
+        return numberOfPlayer;
+    }
 }

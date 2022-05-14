@@ -372,15 +372,15 @@ public class Ground {
         return false;
     }
     public boolean canWeUseThisBonusResource(){
-        if (this.bonusResource.size()!=0 &&  this.bonusResource.get(0).getImprovementType()==this.improvementType) return true;
+        if (this.bonusResource.size()!=0 && this.bonusResource.get(0)!=null &&   this.bonusResource.get(0).getImprovementType()==this.improvementType) return true;
         return false;
     }
     public boolean canWeUseThisStrategicResource(){
-        if (this.strategicResources.size()!=0 &&  this.strategicResources.get(0).getImprovementType()==this.improvementType) return true;
+        if (this.strategicResources.size()!=0 && this.strategicResources.get(0)!=null && this.strategicResources.get(0).getImprovementType()==this.improvementType) return true;
         return false;
     }
     public boolean canWeUseThisLuxuryResource(){
-        if (this.luxuryResources.size()!=0 &&  this.luxuryResources.get(0).getImprovementType()==this.improvementType) return true;
+        if (this.luxuryResources.size()!=0 && this.luxuryResources.get(0)!=null && this.luxuryResources.get(0).getImprovementType()==this.improvementType) return true;
         return false;
     }
 
