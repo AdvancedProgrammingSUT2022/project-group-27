@@ -1,0 +1,13 @@
+Cheat codes which you can use in this game are 11. You can use them easily and they are fine to use but be careful the score you get be cause of them and your win status is just a fault and it’s not what you exactly play.
+You can find them in root menu when game runs, unit menu and city menu as we introduce in below.
+	1- next turn —numberOfTurns/-n: if you don’t have illegal problems like violating city limitation or don’t have any thing to build etc, you can go n turn front. This command only can be used in root menu.
+	2- increase gold —numberOfGolds/-n: you can easily increase your golds by this command. This command can be used in root menu.
+	3- increase happiness —numberOfHappiness/-n: This command just can be used in root menu.
+	4- increase score —numberOfScore/-n: your user score can be increased by this command. This command just can be used in root menu.
+	5- increase mp —numberOfAmount/-n (for units): by this you can increase the amount of mp your unit has. It works on just one unit, you can use this command in unit menu after choosing your unit which you want.
+	6- increase hp —numberOfAmount/-n (for units): like increase mp, for units you can increase your hp of unit, too. This command can only be used in unit menu after choosing unit.
+	7- increase hp —numberOfAmount/-n (for cities): in city menu after choosing city you can increase your city hp by this command.
+	8- buy free ground: by this command one random ground next to your city adds to your city for free. You can just use this command in city menu after choosing city.
+	9- increase saved food —numberOfAmount/-n: in city menu after choosing city you can increase your city saved food by this command.
+	10- free worker: by this command in city menu after choosing city without any payment or turn patience you can get free worker, but pay attention about city limitation at end of turn.
+	11- free settler: like free worker you can get free settler in city menu, too.

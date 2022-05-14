@@ -299,6 +299,8 @@ public class City {
     }
 
     public static City findCityByGround(Ground ground, Player player) {
+        if (player == null) return null;
+
         for (City city: player.getCities()) {
             if (city.isThisGroundInThisCityRange(ground)) return city;
         }

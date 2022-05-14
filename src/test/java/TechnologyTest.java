@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 
 @ExtendWith(MockitoExtension.class)
 public class TechnologyTest {
-    Technology technology = new Technology(TechnologyType.MINING);
+    Technology technology = new Technology(TechnologyType.MINING, TechnologyType.MINING.getTime());
 
     @Test
     public void technologyTest() {
