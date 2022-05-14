@@ -34,6 +34,7 @@ public class RangedUnit extends MilitaryUnit{
         militaryUnit.hp -= decreasedHp;
         if (militaryUnit.hp <= 0.000001)
             militaryUnit.removeUnit();
+        this.mp = 0;
     }
 
     @Override
@@ -43,5 +44,6 @@ public class RangedUnit extends MilitaryUnit{
         city.setHp(city.getHp() - decreasedHp);
         if (city.getHp() < 1)
             city.setHp(1);
+        this.mp = 0;
     }
 }

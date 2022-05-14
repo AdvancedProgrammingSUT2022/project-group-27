@@ -48,7 +48,9 @@ public class MeleeUnit extends MilitaryUnit {
         if (this.militaryType.equals(MilitaryType.HORSEMAN) || this.militaryType.equals(MilitaryType.KNIGHT) ||
                 this.militaryType.equals(MilitaryType.CAVALRY) || this.militaryType.equals(MilitaryType.LANCER) ||
                 this.militaryType.equals(MilitaryType.PANZER) || this.militaryType.equals(MilitaryType.TANK))
-            mp = 10;
+            this.mp = 10;
+        else
+            this.mp = 0;
 
     }
     @Override
@@ -82,7 +84,8 @@ public class MeleeUnit extends MilitaryUnit {
         if (this.militaryType.equals(MilitaryType.HORSEMAN) || this.militaryType.equals(MilitaryType.KNIGHT) ||
                 this.militaryType.equals(MilitaryType.CAVALRY) || this.militaryType.equals(MilitaryType.LANCER) ||
                 this.militaryType.equals(MilitaryType.PANZER) || this.militaryType.equals(MilitaryType.TANK))
-            mp = 10;
-
+            this.mp = 10;
+        else
+            this.mp = 0;
     }
 }
