@@ -232,12 +232,11 @@ public class Game extends Controller {
         if (Ground.getGroundByNumber(firstGroundNumber).getImprovementTypeInProgress()!=null)
             Ground.getGroundByNumber(firstGroundNumber).setImprovementTypeInProgress(null);
         ArrayList<Unit> unitArrayList = Ground.getGroundByNumber(firstGroundNumber).unitsOfASpecificPlayerInThisGround(player);
-        /// TODO : type of unit
         boolean exit = false;
         if (Ground.getGroundByNumber(secondGroundNumber).getGroundType().isBlock()) exit=true;
         for (Unit unit : Ground.getGroundByNumber(secondGroundNumber).unitsInThisGround()) {
             if (unit.getGround().getNumber() == secondGroundNumber && ((unit instanceof MilitaryUnit && type.equals("Military"))
-                    || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary")))) {
+                    || (type.equals("UnMilitary")))) {
                 exit = true;
                 break;
             }
@@ -245,6 +244,7 @@ public class Game extends Controller {
         if (exit) {
             return "unit can not go to that ground:(";
         }
+        boolean fail=false;
         for (Unit unit : unitArrayList) {
             if ((unit instanceof MilitaryUnit && type.equals("Military")) || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary"))) {
                 unit.setDestination(Ground.getGroundByNumber(secondGroundNumber));
@@ -252,8 +252,10 @@ public class Game extends Controller {
             }
             unit.checkDestination();
         }
+        if (fail) return "unit move failed successfully :)";
         return "unit moved successfully";
     }
+
     public void deleteUnit(Unit unit) {
 
     }

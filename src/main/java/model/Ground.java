@@ -16,6 +16,7 @@ import Enum.LuxuryResource;
 import Enum.ImprovementType;
 import Enum.TechnologyType;
 import controller.ImprovementSettingController;
+import Enum.MilitaryType;
 
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
@@ -271,7 +272,7 @@ public class Ground {
                 && abs(firstGround.getyLocation() - secondGround.getyLocation()) <= globalVariables.arz6Zelie;
     }
 
-    public static int distanceOfTheseTwoGround(Ground firstGround, Ground secondGround,Player player) {
+    public static int distanceOfTheseTwoGround(Ground firstGround, Ground secondGround,Player player,Unit unitType) {
         int inf = 10000;
         if (!AreTheseTwoGroundAdjacent(firstGround, secondGround)) return inf;
         if (secondGround.groundType == GroundType.OCEAN || secondGround.groundType == GroundType.MOUNTAIN) {
@@ -301,6 +302,7 @@ public class Ground {
             }
         }
         amount=min(10,amount);
+        if (unitType.getMilitaryType()== MilitaryType.SCOUT) amount=1;
         return amount;
 
     }
