@@ -1,6 +1,8 @@
 package model;
 
 import Enum.MilitaryType;
+import Enum.GroundType;
+import Enum.FeatureType;
 import view.game.ConquerCityMenu;
 
 public class MeleeUnit extends MilitaryUnit {
@@ -22,6 +24,10 @@ public class MeleeUnit extends MilitaryUnit {
         }
         double decreasedEnemyHp = (this.hp + 10) / 20 * this.getCombatStrength();
         decreasedEnemyHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
+        if ((this.militaryType.equals(MilitaryType.SPEARMAN) || this.militaryType.equals(MilitaryType.PIKEMAN)) && militaryUnit.militaryType.getCombatType().equals("Mounted"))
+            decreasedEnemyHp *= 2;
+        if (this.militaryType.equals(MilitaryType.CHARIOTARCHER) && (ground.getGroundType().equals(GroundType.HILL) || ground.getFeatureType().equals(FeatureType.FOREST) || ground.getFeatureType().equals(FeatureType.JUNGLE)))
+            decreasedEnemyHp /= 2;
         if (militaryUnit.getMilitaryType().getCombatType() != "Mounted" && militaryUnit.getMilitaryType().getCombatType() != "Siege") {
             if (militaryUnit.getTurnsFortified() >= 2)
                 decreasedEnemyHp /= 2;
@@ -59,6 +65,10 @@ public class MeleeUnit extends MilitaryUnit {
         UnMilitaryUnit unMilitaryUnit = city.getGround().getUnMilitaryUnit();
         double decreasedEnemyHp = (this.hp + 10) / 20 * this.getCombatStrength();
         decreasedEnemyHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
+        if (this.getMilitaryType().equals(MilitaryType.TANK)) {
+            decreasedEnemyHp *= 110;
+            decreasedEnemyHp /= 100;
+        }
         double decreasedOwnHp = city.getCityStrength();
         if (militaryUnit != null)
             decreasedOwnHp += (militaryUnit.hp + 10) / 20 * this.getCombatStrength() / 3;

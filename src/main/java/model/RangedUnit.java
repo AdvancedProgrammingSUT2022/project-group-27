@@ -41,6 +41,10 @@ public class RangedUnit extends MilitaryUnit{
     public void combat(City city) {
         double decreasedHp = (this.hp + 10) / 20 * this.getRangedCombatStrength();
         decreasedHp *= (double) 100.0 / (city.getGround().getGroundType().getCombatCoefficient() + 100.0);
+        if (this.getMilitaryType().getCombatType().equals("Siege")) {
+            decreasedHp *= 110;
+            decreasedHp /= 100;
+        }
         city.setHp(city.getHp() - decreasedHp);
         if (city.getHp() < 1)
             city.setHp(1);
