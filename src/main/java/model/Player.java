@@ -66,7 +66,7 @@ public class Player {
         this.user = user;
         allPlayers.add(this);
         this.numberOfPlayer=allPlayers.size();
-        for (TechnologyType technologyType : TechnologyType.values()) AllTechnologyTypes.add(new Technology(technologyType));
+        for (TechnologyType technologyType : TechnologyType.values()) AllTechnologyTypes.add(new Technology(technologyType,technologyType.getCost()));
 
     }
     public int getFood() {
@@ -200,9 +200,10 @@ public class Player {
     }
 
     public static void nextTurn() {
+        if (!Game.getInstance().canWeGoNextTurn()) return ;
+        counterOfNextRound++;
         while (!whichPlayerTurnIs().isAlive) counterOfNextRound++;
-
-        if (Game.getInstance().nextTurn()) counterOfNextRound++;
+        Game.getInstance().nextTurn();
     }
 
     public static Player whichPlayerTurnIs() {

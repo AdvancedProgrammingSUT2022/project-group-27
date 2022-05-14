@@ -8,6 +8,8 @@ import view.Menu;
 import Enum.Message;
 import java.util.ArrayList;
 
+import static java.lang.Math.max;
+
 public class TechnologyMenu {
     public TechnologyMenu(Player player) {
         System.out.println("You enter technology menu.");
@@ -25,6 +27,7 @@ public class TechnologyMenu {
             if (intInput >= 1 && intInput <= technologies.size()){
                 intInput--;
                 player.setUnderConstructionTechnology(technologies.get(intInput).getTechnologyType());
+                System.out.println(player.getUnderConstructionTechnology());
                 return;
             }
         }
@@ -49,7 +52,7 @@ public class TechnologyMenu {
 
         for (int i = 0; i < player.technologiesThatCanBeObtained().size(); i++){
             System.out.println(i+1 + " - type: "+player.technologiesThatCanBeObtained().get(i).getTechnologyType()
-                    +"  time remain: "+player.technologiesThatCanBeObtained().get(i).getTimeRemain());
+                    +"  time remain: "+(player.technologiesThatCanBeObtained().get(i).getTimeRemain()+player.getScience()-1)/max(1,player.getScience()));
         }
         return true;
     }

@@ -75,8 +75,7 @@ public class Game extends Controller {
             }
         }
     }
-
-    public boolean nextTurn() {
+    public boolean canWeGoNextTurn(){
         Player player = Player.whichPlayerTurnIs();
         if (!isLimitationOkInCities(player)) {
             new Notification("One of your cities doesn't obey the rule of one unit of each type limitation.",
@@ -89,7 +88,11 @@ public class Game extends Controller {
                     Player.getCounterOfNextRound(), player);
             return false;
         }
+        return true;
+    }
 
+    public void nextTurn() {
+        Player player=Player.whichPlayerTurnIs();
         player.setGold(player.getGold() + player.getGoldDifference());
         if (player.getGold() < 0)
             player.setGold(0);
@@ -136,7 +139,8 @@ public class Game extends Controller {
         for (int i=0;i<player.getAllTechnologyTypes().size();i++){
             if (player.getUnderConstructionTechnology()==null) continue;
             if (player.getUnderConstructionTechnology() == player.getAllTechnologyTypes().get(i).getTechnologyType()){
-                player.getAllTechnologyTypes().get(i).decreaseTimeRemain(1);
+                player.getAllTechnologyTypes().get(i).decreaseTimeRemain(max(1
+                        ,min(player.getAllTechnologyTypes().get(i).getTimeRemain(),player.getScience())));
                 if (player.getAllTechnologyTypes().get(i).getTimeRemain()==0){
                     player.addTechnology(player.getAllTechnologyTypes().get(i).getTechnologyType());
                     new Notification("Your research is finished.", Player.getCounterOfNextRound(), player);
@@ -144,7 +148,7 @@ public class Game extends Controller {
             }
         }
         for (int i=0;i<player.getUnits().size();i++){
-            if (player.getUnits().get(i) instanceof Worker){
+            if (player.getUnits().get(i) instanceof Worker){   
                 if (((Worker) player.getUnits().get(i)).getIsWorking()){
                     Ground ground=player.getUnits().get(i).getGround();
                     if (ground.getImprovementTypeInProgress()!=null){
@@ -170,7 +174,6 @@ public class Game extends Controller {
                 }
             }
         }
-        return true;
     }
 
     private void createMap() {

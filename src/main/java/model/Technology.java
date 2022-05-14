@@ -8,6 +8,10 @@ public class Technology {
         return timeRemain;
     }
 
+    public void setTimeRemain(int timeRemain) {
+        this.timeRemain = timeRemain;
+    }
+
     public void decreaseTimeRemain(int amount) {
         this.timeRemain -= amount;
     }
@@ -16,8 +20,8 @@ public class Technology {
         return technologyType;
     }
 
-    public Technology(TechnologyType technologyType){
+    public Technology(TechnologyType technologyType,int timeRemain){
         this.technologyType = technologyType;
-        this.timeRemain = technologyType.getTime();
+        this.timeRemain = timeRemain;
     }
 }
