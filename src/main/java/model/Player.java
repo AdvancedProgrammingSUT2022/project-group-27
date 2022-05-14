@@ -7,7 +7,7 @@ import controller.Game;
 import Enum.LuxuryResource;
 import Enum.StrategicResource;
 import controller.UnitController;
-
+import Enum.*;
 public class Player {
     private int numberOfPlayer;
     private int gold;
@@ -188,9 +188,16 @@ public class Player {
     public void handleClearToSee() {
         this.clearToSeeGrounds = new ArrayList<>();
         for (Unit unit : this.units) {
+            if (unit.getMilitaryType()== MilitaryType.TREBUCHET || unit.getMilitaryType()== MilitaryType.PANZER ||
+                    unit.getMilitaryType()== MilitaryType.CATAPULT) continue;
             this.addGroundToClearGround(unit.getGround());
         }
+
         handleClearToSeeGrounds1depth(this.clearToSeeGrounds);
+        for (Unit unit : this.units) {
+            if (unit.getMilitaryType() == MilitaryType.TREBUCHET || unit.getMilitaryType() == MilitaryType.PANZER ||
+                    unit.getMilitaryType() == MilitaryType.CATAPULT) this.addGroundToClearGround(unit.getGround());
+        }
         for (City city : this.cities) {
             for (int j = 0; j < city.getRangeOfCity().size(); j++) {
                 this.addGroundToClearGround(city.getRangeOfCity().get(j));

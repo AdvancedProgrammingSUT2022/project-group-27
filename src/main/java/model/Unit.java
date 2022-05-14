@@ -122,58 +122,87 @@ public abstract class Unit {
         this.ground = ground;
     }
 
-    public void checkDestination() {
-        if (destination == null) return;
-        int[] dis = new int[GlobalVariables.numberOfTiles + 1];
-        int[] par = new int[GlobalVariables.numberOfTiles + 1];
-        int[] vis = new int[GlobalVariables.numberOfTiles + 1];
-        for (int i = 1; i < GlobalVariables.numberOfTiles + 1; i++) {
-            dis[i] = 10000;
-            par[i] = 0;
-            vis[i] = 0;
-        }
-        dis[this.destination.getNumber()] = 0;
-
+    public boolean checkDestination() {
+        if (destination == null) return true;
+        int[][] distanceFloyd = new int[GlobalVariables.numberOfTiles + 1][GlobalVariables.numberOfTiles + 1];
         for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
-            int best = 1000;
-            int id = -1;
-            for (int j = 1; j <= GlobalVariables.numberOfTiles; j++) {
-                if (vis[j] == 1) continue;
-                if (dis[j] < best) {
-                    best = dis[j];
-                    id = j;
+            for (int j = i + 1; j <= GlobalVariables.numberOfTiles; j++) {
+                distanceFloyd[i][j] = Ground.distanceOfTheseTwoGround(Ground.getGroundByNumber(i), Ground.getGroundByNumber(j), player, this);
+                distanceFloyd[j][i] = Ground.distanceOfTheseTwoGround(Ground.getGroundByNumber(j), Ground.getGroundByNumber(i), player, this);
+                ;
+            }
+        }
+        for (int k = 1; k <= GlobalVariables.numberOfTiles; k++) {
+            for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
+                for (int j = 1; j <= GlobalVariables.numberOfTiles; j++) {
+                    distanceFloyd[i][j] = min(distanceFloyd[i][k] + distanceFloyd[k][j], distanceFloyd[i][j]);
                 }
             }
-            if (id == -1) break;
-            for (int j = 1; j <= GlobalVariables.numberOfTiles; j++) {
-                if (dis[j] > dis[id] + Ground.distanceOfTheseTwoGround(Ground.getGroundByNumber(id), Ground.getGroundByNumber(j),player,this)) {
-                    par[j] = id;
+        }
+        if (distanceFloyd[this.getGround().getNumber()][this.destination.getNumber()] >= 1000) {
+            this.destination = null;
+            return false;
+        }
+        System.out.println(distanceFloyd[this.getGround().getNumber()][this.destination.getNumber()]);
+        Ground middle = this.getGround().getAdjacentGrounds().get(0);
+        if (middle.getNumber()==this.getGround().getNumber()) middle=this.getGround().getAdjacentGrounds().get(1);
+        for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
+            Ground ground1 = Ground.getGroundByNumber(i);
+            boolean isOk = false;
+            for (Player opponent : Player.getAllPlayers()) {
+                if (player.equals(opponent)) continue;
+                for (Unit unit : opponent.getUnits()) {
+                    if (unit instanceof MilitaryUnit && unit.getGround().getNumber() == ground1.getNumber())
+                        isOk = true;
+                    if (unit instanceof UnMilitaryUnit && this instanceof UnMilitaryUnit &&
+                            unit.getGround().getNumber() == ground1.getNumber()) isOk = true;
                 }
-                dis[j] = min(dis[j], dis[id] + Ground.distanceOfTheseTwoGround(Ground.getGroundByNumber(id), Ground.getGroundByNumber(j),player,this));
             }
-            vis[id] = 1;
-        }
-        if (dis[this.getGround().getNumber()] >= 1000) return;
-        while (this.mp > 0 && this.ground.getNumber() != this.destination.getNumber()) {
-            int father = par[this.getGround().getNumber()];
-            if (this.getMp() - Ground.distanceOfTheseTwoGround(this.getGround(), Ground.getGroundByNumber(father),player,this) == 0) {
-                if (this instanceof MilitaryUnit && !Ground.getGroundByNumber(father).isFreeOfMilitaryUnit())
-                    break;
-                if (this instanceof UnMilitaryUnit && !Ground.getGroundByNumber(father).isFreeOfUnMilitaryUnit())
-                    break;
+            if (isOk) continue;
+            for (Ground adjacentGround : Ground.getGroundByNumber(i).getAdjacentGrounds()) {
+                if (distanceFloyd[this.getGround().getNumber()][adjacentGround.getNumber()] < this.mp) {
+                    isOk = true;
+                }
             }
-            System.out.println("father : " + father);
-            this.decreaseMp(Ground.distanceOfTheseTwoGround(this.getGround(), Ground.getGroundByNumber(father),player,this));
-            this.ground = Ground.getGroundByNumber(father);
-            System.out.println("mp : " + this.getMp());
-            ShowMap showMap = new ShowMap(player);
-            showMap.run();
-        }
-        System.out.println(this.ground.getNumber());
-        if (this.getGround().getNumber() == this.destination.getNumber()) this.destination = null;
+               if (distanceFloyd[this.getGround().getNumber()][i]<=this.mp) isOk=true;
+            if (isOk) {
+                Ground adjacentGround = Ground.getGroundByNumber(i);
+                if (middle == null || (distanceFloyd[this.getGround().getNumber()][middle.getNumber()] +
+                        distanceFloyd[middle.getNumber()][this.destination.getNumber()] >
+                        distanceFloyd[this.getGround().getNumber()][adjacentGround.getNumber()] +
+                                distanceFloyd[adjacentGround.getNumber()][this.destination.getNumber()]) || (
+                        distanceFloyd[middle.getNumber()][this.destination.getNumber()]
+                                > distanceFloyd[adjacentGround.getNumber()][this.destination.getNumber()] &&
+                                distanceFloyd[this.getGround().getNumber()][middle.getNumber()] +
+                                        distanceFloyd[middle.getNumber()][this.destination.getNumber()] ==
+                                        distanceFloyd[this.getGround().getNumber()][adjacentGround.getNumber()] +
+                                                distanceFloyd[adjacentGround.getNumber()][this.destination.getNumber()]
 
+                )) {
+                    middle = Ground.getGroundByNumber(i);
+                }
+            }
+        }
+        while (this.getGround().getNumber()!=middle.getNumber()){
+            for (Ground betweenGround : this.ground.getAdjacentGrounds()){
+                if (betweenGround.getNumber()==this.ground.getNumber()) continue;
+                if (distanceFloyd[this.ground.getNumber()][betweenGround.getNumber()]+distanceFloyd[betweenGround.getNumber()][middle.getNumber()]
+                        ==distanceFloyd[this.getGround().getNumber()][middle.getNumber()]){
+                    this.mp-=Ground.distanceOfTheseTwoGround(this.getGround(),betweenGround,player,this);
+                    System.out.println("MP : " + this.mp);
+                    this.ground=betweenGround;
+                    ShowMap menu=new ShowMap(player);
+                    menu.run();
+                    break;
+                }
+            }
+        }
+        if (this.getGround().getNumber()==this.destination.getNumber()) this.destination=null;
+
+
+
+        return true;
     }
-
     public void removeUnit() {
         this.player.getUnits().remove(this);
     }
