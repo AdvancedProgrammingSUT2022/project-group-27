@@ -113,4 +113,11 @@ public class UserTest {
 
         Assertions.assertEquals("arefe", user.getUsername());
     }
+
+    @Test
+    public void increaseScoreTest() {
+        User user = new User("..", ",", ".");
+        user.increaseScore(10);
+        Assertions.assertEquals(10, user.getScore());
+    }
 }

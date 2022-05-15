@@ -26,6 +26,10 @@ public class User {
         this.score += score;
     }
 
+    public int getScore() {
+        return this.score;
+    }
+
     public static void setListOfUsers(ArrayList<User> listOfUsers) {
         User.listOfUsers = listOfUsers;
     }
