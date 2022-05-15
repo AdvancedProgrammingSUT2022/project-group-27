@@ -1,3 +1,5 @@
+import controller.Game;
+import controller.InitializeMap;
 import model.*;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -94,5 +96,14 @@ public class GlobalTest {
         int number = pair1.hashCode();
 
         Assertions.assertEquals(Objects.hash(pair1.getFirstInt(), pair1.getSecondInt()), number);
+    }
+
+    @Test
+    public void testInitializeMap() {
+        new User(".", ".", ".");
+        new User(",", ",", ",");
+        Game.getInstance();
+        InitializeMap initializeMap = new InitializeMap(User.getListOfUsers());
+        initializeMap.run();
     }
 }

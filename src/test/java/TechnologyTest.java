@@ -30,7 +30,8 @@ public class TechnologyTest {
 
     @Test
     public void technologyTimeTest() {
+        technology.setTimeRemain(TechnologyType.MINING.getTime() + 20);
         technology.decreaseTimeRemain(10);
-        Assertions.assertEquals(technology.getTechnologyType().getTime() - 10, technology.getTimeRemain());
+        Assertions.assertEquals(technology.getTechnologyType().getTime() + 10, technology.getTimeRemain());
     }
 }
