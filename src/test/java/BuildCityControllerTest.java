@@ -58,7 +58,19 @@ public class BuildCityControllerTest {
         when(player.hasStrategicResource(any())).thenReturn(true);
         Ground ground = mock(Ground.class);
         City city = new City(ground, "...", player);
-        Message message = buildCityController.changeConstruction(city, "SETTLER");
+        Message message = buildCityController.changeConstruction(city, "CATAPULT");
+        Assertions.assertEquals(Message.SUCCESS_WORK, message);
+    }
+
+    @Test
+    public void testChangeProductionTrue2() {
+        Player player = mock(Player.class);
+        when(player.getHappiness()).thenReturn(10);
+        when(player.doWeHaveThisTechnology(any())).thenReturn(true);
+        when(player.hasStrategicResource(any())).thenReturn(true);
+        Ground ground = mock(Ground.class);
+        City city = new City(ground, "...", player);
+        Message message = buildCityController.changeConstruction(city, "TANK");
         Assertions.assertEquals(Message.SUCCESS_WORK, message);
     }
 
