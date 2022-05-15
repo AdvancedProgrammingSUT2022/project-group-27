@@ -186,7 +186,7 @@ public class WorkerMenu extends ViewOfCity{
         Matcher matcher = controller.findMatcherFromString(numberInput, "\\d+");
         if (matcher == null) {
             System.out.println(Message.INVALID_COMMAND);
-            this.buildRailway();
+            this.removeRoadAndRailway();
             return;
         }
 
@@ -221,7 +221,7 @@ public class WorkerMenu extends ViewOfCity{
         Worker worker = getWorkerByNumber(number);
         if (worker == null) {
             System.out.println(Message.INVALID_COMMAND);
-            this.buildRailway();
+            this.repair();
             return ;
         }
         if (worker.getGround().getImprovementType()==null){
