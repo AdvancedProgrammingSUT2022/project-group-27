@@ -31,6 +31,7 @@ public class cityTest {
     Ground ground = mock(Ground.class);
     Player player = mock(Player.class);
     City city = new City(ground, "...", player);
+    static MockedStatic<Ground> groundMockedStatic = Mockito.mockStatic(Ground.class);
 
     @Test
     public void findCityByGroundTest1() {
@@ -145,5 +146,112 @@ public class cityTest {
         when(ground.getMilitaryUnit()).thenReturn(militaryUnit);
          double result = city.getCityStrength();
          Assertions.assertEquals(2.0, result);
+    }
+
+    @Test
+    public void howMuchFoodIsProduced() {
+        Assertions.assertEquals(0, city.howMuchFoodIsProduced());
+    }
+
+    @Test
+    public void groundsNearCityTest() {
+        Assertions.assertEquals(new ArrayList<>(), city.groundsNearTheCity());
+    }
+
+    @Test
+    public void isThisGroundNearCityTest1() {
+        groundMockedStatic.when(() -> Ground.getGroundByNumber(anyInt())).thenReturn(ground);
+        groundMockedStatic.when(() -> Ground.AreTheseTwoGroundAdjacent(any(), any())).thenReturn(true);
+        when(ground.isInRangeOfCity()).thenReturn(true);
+
+        Assertions.assertTrue(city.isThisGroundNearThisCity(ground));
+    }
+
+    @Test
+    public void isThisGroundNearCityTest2() {
+        groundMockedStatic.when(() -> Ground.getGroundByNumber(anyInt())).thenReturn(ground);
+        groundMockedStatic.when(() -> Ground.AreTheseTwoGroundAdjacent(any(), any())).thenReturn(true);
+        when(ground.isInRangeOfCity()).thenReturn(false);
+
+        Assertions.assertFalse(city.isThisGroundNearThisCity(ground));
+    }
+
+    @Test
+    public void isAnyoneWorkOnGroundTest() {
+        when(ground.getNumber()).thenReturn(10);
+        Assertions.assertNull(city.isAnyoneWorkOnGround(ground));
+    }
+
+    @Test
+    public void withoutWorkCitizensTest() {
+        Assertions.assertNotEquals(new ArrayList<>(),city.withoutWorkCitizens());
+    }
+
+    @Test
+    public void isThisGroundInThisCityRangeTest() {
+        Ground ground1 = mock(Ground.class);
+        when(ground.getNumber()).thenReturn(10);
+        when(ground1.getNumber()).thenReturn(11);
+        Assertions.assertFalse(city.isThisGroundInThisCityRange(ground1));
+    }
+
+    @Test
+    public void addGroundToRangeOfCityTest() {
+        doNothing().when(ground).setOwner(any());
+        city.addGroundToRangeOfCity(ground);
+    }
+
+    @Test
+    public void finishedConstructedTest() {
+        Unit unit = mock(Unit.class);
+        city.setConstruction(unit);
+        city.finishedConstructed();
+    }
+
+    @Test
+    public void RemainTimeTest() {
+        city.setRemainedTurnsToBuild(10);
+        Assertions.assertEquals(10, city.getRemainedTurnsToBuild());
+    }
+
+    @Test
+    public void buildUnitSetterGetterTest() {
+        city.setBuildingUnit(MilitaryType.ARTILLERY);
+        Assertions.assertEquals(MilitaryType.ARTILLERY, city.getBuildingUnit());
+    }
+
+    @Test
+    public void HpTest() {
+        city.setHp(10);
+        Assertions.assertEquals(10, city.getHp());
+    }
+
+    @Test
+    public void savedFoodTest() {
+        city.setSavedFood(10);
+        Assertions.assertEquals(10, city.getSavedFood());
+    }
+
+    @Test
+    public void nameTest() {
+        Assertions.assertEquals("...", city.getName());
+    }
+
+    @Test
+    public void setPlayerTest() {
+        when(player.getCities()).thenReturn(new ArrayList<>(List.of(city)));
+        doNothing().when(ground).setOwner(any());
+        city.setPlayer(player);
+    }
+
+    @Test
+    public void setPuppetTest() {
+        city.setPuppet(true, player);
+        Assertions.assertTrue(city.isPuppet());
+    }
+
+    @AfterAll
+    public static void clear() {
+        groundMockedStatic.close();
     }
 }

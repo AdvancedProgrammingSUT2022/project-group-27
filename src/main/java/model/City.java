@@ -174,7 +174,7 @@ public class City {
 
     public Citizen isAnyoneWorkOnGround(Ground ground) {
         for (Citizen citizen : this.listOfCitizens) {
-            if (citizen.getGround().getNumber() == ground.getNumber()) return citizen;
+            if (citizen.getGround() != null && citizen.getGround().getNumber() == ground.getNumber()) return citizen;
         }
 
         return null;
