@@ -1,0 +1,6 @@
+.background {
+    -fx-background-image: url(../images/civilizations.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
