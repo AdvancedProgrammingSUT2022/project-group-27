@@ -4,3 +4,8 @@
     -fx-background-position: center;
     -fx-background-size: cover;
 }
+
+.text {
+    -fx-text-fill: #4d370b;
+    -fx-font-weight: bold;
+}

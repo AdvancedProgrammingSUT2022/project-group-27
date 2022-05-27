@@ -13,7 +13,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import view.LoginMenu;
 import viewControllers.LoginView;
 
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class Main extends Application {
     public static void main(String[] args) throws IOException {
         launch();
 
-        LoginMenu.getInstance().run(); //TODO change these things to graphic
+        //LoginMenu.getInstance().run(); //TODO change these things to graphic
 
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             @Override
@@ -47,10 +46,11 @@ public class Main extends Application {
     public void initialize() {
         audio.play();
         DropShadow shadow = new DropShadow();
-        shadow.setRadius(10);
+        shadow.setRadius(5);
         shadow.setColor(Color.WHITE);
         author.setFont(new Font(24));
-        author.setStyle("-fx-text-fill: #4d370b");
+        author.getStylesheets().add(Main.class.getResource("/css/welcome.css").toExternalForm());
+        author.getStyleClass().add("text");
         author.setEffect(shadow);
     }
 

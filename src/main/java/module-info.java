@@ -5,7 +5,7 @@ module apProjectGroup27 {
     requires javafx.media;
     requires com.google.gson;
 
-    opens view to javafx.fxml;
+    opens viewControllers to javafx.fxml;
     opens model to com.google.gson;
     opens Main to javafx.fxml;
 
