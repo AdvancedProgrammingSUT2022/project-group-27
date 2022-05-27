@@ -7,5 +7,8 @@ module apProjectGroup27 {
 
     opens view to javafx.fxml;
     opens model to com.google.gson;
+    opens Main to javafx.fxml;
+
     exports Main;
+    exports viewControllers;
 }
