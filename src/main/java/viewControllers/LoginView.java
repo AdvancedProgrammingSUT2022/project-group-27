@@ -13,12 +13,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class LoginView extends Application {
     private static Stage stage;
+    private static MediaPlayer audio;
     private boolean isSignIn = false;
 
     @FXML
@@ -41,6 +44,13 @@ public class LoginView extends Application {
 
     @FXML
     public void initialize() {
+        audio.play();
+        audio.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                audio.seek(Duration.ZERO);
+            }
+        });
         DropShadow shadow = new DropShadow();
         shadow.setRadius(5);
         shadow.setColor(Color.WHITE);
@@ -55,6 +65,7 @@ public class LoginView extends Application {
     @Override
     public void start(Stage stage) throws Exception { //TODO adding audio to this scene and random profile image to users
         LoginView.stage = stage;
+        audio = Main.loadingAudio("openingTitles.mpeg");
         Parent root = Main.loadFXML("login-view");
         root.getStylesheets().add(Main.class.getResource("/css/login.css").toExternalForm());
         root.getStyleClass().add("background");
