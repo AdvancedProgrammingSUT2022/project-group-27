@@ -6,17 +6,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
+<AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="viewControllers.MainMenuView"
             prefHeight="1000.0" prefWidth="800.0">
 
-    <top>
-        <VBox fx:id="box" alignment="TOP_RIGHT" spacing="10">
-            <Label fx:id="text" text="where do you want to go?"/>
-            <Button fx:id="logOut" text="log out"/>
-            <Button fx:id="profile" text="profile menu"/>
-            <Button fx:id="game" text="game menu"/>
-        </VBox>
-    </top>
-</BorderPane>
+    <VBox alignment="CENTER" spacing="10" layoutX="450" layoutY="80">
+        <Label fx:id="username"/>
+        <Label fx:id="text" text="where do you want to go?"/>
+        <Button fx:id="logOut" text="log out" alignment="CENTER" prefWidth="100" onMouseClicked="#logOut"/>
+        <Button fx:id="profile" text="profile menu" alignment="CENTER" prefWidth="100" onMouseClicked="#profileMenu"/>
+        <Button fx:id="game" text="game menu" alignment="CENTER" prefWidth="100" onMouseClicked="#gameMenu"/>
+    </VBox>
+
+</AnchorPane>

@@ -3,18 +3,33 @@ package viewControllers;
 import Main.Main;
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import model.User;
+import view.Menu;
+import Enum.Message;
+
+import java.util.Optional;
 
 public class MainMenuView extends Application {
     private static Stage stage;
+    private static MediaPlayer audio;
+    private static User user = Menu.getLoggedInUser();
 
     @FXML
-    private VBox box;
+    private Label username;
 
     @FXML
     private Label text;
@@ -30,12 +45,37 @@ public class MainMenuView extends Application {
 
     @FXML
     public void initialize() {
-        //TODO setting place of them and adding username and maybe it's profile image
+        audio.play();
+        audio.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                audio.seek(Duration.ZERO);
+            }
+        });
+        //TODO it's profile image
+        username.setText("current username: *" + user.getUsername() + "*, and score: *" + user.getScore() + "*");
+        DropShadow shadow = new DropShadow();
+        shadow.setRadius(5);
+        shadow.setColor(Color.WHITE);
+        text.setEffect(shadow);
+        text.setFont(new Font(24));
+        text.getStylesheets().add(Main.class.getResource("/css/mainMenu.css").toExternalForm());
+        text.getStyleClass().add("text");
+
+        username.setEffect(shadow);
+        username.setFont(new Font(14));
+        username.getStylesheets().add(Main.class.getResource("/css/mainMenu.css").toExternalForm());
+        username.getStyleClass().add("text");
+
+        logOut.setCursor(Cursor.HAND);
+        profile.setCursor(Cursor.HAND);
+        game.setCursor(Cursor.HAND);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         MainMenuView.stage = stage;
+        audio = Main.loadingAudio("menu.m4a");
         Parent root = Main.loadFXML("main-menu-view");
         root.getStylesheets().add(Main.class.getResource("/css/mainMenu.css").toExternalForm());
         root.getStyleClass().add("background");
@@ -43,5 +83,30 @@ public class MainMenuView extends Application {
         stage.setScene(scene);
         stage.setTitle("Main Menu");
         stage.show();
+    }
+
+    public void logOut(MouseEvent mouseEvent) throws Exception {
+        Menu.setLoggedInUser(null);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Success log out");
+        alert.setContentText(Message.LOGOUT.toString());
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            audio.stop();
+            LoginView loginView = new LoginView();
+            loginView.start(stage);
+        }
+    }
+
+    public void profileMenu(MouseEvent mouseEvent) throws Exception {
+        audio.stop();
+        ProfileView profileView = new ProfileView();
+        profileView.start(stage);
+    }
+
+    public void gameMenu(MouseEvent mouseEvent) throws Exception {
+        audio.stop();
+        GameView gameView = new GameView();
+        gameView.start(stage);
     }
 }

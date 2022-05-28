@@ -5,6 +5,7 @@ import Enum.Message;
 import controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,6 +23,9 @@ public class LoginView extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
     private boolean isSignIn = false;
+
+    @FXML
+    private Button submit;
 
     @FXML
     private TextField username;
@@ -57,6 +61,7 @@ public class LoginView extends Application {
         text.setFont(new Font(24));
         text.getStylesheets().add(Main.class.getResource("/css/login.css").toExternalForm());
         text.getStyleClass().add("text");
+        submit.setCursor(Cursor.HAND);
 
         signUp.setDisable(true);
     }
@@ -110,6 +115,7 @@ public class LoginView extends Application {
                 alert.setContentText(message.toString());
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
+                    audio.stop();
                     MainMenuView mainMenuView = new MainMenuView();
                     mainMenuView.start(stage);
                 }
@@ -127,6 +133,7 @@ public class LoginView extends Application {
                 alert.setContentText(message.toString());
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
+                    audio.stop();
                     MainMenuView mainMenuView = new MainMenuView();
                     mainMenuView.start(stage);
                 }

@@ -21,7 +21,7 @@
             <TextField fx:id="username" promptText="enter your username"/>
             <TextField fx:id="password" promptText="enter your password"/>
             <TextField fx:id="nickname" promptText="enter your nickname"/>
-            <Button text="submit" onMouseClicked="#submit"/>
+            <Button fx:id="submit" text="submit" onMouseClicked="#submit"/>
         </VBox>
     </center>
 </BorderPane>

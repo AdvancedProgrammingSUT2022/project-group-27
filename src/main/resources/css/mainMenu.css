@@ -4,3 +4,14 @@
     -fx-background-position: center;
     -fx-background-size: cover;
 }
+
+.text {
+    -fx-text-fill: #000209;
+    -fx-font-weight: bold;
+}
+
+.button {
+    -fx-background-color: #d77101;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+}
