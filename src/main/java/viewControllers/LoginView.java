@@ -7,10 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
@@ -18,6 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.util.Optional;
 
 public class LoginView extends Application {
     private static Stage stage;
@@ -109,9 +108,11 @@ public class LoginView extends Application {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Success sign in");
                 alert.setContentText(message.toString());
-                alert.show();
-                MainMenuView mainMenuView = new MainMenuView();
-                mainMenuView.start(stage);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    MainMenuView mainMenuView = new MainMenuView();
+                    mainMenuView.start(stage);
+                }
             }
         } else {
             Message message = LoginController.getInstance().createUser(username.getText(), password.getText(), nickname.getText());
@@ -124,9 +125,11 @@ public class LoginView extends Application {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Success sign up");
                 alert.setContentText(message.toString());
-                alert.show();
-                MainMenuView mainMenuView = new MainMenuView();
-                mainMenuView.start(stage);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    MainMenuView mainMenuView = new MainMenuView();
+                    mainMenuView.start(stage);
+                }
             }
         }
     }
