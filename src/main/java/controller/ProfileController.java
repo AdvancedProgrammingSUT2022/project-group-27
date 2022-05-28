@@ -1,7 +1,14 @@
 package controller;
 
 import Enum.Message;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import model.User;
 import view.Menu;
+import Enum.ProfileImages;
+
+import java.util.Random;
 
 public class ProfileController extends Controller {
     //singleton pattern
@@ -28,5 +35,26 @@ public class ProfileController extends Controller {
         if (!Menu.getLoggedInUser().isPasswordCorrect(oldPassword)) return Message.INVALID_PASSWORD;
         if (!Menu.getLoggedInUser().changePassword(newPassword)) return Message.DUPLICSTED_PASSWORD;
         return Message.PASSWORD_CHANGED;
+    }
+
+    public void settingProfile(Rectangle profile, User user) {
+        String profileModel;
+
+        if (user.getProfileImage() == null) profileModel = randomImage().toString();
+        else profileModel = user.getProfileImage();
+
+        Image image = new Image(ProfileController.class.getResource("/profile/" + profileModel).toExternalForm());
+        ImagePattern profileImage = new ImagePattern(image);
+        profile.setFill(profileImage);
+        profile.setHeight(60);
+        profile.setWidth(60);
+        user.setProfileImage(profileModel);
+    }
+
+    private ProfileImages randomImage() {
+        int max = ProfileImages.values().length;
+        Random random = new Random();
+        int randomNumber = random.nextInt(max);
+        return ProfileImages.values()[randomNumber];
     }
 }

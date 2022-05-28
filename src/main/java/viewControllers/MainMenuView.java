@@ -1,6 +1,7 @@
 package viewControllers;
 
 import Main.Main;
+import controller.ProfileController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -14,6 +15,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -26,7 +28,10 @@ import java.util.Optional;
 public class MainMenuView extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
-    private static User user = Menu.getLoggedInUser();
+    private static final User user = Menu.getLoggedInUser();
+
+    @FXML
+    private Rectangle profileImage;
 
     @FXML
     private Label username;
@@ -52,7 +57,9 @@ public class MainMenuView extends Application {
                 audio.seek(Duration.ZERO);
             }
         });
-        //TODO it's profile image
+
+        ProfileController.getInstance().settingProfile(profileImage, user);
+
         username.setText("current username: *" + user.getUsername() + "*, and score: *" + user.getScore() + "*");
         DropShadow shadow = new DropShadow();
         shadow.setRadius(5);

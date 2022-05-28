@@ -6,6 +6,7 @@ public class User {
     private String username;
     private String password;
     private String nickname;
+    private String profileImage = null;
     private int score;
 
     private static ArrayList<User> listOfUsers = new ArrayList<>();
@@ -16,6 +17,14 @@ public class User {
         this.nickname = nickname;
         this.score = 0;
         listOfUsers.add(this);
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
     public String getUsername() {
