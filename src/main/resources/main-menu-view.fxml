@@ -19,6 +19,8 @@
         <Button fx:id="logOut" text="log out" alignment="CENTER" prefWidth="100" onMouseClicked="#logOut"/>
         <Button fx:id="profile" text="profile menu" alignment="CENTER" prefWidth="100" onMouseClicked="#profileMenu"/>
         <Button fx:id="game" text="game menu" alignment="CENTER" prefWidth="100" onMouseClicked="#gameMenu"/>
+        <Button fx:id="scoreBoard" text="score board" alignment="CENTER" prefWidth="100" onMouseClicked="#scoreBoardMenu"/>
+        <Button fx:id="chat" text="chat room" alignment="CENTER" prefWidth="100" onMouseClicked="#chatRoomMenu"/>
     </VBox>
 
 </AnchorPane>

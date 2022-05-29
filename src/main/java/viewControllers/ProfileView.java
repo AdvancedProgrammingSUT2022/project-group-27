@@ -169,6 +169,8 @@ public class ProfileView extends Application {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     changingImageAction(ProfileImages.values()[index].toString());
+                    user.setCurrentImage(null);
+                    ProfileController.getInstance().settingProfile(profileImage, user);
                 }
             });
         }

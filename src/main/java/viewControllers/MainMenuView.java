@@ -31,6 +31,12 @@ public class MainMenuView extends Application {
     private static final User user = Menu.getLoggedInUser();
 
     @FXML
+    public Button chat;
+
+    @FXML
+    private Button scoreBoard;
+
+    @FXML
     private Rectangle profileImage;
 
     @FXML
@@ -76,6 +82,8 @@ public class MainMenuView extends Application {
         logOut.setCursor(Cursor.HAND);
         profile.setCursor(Cursor.HAND);
         game.setCursor(Cursor.HAND);
+        chat.setCursor(Cursor.HAND);
+        scoreBoard.setCursor(Cursor.HAND);
     }
 
     @Override
@@ -114,5 +122,17 @@ public class MainMenuView extends Application {
         audio.stop();
         GameView gameView = new GameView();
         gameView.start(stage);
+    }
+
+    public void scoreBoardMenu(MouseEvent mouseEvent) throws Exception {
+        audio.stop();
+        ScoreBoardView scoreBoardView = new ScoreBoardView();
+        scoreBoardView.start(stage);
+    }
+
+    public void chatRoomMenu(MouseEvent mouseEvent) throws Exception {
+        audio.stop();
+        ChatRoomView chatRoomView = new ChatRoomView();
+        chatRoomView.start(stage);
     }
 }

@@ -67,7 +67,7 @@ public class LoginView extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception { //TODO adding audio to this scene and random profile image to users
+    public void start(Stage stage) throws Exception {
         LoginView.stage = stage;
         audio = Main.loadingAudio("openingTitles.mpeg");
         Parent root = Main.loadFXML("login-view");
