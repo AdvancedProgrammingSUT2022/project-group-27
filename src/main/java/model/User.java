@@ -7,6 +7,7 @@ public class User {
     private String password;
     private String nickname;
     private String profileImage = null;
+    private String currentImage = null;
     private int score;
 
     private static ArrayList<User> listOfUsers = new ArrayList<>();
@@ -17,6 +18,14 @@ public class User {
         this.nickname = nickname;
         this.score = 0;
         listOfUsers.add(this);
+    }
+
+    public void setCurrentImage(String currentImage) {
+        this.currentImage = currentImage;
+    }
+
+    public String getCurrentImage() {
+        return currentImage;
     }
 
     public String getProfileImage() {
@@ -93,5 +102,11 @@ public class User {
         if (User.isNicknameExist(newNickname)) return false;
         this.nickname = newNickname;
         return true;
+    }
+
+    public static void setNullAllOfTheCurrentImages() {
+        for (User user: listOfUsers) {
+            user.setCurrentImage(null);
+        }
     }
 }

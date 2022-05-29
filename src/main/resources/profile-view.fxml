@@ -19,7 +19,7 @@
         <HBox>
             <Button fx:id="password" text="change password" onMouseClicked="#changePasswordButton"/>
             <Button fx:id="nickname" text="change nickname" onMouseClicked="#changeNicknameButton"/>
-            <Button fx:id="profile" text="change profile image"/>
+            <Button fx:id="profile" text="change profile image" onMouseClicked="#changeImageButton"/>
         </HBox>
     </VBox>
     <VBox fx:id="box" alignment="CENTER" spacing="10" layoutX="220" layoutY="340">

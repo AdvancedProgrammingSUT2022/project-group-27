@@ -8,6 +8,8 @@ import model.User;
 import view.Menu;
 import Enum.ProfileImages;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class ProfileController extends Controller {
@@ -43,7 +45,18 @@ public class ProfileController extends Controller {
         if (user.getProfileImage() == null) profileModel = randomImage().toString();
         else profileModel = user.getProfileImage();
 
-        Image image = new Image(ProfileController.class.getResource("/profile/" + profileModel).toExternalForm());
+        Image image;
+        if (user.getCurrentImage() == null)
+            image = new Image(ProfileController.class.getResource(profileModel).toExternalForm());
+        else {
+            FileInputStream fileInputStream = null;
+            try {
+                fileInputStream = new FileInputStream(user.getCurrentImage());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            image = new Image(fileInputStream);
+        }
         ImagePattern profileImage = new ImagePattern(image);
         profile.setFill(profileImage);
         profile.setHeight(60);

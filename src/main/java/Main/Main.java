@@ -13,6 +13,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.User;
 import viewControllers.LoginView;
 
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class Main extends Application {
             @Override
             public void run() {
                 try {
+                    User.setNullAllOfTheCurrentImages();
                     Database.writeOnDataBase();
                 } catch (IOException e) {
                     e.printStackTrace();

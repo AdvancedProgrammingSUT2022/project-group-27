@@ -1,1 +1,1 @@
-[{"username":"a","password":"a","nickname":"a","profileImage":"troy-1.jpg","score":0},{"username":"b","password":"b","nickname":"b","score":0},{"username":"c","password":"c","nickname":"c","score":0}]
+[{"username":"a","password":"a","nickname":"a","profileImage":"/profile/a.jpg","score":0},{"username":"b","password":"b","nickname":"b","score":0},{"username":"c","password":"c","nickname":"c","score":0}]

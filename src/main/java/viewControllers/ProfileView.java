@@ -3,11 +3,16 @@ package viewControllers;
 import Main.Main;
 import controller.ProfileController;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -15,12 +20,19 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.User;
 import view.Menu;
 import Enum.MenusInProfile;
 import Enum.Message;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class ProfileView extends Application {
     private static Stage stage;
@@ -132,11 +144,40 @@ public class ProfileView extends Application {
         box.setLayoutX(320);
     }
 
+    public void changeImageButton(MouseEvent mouseEvent) throws IOException {
+        menus = MenusInProfile.CHANGING_NICKNAME;
+        password.setDisable(false);
+        nickname.setDisable(false);
+        profile.setDisable(true);
+        removingElementsFromBox();
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("View Pictures");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            user.setCurrentImage(file.getPath());
+            ProfileController.getInstance().settingProfile(profileImage, user);
+
+            File newFile = new File("./src/main/resources/profile/" + user.getUsername() + ".jpg");
+            newFile.createNewFile();
+            Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            changingImageAction("/profile/" + user.getUsername() + ".jpg");
+        }
+    }
+
     public void submitChanges(MouseEvent mouseEvent) {
         switch (menus) {
             case CHANGING_PASSWORD -> changePasswordAction();
             case CHANGING_NICKNAME -> changeNicknameAction();
         }
+    }
+
+    private void changingImageAction(String path) {
+        user.setProfileImage(path);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Success change");
+        alert.setContentText("your profile image changed successfully");
+        alert.show();
     }
 
     private void changePasswordAction() {
