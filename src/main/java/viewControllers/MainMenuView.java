@@ -71,8 +71,7 @@ public class MainMenuView extends Application {
 
         username.setEffect(shadow);
         username.setFont(new Font(14));
-        username.getStylesheets().add(Main.class.getResource("/css/mainMenu.css").toExternalForm());
-        username.getStyleClass().add("text");
+        username.setStyle("-fx-text-fill: black");
 
         logOut.setCursor(Cursor.HAND);
         profile.setCursor(Cursor.HAND);

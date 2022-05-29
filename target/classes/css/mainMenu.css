@@ -1,17 +1,17 @@
 .background {
-    -fx-background-image: url(../images/persianCivilization.jpg);
+    -fx-background-image: url(../images/persepolis.jpg);
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-size: cover;
 }
 
 .text {
-    -fx-text-fill: #000209;
+    -fx-text-fill: #b71135;
     -fx-font-weight: bold;
 }
 
 .button {
-    -fx-background-color: #d77101;
+    -fx-background-color: #b71135;
     -fx-text-fill: white;
     -fx-background-radius: 8;
 }
