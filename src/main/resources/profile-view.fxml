@@ -12,13 +12,17 @@
             fx:controller="viewControllers.ProfileView"
             prefHeight="1000.0" prefWidth="800.0">
 
+    <Button fx:id="back" text="back" layoutY="20" layoutX="20" onMouseClicked="#back"/>
     <VBox alignment="CENTER" spacing="10" layoutY="200" layoutX="220">
         <Rectangle fx:id="profileImage"/>
         <Label fx:id="username"/>
         <HBox>
-            <Button text="change password"/>
-            <Button text="change nickname"/>
-            <Button text="change profile image"/>
+            <Button fx:id="password" text="change password" onMouseClicked="#changePasswordButton"/>
+            <Button fx:id="nickname" text="change nickname" onMouseClicked="#changeNicknameButton"/>
+            <Button fx:id="profile" text="change profile image"/>
         </HBox>
+    </VBox>
+    <VBox fx:id="box" alignment="CENTER" spacing="10" layoutX="220" layoutY="340">
+        <Button fx:id="submit" text="submit" onMouseClicked="#submitChanges"/>
     </VBox>
 </AnchorPane>
