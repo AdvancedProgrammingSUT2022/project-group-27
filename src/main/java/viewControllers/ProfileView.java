@@ -3,7 +3,6 @@ package viewControllers;
 import Main.Main;
 import controller.ProfileController;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -27,8 +26,8 @@ import model.User;
 import view.Menu;
 import Enum.MenusInProfile;
 import Enum.Message;
+import Enum.ProfileImages;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -43,6 +42,8 @@ public class ProfileView extends Application {
     private TextField newNickname;
     private TextField newPassword;
     private TextField oldPassword;
+    private final Rectangle[] images = new Rectangle[ProfileImages.values().length];
+    private final Button exploreFile = new Button("explore file");
 
     @FXML
     private Button password;
@@ -115,6 +116,12 @@ public class ProfileView extends Application {
         box.getChildren().remove(newNickname);
         box.getChildren().remove(oldPassword);
         box.getChildren().remove(newPassword);
+        box.getChildren().remove(exploreFile);
+        for (int i = 0; i < ProfileImages.values().length; i++) {
+            box.getChildren().remove(images[i]);
+        }
+        box.getChildren().remove(submit);
+        box.getChildren().add(submit);
     }
 
     public void changePasswordButton() {
@@ -144,17 +151,49 @@ public class ProfileView extends Application {
         box.setLayoutX(320);
     }
 
-    public void changeImageButton(MouseEvent mouseEvent) throws IOException {
-        menus = MenusInProfile.CHANGING_NICKNAME;
+    public void changeImageButton(MouseEvent mouseEvent) {
+        menus = MenusInProfile.CHANGING_PROFILE_IMAGE;
         password.setDisable(false);
         nickname.setDisable(false);
         profile.setDisable(true);
         removingElementsFromBox();
+        box.getChildren().remove(submit);
+        box.setLayoutX(360);
+
+        ProfileController.getInstance().settingAllImages(images);
+        for (int i = 0; i < ProfileImages.values().length; i++) {
+            box.getChildren().add(0, images[i]);
+            images[i].setCursor(Cursor.HAND);
+            Integer index = i;
+            images[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    changingImageAction(ProfileImages.values()[index].toString());
+                }
+            });
+        }
+
+        box.getChildren().add(0, exploreFile);
+        exploreFile.setCursor(Cursor.HAND);
+        exploreFile.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    changeImageFromUserComputer();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void changeImageFromUserComputer() throws IOException {
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("View Pictures");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         File file = fileChooser.showOpenDialog(stage);
-        if (file != null && file.getPath().toString().contains(".jpg")) {
+        if (file != null && (file.getPath().toString().contains(".jpg") ||file.getPath().toString().contains(".jpeg") ||
+                file.getPath().toString().contains(".png"))) {
             user.setCurrentImage(file.getPath());
             ProfileController.getInstance().settingProfile(profileImage, user);
 
@@ -178,7 +217,7 @@ public class ProfileView extends Application {
         if (path == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("invalid image");
-            alert.setContentText("sorry but your file is not .jpg");
+            alert.setContentText("sorry but your file is not .jpg / .jpeg / .png");
             alert.show();
         } else {
             user.setProfileImage(path);

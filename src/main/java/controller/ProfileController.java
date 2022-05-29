@@ -2,6 +2,7 @@ package controller;
 
 import Enum.Message;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.User;
@@ -62,6 +63,17 @@ public class ProfileController extends Controller {
         profile.setHeight(60);
         profile.setWidth(60);
         user.setProfileImage(profileModel);
+    }
+
+    public void settingAllImages(Rectangle[] images) {
+        for (int i = 0; i < ProfileImages.values().length; i++) {
+            images[i] = new Rectangle();
+            Image image = new Image(ProfileController.class.getResource(ProfileImages.values()[i].toString()).toExternalForm());
+            ImagePattern profileImage = new ImagePattern(image);
+            images[i].setFill(profileImage);
+            images[i].setHeight(60);
+            images[i].setWidth(60);
+        }
     }
 
     private ProfileImages randomImage() {
