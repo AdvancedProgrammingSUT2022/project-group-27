@@ -154,7 +154,7 @@ public class ProfileView extends Application {
         fileChooser.setTitle("View Pictures");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
+        if (file != null && file.getPath().toString().contains(".jpg")) {
             user.setCurrentImage(file.getPath());
             ProfileController.getInstance().settingProfile(profileImage, user);
 
@@ -162,6 +162,8 @@ public class ProfileView extends Application {
             newFile.createNewFile();
             Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             changingImageAction("/profile/" + user.getUsername() + ".jpg");
+        } else {
+            changingImageAction(null);
         }
     }
 
@@ -173,11 +175,18 @@ public class ProfileView extends Application {
     }
 
     private void changingImageAction(String path) {
-        user.setProfileImage(path);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Success change");
-        alert.setContentText("your profile image changed successfully");
-        alert.show();
+        if (path == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("invalid image");
+            alert.setContentText("sorry but your file is not .jpg");
+            alert.show();
+        } else {
+            user.setProfileImage(path);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Success change");
+            alert.setContentText("your profile image changed successfully");
+            alert.show();
+        }
     }
 
     private void changePasswordAction() {
