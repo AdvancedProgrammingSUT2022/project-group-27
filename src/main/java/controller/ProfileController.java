@@ -49,7 +49,9 @@ public class ProfileController extends Controller {
 
         Image image;
         if (user.getCurrentImage() == null)
-            image = new Image(ProfileController.class.getResource(File.separator + "profile" + File.separator + profileModel).toExternalForm());
+            //image = new Image(ProfileController.class.getResource(File.separator + "profile" + File.separator + profileModel).toExternalForm());
+            image = new Image(ProfileController.class.getResource("/profile/" + profileModel).toExternalForm());
+
         else {
             FileInputStream fileInputStream = null;
             try {
@@ -69,7 +71,7 @@ public class ProfileController extends Controller {
     public void settingAllImages(Rectangle[] images) {
         for (int i = 0; i < ProfileImages.values().length; i++) {
             images[i] = new Rectangle();
-            Image image = new Image(ProfileController.class.getResource(File.separator + "profile" + File.separator + ProfileImages.values()[i].toString()).toExternalForm());
+            Image image = new Image(ProfileController.class.getResource("/profile/" + ProfileImages.values()[i].toString()).toExternalForm());
             ImagePattern profileImage = new ImagePattern(image);
             images[i].setFill(profileImage);
             images[i].setHeight(60);
