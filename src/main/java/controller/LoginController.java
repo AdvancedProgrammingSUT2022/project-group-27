@@ -26,6 +26,7 @@ public class LoginController extends Controller {
         else if (User.isNicknameExist(nickname)) message = Message.EXIST_NICKNAME;
         else {
             User user = new User(username, password, nickname);
+            Menu.setLoggedInUser(user);
             message = Message.CREATE_USER_SUCCESSFUL;
         }
 
