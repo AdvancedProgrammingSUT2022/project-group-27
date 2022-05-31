@@ -199,7 +199,7 @@ public class ProfileView extends Application {
             user.setCurrentImage(file.getPath());
             ProfileController.getInstance().settingProfile(profileImage, user);
 
-            File newFile = new File("./src/main/resources/profile/" + user.getUsername() + ".jpg");
+            File newFile = new File("." + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "profile" + File.separator + user.getUsername() + ".jpg");
             newFile.createNewFile();
             Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             changingImageAction(user.getUsername() + ".jpg");
