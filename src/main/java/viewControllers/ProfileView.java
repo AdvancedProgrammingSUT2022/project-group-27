@@ -192,7 +192,7 @@ public class ProfileView extends Application {
     public void changeImageFromUserComputer() throws IOException {
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("View Pictures");
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        //fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         File file = fileChooser.showOpenDialog(stage);
         if (file != null && (file.getPath().toString().contains(".jpg") ||file.getPath().toString().contains(".jpeg") ||
                 file.getPath().toString().contains(".png"))) {
