@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -44,6 +45,9 @@ public class ProfileView extends Application {
     private TextField oldPassword;
     private final Rectangle[] images = new Rectangle[ProfileImages.values().length];
     private final Button exploreFile = new Button("explore file");
+
+    @FXML
+    private AnchorPane pane;
 
     @FXML
     private Button password;
@@ -171,6 +175,25 @@ public class ProfileView extends Application {
                     changingImageAction(ProfileImages.values()[index].toString());
                     user.setCurrentImage(null);
                     ProfileController.getInstance().settingProfile(profileImage, user);
+                }
+            });
+            Rectangle rectangle = new Rectangle();
+            images[i].setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    rectangle.setX(480);
+                    rectangle.setY(400 - index * 60);
+                    rectangle.setHeight(300);
+                    rectangle.setWidth(300);
+                    rectangle.setFill(images[index].getFill());
+                    rectangle.setEffect(new DropShadow());
+                    if (!pane.getChildren().contains(rectangle)) pane.getChildren().add(rectangle);
+                }
+            });
+            images[i].setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    pane.getChildren().remove(rectangle);
                 }
             });
         }
