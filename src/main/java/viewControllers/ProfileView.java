@@ -202,7 +202,7 @@ public class ProfileView extends Application {
             File newFile = new File("./src/main/resources/profile/" + user.getUsername() + ".jpg");
             newFile.createNewFile();
             Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            changingImageAction("/profile/" + user.getUsername() + ".jpg");
+            changingImageAction(user.getUsername() + ".jpg");
         } else {
             changingImageAction(null);
         }
