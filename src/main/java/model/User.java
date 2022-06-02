@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class User {
     private String username;
@@ -9,6 +10,8 @@ public class User {
     private String profileImage = null;
     private String currentImage = null;
     private int score;
+    private String timeOfScoreGame = "0";
+    private String lastLoginTime;
 
     private static ArrayList<User> listOfUsers = new ArrayList<>();
 
@@ -46,6 +49,18 @@ public class User {
 
     public int getScore() {
         return this.score;
+    }
+
+    public String getTimeOfScoreGame() {
+        return timeOfScoreGame;
+    }
+
+    public String getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(String lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
     }
 
     public static void setListOfUsers(ArrayList<User> listOfUsers) {
@@ -108,5 +123,14 @@ public class User {
         for (User user: listOfUsers) {
             user.setCurrentImage(null);
         }
+    }
+
+    public static void sort() {
+        Comparator<User> sortByScore = Comparator.comparing(User::getScore).reversed();
+        Comparator<User> sortByTime = Comparator.comparing(User::getTimeOfScoreGame);
+        Comparator<User> sortByName = Comparator.comparing(User::getUsername);
+
+        Comparator<User> full = sortByScore.thenComparing(sortByTime).thenComparing(sortByName);
+        User.listOfUsers.sort(full);
     }
 }

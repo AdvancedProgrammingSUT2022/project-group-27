@@ -23,6 +23,8 @@ import model.User;
 import view.Menu;
 import Enum.Message;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class MainMenuView extends Application {
@@ -100,6 +102,7 @@ public class MainMenuView extends Application {
     }
 
     public void logOut(MouseEvent mouseEvent) throws Exception {
+        user.setLastLoginTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         Menu.setLoggedInUser(null);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Success log out");

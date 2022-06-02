@@ -27,6 +27,7 @@ public class LoginController extends Controller {
         else {
             User user = new User(username, password, nickname);
             Menu.setLoggedInUser(user);
+            user.setLastLoginTime("online");
             message = Message.CREATE_USER_SUCCESSFUL;
         }
 
@@ -39,6 +40,7 @@ public class LoginController extends Controller {
         if (user == null) message = Message.USER_IS_INVALID;
         else {
             Menu.setLoggedInUser(user);
+            user.setLastLoginTime("online");
             message = Message.LOGIN_SUCCESSFUL;
         }
 
