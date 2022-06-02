@@ -2,12 +2,15 @@ package Main;
 
 import database.Database;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -58,17 +61,17 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Database.readFromDatabase();
         audio = loadingAudio("foxTwentyCentry.mp4");
-        settingNextSceneAfterAudio();
         Main.stage = stage;
         Parent root = loadFXML("welcome");
         root.getStylesheets().add(Main.class.getResource("/css/welcome.css").toExternalForm());
         root.getStyleClass().add("background");
         Scene scene = new Scene(root);
+        settingNextSceneAfterAudio(scene);
         stage.setScene(scene);
         stage.show();
     }
 
-    private static void settingNextSceneAfterAudio() {
+    private static void settingNextSceneAfterAudio(Scene scene) {
         audio.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
@@ -78,6 +81,21 @@ public class Main extends Application {
                     loginView.start(stage);
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+            }
+        });
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode().equals(KeyCode.ESCAPE)) {
+                    audio.stop();
+                    LoginView loginView = new LoginView();
+                    try {
+                        loginView.start(stage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
