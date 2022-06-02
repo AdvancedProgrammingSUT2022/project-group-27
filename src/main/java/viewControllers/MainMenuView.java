@@ -30,7 +30,7 @@ import java.util.Optional;
 public class MainMenuView extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
-    private static final User user = Menu.getLoggedInUser();
+    private static User user = Menu.getLoggedInUser();
 
     @FXML
     public Button chat;
@@ -58,6 +58,7 @@ public class MainMenuView extends Application {
 
     @FXML
     public void initialize() {
+        user = Menu.getLoggedInUser();
         audio.play();
         audio.setOnEndOfMedia(new Runnable() {
             @Override

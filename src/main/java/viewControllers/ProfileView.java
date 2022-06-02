@@ -37,7 +37,7 @@ import java.nio.file.StandardCopyOption;
 public class ProfileView extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
-    private static final User user = Menu.getLoggedInUser();
+    private static User user = Menu.getLoggedInUser();
     private static MenusInProfile menus;
 
     private TextField newNickname;
@@ -75,6 +75,7 @@ public class ProfileView extends Application {
 
     @FXML
     public void initialize() {
+        user = Menu.getLoggedInUser();
         audio.play();
         audio.setOnEndOfMedia(new Runnable() {
             @Override

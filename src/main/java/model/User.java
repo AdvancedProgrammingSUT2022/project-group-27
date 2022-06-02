@@ -10,7 +10,7 @@ public class User {
     private String profileImage = null;
     private String currentImage = null;
     private int score;
-    private String timeOfScoreGame = "0";
+    private String timeOfScoreGame;
     private String lastLoginTime;
 
     private static ArrayList<User> listOfUsers = new ArrayList<>();
@@ -20,11 +20,16 @@ public class User {
         this.password = password;
         this.nickname = nickname;
         this.score = 0;
+        this.timeOfScoreGame = "0";
         listOfUsers.add(this);
     }
 
     public void setCurrentImage(String currentImage) {
         this.currentImage = currentImage;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getCurrentImage() {
@@ -51,8 +56,16 @@ public class User {
         return this.score;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public String getTimeOfScoreGame() {
         return timeOfScoreGame;
+    }
+
+    public void setTimeOfScoreGame(String timeOfScoreGame) {
+        this.timeOfScoreGame = timeOfScoreGame;
     }
 
     public String getLastLoginTime() {

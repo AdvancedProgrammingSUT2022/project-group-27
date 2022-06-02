@@ -17,10 +17,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.User;
+import view.Menu;
 import viewControllers.LoginView;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Main extends Application {
     private static Stage stage;
@@ -36,6 +39,10 @@ public class Main extends Application {
             @Override
             public void run() {
                 try {
+                    if (Menu.getLoggedInUser() != null) {
+                        Menu.getLoggedInUser().setLastLoginTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                        Menu.setLoggedInUser(null);
+                    }
                     User.setNullAllOfTheCurrentImages();
                     Database.writeOnDataBase();
                 } catch (IOException e) {

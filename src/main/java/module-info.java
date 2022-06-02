@@ -6,7 +6,7 @@ module apProjectGroup27 {
     requires com.google.gson;
 
     opens viewControllers to javafx.fxml;
-    opens model to com.google.gson;
+    opens model to com.google.gson, javafx.base;
     opens Main to javafx.fxml;
 
     exports Main;
