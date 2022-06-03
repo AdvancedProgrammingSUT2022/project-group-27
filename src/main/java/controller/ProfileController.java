@@ -12,6 +12,7 @@ import Enum.ProfileImages;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Random;
 
 public class ProfileController extends Controller {
@@ -43,18 +44,21 @@ public class ProfileController extends Controller {
 
     public void settingProfile(Rectangle profile, User user) {
         String profileModel;
+        File file = null;
 
         if (user.getProfileImage() == null) profileModel = randomImage().toString();
         else profileModel = user.getProfileImage();
 
         Image image;
-        if (user.getCurrentImage() == null)
+        if (user.getCurrentImage() == null) {
             //image = new Image(ProfileController.class.getResource(File.separator + "profile" + File.separator + profileModel).toExternalForm());
             image = new Image(ProfileController.class.getResource("/profile/" + profileModel).toExternalForm());
-
+            file = new File("./src/main/resources/profile/" + profileModel);
+        }
         else {
             FileInputStream fileInputStream = null;
             try {
+                file = new File(user.getCurrentImage());
                 fileInputStream = new FileInputStream(user.getCurrentImage());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -66,6 +70,18 @@ public class ProfileController extends Controller {
         profile.setHeight(60);
         profile.setWidth(60);
         user.setProfileImage(profileModel);
+
+
+        byte[] bFile = new byte[(int) file.length()];
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        user.setImage(bFile);
     }
 
     public void settingAllImages(Rectangle[] images) {

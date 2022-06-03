@@ -12,6 +12,7 @@ public class User {
     private int score;
     private String timeOfScoreGame;
     private String lastLoginTime;
+    private byte[] image;
 
     private static ArrayList<User> listOfUsers = new ArrayList<>();
 
@@ -74,6 +75,14 @@ public class User {
 
     public void setLastLoginTime(String lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public byte[] getImage() {
+        return image;
     }
 
     public static void setListOfUsers(ArrayList<User> listOfUsers) {
