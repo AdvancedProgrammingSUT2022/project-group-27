@@ -9,15 +9,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import model.User;
+import view.Menu;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -67,6 +71,18 @@ public class ScoreBoardView extends Application {
                     imageView.setFitHeight(100);
                     imageView.setFitWidth(100);
                     setGraphic(imageView);
+                }
+            }
+        });
+
+        usernameColumn.setCellFactory(param -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                TableRow<User> currentRow = getTableRow();
+                if (!isEmpty()) {
+                    if (Menu.getLoggedInUser().getUsername().equals(item))
+                        currentRow.setStyle("-fx-background-color: #b71135");
                 }
             }
         });
