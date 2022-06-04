@@ -3,22 +3,21 @@ package model;
 import java.util.ArrayList;
 
 public class ChatText {
-    private static final ArrayList<ChatText> listOfChats = new ArrayList<>();
     private User sender;
-    private User receiver;
+    private ChatGroup chatGroup;
     private String time;
     private String text;
     private boolean isSend;
     private boolean isSeen;
 
-    public ChatText(User sender, User receiver, String time, String text) {
+    public ChatText(User sender, ChatGroup chatGroup, String time, String text) {
         this.sender = sender;
-        this.receiver = receiver;
+        this.chatGroup = chatGroup;
         this.time = time;
         this.text = text;
         this.isSend = true;
         this.isSeen = false;
-        listOfChats.add(this);
+        chatGroup.add(this);
     }
 
     public void setSeen(boolean seen) {
