@@ -14,9 +14,11 @@ import Enum.LuxuryResource;
 import Enum.StrategicResource;
 
 public class InitializeMap {
+    private int seed=0;
     private ArrayList<User> playerUsers;
 
-    public InitializeMap(ArrayList<User> playerUsers) {
+    public InitializeMap(ArrayList<User> playerUsers,int seed) {
+        this.seed=seed;
         this.playerUsers = playerUsers;
     }
 
@@ -31,7 +33,7 @@ public class InitializeMap {
     }
 
     private void setGroundsType() {
-        Random random = new Random();
+        Random random = new Random(seed);
         for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
             int rand = random.nextInt(0, 200);
             if (rand < 70) {
@@ -75,7 +77,7 @@ public class InitializeMap {
     }
 
     private void setRivers() {
-        Random random = new Random();
+        Random random = new Random(seed);
         int numberOfRivers = random.nextInt(0, GlobalVariables.numberOfTiles / 2) + 5;
         for (int i = 0; i < numberOfRivers; i++) {
             int first = random.nextInt(0, GlobalVariables.numberOfTiles) + 1, second = random.nextInt(0, GlobalVariables.numberOfTiles) + 1;
@@ -88,7 +90,7 @@ public class InitializeMap {
     }
 
     private void setFirstGroundsForPlayers() {
-        Random rand = new Random();
+        Random rand = new Random(seed);
         for (User playerUser : playerUsers) {
             int idStartGround = rand.nextInt(GlobalVariables.numberOfTiles) + 1;
             while (!Ground.getGroundByNumber(idStartGround).isFreeOfMilitaryUnit() || Ground.getGroundByNumber(idStartGround).getGroundType()==GroundType.OCEAN
@@ -118,7 +120,7 @@ public class InitializeMap {
 
     private void setBonusType() {
         for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
-            Random random = new Random();
+            Random random = new Random(seed);
             int rand = random.nextInt(0, 200);
             if (rand < 40) {
                 if (Ground.getGroundByNumber(i).canWeAddThisBonusResourceToThisGround(BonusResource.BANANA)) {
@@ -148,7 +150,7 @@ public class InitializeMap {
 
     private void setLuxuryType() {
         for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
-            Random random = new Random();
+            Random random = new Random(seed);
             int rand = random.nextInt(0, 220);
             if (rand < 20) {
                 if (Ground.getGroundByNumber(i).canWeAddThisLuxuryResourceToThisGround(LuxuryResource.SUGAR)) {
@@ -201,7 +203,7 @@ public class InitializeMap {
     }
     private void setStrategicType(){
         for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
-            Random random = new Random();
+            Random random = new Random(seed);
             int rand = random.nextInt(0, 150);
             if (rand<50) {
                 if (Ground.getGroundByNumber(i).canWeAddThisStrategicResourceToThisGround(StrategicResource.HORSE)) {

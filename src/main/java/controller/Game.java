@@ -195,6 +195,7 @@ public class Game extends Controller {
 
                 Ground.getAllGround().add(ground);
             }
+            GlobalVariables.numberOfTiles=numberOfCity-1;
         }
         for (int i = 0; i < globalVariables.surfaceHeight; i++) {
             for (int j = 0; j < globalVariables.surfaceWidth; j++) {

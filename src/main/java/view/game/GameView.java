@@ -10,6 +10,7 @@ import view.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import Enum.MilitaryType;
 
@@ -20,10 +21,10 @@ public class GameView {
     private Game controller;
     private ArrayList<User> playerUsers = new ArrayList<>();
 
-    public GameView(ArrayList<User> playerUsers) {
+    public GameView(ArrayList<User> playerUsers,int seed) {
         this.controller = Game.getInstance();
         this.playerUsers = playerUsers;
-        InitializeMap initializeMap = new InitializeMap(playerUsers);
+        InitializeMap initializeMap = new InitializeMap(playerUsers,seed);
         initializeMap.run();
     }
 

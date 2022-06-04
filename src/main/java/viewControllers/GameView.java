@@ -17,6 +17,8 @@ import view.Menu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
+
 import Enum.Message;
 public class GameView extends Application {
     private static Stage stage;
@@ -50,7 +52,7 @@ public class GameView extends Application {
         for (String playerUsers:arrayList){
             listOfPlayers.add(User.findUser(playerUsers));
         }
-        view.game.GameView gameView = new view.game.GameView(new ArrayList<User>(listOfPlayers));
+        view.game.GameView gameView = new view.game.GameView(new ArrayList<User>(listOfPlayers),1);
         System.out.println(Message.START_GAME);
         gameView.run();
     }

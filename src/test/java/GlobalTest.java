@@ -103,7 +103,7 @@ public class GlobalTest {
         new User(".", ".", ".");
         new User(",", ",", ",");
         Game.getInstance();
-        InitializeMap initializeMap = new InitializeMap(User.getListOfUsers());
+        InitializeMap initializeMap = new InitializeMap(User.getListOfUsers(),1);
         initializeMap.run();
     }
 }

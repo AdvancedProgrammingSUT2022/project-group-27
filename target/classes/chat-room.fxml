@@ -15,6 +15,8 @@
         <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="600">
             <VBox fx:id="rooms" prefWidth="250" spacing="10"/>
         </ScrollPane>
-        <VBox fx:id="chat" prefWidth="480" spacing="10" maxHeight="500"/>
+        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="600">
+            <VBox fx:id="chat" prefWidth="480" spacing="10"/>
+        </ScrollPane>
     </HBox>
 </AnchorPane>
