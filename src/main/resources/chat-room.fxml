@@ -12,7 +12,11 @@
             prefHeight="1000.0" prefWidth="800.0">
     <Button fx:id="back" text="back" layoutY="20" layoutX="20" onMouseClicked="#back"/>
     <HBox layoutY="60" layoutX="20" spacing="30">
-        <VBox fx:id="rooms" prefWidth="250" spacing="10"/>
-        <VBox fx:id="chat" prefWidth="480" spacing="10"/>
+        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="600">
+            <VBox fx:id="rooms" prefWidth="250" spacing="10"/>
+        </ScrollPane>
+        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="600">
+            <VBox fx:id="chat" prefWidth="480" spacing="10"/>
+        </ScrollPane>
     </HBox>
 </AnchorPane>
