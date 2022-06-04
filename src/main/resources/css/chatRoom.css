@@ -5,6 +5,11 @@
     -fx-background-size: cover;
 }
 
+.text-field {
+    -fx-background-radius: 8;
+    -fx-background-color: gray;
+}
+
 .button {
     -fx-background-color: #b71135;
     -fx-text-fill: white;

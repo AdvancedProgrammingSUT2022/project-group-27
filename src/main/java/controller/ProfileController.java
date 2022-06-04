@@ -42,6 +42,30 @@ public class ProfileController extends Controller {
         return Message.PASSWORD_CHANGED;
     }
 
+    public ImagePattern getImage(User user) {
+        String profileModel;
+
+        if (user.getProfileImage() == null) profileModel = randomImage().toString();
+        else profileModel = user.getProfileImage();
+
+        Image image;
+        if (user.getCurrentImage() == null) {
+            //image = new Image(ProfileController.class.getResource(File.separator + "profile" + File.separator + profileModel).toExternalForm());
+            image = new Image(ProfileController.class.getResource("/profile/" + profileModel).toExternalForm());
+        }
+        else {
+            FileInputStream fileInputStream = null;
+            try {
+                fileInputStream = new FileInputStream(user.getCurrentImage());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            image = new Image(fileInputStream);
+        }
+
+        return new ImagePattern(image);
+    }
+
     public void settingProfile(Rectangle profile, User user) {
         String profileModel;
         File file = null;
