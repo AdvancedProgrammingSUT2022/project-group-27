@@ -5,8 +5,10 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -30,6 +32,9 @@ import java.nio.ByteBuffer;
 public class ScoreBoardView extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
+
+    @FXML
+    private Button back;
 
     @FXML
     private TableColumn<User, String> usernameColumn;
@@ -92,6 +97,8 @@ public class ScoreBoardView extends Application {
         User.sort();
         items.addAll(User.getListOfUsers());
         scoreBoard.getItems().addAll(items);
+
+        back.setCursor(Cursor.HAND);
     }
 
     private WritableImage getImageFromBytes(byte[] imgBytes) {

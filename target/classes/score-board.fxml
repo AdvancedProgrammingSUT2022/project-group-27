@@ -6,23 +6,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
+<AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="viewControllers.ScoreBoardView"
             prefHeight="1000.0" prefWidth="800.0">
 
-    <center>
-        <VBox spacing="20">
-            <Button text="back" onMouseClicked="#back"/>
-            <TableView fx:id="scoreBoard" prefHeight="800">
-                <columns>
-                    <TableColumn fx:id="profileImageColumn" text="profile image" prefWidth="100"/>
-                    <TableColumn fx:id="usernameColumn" text="username" prefWidth="75"/>
-                    <TableColumn fx:id="scoreColumn" text="score" prefWidth="75"/>
-                    <TableColumn fx:id="timeColumn" text="time" prefWidth="150"/>
-                    <TableColumn fx:id="lastLoginColumn" text="last login" prefWidth="150"/>
-                </columns>
-            </TableView>
-        </VBox>
-    </center>
-</BorderPane>
+    <Button fx:id="back" text="back" layoutY="20" layoutX="20" onMouseClicked="#back"/>
+
+    <TableView fx:id="scoreBoard" prefHeight="800" layoutY="60" prefWidth="800">
+        <columns>
+            <TableColumn fx:id="profileImageColumn" text="profile image" prefWidth="100"/>
+            <TableColumn fx:id="usernameColumn" text="username" prefWidth="75"/>
+            <TableColumn fx:id="scoreColumn" text="score" prefWidth="75"/>
+            <TableColumn fx:id="timeColumn" text="time" prefWidth="150"/>
+            <TableColumn fx:id="lastLoginColumn" text="last login" prefWidth="150"/>
+        </columns>
+    </TableView>
+</AnchorPane>
