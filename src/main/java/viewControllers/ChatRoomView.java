@@ -4,14 +4,18 @@ import Main.Main;
 import controller.ChatController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import view.Menu;
@@ -19,6 +23,9 @@ import view.Menu;
 public class ChatRoomView extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
+
+    @FXML
+    private Button newChatRoom;
 
     @FXML
     private VBox chat;
@@ -40,15 +47,26 @@ public class ChatRoomView extends Application {
         });
 
         back.setCursor(Cursor.HAND);
-        testingHBBoxes();
-        ChatController.newPrivateChat(Menu.getLoggedInUser(), rooms);
-        for (int i = 0; i < 24; i++) ChatController.newPrivateChat(Menu.getLoggedInUser(), rooms);
+        newChatRoom.setCursor(Cursor.HAND);
+        firstInitialize();
+        //for (int i = 0; i < 24; i++) ChatController.newPrivateChat(Menu.getLoggedInUser(), rooms);
     }
 
-    private void testingHBBoxes() {
-        TextField textField1 = new TextField();
+    private void firstInitialize() {
+        chat.getChildren().clear();
+        chat.setAlignment(Pos.CENTER);
+        Text textChat = new Text("please select one of chats...");
+        chat.getChildren().add(textChat);
+
+        ChatController.publicChat(rooms); //TODO add other chats that user have
+        /*TextField textField1 = new TextField();
         textField1.setPromptText("chat");
         chat.getChildren().add(textField1);
+
+        Label label = new Label("hello");
+        chat.getChildren().add(chat.getChildren().size() - 1, label);
+        Label label1 = new Label("hi");
+        chat.getChildren().add(chat.getChildren().size() - 1, label1);*/
     }
 
     @Override
@@ -68,5 +86,9 @@ public class ChatRoomView extends Application {
         audio.stop();
         MainMenuView mainMenuView = new MainMenuView();
         mainMenuView.start(stage);
+    }
+
+    public void addingChatRoom(MouseEvent mouseEvent) {
+
     }
 }
