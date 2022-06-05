@@ -11,11 +11,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import model.ChatGroup;
 import model.ChatText;
 import model.User;
 import view.Menu;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +85,11 @@ public class ChatController {
         circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("send");
+                String text = typing.getText();
+                typing.clear();
+                String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                ChatText chatText = new ChatText(owner, chatGroup, time, text);
+                addChat(chatText, chat);
             }
         });
 
@@ -92,11 +99,27 @@ public class ChatController {
         chat.getChildren().add(hBox);
 
         for (ChatText chatText: chatGroup.getChats()) {
-            addChat(chatGroup, chatText, chat);
+            addChat(chatText, chat);
         }
     }
 
-    public static void addChat(ChatGroup chatGroup, ChatText chatText, VBox chat) {
-        System.out.println("adding");
+    public static void addChat(ChatText chatText, VBox chat) {
+        Text text = new Text();
+        String seenMessage = chatText.getSender().getUsername() + ": " + chatText.getTime() + "\n" + chatText.getText();
+        text.setText(seenMessage);
+        Circle tick = new Circle(10);
+        Image imageTick;
+        if (!chatText.isSeen()) imageTick= new Image(ChatController.class.getResource("/images/tick.png").toExternalForm());
+        else imageTick = new Image(ChatController.class.getResource("/images/double tick.png").toExternalForm());
+        tick.setFill(new ImagePattern(imageTick));
+        Circle avatar = new Circle();
+        avatar.setRadius(20);
+        avatar.setFill(ProfileController.getInstance().getImage(chatText.getSender()));
+
+        HBox hBox = new HBox(tick, text, avatar);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.setSpacing(5);
+
+        chat.getChildren().add(chat.getChildren().size() - 1, hBox);
     }
 }
