@@ -3,15 +3,15 @@ package viewControllers;
 import Main.Main;
 import controller.ChatController;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
@@ -28,6 +28,7 @@ import java.util.List;
 public class ChatRoomView extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
+    private static ContextMenu contextMenu;
 
     @FXML
     private Button newChatRoom;
@@ -55,8 +56,46 @@ public class ChatRoomView extends Application {
         newChatRoom.setCursor(Cursor.HAND);
         //rooms.setStyle("-fx-border-color: rgba(128,128,128,0.49); -fx-border-insets: 5; -fx-border-width: 1; -fx-border-style: dashed"); TODO do we want border for it
         firstInitialize();
-        //ChatController.newPrivateChat(Menu.getLoggedInUser(), rooms, chat);
-        //ChatController.newRoomChat(new ArrayList<>(List.of(User.findUser("a"), User.findUser("b"), User.findUser("c"))), "friends", rooms, chat);
+        contextMenu = buildContextMenu();
+    }
+
+    private ContextMenu buildContextMenu() {
+        final ContextMenu contextMenu = new ContextMenu();
+        MenuItem room = new MenuItem("new room");
+        room.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                NewChatGroups newChatGroups = new NewChatGroups();
+                newChatGroups.setIsRoom(true);
+                newChatGroups.setRooms(rooms);
+                newChatGroups.setChat(chat);
+                try {
+                    newChatGroups.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        MenuItem privateChat = new MenuItem("new private chat");
+        privateChat.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                NewChatGroups newChatGroups = new NewChatGroups();
+                newChatGroups.setIsRoom(false);
+                newChatGroups.setRooms(rooms);
+                newChatGroups.setChat(chat);
+                try {
+                    newChatGroups.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        contextMenu.getItems().add(room);
+        contextMenu.getItems().add(privateChat);
+        return contextMenu;
     }
 
     private void firstInitialize() {
@@ -97,6 +136,6 @@ public class ChatRoomView extends Application {
     }
 
     public void addingChatRoom(MouseEvent mouseEvent) {
-
+        contextMenu.show(newChatRoom, mouseEvent.getScreenX(), mouseEvent.getScreenY());
     }
 }

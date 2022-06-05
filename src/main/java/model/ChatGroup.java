@@ -70,7 +70,7 @@ public class ChatGroup {
     public static ArrayList<ChatGroup> listOfGroupsWithUser(User user) {
         ArrayList<ChatGroup> list = new ArrayList<>();
         for (ChatGroup chatGroup: listOfGroups) {
-            if (chatGroup.listOfUsers.contains(user)) list.add(chatGroup);
+            if (chatGroup.listOfUsers.contains(user.getUsername())) list.add(chatGroup);
         }
 
         return list;
@@ -78,7 +78,7 @@ public class ChatGroup {
 
     public static ChatGroup findChat(User one, User two) {
         for (ChatGroup chatGroup: listOfGroups) {
-            if (chatGroup.listOfUsers.contains(one) && chatGroup.listOfUsers.contains(two) && chatGroup.listOfUsers.size() == 2)
+            if (chatGroup.listOfUsers.contains(one.getUsername()) && chatGroup.listOfUsers.contains(two.getUsername()) && chatGroup.listOfUsers.size() == 2)
                 return chatGroup;
         }
 
