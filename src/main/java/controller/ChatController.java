@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -167,6 +169,8 @@ public class ChatController {
 
     public static void addChat(ChatText chatText, VBox chat) {
         if (chatText.isDeleted() && chatText.getSender() == Menu.getLoggedInUser()) return;
+        if (chatText.getSender() != Menu.getLoggedInUser()) chatText.setSeen(true);
+
         Text text = new Text();
         String seenMessage = chatText.getSender().getUsername() + ": " + chatText.getTime() + "\n" + chatText.getText();
         text.setText(seenMessage);
@@ -183,11 +187,11 @@ public class ChatController {
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setSpacing(5);
 
-        ContextMenu contextMenu = buildContextMenu(hBox, chat, chatText);
+        ContextMenu contextMenu = buildContextMenu(hBox, chat, chatText, text);
         hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                if (mouseEvent.getButton() == MouseButton.SECONDARY && chatText.getSender() == Menu.getLoggedInUser()) {
                     contextMenu.show(hBox, mouseEvent.getScreenX(), mouseEvent.getScreenY());
                 }
             }
@@ -196,9 +200,9 @@ public class ChatController {
         chat.getChildren().add(chat.getChildren().size() - 1, hBox);
     }
 
-    private static ContextMenu buildContextMenu(HBox hBox, VBox chat, ChatText chatText) {
+    private static ContextMenu buildContextMenu(HBox hBox, VBox chat, ChatText chatText, Text text) {
         final ContextMenu contextMenu = new ContextMenu();
-        MenuItem deleteForAll = new MenuItem("delete for all");
+        MenuItem deleteForAll = new MenuItem("delete for everyone");
         deleteForAll.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
                 chatText.delete();
@@ -215,6 +219,28 @@ public class ChatController {
             }
         });
 
+        MenuItem edit = new MenuItem("edit");
+        edit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                TextField textField = new TextField();
+                textField.setPromptText("edit message here");
+                hBox.getChildren().add(0, textField);
+                hBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent keyEvent) {
+                        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                            chatText.setText(textField.getText());
+                            hBox.getChildren().remove(textField);
+                            String newMessage = chatText.getSender().getUsername() + ": " + chatText.getTime() + "\n" + chatText.getText();
+                            text.setText(newMessage);
+                        }
+                    }
+                });
+            }
+        });
+
+        contextMenu.getItems().add(edit);
         contextMenu.getItems().add(deleteForAll);
         contextMenu.getItems().add(deleteForYou);
         return contextMenu;

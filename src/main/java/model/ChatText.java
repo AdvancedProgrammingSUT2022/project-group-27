@@ -28,6 +28,10 @@ public class ChatText {
         isDeleted = deleted;
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public User getSender() {
         return sender;
     }
