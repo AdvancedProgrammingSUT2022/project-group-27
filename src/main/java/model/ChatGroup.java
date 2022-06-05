@@ -9,14 +9,38 @@ public class ChatGroup {
     private String name = "";
 
     public ChatGroup(ArrayList<User> listOfUsers) {
+        boolean flag = true;
+        for (ChatGroup chatGroup: listOfGroups) {
+            flag = true;
+            for (User user: listOfUsers) {
+                if (!chatGroup.listOfUsers.contains(user)) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag && listOfUsers.size() == chatGroup.listOfUsers.size()) return;
+        }
+
         this.listOfUsers = listOfUsers;
         listOfGroups.add(this);
     }
 
     public ChatGroup(ArrayList<User> listOfUsers, String name) {
+        for (ChatGroup chatGroup: listOfGroups) {
+            if (chatGroup.name.equals(name)) return;
+        }
+
         this.listOfUsers = listOfUsers;
         this.name = name;
         listOfGroups.add(this);
+    }
+
+    public User getOtherUser(User own) {
+        for (User user: listOfUsers) {
+            if (!user.getUsername().equals(own.getUsername())) return user;
+        }
+
+        return null;
     }
 
     public void add(ChatText chatText) {
@@ -25,6 +49,14 @@ public class ChatGroup {
 
     public ArrayList<ChatText> getChats() {
         return chats;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<User> getListOfUsers() {
+        return listOfUsers;
     }
 
     public static ArrayList<ChatGroup> listOfGroupsWithUser(User user) {

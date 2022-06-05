@@ -37,7 +37,7 @@ public class ChatController {
             public void handle(MouseEvent mouseEvent) {
                 for (Node node: rooms.getChildren()) {
                     node.setStyle("-fx-background-color: transparent;");
-                    createChatBox(Menu.getLoggedInUser(), user.getUsername(), chat);
+                    createChatBoxForPrivate(Menu.getLoggedInUser(), user.getUsername(), chat);
                 }
                 hBox.setStyle("-fx-background-color: rgba(175,174,174,0.55); -fx-background-radius: 8;");
             }
@@ -47,7 +47,31 @@ public class ChatController {
         ChatGroup chatGroup = new ChatGroup(new ArrayList<>(List.of(Menu.getLoggedInUser(), user)));
     }
 
-    public static void publicChat(VBox rooms) {
+    public static void newRoomChat(ArrayList<User> listOfUsers, String groupName, VBox rooms, VBox chat) {
+        if (!listOfUsers.contains(Menu.getLoggedInUser())) return;
+        Label label = new Label(groupName);
+        Circle circle = new Circle(20);
+        Image image = new Image(ChatController.class.getResource("/images/group icon.png").toExternalForm());
+        circle.setFill(new ImagePattern(image));
+        HBox hBox = new HBox(circle, label);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.setSpacing(5);
+        hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                for (Node node: rooms.getChildren()) {
+                    node.setStyle("-fx-background-color: transparent;");
+                    createChatBoxForRooms(Menu.getLoggedInUser(), groupName, chat);
+                }
+                hBox.setStyle("-fx-background-color: rgba(175,174,174,0.55); -fx-background-radius: 8;");
+            }
+        });
+
+        rooms.getChildren().add(hBox);
+        ChatGroup chatRoom = new ChatGroup(listOfUsers, groupName);
+    }
+
+    public static void publicChat(VBox rooms, VBox chat) {
         Label label = new Label("public chat");
         Circle circle = new Circle(20);
         Image image = new Image(ChatController.class.getResource("/images/publicChat.png").toExternalForm());
@@ -60,16 +84,50 @@ public class ChatController {
             public void handle(MouseEvent mouseEvent) {
                 for (Node node: rooms.getChildren()) {
                     node.setStyle("-fx-background-color: transparent;");
-                    //TODO createChatBox
+                    createChatBoxForRooms(Menu.getLoggedInUser(), "public", chat);
                 }
                 hBox.setStyle("-fx-background-color: rgba(175,174,174,0.55); -fx-background-radius: 8;");
             }
         });
 
         rooms.getChildren().add(hBox);
+        ChatGroup publicChat = new ChatGroup(User.getListOfUsers(), "public");
     }
 
-    public static void createChatBox(User owner, String usernameReceiver, VBox chat) {
+    public static void createChatBoxForRooms(User owner, String chatRoom, VBox chat) {
+        chat.getChildren().clear();
+        chat.setAlignment(Pos.BOTTOM_CENTER);
+        ChatGroup chatGroup = ChatGroup.findChat(chatRoom);
+        if (chatGroup == null) return;
+
+        TextField typing = new TextField();
+        typing.setPromptText("Message");
+        typing.setPrefWidth(400);
+        Circle circle = new Circle(20);
+        Image image = new Image(ChatController.class.getResource("/images/sender icon.jpg").toExternalForm());
+        circle.setFill(new ImagePattern(image));
+        circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                String text = typing.getText();
+                typing.clear();
+                String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                ChatText chatText = new ChatText(owner, chatGroup, time, text);
+                addChat(chatText, chat);
+            }
+        });
+
+        HBox hBox = new HBox(typing, circle);
+        hBox.setSpacing(5);
+        hBox.setAlignment(Pos.CENTER);
+        chat.getChildren().add(hBox);
+
+        for (ChatText chatText: chatGroup.getChats()) {
+            addChat(chatText, chat);
+        }
+    }
+
+    public static void createChatBoxForPrivate(User owner, String usernameReceiver, VBox chat) {
         chat.getChildren().clear();
         chat.setAlignment(Pos.BOTTOM_CENTER);
         User receiver = User.findUser(usernameReceiver);

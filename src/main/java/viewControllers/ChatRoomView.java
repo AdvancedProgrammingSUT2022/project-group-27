@@ -18,7 +18,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.ChatGroup;
+import model.User;
 import view.Menu;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatRoomView extends Application {
     private static Stage stage;
@@ -50,8 +55,8 @@ public class ChatRoomView extends Application {
         newChatRoom.setCursor(Cursor.HAND);
         //rooms.setStyle("-fx-border-color: rgba(128,128,128,0.49); -fx-border-insets: 5; -fx-border-width: 1; -fx-border-style: dashed"); TODO do we want border for it
         firstInitialize();
-        ChatController.newPrivateChat(Menu.getLoggedInUser(), rooms, chat);
-        //for (int i = 0; i < 24; i++) ChatController.newPrivateChat(Menu.getLoggedInUser(), rooms);
+        //ChatController.newPrivateChat(Menu.getLoggedInUser(), rooms, chat);
+        //ChatController.newRoomChat(new ArrayList<>(List.of(User.findUser("a"), User.findUser("b"), User.findUser("c"))), "friends", rooms, chat);
     }
 
     private void firstInitialize() {
@@ -60,15 +65,16 @@ public class ChatRoomView extends Application {
         Text textChat = new Text("please select one of chats...");
         chat.getChildren().add(textChat);
 
-        ChatController.publicChat(rooms); //TODO add other chats that user have
-        /*TextField textField1 = new TextField();
-        textField1.setPromptText("chat");
-        chat.getChildren().add(textField1);
-
-        Label label = new Label("hello");
-        chat.getChildren().add(chat.getChildren().size() - 1, label);
-        Label label1 = new Label("hi");
-        chat.getChildren().add(chat.getChildren().size() - 1, label1);*/
+        ChatController.publicChat(rooms, chat);
+        for (ChatGroup chatGroup: ChatGroup.listOfGroupsWithUser(Menu.getLoggedInUser())) {
+            if (chatGroup.getName().equals("")) {
+                User user = chatGroup.getOtherUser(Menu.getLoggedInUser());
+                ChatController.newPrivateChat(user, rooms, chat);
+            } else if (chatGroup.getName().equals("public"));
+            else {
+                ChatController.newRoomChat(chatGroup.getListOfUsers(), chatGroup.getName(), rooms, chat);
+            }
+        }
     }
 
     @Override
