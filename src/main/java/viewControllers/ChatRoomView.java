@@ -48,7 +48,9 @@ public class ChatRoomView extends Application {
 
         back.setCursor(Cursor.HAND);
         newChatRoom.setCursor(Cursor.HAND);
+        //rooms.setStyle("-fx-border-color: rgba(128,128,128,0.49); -fx-border-insets: 5; -fx-border-width: 1; -fx-border-style: dashed"); TODO do we want border for it
         firstInitialize();
+        ChatController.newPrivateChat(Menu.getLoggedInUser(), rooms, chat);
         //for (int i = 0; i < 24; i++) ChatController.newPrivateChat(Menu.getLoggedInUser(), rooms);
     }
 

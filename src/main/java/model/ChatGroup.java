@@ -6,9 +6,16 @@ public class ChatGroup {
     private static ArrayList<ChatGroup> listOfGroups = new ArrayList<>();
     private ArrayList<User> listOfUsers;
     private final ArrayList<ChatText> chats = new ArrayList<>();
+    private String name = "";
 
     public ChatGroup(ArrayList<User> listOfUsers) {
         this.listOfUsers = listOfUsers;
+        listOfGroups.add(this);
+    }
+
+    public ChatGroup(ArrayList<User> listOfUsers, String name) {
+        this.listOfUsers = listOfUsers;
+        this.name = name;
         listOfGroups.add(this);
     }
 
@@ -33,6 +40,14 @@ public class ChatGroup {
         for (ChatGroup chatGroup: listOfGroups) {
             if (chatGroup.listOfUsers.contains(one) && chatGroup.listOfUsers.contains(two) && chatGroup.listOfUsers.size() == 2)
                 return chatGroup;
+        }
+
+        return null;
+    }
+
+    public static ChatGroup findChat(String name) {
+        for (ChatGroup chatGroup: listOfGroups) {
+            if (chatGroup.name.equals(name)) return chatGroup;
         }
 
         return null;
