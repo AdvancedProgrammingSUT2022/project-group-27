@@ -8,6 +8,7 @@ public class ChatText {
     private String time;
     private String text;
     private boolean isSeen;
+    private boolean isDeleted;
 
     public ChatText(User sender, ChatGroup chatGroup, String time, String text) {
         this.sender = sender;
@@ -15,11 +16,16 @@ public class ChatText {
         this.time = time;
         this.text = text;
         this.isSeen = false;
+        this.isDeleted = false;
         chatGroup.add(this);
     }
 
     public void setSeen(boolean seen) {
         isSeen = seen;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     public User getSender() {
@@ -36,5 +42,13 @@ public class ChatText {
 
     public boolean isSeen() {
         return isSeen;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void delete() {
+        chatGroup.getChats().remove(this);
     }
 }

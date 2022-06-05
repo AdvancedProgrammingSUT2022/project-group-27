@@ -1,11 +1,15 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -162,6 +166,7 @@ public class ChatController {
     }
 
     public static void addChat(ChatText chatText, VBox chat) {
+        if (chatText.isDeleted() && chatText.getSender() == Menu.getLoggedInUser()) return;
         Text text = new Text();
         String seenMessage = chatText.getSender().getUsername() + ": " + chatText.getTime() + "\n" + chatText.getText();
         text.setText(seenMessage);
@@ -178,6 +183,40 @@ public class ChatController {
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setSpacing(5);
 
+        ContextMenu contextMenu = buildContextMenu(hBox, chat, chatText);
+        hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                    contextMenu.show(hBox, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+                }
+            }
+        });
+
         chat.getChildren().add(chat.getChildren().size() - 1, hBox);
+    }
+
+    private static ContextMenu buildContextMenu(HBox hBox, VBox chat, ChatText chatText) {
+        final ContextMenu contextMenu = new ContextMenu();
+        MenuItem deleteForAll = new MenuItem("delete for all");
+        deleteForAll.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent actionEvent) {
+                chatText.delete();
+                chat.getChildren().remove(hBox);
+            }
+        });
+
+        MenuItem deleteForYou = new MenuItem("delete just for yourself");
+        deleteForYou.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                chatText.setDeleted(true);
+                chat.getChildren().remove(hBox);
+            }
+        });
+
+        contextMenu.getItems().add(deleteForAll);
+        contextMenu.getItems().add(deleteForYou);
+        return contextMenu;
     }
 }
