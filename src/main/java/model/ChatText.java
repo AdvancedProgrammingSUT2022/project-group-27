@@ -3,16 +3,14 @@ package model;
 import java.util.ArrayList;
 
 public class ChatText {
-    private User sender;
-    private ChatGroup chatGroup;
+    private String sender;
     private String time;
     private String text;
     private boolean isSeen;
     private boolean isDeleted;
 
-    public ChatText(User sender, ChatGroup chatGroup, String time, String text) {
+    public ChatText(String sender, ChatGroup chatGroup, String time, String text) {
         this.sender = sender;
-        this.chatGroup = chatGroup;
         this.time = time;
         this.text = text;
         this.isSeen = false;
@@ -33,7 +31,7 @@ public class ChatText {
     }
 
     public User getSender() {
-        return sender;
+        return User.findUser(sender);
     }
 
     public String getText() {
@@ -53,6 +51,7 @@ public class ChatText {
     }
 
     public void delete() {
-        chatGroup.getChats().remove(this);
+        ChatGroup chatGroup = ChatGroup.findChatGroupByChat(this);
+        if (chatGroup != null) chatGroup.getChats().remove(this);
     }
 }

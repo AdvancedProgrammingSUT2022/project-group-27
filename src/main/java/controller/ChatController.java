@@ -50,11 +50,11 @@ public class ChatController {
         });
 
         rooms.getChildren().add(hBox);
-        ChatGroup chatGroup = new ChatGroup(new ArrayList<>(List.of(Menu.getLoggedInUser(), user)));
+        ChatGroup chatGroup = new ChatGroup(new ArrayList<>(List.of(Menu.getLoggedInUser().getUsername(), user.getUsername())));
     }
 
-    public static void newRoomChat(ArrayList<User> listOfUsers, String groupName, VBox rooms, VBox chat) {
-        if (!listOfUsers.contains(Menu.getLoggedInUser())) return;
+    public static void newRoomChat(ArrayList<String> listOfUsers, String groupName, VBox rooms, VBox chat) {
+        if (!listOfUsers.contains(Menu.getLoggedInUser().getUsername())) return;
         Label label = new Label(groupName);
         Circle circle = new Circle(20);
         Image image = new Image(ChatController.class.getResource("/images/group icon.png").toExternalForm());
@@ -97,7 +97,12 @@ public class ChatController {
         });
 
         rooms.getChildren().add(hBox);
-        ChatGroup publicChat = new ChatGroup(User.getListOfUsers(), "public");
+        ArrayList<String> users = new ArrayList<>();
+        for (User user: User.getListOfUsers()) {
+            users.add(user.getUsername());
+        }
+
+        ChatGroup publicChat = new ChatGroup(users, "public");
     }
 
     public static void createChatBoxForRooms(User owner, String chatRoom, VBox chat) {
@@ -118,7 +123,7 @@ public class ChatController {
                 String text = typing.getText();
                 typing.clear();
                 String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                ChatText chatText = new ChatText(owner, chatGroup, time, text);
+                ChatText chatText = new ChatText(owner.getUsername(), chatGroup, time, text);
                 addChat(chatText, chat);
             }
         });
@@ -152,7 +157,7 @@ public class ChatController {
                 String text = typing.getText();
                 typing.clear();
                 String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                ChatText chatText = new ChatText(owner, chatGroup, time, text);
+                ChatText chatText = new ChatText(owner.getUsername(), chatGroup, time, text);
                 addChat(chatText, chat);
             }
         });

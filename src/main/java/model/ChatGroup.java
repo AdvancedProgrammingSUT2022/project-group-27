@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class ChatGroup {
     private static ArrayList<ChatGroup> listOfGroups = new ArrayList<>();
-    private ArrayList<User> listOfUsers;
+    private ArrayList<String> listOfUsers;
     private final ArrayList<ChatText> chats = new ArrayList<>();
     private String name = "";
 
-    public ChatGroup(ArrayList<User> listOfUsers) {
+    public ChatGroup(ArrayList<String> listOfUsers) {
         boolean flag = true;
         for (ChatGroup chatGroup: listOfGroups) {
             flag = true;
-            for (User user: listOfUsers) {
+            for (String user: listOfUsers) {
                 if (!chatGroup.listOfUsers.contains(user)) {
                     flag = false;
                     break;
@@ -25,7 +25,7 @@ public class ChatGroup {
         listOfGroups.add(this);
     }
 
-    public ChatGroup(ArrayList<User> listOfUsers, String name) {
+    public ChatGroup(ArrayList<String> listOfUsers, String name) {
         for (ChatGroup chatGroup: listOfGroups) {
             if (chatGroup.name.equals(name)) return;
         }
@@ -36,8 +36,8 @@ public class ChatGroup {
     }
 
     public User getOtherUser(User own) {
-        for (User user: listOfUsers) {
-            if (!user.getUsername().equals(own.getUsername())) return user;
+        for (String user: listOfUsers) {
+            if (!user.equals(own.getUsername())) return User.findUser(user);
         }
 
         return null;
@@ -55,8 +55,16 @@ public class ChatGroup {
         return name;
     }
 
-    public ArrayList<User> getListOfUsers() {
+    public ArrayList<String> getListOfUsers() {
         return listOfUsers;
+    }
+
+    public static ArrayList<ChatGroup> getListOfGroups() {
+        return listOfGroups;
+    }
+
+    public static void setListOfGroups(ArrayList<ChatGroup> listOfGroups) {
+        ChatGroup.listOfGroups = listOfGroups;
     }
 
     public static ArrayList<ChatGroup> listOfGroupsWithUser(User user) {
@@ -80,6 +88,14 @@ public class ChatGroup {
     public static ChatGroup findChat(String name) {
         for (ChatGroup chatGroup: listOfGroups) {
             if (chatGroup.name.equals(name)) return chatGroup;
+        }
+
+        return null;
+    }
+
+    public static ChatGroup findChatGroupByChat(ChatText chatText) {
+        for (ChatGroup chatGroup: listOfGroups) {
+            if (chatGroup.getChats().contains(chatText)) return chatGroup;
         }
 
         return null;
