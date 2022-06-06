@@ -3,6 +3,8 @@ package viewControllers;
 import Main.Main;
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,9 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.GlobalVariables;
 import model.User;
 import view.Menu;
@@ -38,6 +42,12 @@ public class GameView extends Application {
     public Button map3Clicked;
     public Button map4Clicked;
 
+    @FXML
+    private VBox box;
+
+    @FXML
+    private Button back;
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -55,6 +65,21 @@ public class GameView extends Application {
     @FXML
     public void initialize(){
         randomMap.setDisable(true);
+        audio.play();
+        audio.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                audio.seek(Duration.ZERO);
+            }
+        });
+        back.setCursor(Cursor.HAND);
+        box.setPadding(new Insets(20));
+    }
+
+    public void back(MouseEvent mouseEvent) throws Exception {
+        audio.stop();
+        MainMenuView mainMenuView = new MainMenuView();
+        mainMenuView.start(stage);
     }
 
     public void startGame(MouseEvent mouseEvent) {

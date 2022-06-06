@@ -87,7 +87,7 @@ public class ScoreBoardView extends Application {
                 TableRow<User> currentRow = getTableRow();
                 if (!isEmpty()) {
                     if (Menu.getLoggedInUser().getUsername().equals(item))
-                        currentRow.setStyle("-fx-background-color: #00ff00");
+                        currentRow.setStyle("-fx-background-color: rgba(0,168,0,0.55)");
                     setText(item);
                 }
             }
