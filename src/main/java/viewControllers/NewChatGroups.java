@@ -3,15 +3,20 @@ package viewControllers;
 import Main.Main;
 import controller.ChatController;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.ChatGroup;
 import model.User;
 
 import java.util.ArrayList;
@@ -21,8 +26,10 @@ public class NewChatGroups extends Application {
     private static Stage stage;
     private static boolean isRoom;
     private ComboBox<String> comboBox;
+    private TextField name;
     private static VBox chat;
     private static VBox rooms;
+    private final ArrayList<String> multiUser = new ArrayList<>();
 
     @FXML
     private Button submit;
@@ -35,7 +42,7 @@ public class NewChatGroups extends Application {
         submit.setCursor(Cursor.HAND);
         box.setPadding(new Insets(20));
         List<String> users = new ArrayList<>();
-        System.out.println(isRoom);
+
         if (!isRoom) {
             for (User user: User.getListOfUsers()) {
                 users.add(user.getUsername());
@@ -47,7 +54,28 @@ public class NewChatGroups extends Application {
             comboBox.setPromptText("Enter one user below");
             box.getChildren().add(0, comboBox);
         } else {
-            
+            TextField name = new TextField();
+            this.name = name;
+            name.setPromptText("Enter your room's name.");
+
+            Menu menu = new Menu();
+            addingMenu(menu);
+            MenuBar menuBar = new MenuBar(menu);
+
+            Button usersList = new Button("choice users.");
+            usersList.setCursor(Cursor.HAND);
+            usersList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    menu.show();
+                }
+            });
+
+            HBox hBox = new HBox(menuBar, usersList);
+            hBox.setAlignment(Pos.CENTER);
+
+            box.getChildren().add(0, name);
+            box.getChildren().add(0, hBox);
         }
     }
 
@@ -61,6 +89,22 @@ public class NewChatGroups extends Application {
 
     public void setChat(VBox chat) {
         NewChatGroups.chat = chat;
+    }
+
+    private void addingMenu(Menu menu) {
+        for (User user: User.getListOfUsers()) {
+            if (user != view.Menu.getLoggedInUser()) {
+                CheckMenuItem checkMenuItem = new CheckMenuItem(user.getUsername());
+                menu.getItems().add(checkMenuItem);
+                checkMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        if (!multiUser.contains(user.getUsername())) multiUser.add(user.getUsername());
+                        else multiUser.remove(user.getUsername());
+                    }
+                });
+            }
+        }
     }
 
     @Override
@@ -85,7 +129,25 @@ public class NewChatGroups extends Application {
             User user = User.findUser(comboBox.getValue());
             ChatController.newPrivateChat(user, rooms, chat);
             stage.close();
+        } else if (multiUser.size() == 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("no user");
+            alert.setContentText("sorry, but you don't choose any user");
+            alert.show();
+        } else if (name.getText().length() == 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("no name");
+            alert.setContentText("sorry, but you don't choose any name for your room.");
+            alert.show();
+        } else if (ChatGroup.isRepeatedName(name.getText())) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("repeated name");
+            alert.setContentText("sorry, but you choose a repeated name for your room.");
+            alert.show();
+        } else {
+            multiUser.add(view.Menu.getLoggedInUser().getUsername());
+            ChatController.newRoomChat(multiUser, name.getText(), rooms, chat);
+            stage.close();
         }
-        else stage.close();
     }
 }

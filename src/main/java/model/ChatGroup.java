@@ -35,6 +35,14 @@ public class ChatGroup {
         listOfGroups.add(this);
     }
 
+    public static boolean isRepeatedName(String name) {
+        for (ChatGroup chatGroup: listOfGroups) {
+            if (chatGroup.name.equals(name)) return true;
+        }
+
+        return false;
+    }
+
     public User getOtherUser(User own) {
         for (String user: listOfUsers) {
             if (!user.equals(own.getUsername())) return User.findUser(user);
