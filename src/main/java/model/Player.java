@@ -11,6 +11,7 @@ import Enum.*;
 public class Player {
     private int numberOfPlayer;
     private int gold;
+    private City mainCapital = null;
     //private int science;
     private int extraHappiness = 0;
     private static final ArrayList<Player> allPlayers = new ArrayList<>();
@@ -258,6 +259,10 @@ public class Player {
         if (canWeCreateCity){
             /// TODO : change something;
             City city = new City(ground,"something", this);
+            if (cities.size() == 0) {
+                city.setMainCapital();
+                mainCapital = city;
+            }
             this.cities.add(city);
         }
 
@@ -356,6 +361,33 @@ public class Player {
         if (this.gold <= 0)
             science = 0;
         return science;
+    }
+
+    public boolean doWeHaveOurCapital() {
+        return mainCapital != null && mainCapital.getPlayer() == this;
+    }
+
+    public static int numberOfAliveAndHaveCapitalPlayer() {
+        int count = 0;
+        for (Player player: allPlayers) {
+            if (player.isAlive() && player.doWeHaveOurCapital()) count++;
+        }
+
+        return count;
+    }
+
+    public static int getYear() {
+        return counterOfNextRound / allPlayers.size();
+    }
+
+    public void checkDies() {
+        if (isAlive && mainCapital != null) {
+            if (cities.size() == 0) {
+                isAlive = false;
+                new Notification("You lose the game :(", getCounterOfNextRound(), this);
+                nextTurn(); //TODO where should we call this method... for now we call it on gameView.run(); ...
+            }
+        }
     }
 
     public void setNumberOfPlayer(int numberOfPlayer) {

@@ -35,7 +35,9 @@ public class GameView {
         Matcher matcher;
         String regex;
 
-        if (input.matches("^exit$")) {
+        Player.whichPlayerTurnIs().checkDies();
+
+        if (input.matches("^exit$") || controller.isFinished()) {
             this.exit();
         }
         else if (input.matches("^show map$")) {

@@ -27,6 +27,10 @@ public class Game extends Controller {
         return Game.instance;
     }
 
+    public boolean isFinished() {
+        return Player.numberOfAliveAndHaveCapitalPlayer() <= 1 || Player.getYear() >= 2050;
+    }
+
     private boolean isLimitationOkInCities(Player player) {
         for (City city: player.getCities()) {
             if (city.getListOfUnitsInCity().size() > 2) return false;
@@ -77,6 +81,7 @@ public class Game extends Controller {
     }
     public boolean canWeGoNextTurn(){
         Player player = Player.whichPlayerTurnIs();
+        if (!player.isAlive()) return true;
         if (!isLimitationOkInCities(player)) {
             new Notification("One of your cities doesn't obey the rule of one unit of each type limitation.",
                     Player.getCounterOfNextRound(), player);

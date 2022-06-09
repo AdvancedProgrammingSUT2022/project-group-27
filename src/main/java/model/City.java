@@ -20,6 +20,8 @@ public class City {
     private Productions construction; //in the future, we should write a class for constructions and get type here
     private boolean isPuppet = false;
     private double hp = 20;
+    private boolean isMainCapital;
+    private Player mainCapitalFor;
 
     private final ArrayList<Unit> listOfUnitsInCity = new ArrayList<>();
     private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
@@ -33,6 +35,11 @@ public class City {
         this.rangeOfCity.addAll(ground.getAdjacentGrounds());
         this.player=player;
         this.increasingCitizens();
+    }
+
+    public void setMainCapital() {
+        isMainCapital = true;
+        mainCapitalFor = player;
     }
 
     public void addBuilding(Building building) {
