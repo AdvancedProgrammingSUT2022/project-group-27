@@ -1,8 +1,6 @@
 package Enum;
 
-import java.util.ArrayList;
-
-public enum Buildings {
+public enum BuildingsType {
     BARRACKS(80, 1, TechnologyType.BRONZE_WORKING),
     GRANARY(100, 1, TechnologyType.POTTERY),
     LIBRARY(80, 1, TechnologyType.WRITING),
@@ -43,9 +41,13 @@ public enum Buildings {
     private final int maintenance;
     private final TechnologyType technologyType;
 
-    Buildings(int cost, int maintenance, TechnologyType technologyType) {
+    BuildingsType(int cost, int maintenance, TechnologyType technologyType) {
         this.cost = cost;
         this.maintenance = maintenance;
         this.technologyType = technologyType;
+    }
+
+    public TechnologyType getTechnologyType() {
+        return technologyType;
     }
 }

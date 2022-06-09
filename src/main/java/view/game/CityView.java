@@ -186,7 +186,7 @@ public class CityView extends ViewOfCity{
         }
 
         System.out.println("Unit which remains:");
-        if (city.getConstruction() != null) System.out.println(city.getConstruction().getMilitaryType().name() +
+        if (city.getConstruction() != null) System.out.println(city.getConstruction().name() +
                 "remain time is: " + city.getRemainedTurnsToBuild());
         if (city.getBuildingUnit() != null) System.out.println(city.getBuildingUnit().name() + "remain time is: " +
                 city.getRemainedTurnsToBuild());

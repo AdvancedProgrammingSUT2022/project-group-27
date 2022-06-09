@@ -1,16 +1,22 @@
 package controller;
 
 import Enum.Message;
+import model.Building;
 import model.City;
 import model.Unit;
 
 public class BuildCityController extends CityController{
     public Message changeConstruction(City city, String newProduction) {
         Unit unit = checkValidationOfUnitName(city, newProduction); //Maybe should add building too.
+        Building building = checkValidationOfBuildingName(city, newProduction);
+
         if (unit != null) {
             city.changeConstruction(unit);
             return Message.SUCCESS_WORK;
-        } else return Message.INVALID_UNIT_NAME;
+        } else if (building != null) {
+            city.changeConstruction(building);
+            return Message.SUCCESS_WORK;
+        } else return Message.INVALID_PRODUCTION_NAME;
     }
 
     public Message buildUnit(City city, String unitName) {

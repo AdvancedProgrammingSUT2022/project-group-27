@@ -17,13 +17,14 @@ public class City {
     private RemainedTurns remainedTurnsToBuild = new RemainedTurns(0);
     private MilitaryType buildingUnit = null;
     private Ground ground;
-    private Unit construction; //in the future, we should write a class for constructions and get type here
+    private Productions construction; //in the future, we should write a class for constructions and get type here
     private boolean isPuppet = false;
     private double hp = 20;
 
     private final ArrayList<Unit> listOfUnitsInCity = new ArrayList<>();
     private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
     private final ArrayList<Ground> rangeOfCity = new ArrayList<>();
+    private final ArrayList<Building> buildings = new ArrayList<>();
 
     public City(Ground ground, String name, Player player) {
         this.name = name;
@@ -34,11 +35,15 @@ public class City {
         this.increasingCitizens();
     }
 
-    public void changeConstruction(Unit construction) {
+    public void addBuilding(Building building) {
+        buildings.add(building);
+    }
+
+    public void changeConstruction(Productions construction) {
         this.construction = construction;
     }
 
-    public Unit getConstruction() {
+    public Productions getConstruction() {
         return construction;
     }
 
@@ -147,7 +152,8 @@ public class City {
     public void finishedConstructed() {
         if (this.construction == null) return;
 
-        listOfUnitsInCity.add(this.construction);
+        if (construction instanceof Unit unit) listOfUnitsInCity.add(unit);
+
         this.construction = null;
     }
 
@@ -287,7 +293,7 @@ public class City {
             food /= 3;
         if (food < 0)
             food = 0;
-        if (this.construction != null && this.construction.getMilitaryType() == MilitaryType.SETTLER)
+        if (this.construction != null && this.construction.name().equals(MilitaryType.SETTLER.name()))
             food = 0;
         return food;
     }

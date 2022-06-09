@@ -1,6 +1,6 @@
 package controller;
 
-import Enum.MilitaryType;
+import Enum.*;
 import model.*;
 
 public class CityController extends Controller{
@@ -26,5 +26,20 @@ public class CityController extends Controller{
         if (unitType.getCombatType().matches("Recon|Melee|Gunpowder|Armored")) return new MeleeUnit(city.getGround(),
                 city.getPlayer(), unitType);
         return null;
+    }
+
+    protected Building checkValidationOfBuildingName(City city, String buildingName) {
+        BuildingsType building = null;
+        for (BuildingsType buildingsType: BuildingsType.values()) {
+            if (city.getPlayer().doWeHaveThisTechnology(buildingsType.getTechnologyType())) {
+                if (buildingsType.name().equals(buildingName)) {
+                    building = buildingsType;
+                    break;
+                }
+            }
+        }
+
+        if (building != null) return new Building(building, city);
+        else return null;
     }
 }

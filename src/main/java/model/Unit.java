@@ -6,7 +6,7 @@ import static java.lang.Math.min;
 import Enum.MilitaryType;
 import Enum.UnitStatus;
 
-public abstract class Unit {
+public abstract class Unit implements Productions {
     protected MilitaryType militaryType;
     protected Ground ground;
     protected Player player;
@@ -227,6 +227,11 @@ public abstract class Unit {
             player.getUnits().add(unit);
         }
         return true;
+    }
+
+    @Override
+    public String name() {
+        return this.getMilitaryType().name();
     }
 
     @Override
