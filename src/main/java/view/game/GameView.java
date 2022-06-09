@@ -120,6 +120,10 @@ public class GameView {
     }
 
     private void exit() {
+        for (Player player: Player.getAllPlayers()) {
+            player.setScoreAndTimeAtEnd();
+        }
+
         System.out.println("The end");
         System.out.println("Hope you enjoyed the game");
         System.out.println("Hope to see you again in an other exiting game:)");

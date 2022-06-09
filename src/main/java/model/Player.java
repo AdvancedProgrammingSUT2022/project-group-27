@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import Enum.TechnologyType;
@@ -388,6 +390,23 @@ public class Player {
                 nextTurn(); //TODO where should we call this method... for now we call it on gameView.run(); ...
             }
         }
+    }
+
+    public void setScoreAndTimeAtEnd() {
+        int score = countScore();
+        if (!isAlive) user.setScore(0);
+        else if (getYear() < 2050){
+            score *= (2050 - getYear());
+            user.setScore(score);
+        } else user.setScore(score);
+
+        user.setTimeOfScoreGame(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    }
+
+    public int countScore() {
+        int count = 0;
+        //TODO counting...
+        return count;
     }
 
     public void setNumberOfPlayer(int numberOfPlayer) {
