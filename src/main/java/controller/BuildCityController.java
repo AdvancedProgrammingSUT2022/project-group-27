@@ -28,4 +28,14 @@ public class BuildCityController extends CityController{
             return Message.SUCCESS_WORK;
         } else return Message.INVALID_UNIT_NAME;
     }
+
+    public Message buildBuilding(City city, String buildingName) {
+        if (city.getConstruction() != null) return Message.PRODUCTION_IS_ON_PROGRESS;
+        Building building = checkValidationOfBuildingName(city, buildingName);
+        if (building != null) {
+            building.setTurnRemainedToCompleted((building.getCost() + city.getProduction() - 1) / city.getProduction());
+            city.setConstruction(building);
+            return Message.SUCCESS_WORK;
+        } else return Message.INVALID_BUILDING_NAME;
+    }
 }

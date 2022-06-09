@@ -51,7 +51,7 @@ public class City {
         this.savedFood = savedFood;
     }
 
-    public void setConstruction(Unit construction) {
+    public void setConstruction(Productions construction) {
         this.construction = construction;
         this.remainedTurnsToBuild = construction.getTurnRemainedToComplete();
     }
@@ -153,6 +153,7 @@ public class City {
         if (this.construction == null) return;
 
         if (construction instanceof Unit unit) listOfUnitsInCity.add(unit);
+        else if (construction instanceof Building building) buildings.add(building);
 
         this.construction = null;
     }

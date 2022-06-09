@@ -29,6 +29,9 @@ public class BuildCityMenu extends ViewOfCity{
         else if (input.matches((regex = "^build unit ((--unitName)|(-u)) (?<unitName>\\S+)$"))) {
             matcher = controller.findMatcherFromString(input, regex);
             buildUnit(matcher, city);
+        } else if (input.matches((regex = "^build building ((--buildingName)|(-b)) (?<buildingName>\\S+)$"))) {
+            matcher = controller.findMatcherFromString(input, regex);
+            buildBuilding(matcher, city);
         }
         else if (input.matches((regex = "^change production to ((--nameOfNewProduct)|(-p)) (?<newBuild>\\S+)$"))) {
             matcher = controller.findMatcherFromString(input, regex);
@@ -37,6 +40,13 @@ public class BuildCityMenu extends ViewOfCity{
             System.out.println(Message.INVALID_COMMAND);
             this.run(city);
         }
+    }
+
+    private void buildBuilding(Matcher matcher, City city) {
+        String buildingName = matcher.group("buildingName");
+        Message message = controller.buildBuilding(city, buildingName);
+        System.out.println(message);
+        this.run(city);
     }
 
     private void exitMenu() {
