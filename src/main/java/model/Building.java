@@ -9,7 +9,10 @@ public class Building implements Productions{
     public Building(BuildingsType type, City city) {
         this.type = type;
         this.city = city;
-        city.addBuilding(this);
+    }
+
+    public int getCost() {
+        return type.getCost();
     }
 
     @Override

@@ -1,10 +1,7 @@
 package controller;
 
-import model.Citizen;
-import model.City;
-import model.Ground;
+import model.*;
 import Enum.Message;
-import model.Unit;
 
 import java.util.ArrayList;
 
@@ -54,13 +51,20 @@ public class CityMenuController extends CityController{
 
     public Message buyThings(City city, String whatPlayerWantToBuy) {
         Unit unit = checkValidationOfUnitName(city, whatPlayerWantToBuy);
+        Building building = checkValidationOfBuildingName(city, whatPlayerWantToBuy);
         if (unit != null) {
             if (city.getPlayer().haveEnoughMoney(unit.getCost())) return Message.NOT_ENOUGH_MONEY;
 
             city.getPlayer().giveMoneyForBuying(unit.getCost());
             city.getListOfUnitsInCity().add(unit);
             return Message.SUCCESS_WORK;
-        } else return Message.INVALID_UNIT_NAME;
+        } else if (building != null) {
+            if (city.getPlayer().haveEnoughMoney(building.getCost())) return Message.NOT_ENOUGH_MONEY;
+
+            city.getPlayer().giveMoneyForBuying(building.getCost());
+            city.addBuilding(building);
+            return Message.SUCCESS_WORK;
+        } else return Message.INVALID_PRODUCTION_NAME;
     }
 
     private Message isGroundValidForCity(City city, Ground ground) {

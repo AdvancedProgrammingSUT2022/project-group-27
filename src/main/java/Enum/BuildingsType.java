@@ -50,4 +50,8 @@ public enum BuildingsType {
     public TechnologyType getTechnologyType() {
         return technologyType;
     }
+
+    public int getCost() {
+        return cost;
+    }
 }
