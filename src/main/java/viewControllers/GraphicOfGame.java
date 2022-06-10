@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,7 +23,6 @@ import model.Player;
 import model.User;
 import controller.Game;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class GraphicOfGame extends Application {
@@ -31,7 +31,49 @@ public class GraphicOfGame extends Application {
 
     private Game controller;
     private ArrayList<User> playerUsers = new ArrayList<>();
-    
+
+    @FXML
+    private Label technologyPanel;
+
+    @FXML
+    private Label unitPanel;
+
+    @FXML
+    private Label cityPanel;
+
+    @FXML
+    private Label diplomacyInformationPanel;
+
+    @FXML
+    private Label winPanel;
+
+    @FXML
+    private Label demographicPanel;
+
+    @FXML
+    private Label notificationPanel;
+
+    @FXML
+    private Label militaryPanel;
+
+    @FXML
+    private Label economicPanel;
+
+    @FXML
+    private Label tradingPanel;
+
+    @FXML
+    private Label diplomacyPanel;
+
+    @FXML
+    private Label technology;
+
+    @FXML
+    private HBox secondBar;
+
+    @FXML
+    private HBox bottom_hBox;
+
     @FXML
     private Button setting;
 
@@ -66,13 +108,21 @@ public class GraphicOfGame extends Application {
             }
         });
 
-        statusBar.setStyle("-fx-background-color: black; -fx-background-radius: 5");
         statusBar.setPadding(new Insets(5, 10, 5, 10));
+        secondBar.setPadding(new Insets(5, 10, 5, 10));
+        bottom_hBox.setPadding(new Insets(10));
+        technology.setPadding(new Insets(5));
+
+        statusBar.setStyle("-fx-background-color: black; -fx-background-radius: 5");
         science.setStyle("-fx-text-fill: #00e1ff;");
         gold.setStyle("-fx-text-fill: gold;");
         happiness.setStyle("-fx-text-fill: pink;");
+        technology.setStyle("-fx-background-color: #00c4ff; -fx-background-radius: 5;");
+
         setIcons();
         initializing();
+        setTooltip(); //TODO set on Mouse Clicked for every panel :) ...
+
         setting.setCursor(Cursor.HAND);
     }
 
@@ -102,7 +152,13 @@ public class GraphicOfGame extends Application {
         happiness.setText("happiness: " + Player.whichPlayerTurnIs().getHappiness());
         player.setText("player: " + Player.whichPlayerTurnIs().getUser().getUsername());
         turn.setText("year: " + Player.getYear());
+        if (Player.whichPlayerTurnIs().getUnderConstructionTechnology() != null) {
+            technology.setText("technology: " + Player.whichPlayerTurnIs().getUnderConstructionTechnology().name() +
+                    "turns: " + Player.whichPlayerTurnIs().getUnderConstructionTechnology().getTime());
+        } else technology.setText("technology: nothing");
+
         setIconForPlayer();
+        setHappinessImage();
 
         if (Game.getInstance().canWeGoNextTurn()) {
             nextTurn.setCursor(Cursor.HAND);
@@ -111,6 +167,20 @@ public class GraphicOfGame extends Application {
             nextTurn.setCursor(Cursor.DISAPPEAR);
             nextTurn.setDisable(true);
         }
+    }
+
+    private void setTooltip() {
+        technologyPanel.setTooltip(new Tooltip("technology panel"));
+        unitPanel.setTooltip(new Tooltip("unit panel"));
+        cityPanel.setTooltip(new Tooltip("city panel"));
+        diplomacyInformationPanel.setTooltip(new Tooltip("diplomacy information panel"));
+        demographicPanel.setTooltip(new Tooltip("demographic panel"));
+        winPanel.setTooltip(new Tooltip("win panel"));
+        notificationPanel.setTooltip(new Tooltip("notification panel"));
+        militaryPanel.setTooltip(new Tooltip("military view panel"));
+        economicPanel.setTooltip(new Tooltip("economic view panel"));
+        tradingPanel.setTooltip(new Tooltip("trading panel"));
+        diplomacyPanel.setTooltip(new Tooltip("diplomacy panel"));
     }
 
     private void setIcons() {
@@ -139,6 +209,27 @@ public class GraphicOfGame extends Application {
         turn.setGraphic(yearIcon);
 
         setIconForPlayer();
+
+
+        technologyPanel.setGraphic(setInfoImage());
+        unitPanel.setGraphic(setInfoImage());
+        cityPanel.setGraphic(setInfoImage());
+        diplomacyInformationPanel.setGraphic(setInfoImage());
+        demographicPanel.setGraphic(setInfoImage());
+        winPanel.setGraphic(setInfoImage());
+        notificationPanel.setGraphic(setInfoImage());
+        militaryPanel.setGraphic(setInfoImage());
+        economicPanel.setGraphic(setInfoImage());
+        tradingPanel.setGraphic(setInfoImage());
+        diplomacyPanel.setGraphic(setInfoImage());
+    }
+
+    private ImageView setInfoImage() {
+        Image image = new Image(GraphicOfGame.class.getResource("/iconsOfGame/panel.png").toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(20);
+        imageView.setFitWidth(20);
+        return imageView;
     }
 
     private void setIconForPlayer() {
@@ -147,6 +238,20 @@ public class GraphicOfGame extends Application {
         playerIcon.setFitWidth(20);
         playerIcon.setFitHeight(20);
         player.setGraphic(playerIcon);
+    }
+
+    private void setHappinessImage() {
+        int countOfHappiness = Player.whichPlayerTurnIs().getHappiness();
+        Image image;
+        if (countOfHappiness > 0) image = new Image(GraphicOfGame.class.getResource("/iconsOfGame/Happy-citizens.jpg").toExternalForm());
+        else image = new Image(GraphicOfGame.class.getResource("/iconsOfGame/unhappy-citizens.jpg").toExternalForm());
+
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(320);
+        imageView.setFitHeight(320);
+        Tooltip tooltip = new Tooltip();
+        tooltip.setGraphic(imageView);
+        happiness.setTooltip(tooltip);
     }
 
     public void nextTurn(MouseEvent mouseEvent) {

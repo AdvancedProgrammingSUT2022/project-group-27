@@ -12,16 +12,32 @@
             prefHeight="720.0" prefWidth="1280.0">
 
     <top>
-        <HBox fx:id="statusBar" spacing="10">
-            <Label fx:id="science"/>
-            <Label fx:id="gold"/>
-            <Label fx:id="happiness"/>
-            <Label fx:id="player"/>
-            <Label fx:id="turn"/>
-        </HBox>
+        <VBox>
+            <HBox fx:id="statusBar" spacing="10">
+                <Label fx:id="science"/>
+                <Label fx:id="gold"/>
+                <Label fx:id="happiness"/>
+                <Label fx:id="player"/>
+                <Label fx:id="turn"/>
+            </HBox>
+            <HBox fx:id="secondBar" spacing="10" alignment="CENTER_LEFT">
+                <Label fx:id="technology"/>
+                <Label fx:id="technologyPanel"/>
+                <Label fx:id="unitPanel"/>
+                <Label fx:id="cityPanel"/>
+                <Label fx:id="diplomacyInformationPanel"/>
+                <Label fx:id="winPanel"/>
+                <Label fx:id="demographicPanel"/>
+                <Label fx:id="notificationPanel"/>
+                <Label fx:id="militaryPanel"/>
+                <Label fx:id="economicPanel"/>
+                <Label fx:id="tradingPanel"/>
+                <Label fx:id="diplomacyPanel"/>
+            </HBox>
+        </VBox>
     </top>
     <bottom>
-        <HBox spacing="10">
+        <HBox fx:id="bottom_hBox" spacing="10">
             <Button fx:id="nextTurn" text="next turn" onMouseClicked="#nextTurn"/>
             <Button fx:id="setting" text="setting" onMouseClicked="#setting"/>
         </HBox>
