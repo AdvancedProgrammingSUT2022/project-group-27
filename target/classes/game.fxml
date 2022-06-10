@@ -6,9 +6,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="viewControllers.Game"
+            fx:controller="viewControllers.GraphicOfGame"
             prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+    <top>
+        <HBox fx:id="statusBar" alignment="CENTER" spacing="10">
+            <Label fx:id="science"/>
+            <Label fx:id="gold"/>
+            <Label fx:id="happiness"/>
+            <Label fx:id="player"/>
+            <Button text="next turn" onMouseClicked="#nextTurn"/>
+        </HBox>
+    </top>
+</BorderPane>

@@ -115,9 +115,17 @@ public class GameView extends Application {
         if (seed==3) GlobalVariables.surfaceWidth=GlobalVariables.surfaceWidth-16;
         if (seed==4) GlobalVariables.surfaceWidth=GlobalVariables.surfaceWidth+16;
         if (seed==5) GlobalVariables.surfaceWidth=GlobalVariables.surfaceWidth+3*16;
-        view.game.GameView gameView = new view.game.GameView(new ArrayList<User>(listOfPlayers),seed);
+        /*view.game.GameView gameView = new view.game.GameView(new ArrayList<User>(listOfPlayers),seed);
         System.out.println(Message.START_GAME);
-        gameView.run();
+        gameView.run();*/
+        GraphicOfGame game = new GraphicOfGame();
+        game.setting(new ArrayList<User>(listOfPlayers),seed);
+        audio.stop();
+        try {
+            game.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void textFieldEditor(KeyEvent keyEvent) {
