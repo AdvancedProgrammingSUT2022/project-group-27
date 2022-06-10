@@ -4,8 +4,10 @@ import Main.Main;
 import controller.InitializeMap;
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -24,6 +26,15 @@ public class GraphicOfGame extends Application {
 
     private Game controller;
     private ArrayList<User> playerUsers = new ArrayList<>();
+    
+    @FXML
+    private Button setting;
+
+    @FXML
+    private Button nextTurn;
+
+    @FXML
+    private Label turn;
 
     @FXML
     private Label player;
@@ -50,7 +61,12 @@ public class GraphicOfGame extends Application {
             }
         });
 
+        statusBar.setStyle("-fx-background-color: black; -fx-background-radius: 5");
+        science.setStyle("-fx-text-fill: #00e1ff;");
+        gold.setStyle("-fx-text-fill: gold;");
+        happiness.setStyle("-fx-text-fill: pink;");
         initializing();
+        setting.setCursor(Cursor.HAND);
     }
 
     public void setting(ArrayList<User> playerUsers,int seed) {
@@ -77,6 +93,24 @@ public class GraphicOfGame extends Application {
         science.setText("science: " + Player.whichPlayerTurnIs().getScience());
         gold.setText("gold: " + Player.whichPlayerTurnIs().getGold());
         happiness.setText("happiness: " + Player.whichPlayerTurnIs().getHappiness());
-        player.setText(Player.whichPlayerTurnIs().getUser().getUsername());
+        player.setText("player: " + Player.whichPlayerTurnIs().getUser().getUsername());
+        turn.setText("year: " + Player.getYear());
+        
+        if (Game.getInstance().canWeGoNextTurn()) {
+            nextTurn.setCursor(Cursor.HAND);
+            nextTurn.setDisable(false);
+        } else {
+            nextTurn.setCursor(Cursor.DISAPPEAR);
+            nextTurn.setDisable(true);
+        }
+    }
+
+    public void nextTurn(MouseEvent mouseEvent) {
+        Player.nextTurn();
+        initializing();
+    }
+
+    public void setting(MouseEvent mouseEvent) {
+        //TODO...
     }
 }
