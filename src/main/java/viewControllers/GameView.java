@@ -10,11 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.GlobalVariables;
@@ -73,6 +75,10 @@ public class GameView extends Application {
             }
         });
         back.setCursor(Cursor.HAND);
+        Tooltip backToolTip = new Tooltip("back to main menu");
+        //backToolTip.widthProperty().addListener((obs, b, b1) -> System.out.println(backToolTip.getWidth()));
+        backToolTip.setTextAlignment(TextAlignment.CENTER);
+        back.setTooltip(backToolTip);
         box.setPadding(new Insets(20));
     }
 
