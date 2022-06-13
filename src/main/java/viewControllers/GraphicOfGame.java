@@ -200,6 +200,10 @@ public class GraphicOfGame extends Application {
         });
     }
 
+    private void setTechnologyMenu() {
+
+    }
+
     private void setTooltip() {
         technology.setTooltip(new Tooltip("the technology which is on progress"));
         technology.getTooltip().setStyle("-fx-font-size: 14;");
