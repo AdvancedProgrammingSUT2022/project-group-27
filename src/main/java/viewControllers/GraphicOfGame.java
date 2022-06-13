@@ -4,6 +4,7 @@ import Main.Main;
 import controller.InitializeMap;
 import controller.ProfileController;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -122,6 +123,7 @@ public class GraphicOfGame extends Application {
         setIcons();
         initializing();
         setTooltip(); //TODO set on Mouse Clicked for every panel :) ...
+        setHover();
 
         setting.setCursor(Cursor.HAND);
     }
@@ -169,18 +171,71 @@ public class GraphicOfGame extends Application {
         }
     }
 
+    private void setHover() {
+        settingHoverToEach(technologyPanel);
+        settingHoverToEach(unitPanel);
+        settingHoverToEach(cityPanel);
+        settingHoverToEach(diplomacyInformationPanel);
+        settingHoverToEach(demographicPanel);
+        settingHoverToEach(winPanel);
+        settingHoverToEach(notificationPanel);
+        settingHoverToEach(militaryPanel);
+        settingHoverToEach(economicPanel);
+        settingHoverToEach(tradingPanel);
+        settingHoverToEach(diplomacyPanel);
+    }
+
+    private void settingHoverToEach(Label ourLabel) {
+        ourLabel.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                ourLabel.setStyle("-fx-background-radius: 5; -fx-background-color: rgba(128,128,128,0.39); -fx-font-size: 10; -fx-text-fill: black;");
+            }
+        });
+        ourLabel.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                ourLabel.setStyle("-fx-background-color: transparent; -fx-font-size: 10; -fx-text-fill: black;");
+            }
+        });
+    }
+
     private void setTooltip() {
+        technology.setTooltip(new Tooltip("the technology which is on progress"));
+        technology.getTooltip().setStyle("-fx-font-size: 14;");
         technologyPanel.setTooltip(new Tooltip("technology panel"));
+        technologyPanel.setStyle("-fx-text-fill: black; -fx-font-size: 10;");
+        technologyPanel.getTooltip().setStyle("-fx-font-size: 14;");
         unitPanel.setTooltip(new Tooltip("unit panel"));
+        unitPanel.setStyle("-fx-text-fill: black; -fx-font-size: 10;");
+        unitPanel.getTooltip().setStyle("-fx-font-size: 14;");
         cityPanel.setTooltip(new Tooltip("city panel"));
+        cityPanel.setStyle("-fx-text-fill: black; -fx-font-size: 10;");
+        cityPanel.getTooltip().setStyle("-fx-font-size: 14;");
         diplomacyInformationPanel.setTooltip(new Tooltip("diplomacy information panel"));
+        diplomacyInformationPanel.setStyle("-fx-text-fill: black; -fx-font-size: 10;");
+        diplomacyInformationPanel.getTooltip().setStyle("-fx-font-size: 14;");
         demographicPanel.setTooltip(new Tooltip("demographic panel"));
+        demographicPanel.setStyle("-fx-text-fill: black; -fx-font-size: 10;");
+        demographicPanel.getTooltip().setStyle("-fx-font-size: 14;");
         winPanel.setTooltip(new Tooltip("win panel"));
+        winPanel.setStyle("-fx-text-fill: black; -fx-font-size: 10;");
+        winPanel.getTooltip().setStyle("-fx-font-size: 14;");
         notificationPanel.setTooltip(new Tooltip("notification panel"));
+        notificationPanel.setStyle("-fx-text-fill: black; -fx-font-size: 10;");
+        notificationPanel.getTooltip().setStyle("-fx-font-size: 14;");
         militaryPanel.setTooltip(new Tooltip("military view panel"));
+        militaryPanel.setStyle("-fx-text-fill: black; -fx-font-size: 10;");
+        militaryPanel.getTooltip().setStyle("-fx-font-size: 14;");
         economicPanel.setTooltip(new Tooltip("economic view panel"));
+        economicPanel.setStyle("-fx-text-fill: black; -fx-font-size: 10;");
+        economicPanel.getTooltip().setStyle("-fx-font-size: 14;");
         tradingPanel.setTooltip(new Tooltip("trading panel"));
+        tradingPanel.setStyle("-fx-text-fill: black; -fx-font-size: 10;");
+        tradingPanel.getTooltip().setStyle("-fx-font-size: 14;");
         diplomacyPanel.setTooltip(new Tooltip("diplomacy panel"));
+        diplomacyPanel.setStyle("-fx-text-fill: black; -fx-font-size: 10;");
+        diplomacyPanel.getTooltip().setStyle("-fx-font-size: 14;");
     }
 
     private void setIcons() {

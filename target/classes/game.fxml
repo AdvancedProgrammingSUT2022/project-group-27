@@ -22,17 +22,17 @@
             </HBox>
             <HBox fx:id="secondBar" spacing="10" alignment="CENTER_LEFT">
                 <Label fx:id="technology"/>
-                <Label fx:id="technologyPanel"/>
-                <Label fx:id="unitPanel"/>
-                <Label fx:id="cityPanel"/>
-                <Label fx:id="diplomacyInformationPanel"/>
-                <Label fx:id="winPanel"/>
-                <Label fx:id="demographicPanel"/>
-                <Label fx:id="notificationPanel"/>
-                <Label fx:id="militaryPanel"/>
-                <Label fx:id="economicPanel"/>
-                <Label fx:id="tradingPanel"/>
-                <Label fx:id="diplomacyPanel"/>
+                <Label fx:id="technologyPanel" text="Technology Panel"/>
+                <Label fx:id="unitPanel" text="Unit Panel"/>
+                <Label fx:id="cityPanel" text="City Panel"/>
+                <Label fx:id="diplomacyInformationPanel" text="Diplomacy Information Panel"/>
+                <Label fx:id="winPanel" text="Win Panel"/>
+                <Label fx:id="demographicPanel" text="Demographic Panel"/>
+                <Label fx:id="notificationPanel" text="Notification Panel"/>
+                <Label fx:id="militaryPanel" text="Military Panel"/>
+                <Label fx:id="economicPanel" text="Economic Panel"/>
+                <Label fx:id="tradingPanel" text="Trading Panel"/>
+                <Label fx:id="diplomacyPanel" text="Diplomacy Panel"/>
             </HBox>
         </VBox>
     </top>
