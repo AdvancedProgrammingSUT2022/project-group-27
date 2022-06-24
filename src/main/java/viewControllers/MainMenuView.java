@@ -98,7 +98,7 @@ public class MainMenuView extends Application {
         root.getStyleClass().add("background");
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Main Menu");
+        stage.setTitle("Ancient Civilization/ Main Menu");
         stage.show();
     }
 

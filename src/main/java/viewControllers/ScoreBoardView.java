@@ -121,7 +121,7 @@ public class ScoreBoardView extends Application {
         root.getStyleClass().add("background");
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Profile Menu");
+        stage.setTitle("Ancient Civilization/ Scoreboard Menu");
         stage.show();
     }
 

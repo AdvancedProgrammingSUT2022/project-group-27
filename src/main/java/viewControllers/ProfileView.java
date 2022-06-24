@@ -107,7 +107,7 @@ public class ProfileView extends Application {
         root.getStyleClass().add("background");
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Profile Menu");
+        stage.setTitle("Ancient Civilization/ Profile Menu");
         stage.show();
     }
 

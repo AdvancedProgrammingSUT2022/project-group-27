@@ -61,7 +61,7 @@ public class GameView extends Application {
         System.out.println("game");
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Game Menu");
+        stage.setTitle("Ancient Civilization/ Game Menu");
         stage.show();
     }
     @FXML

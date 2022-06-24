@@ -75,7 +75,7 @@ public class LoginView extends Application {
         root.getStyleClass().add("background");
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Login Menu");
+        stage.setTitle("Ancient Civilization/ Login Menu");
         stage.show();
     }
 

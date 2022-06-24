@@ -125,7 +125,7 @@ public class ChatRoomView extends Application {
         root.getStyleClass().add("background");
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Chat Room");
+        stage.setTitle("Ancient Civilization/ Chat Room");
         stage.show();
     }
 
