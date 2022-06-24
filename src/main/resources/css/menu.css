@@ -9,6 +9,12 @@
     -fx-background-color: rgba(255, 255, 255, 0.61);
 }
 
+.button {
+    -fx-background-color: #b71135;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+}
+
 .scroll-pane {
     -fx-background-color: transparent;
 }

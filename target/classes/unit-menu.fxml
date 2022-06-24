@@ -11,7 +11,12 @@
             fx:controller="viewControllers.UnitPanel"
             prefHeight="400.0" prefWidth="600.0">
     <center>
-        <VBox fx:id="list" alignment="CENTER"/>
+        <VBox>
+            <Button fx:id="back" text="back" onMouseClicked="#back"/>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+                <VBox fx:id="list" alignment="CENTER"/>
+            </ScrollPane>
+        </VBox>
     </center>
 
 </BorderPane>
