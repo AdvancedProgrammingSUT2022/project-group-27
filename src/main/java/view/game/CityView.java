@@ -180,7 +180,7 @@ public class CityView extends ViewOfCity{
         System.out.println("Technologies which remain:");
         for (Technology technology: city.getPlayer().technologiesThatCanBeObtained()){
             if (city.getPlayer().getUnderConstructionTechnology() == null) break;
-            if (technology.getTechnologyType().name().equals(city.getPlayer().getUnderConstructionTechnology().name()))
+            if (technology.getTechnologyType().name().equals(city.getPlayer().getUnderConstructionTechnology().getTechnologyType().name()))
                 System.out.println(technology.getTechnologyType().name() + "remain time is: " +
                         technology.getTimeRemain());
         }

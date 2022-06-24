@@ -26,6 +26,8 @@ import controller.Game;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.max;
+
 public class GraphicOfGame extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
@@ -148,15 +150,16 @@ public class GraphicOfGame extends Application {
         stage.show();
     }
 
-    private void initializing() { //TODO it should run at every steps, every moves and ...
+    public void initializing() { //TODO it should run at every steps, every moves and ...
         science.setText("science: " + Player.whichPlayerTurnIs().getScience());
         gold.setText("gold: " + Player.whichPlayerTurnIs().getGold());
         happiness.setText("happiness: " + Player.whichPlayerTurnIs().getHappiness());
         player.setText("player: " + Player.whichPlayerTurnIs().getUser().getUsername());
         turn.setText("year: " + Player.getYear());
         if (Player.whichPlayerTurnIs().getUnderConstructionTechnology() != null) {
-            technology.setText("technology: " + Player.whichPlayerTurnIs().getUnderConstructionTechnology().name() +
-                    "turns: " + Player.whichPlayerTurnIs().getUnderConstructionTechnology().getTime());
+            technology.setText("technology: " + Player.whichPlayerTurnIs().getUnderConstructionTechnology().getTechnologyType().name() +
+                    "\n turns: " + (Player.whichPlayerTurnIs().getUnderConstructionTechnology().getTimeRemain() +
+                    Player.whichPlayerTurnIs().getScience() - 1) / max(1, Player.whichPlayerTurnIs().getScience()));
         } else technology.setText("technology: nothing");
 
         setIconForPlayer();
@@ -169,6 +172,8 @@ public class GraphicOfGame extends Application {
             nextTurn.setCursor(Cursor.DISAPPEAR);
             nextTurn.setDisable(true);
         }
+
+        setMenus();
     }
 
     private void setHover() {
@@ -200,8 +205,24 @@ public class GraphicOfGame extends Application {
         });
     }
 
-    private void setTechnologyMenu() {
+    private void setMenus() {
+        setTechnologyMenu();
+    }
 
+    private void setTechnologyMenu() {
+        technologyPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                TechnologyMenu technologyMenu = new TechnologyMenu();
+                TechnologyMenu.setPlayer(Player.whichPlayerTurnIs());
+                TechnologyMenu.setGame(GraphicOfGame.this);
+                try {
+                    technologyMenu.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setTooltip() {

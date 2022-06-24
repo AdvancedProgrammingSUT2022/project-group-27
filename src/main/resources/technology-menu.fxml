@@ -12,13 +12,11 @@
             prefHeight="400.0" prefWidth="600.0">
 
     <center>
-        <VBox>
-            <VBox>
-                <Label text="list of technologies you have"/>
+        <ScrollPane fitToWidth="true" fitToHeight="true">
+            <VBox alignment="CENTER" spacing="30">
+                <VBox fx:id="technologyPlayerHave" alignment="CENTER"/>
+                <VBox fx:id="technologyObtained" alignment="CENTER"/>
             </VBox>
-            <VBox>
-                <Label text="list of obtained technology"/>
-            </VBox>
-        </VBox>
+        </ScrollPane>
     </center>
 </BorderPane>

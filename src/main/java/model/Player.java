@@ -23,7 +23,7 @@ public class Player {
     private ArrayList<Ground> wasClearedToSeeGrounds = new ArrayList<>();
     private static int counterOfNextRound = 0;
     private User user;
-    private TechnologyType underConstructionTechnology=null;
+    private Technology underConstructionTechnology=null;
     private boolean isAlive = true;
     private final ArrayList<Notification> notificationHistory = new ArrayList<>();
     private ArrayList<LuxuryResource> allLuxuryResources = new ArrayList<>();
@@ -118,7 +118,7 @@ public class Player {
         return AllTechnologyTypes;
     }
 
-    public TechnologyType getUnderConstructionTechnology() {
+    public Technology getUnderConstructionTechnology() {
         return underConstructionTechnology;
     }
 
@@ -299,8 +299,8 @@ public class Player {
         return answer;
     }
 
-    public void setUnderConstructionTechnology(TechnologyType technologyType){
-        underConstructionTechnology=technologyType;
+    public void setUnderConstructionTechnology(Technology technology){
+        underConstructionTechnology = technology;
     }
 
     public void addTechnology(TechnologyType technologyType){

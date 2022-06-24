@@ -26,7 +26,7 @@ public class TechnologyMenu {
             ArrayList<Technology> technologies = player.technologiesThatCanBeObtained();
             if (intInput >= 1 && intInput <= technologies.size()){
                 intInput--;
-                player.setUnderConstructionTechnology(technologies.get(intInput).getTechnologyType());
+                player.setUnderConstructionTechnology(technologies.get(intInput));
                 System.out.println(player.getUnderConstructionTechnology());
                 return;
             }
