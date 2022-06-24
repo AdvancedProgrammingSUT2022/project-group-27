@@ -207,6 +207,7 @@ public class GraphicOfGame extends Application {
 
     private void setMenus() {
         setTechnologyMenu();
+        setUnitMenu();
     }
 
     private void setTechnologyMenu() {
@@ -218,6 +219,22 @@ public class GraphicOfGame extends Application {
                 TechnologyMenu.setGame(GraphicOfGame.this);
                 try {
                     technologyMenu.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void setUnitMenu() {
+        unitPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                UnitPanel unitPanel = new UnitPanel();
+                UnitPanel.setPlayer(Player.whichPlayerTurnIs());
+                UnitPanel.setGame(GraphicOfGame.this);
+                try {
+                    unitPanel.start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

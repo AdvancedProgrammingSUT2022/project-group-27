@@ -1,7 +1,6 @@
 package viewControllers;
 
 import Main.Main;
-import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -11,7 +10,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Player;
 import Enum.TechnologyType;
@@ -22,7 +20,7 @@ import java.util.Optional;
 
 import static java.lang.Math.max;
 
-public class TechnologyMenu extends Application {
+public class TechnologyMenu extends Menus {
     private static Stage stage;
     private static Player player;
     private static GraphicOfGame game;
@@ -101,20 +99,5 @@ public class TechnologyMenu extends Application {
             Label text = new Label("* Sorry, but you haven't have any technologies, yet");
             technologyPlayerHave.getChildren().add(text);
         }
-    }
-
-    private void settingHoverToEach(Label ourLabel) {
-        ourLabel.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                ourLabel.setStyle("-fx-background-radius: 5; -fx-background-color: rgba(93,93,93,0.39); -fx-text-fill: white;");
-            }
-        });
-        ourLabel.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                ourLabel.setStyle("-fx-background-color: rgba(255, 255, 255, 0.61); -fx-text-fill: black;");
-            }
-        });
     }
 }
