@@ -1,14 +1,14 @@
 package Enum;
 
 public enum GroundType {
-    DESERT(0, 0, 0, -33, 1, false, "\u001B[33m"),
-    GRASS_PLOT(2, 0, 0, -33, 1, false, "\u001B[32m"),
-    HILL(0, 2, 0, 25, 2, false, "\u001B[33m"),
-    MOUNTAIN(0, 0, 0, 25, 0, true, "\u001B[33m"),
-    OCEAN(0, 0, 0, 25, 0, true, "\u001B[36m"),
-    PLAIN(1, 1, 0, -33, 1, false, "\u001B[36m"),
-    SNOW(0, 0, 0, -33, 1, false, "\u001B[36m"),
-    TUNDRA(1, 0, 0, -33, 1, false, "\u001B[36m");
+    DESERT(0, 0, 0, -33, 1, false, "/tile/desert.jpg"),
+    GRASS_PLOT(2, 0, 0, -33, 1, false, "/tile/grass.jpg"),
+    HILL(0, 2, 0, 25, 2, false, "/tile/hill.JPG"),
+    MOUNTAIN(0, 0, 0, 25, 0, true, "/tile/mountain.jpg"),
+    OCEAN(0, 0, 0, 25, 0, true, "/tile/ocean.jpg"),
+    PLAIN(1, 1, 0, -33, 1, false, "/tile/plain.jpg"),
+    SNOW(0, 0, 0, -33, 1, false, "/tile/snow.jpg"),
+    TUNDRA(1, 0, 0, -33, 1, false, "/tile/tundra.jpeg");
 
     private final int food;
     private final int production;

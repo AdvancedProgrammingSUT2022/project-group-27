@@ -6,9 +6,12 @@ import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
 public class GlobalVariables {
-    public static int surfaceWidth = 209-32, surfaceHeight = 57;
+    public static int surfaceWidth = 2*209/3-32, surfaceHeight = 8*16;
     public static int numberOfTiles = 30;
+    public static int numberOfTilesInRow=surfaceWidth/16;
+    public static int numberOfTilesInColumn=surfaceHeight/16;
     public int tool6Zelie = 8, arz6Zelie = 16;
+    public static int tool=100,arz=90;
     public double epsilon = 0.1;
 
     public int isEqual(double x, double y) {

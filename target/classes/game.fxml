@@ -34,6 +34,11 @@
                 <Label fx:id="tradingPanel" text="Trading Panel"/>
                 <Label fx:id="diplomacyPanel" text="Diplomacy Panel"/>
             </HBox>
+            <ScrollPane>
+                <Pane fx:id="gamePane">
+                    
+                </Pane>
+            </ScrollPane>
         </VBox>
     </top>
     <bottom>

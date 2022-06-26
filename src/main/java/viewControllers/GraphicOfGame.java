@@ -17,11 +17,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.Player;
-import model.User;
+import model.*;
 import controller.Game;
 
 import java.util.ArrayList;
@@ -31,6 +31,7 @@ import static java.lang.Math.max;
 public class GraphicOfGame extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
+    public Pane gamePane;
 
     private Game controller;
     private ArrayList<User> playerUsers = new ArrayList<>();
@@ -172,8 +173,22 @@ public class GraphicOfGame extends Application {
             nextTurn.setCursor(Cursor.DISAPPEAR);
             nextTurn.setDisable(true);
         }
-
         setMenus();
+        int cnt=0;
+        int startingArz=GlobalVariables.arz+50;
+        for (int i=1;i<=GlobalVariables.numberOfTilesInColumn;i++){
+            int startingTool=GlobalVariables.tool+5;
+            if (i%2==1){
+                startingTool+=GlobalVariables.tool+GlobalVariables.tool/2+7;
+            }
+            for (int j=1;j<=GlobalVariables.numberOfTilesInRow;j++){
+                GlobalVariables.numberOfTiles=cnt+1;
+                cnt++;
+                gamePane.getChildren().add(new GroundRectangle(Ground.getGroundByNumber(cnt),startingArz,startingTool));
+                startingTool+=(GlobalVariables.tool+5)*3;
+            }
+            startingArz+=GlobalVariables.arz+5;
+        }
     }
 
     private void setHover() {

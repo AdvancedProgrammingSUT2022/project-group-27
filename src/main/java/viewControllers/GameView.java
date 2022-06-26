@@ -111,10 +111,10 @@ public class GameView extends Application {
             if (!exist) break;
         }
         if (seed==1) GlobalVariables.surfaceWidth+=(4-Integer.parseInt(numberOfEnemies.getText()))*16;
-        if (seed==2) GlobalVariables.surfaceWidth=GlobalVariables.surfaceWidth-3*16;
-        if (seed==3) GlobalVariables.surfaceWidth=GlobalVariables.surfaceWidth-16;
-        if (seed==4) GlobalVariables.surfaceWidth=GlobalVariables.surfaceWidth+16;
-        if (seed==5) GlobalVariables.surfaceWidth=GlobalVariables.surfaceWidth+3*16;
+        if (seed==2) GlobalVariables.surfaceWidth+=GlobalVariables.surfaceWidth-3*16;
+        if (seed==3) GlobalVariables.surfaceWidth+=GlobalVariables.surfaceWidth-16;
+        if (seed==4) GlobalVariables.surfaceWidth+=GlobalVariables.surfaceWidth+16;
+        if (seed==5) GlobalVariables.surfaceWidth+=GlobalVariables.surfaceWidth+3*16;
         /*view.game.GameView gameView = new view.game.GameView(new ArrayList<User>(listOfPlayers),seed);
         System.out.println(Message.START_GAME);
         gameView.run();*/
