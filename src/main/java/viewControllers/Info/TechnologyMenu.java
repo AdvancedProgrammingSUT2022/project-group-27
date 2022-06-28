@@ -1,4 +1,4 @@
-package viewControllers;
+package viewControllers.Info;
 
 import Main.Main;
 import javafx.event.EventHandler;
@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import model.Player;
 import Enum.TechnologyType;
 import model.Technology;
+import viewControllers.GraphicOfGame;
+import viewControllers.Menus;
 
 
 import java.util.Optional;

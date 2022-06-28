@@ -1,4 +1,4 @@
-package viewControllers;
+package viewControllers.Info;
 
 import Main.Main;
 import controller.UnitController;
@@ -17,13 +17,12 @@ import javafx.stage.Stage;
 import model.Player;
 import model.Unit;
 import Enum.*;
-
-import java.util.Optional;
+import viewControllers.GraphicOfGame;
+import viewControllers.Menus;
 
 public class UnitPanel extends Menus {
     private static Stage stage;
     private static Player player;
-    private static GraphicOfGame game;
 
     @FXML
     public Button back;
@@ -43,10 +42,6 @@ public class UnitPanel extends Menus {
 
     public static void setPlayer(Player player) {
         UnitPanel.player = player;
-    }
-
-    public static void setGame(GraphicOfGame game) {
-        UnitPanel.game = game;
     }
 
     @Override

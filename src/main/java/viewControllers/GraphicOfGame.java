@@ -23,6 +23,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 import controller.Game;
+import viewControllers.Info.CityPanel;
+import viewControllers.Info.TechnologyMenu;
+import viewControllers.Info.UnitPanel;
 
 import java.util.ArrayList;
 
@@ -223,6 +226,7 @@ public class GraphicOfGame extends Application {
     private void setMenus() {
         setTechnologyMenu();
         setUnitMenu();
+        setCityPanel();
     }
 
     private void setTechnologyMenu() {
@@ -247,9 +251,23 @@ public class GraphicOfGame extends Application {
             public void handle(MouseEvent mouseEvent) {
                 UnitPanel unitPanel = new UnitPanel();
                 UnitPanel.setPlayer(Player.whichPlayerTurnIs());
-                UnitPanel.setGame(GraphicOfGame.this);
                 try {
                     unitPanel.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void setCityPanel() {
+        cityPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                CityPanel cityPanel = new CityPanel();
+                CityPanel.setPlayer(Player.whichPlayerTurnIs());
+                try {
+                    cityPanel.start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

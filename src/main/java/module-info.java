@@ -11,4 +11,6 @@ module apProjectGroup27 {
 
     exports Main;
     exports viewControllers;
+    exports viewControllers.Info;
+    opens viewControllers.Info to javafx.fxml;
 }
