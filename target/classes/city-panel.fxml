@@ -8,15 +8,14 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="viewControllers.Info.TechnologyMenu"
+            fx:controller="viewControllers.Info.CityPanel"
             prefHeight="400.0" prefWidth="600.0">
-
     <center>
-        <ScrollPane fitToWidth="true" fitToHeight="true">
-            <VBox alignment="CENTER" spacing="30">
-                <VBox fx:id="technologyPlayerHave" alignment="CENTER"/>
-                <VBox fx:id="technologyObtained" alignment="CENTER"/>
-            </VBox>
-        </ScrollPane>
+        <VBox>
+            <Button fx:id="back" text="back" onMouseClicked="#back"/>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+                <VBox fx:id="list" alignment="CENTER"/>
+            </ScrollPane>
+        </VBox>
     </center>
 </BorderPane>
