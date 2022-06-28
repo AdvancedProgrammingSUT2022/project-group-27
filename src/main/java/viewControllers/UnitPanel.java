@@ -9,6 +9,8 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -69,6 +71,7 @@ public class UnitPanel extends Menus {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Success");
             alert.setContentText(message.toString());
+            alert.show();
         }
     }
 
@@ -120,7 +123,29 @@ public class UnitPanel extends Menus {
         rangedFight.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                //TODO setting it
+                TextField textField = new TextField();
+                textField.setPromptText("enter ground number for ranged fight");
+                textField.setMaxWidth(300);
+                list.getChildren().add(textField);
+                textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent keyEvent) {
+                        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                            if (!unit.getStatus().equals(UnitStatus.AWAKE)) unit.setStatus(UnitStatus.AWAKE);
+                            String text = textField.getText();
+                            try {
+                                int number = Integer.parseInt(text);
+                                Message message = UnitController.rangedFight(unit, number);
+                                showAlert(message);
+                                list.getChildren().remove(textField);
+                            } catch (NumberFormatException e) {
+                                textField.clear();
+                                textField.setPromptText("invalid number");
+                                textField.setStyle("-fx-prompt-text-fill: red");
+                            }
+                        }
+                    }
+                });
             }
         });
 
@@ -128,7 +153,29 @@ public class UnitPanel extends Menus {
         meleeFight.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                //TODO setting it
+                TextField textField = new TextField();
+                textField.setPromptText("enter ground number for melee fight");
+                textField.setMaxWidth(300);
+                list.getChildren().add(textField);
+                textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent keyEvent) {
+                        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                            if (!unit.getStatus().equals(UnitStatus.AWAKE)) unit.setStatus(UnitStatus.AWAKE);
+                            String text = textField.getText();
+                            try {
+                                int number = Integer.parseInt(text);
+                                Message message = UnitController.meleeFight(unit, number);
+                                showAlert(message);
+                                list.getChildren().remove(textField);
+                            } catch (NumberFormatException e) {
+                                textField.clear();
+                                textField.setPromptText("invalid number");
+                                textField.setStyle("-fx-prompt-text-fill: red");
+                            }
+                        }
+                    }
+                });
             }
         });
 

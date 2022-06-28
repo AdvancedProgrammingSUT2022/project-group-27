@@ -34,7 +34,7 @@
                 <Label fx:id="tradingPanel" text="Trading Panel"/>
                 <Label fx:id="diplomacyPanel" text="Diplomacy Panel"/>
             </HBox>
-            <ScrollPane>
+            <ScrollPane prefHeight="650">
                 <Pane fx:id="gamePane">
                     
                 </Pane>
