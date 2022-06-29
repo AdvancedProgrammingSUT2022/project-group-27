@@ -1,7 +1,7 @@
 package viewControllers.Info;
 
 import Main.Main;
-import controller.CityController;
+import controller.BuildCityController;
 import controller.CityMenuController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -26,6 +26,7 @@ public class CityPanel extends Menus {
     private static Stage stage;
     private static Player player;
     private CityMenuController controller;
+    private BuildCityController buildController;
 
     @FXML
     private Button back;
@@ -36,6 +37,7 @@ public class CityPanel extends Menus {
     @FXML
     public void initialize() {
         controller = new CityMenuController();
+        buildController = new BuildCityController();
 
         Label firstText = new Label("list of technologies you have:");
         firstText.setStyle("-fx-text-fill:  #b71135; -fx-font-size: 20; -fx-background-color: rgba(255, 255, 255, 0.61); -fx-font-weight: bold");
@@ -205,6 +207,48 @@ public class CityPanel extends Menus {
             }
         });
 
+        MenuItem buildUnit = new MenuItem("build unit");
+        buildUnit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                buildUnit(city, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
+        MenuItem buildBuilding = new MenuItem("build building");
+        buildBuilding.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                buildBuilding(city, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
+        MenuItem changeConstruction = new MenuItem("change construction");
+        changeConstruction.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                changeConstruction(city, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
         contextMenu.getItems().add(strength);
         contextMenu.getItems().add(remains);
         contextMenu.getItems().add(lock);
@@ -215,7 +259,62 @@ public class CityPanel extends Menus {
         contextMenu.getItems().add(buyGround);
         contextMenu.getItems().add(buy);
         contextMenu.getItems().add(fight);
+        contextMenu.getItems().add(buildUnit);
+        contextMenu.getItems().add(buildBuilding);
+        contextMenu.getItems().add(changeConstruction);
         return contextMenu;
+    }
+
+    private void changeConstruction(City city, VBox vBox) {
+        ArrayList<String> construction = new ArrayList<>();
+        for (MilitaryType militaryType: MilitaryType.values()) {
+            if (controller.canWeHaveThisUnitType(militaryType, city)) construction.add(militaryType.name());
+        }
+
+        for (BuildingsType buildingsType: BuildingsType.values()) {
+            if (controller.canWeHaveThisBuildingType(buildingsType, city)) construction.add(buildingsType.name());
+        }
+
+        ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList(construction));
+        vBox.getChildren().add(comboBox);
+
+        comboBox.setOnAction((event) -> {
+            String selection = comboBox.getSelectionModel().getSelectedItem();
+            Message message = buildController.changeConstruction(city, selection);
+            showAlert(message);
+        });
+    }
+
+    private void buildBuilding(City city, VBox vBox) {
+        ArrayList<String> building = new ArrayList<>();
+        for (BuildingsType buildingsType: BuildingsType.values()) {
+            if (controller.canWeHaveThisBuildingType(buildingsType, city)) building.add(buildingsType.name());
+        }
+
+        ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList(building));
+        vBox.getChildren().add(comboBox);
+
+        comboBox.setOnAction((event) -> {
+            String selection = comboBox.getSelectionModel().getSelectedItem();
+            Message message = buildController.buildBuilding(city, selection);
+            showAlert(message);
+        });
+    }
+
+    private void buildUnit(City city, VBox vBox) {
+        ArrayList<String> unit = new ArrayList<>();
+        for (MilitaryType militaryType: MilitaryType.values()) {
+            if (controller.canWeHaveThisUnitType(militaryType, city)) unit.add(militaryType.name());
+        }
+
+        ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList(unit));
+        vBox.getChildren().add(comboBox);
+
+        comboBox.setOnAction((event) -> {
+            String selection = comboBox.getSelectionModel().getSelectedItem();
+            Message message = buildController.buildUnit(city, selection);
+            showAlert(message);
+        });
     }
 
     private void fightToGround(City city, VBox vBox) {
