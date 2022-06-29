@@ -232,8 +232,24 @@ public class GraphicOfGame extends Application {
         setDemographicPanel();
         setNotificationPanel();
         setMilitaryPanel();
+        setEconomicPanel();
 
         //TODO ... diplomacyInformationPanel, winPanel, tradingPanel, diplomacyPanel
+    }
+
+    private void setEconomicPanel() {
+        economicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                EconomicOverview economicOverview = new EconomicOverview();
+                EconomicOverview.setPlayer(Player.whichPlayerTurnIs());
+                try {
+                    economicOverview.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setMilitaryPanel() {
