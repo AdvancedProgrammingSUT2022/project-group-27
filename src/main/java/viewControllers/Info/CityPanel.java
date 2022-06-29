@@ -1,6 +1,7 @@
 package viewControllers.Info;
 
 import Main.Main;
+import controller.CityMenuController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,20 +9,21 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import model.City;
-import model.Ground;
-import model.Player;
-import model.Technology;
+import model.*;
 import viewControllers.Menus;
+import Enum.*;
+
+import java.util.ArrayList;
 
 public class CityPanel extends Menus {
     private static Stage stage;
     private static Player player;
+    private CityMenuController controller;
 
     @FXML
     private Button back;
@@ -31,6 +33,8 @@ public class CityPanel extends Menus {
 
     @FXML
     public void initialize() {
+        controller = new CityMenuController();
+
         Label firstText = new Label("list of technologies you have:");
         firstText.setStyle("-fx-text-fill:  #b71135; -fx-font-size: 20; -fx-background-color: rgba(255, 255, 255, 0.61); -fx-font-weight: bold");
         list.getChildren().add(firstText);
@@ -87,14 +91,177 @@ public class CityPanel extends Menus {
             }
         });
 
+        MenuItem lock = new MenuItem("lock a citizen to ground");
+        lock.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                lockCitizen(city, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
+        MenuItem removeWork = new MenuItem("remove a citizen from work");
+        removeWork.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                removeFromWork(city, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
+        MenuItem outputOfCity = new MenuItem("output of city");
+        outputOfCity.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                showOutputOfCity(city, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
+        MenuItem outputOfCivilization = new MenuItem("output of civilization");
+        outputOfCivilization.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                showOutputOfCivilization(city, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
+        MenuItem withOutWork = new MenuItem("with out work citizens");
+        withOutWork.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                showWithOutWork(city, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
         contextMenu.getItems().add(strength);
         contextMenu.getItems().add(remains);
+        contextMenu.getItems().add(lock);
+        contextMenu.getItems().add(removeWork);
+        contextMenu.getItems().add(outputOfCity);
+        contextMenu.getItems().add(outputOfCivilization);
+        contextMenu.getItems().add(withOutWork);
         return contextMenu;
+    }
+
+    private void showWithOutWork(City city, VBox vBox) {
+        ArrayList<Citizen> listOfWithoutWork = city.withoutWorkCitizens();
+
+        int index = 1;
+        for (Citizen citizen: listOfWithoutWork) {
+            vBox.getChildren().add(new Label(index + "- citizen id: " + citizen.getId()));
+            index++;
+        }
+    }
+
+    private void showOutputOfCivilization(City city, VBox vBox) {
+        vBox.getChildren().add(new Label("Science per turn by this city: " + city.getScience()));
+        vBox.getChildren().add(new Label("Gold of civilization produced by this city: " + city.getGold()));
+        vBox.getChildren().add(new Label("The city production: " + city.getProduction()));
+        vBox.getChildren().add(new Label("Happiness of civilization: " + player.getHappiness()));
+        vBox.getChildren().add(new Label("Food produce per turn: " + city.getFoodPerTurn()));
+        showStrategicResources(city, vBox);
+    }
+
+    private void showStrategicResources(City city, VBox vBox) {
+        ArrayList<StrategicResource> listOfStrategicResource = new ArrayList<>();
+        for (Ground ground : city.getRangeOfCity()) {
+            listOfStrategicResource.addAll(ground.getStrategicResources());
+        }
+
+        vBox.getChildren().add(new Label("Strategic resources of city:"));
+        int index = 1;
+        for (StrategicResource strategicResource : listOfStrategicResource) {
+            vBox.getChildren().add(new Label(index + ": " + strategicResource));
+            index++;
+        }
+    }
+
+    private void showOutputOfCity(City city, VBox vBox) {
+        vBox.getChildren().add(new Label("How much food does this city store? " + city.getSavedFood()));
+        vBox.getChildren().add(new Label("How much production does this city have? " + city.getProduction()));
+        vBox.getChildren().add(new Label("How much gold does this city have? " + city.getGold()));
+        vBox.getChildren().add(new Label("How much science does this city have? " + city.getScience()));
+    }
+
+    private void removeFromWork(City city, VBox vBox) {
+        TextField textField = new TextField();
+        textField.setPromptText("enter ground for removing a citizen from work");
+        textField.setMaxWidth(300);
+        vBox.getChildren().add(textField);
+        textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                    String text = textField.getText();
+                    try {
+                        int number = Integer.parseInt(text);
+                        Message message = controller.removeFromWork(city, number);
+                        showAlert(message);
+                    } catch (NumberFormatException e) {
+                        textField.clear();
+                        textField.setPromptText("invalid number format");
+                        textField.setStyle("-fx-prompt-text-fill: red");
+                    }
+                }
+            }
+        });
+    }
+
+    private void lockCitizen(City city, VBox vBox) {
+        TextField textField = new TextField();
+        textField.setPromptText("enter ground number for locking a citizen");
+        textField.setMaxWidth(300);
+        vBox.getChildren().add(textField);
+        textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                    String text = textField.getText();
+                    try {
+                        int number = Integer.parseInt(text);
+                        Message message = controller.lockCitizenToGround(city, number);
+                        showAlert(message);
+                    } catch (NumberFormatException e) {
+                        textField.clear();
+                        textField.setPromptText("invalid number format");
+                        textField.setStyle("-fx-prompt-text-fill: red");
+                    }
+                }
+            }
+        });
     }
 
     private void showRemainTimes(City city, VBox vBox) {
         vBox.getChildren().add(new Label("Technologies which remain:"));
-        for (Technology technology: city.getPlayer().technologiesThatCanBeObtained()){
+        for (Technology technology: city.getPlayer().technologiesThatCanBeObtained()) {
             if (city.getPlayer().getUnderConstructionTechnology() == null) {
                 vBox.getChildren().add(new Label("nothing"));
                 break;

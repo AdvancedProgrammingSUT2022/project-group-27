@@ -2,8 +2,10 @@ package viewControllers;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import Enum.Message;
 
 public abstract class Menus extends Application {
     protected void settingHoverToEach(Label ourLabel) {
@@ -19,5 +21,20 @@ public abstract class Menus extends Application {
                 ourLabel.setStyle("-fx-background-color: rgba(255, 255, 255, 0.61); -fx-text-fill: black;");
             }
         });
+    }
+
+    protected void showAlert(Message message) {
+        Alert alert;
+
+        if (message != Message.SUCCESS_WORK) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error");
+        } else {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Success");
+        }
+
+        alert.setContentText(message.toString());
+        alert.show();
     }
 }

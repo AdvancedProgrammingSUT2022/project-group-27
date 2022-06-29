@@ -56,20 +56,6 @@ public class UnitPanel extends Menus {
         stage.show();
     }
 
-    private void showAlert(Message message) {
-        if (message != Message.SUCCESS_WORK) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error");
-            alert.setContentText(message.toString());
-            alert.show();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Success");
-            alert.setContentText(message.toString());
-            alert.show();
-        }
-    }
-
     private ContextMenu buildContextMenu(Unit unit) {
         final ContextMenu contextMenu = new ContextMenu();
         MenuItem sleep = new MenuItem("sleep");
@@ -135,7 +121,7 @@ public class UnitPanel extends Menus {
                                 list.getChildren().remove(textField);
                             } catch (NumberFormatException e) {
                                 textField.clear();
-                                textField.setPromptText("invalid number");
+                                textField.setPromptText("invalid number format");
                                 textField.setStyle("-fx-prompt-text-fill: red");
                             }
                         }
@@ -165,7 +151,7 @@ public class UnitPanel extends Menus {
                                 list.getChildren().remove(textField);
                             } catch (NumberFormatException e) {
                                 textField.clear();
-                                textField.setPromptText("invalid number");
+                                textField.setPromptText("invalid number format");
                                 textField.setStyle("-fx-prompt-text-fill: red");
                             }
                         }
