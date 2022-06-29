@@ -1,14 +1,24 @@
 package Enum;
 
+import controller.ProfileController;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import model.GlobalVariables;
+import model.GroundRectangle;
+
+import java.awt.*;
+
 public enum GroundType {
-    DESERT(0, 0, 0, -33, 1, false, "/tile/desert.jpg"),
-    GRASS_PLOT(2, 0, 0, -33, 1, false, "/tile/grass.jpg"),
-    HILL(0, 2, 0, 25, 2, false, "/tile/hill.JPG"),
-    MOUNTAIN(0, 0, 0, 25, 0, true, "/tile/mountain.jpg"),
-    OCEAN(0, 0, 0, 25, 0, true, "/tile/ocean.jpg"),
-    PLAIN(1, 1, 0, -33, 1, false, "/tile/plain.jpg"),
-    SNOW(0, 0, 0, -33, 1, false, "/tile/snow.jpg"),
-    TUNDRA(1, 0, 0, -33, 1, false, "/tile/tundra.jpeg");
+
+   // new ImagePattern(new Image(ProfileController.class.getResource(ground.getGroundType().getColor()).toExternalForm()))
+    DESERT(0, 0, 0, -33, 1, false, new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.desert).toExternalForm()))),
+    GRASS_PLOT(2, 0, 0, -33, 1, false, new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.grass).toExternalForm()))),
+    HILL(0, 2, 0, 25, 2, false, new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.hill).toExternalForm()))),
+    MOUNTAIN(0, 0, 0, 25, 0, true, new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.mountain).toExternalForm()))),
+    OCEAN(0, 0, 0, 25, 0, true, new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.ocean).toExternalForm()))),
+    PLAIN(1, 1, 0, -33, 1, false, new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.plainImage).toExternalForm()))),
+    SNOW(0, 0, 0, -33, 1, false, new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.snow).toExternalForm()))),
+    TUNDRA(1, 0, 0, -33, 1, false, new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.tundra).toExternalForm())));
 
     private final int food;
     private final int production;
@@ -17,9 +27,9 @@ public enum GroundType {
     private final int movementCost;
     private final boolean isBlock;
 
-    private final String color;
+    private final ImagePattern color;
 
-    GroundType(int food, int production, int gold, int combatCoefficient, int movementCost, boolean isBlock, String color) {
+    GroundType(int food, int production, int gold, int combatCoefficient, int movementCost, boolean isBlock, ImagePattern color) {
         this.gold = gold;
         this.food = food;
         this.production = production;
@@ -53,7 +63,7 @@ public enum GroundType {
         return isBlock;
     }
 
-    public String getColor() {
+    public ImagePattern getColor() {
         return color;
     }
 }

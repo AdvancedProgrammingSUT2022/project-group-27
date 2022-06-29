@@ -33,4 +33,13 @@ public class GlobalVariables {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
+
+    public static final String grass="/tile/grass.jpg";
+    public static final String desert="/tile/desert.jpg";
+    public static final String hill="/tile/hill.JPG";
+    public static final String mountain="/tile/mountain.jpg";
+    public static final String ocean="/tile/ocean.jpg";
+    public static final String plainImage="/tile/plain.jpg";
+    public static final String snow="/tile/snow.jpg";
+    public static final String tundra="/tile/tundra.jpeg";
 }

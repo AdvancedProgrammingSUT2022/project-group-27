@@ -179,18 +179,22 @@ public class GraphicOfGame extends Application {
         setMenus();
         int cnt=0;
         int startingArz=GlobalVariables.arz+50;
+        for (int i=gamePane.getChildren().size()-1;i>-1;i--){
+            if (gamePane.getChildren().get(i) instanceof GroundRectangle) gamePane.getChildren().remove(i);
+        }
         for (int i=1;i<=GlobalVariables.numberOfTilesInColumn;i++){
-            int startingTool=GlobalVariables.tool+5;
+            int startingTool=GlobalVariables.tool+8;
             if (i%2==1){
-                startingTool+=GlobalVariables.tool+GlobalVariables.tool/2+7;
+                startingTool+=GlobalVariables.tool+GlobalVariables.tool/2+12;
             }
             for (int j=1;j<=GlobalVariables.numberOfTilesInRow;j++){
                 GlobalVariables.numberOfTiles=cnt+1;
                 cnt++;
                 gamePane.getChildren().add(new GroundRectangle(Ground.getGroundByNumber(cnt),startingArz,startingTool));
-                startingTool+=(GlobalVariables.tool+5)*3;
+                System.out.println(Ground.getGroundByNumber(cnt).getxLocation());
+                startingTool+=(GlobalVariables.tool+8)*3;
             }
-            startingArz+=GlobalVariables.arz+5;
+            startingArz+=GlobalVariables.arz+8;
         }
     }
 
