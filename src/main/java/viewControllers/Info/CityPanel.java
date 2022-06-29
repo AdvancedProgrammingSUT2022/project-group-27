@@ -1,7 +1,9 @@
 package viewControllers.Info;
 
 import Main.Main;
+import controller.CityController;
 import controller.CityMenuController;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -161,6 +163,48 @@ public class CityPanel extends Menus {
             }
         });
 
+        MenuItem buyGround = new MenuItem("buy ground");
+        buyGround.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                buyGround(city, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
+        MenuItem buy = new MenuItem("let's buy");
+        buy.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                buyThing(city, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
+        MenuItem fight = new MenuItem("fight to ground...");
+        fight.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                fightToGround(city, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
         contextMenu.getItems().add(strength);
         contextMenu.getItems().add(remains);
         contextMenu.getItems().add(lock);
@@ -168,7 +212,82 @@ public class CityPanel extends Menus {
         contextMenu.getItems().add(outputOfCity);
         contextMenu.getItems().add(outputOfCivilization);
         contextMenu.getItems().add(withOutWork);
+        contextMenu.getItems().add(buyGround);
+        contextMenu.getItems().add(buy);
+        contextMenu.getItems().add(fight);
         return contextMenu;
+    }
+
+    private void fightToGround(City city, VBox vBox) {
+        TextField textField = new TextField();
+        textField.setPromptText("enter ground number which you want to fight with");
+        textField.setMaxWidth(300);
+        vBox.getChildren().add(textField);
+        textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                    String text = textField.getText();
+                    try {
+                        int number = Integer.parseInt(text);
+                        Ground ground = Ground.getGroundByNumber(number);
+                        if (ground == null) showAlert(Message.INVALID_GROUND_NUMBER);
+                        else {
+                            city.combat(ground);
+                            showAlert(Message.FIGHTING_START);
+                        }
+                    } catch (NumberFormatException e) {
+                        textField.clear();
+                        textField.setPromptText("invalid number format");
+                        textField.setStyle("-fx-prompt-text-fill: red");
+                    }
+                }
+            }
+        });
+    }
+
+    private void buyThing(City city, VBox vBox) {
+        ArrayList<String> production = new ArrayList<>();
+        for (MilitaryType militaryType: MilitaryType.values()) {
+            if (controller.canWeHaveThisUnitType(militaryType, city)) production.add(militaryType.name());
+        }
+
+        for (BuildingsType buildingsType: BuildingsType.values()) {
+            if (controller.canWeHaveThisBuildingType(buildingsType, city)) production.add(buildingsType.name());
+        }
+
+        ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList(production));
+        vBox.getChildren().add(comboBox);
+
+        comboBox.setOnAction((event) -> {
+            String selection = comboBox.getSelectionModel().getSelectedItem();
+            Message message = controller.buyThings(city, selection);
+            showAlert(message);
+        });
+    }
+
+    private void buyGround(City city, VBox vBox) {
+        TextField textField = new TextField();
+        textField.setPromptText("enter ground number which you want to buy");
+        textField.setMaxWidth(300);
+        vBox.getChildren().add(textField);
+        textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                    String text = textField.getText();
+                    try {
+                        int number = Integer.parseInt(text);
+                        Message message = controller.buyGround(city, number);
+                        showAlert(message);
+                    } catch (NumberFormatException e) {
+                        textField.clear();
+                        textField.setPromptText("invalid number format");
+                        textField.setStyle("-fx-prompt-text-fill: red");
+                    }
+                }
+            }
+        });
     }
 
     private void showWithOutWork(City city, VBox vBox) {

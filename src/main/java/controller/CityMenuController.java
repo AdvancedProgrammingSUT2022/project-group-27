@@ -53,13 +53,13 @@ public class CityMenuController extends CityController{
         Unit unit = checkValidationOfUnitName(city, whatPlayerWantToBuy);
         Building building = checkValidationOfBuildingName(city, whatPlayerWantToBuy);
         if (unit != null) {
-            if (city.getPlayer().haveEnoughMoney(unit.getCost())) return Message.NOT_ENOUGH_MONEY;
+            if (!city.getPlayer().haveEnoughMoney(unit.getCost())) return Message.NOT_ENOUGH_MONEY;
 
             city.getPlayer().giveMoneyForBuying(unit.getCost());
             city.getListOfUnitsInCity().add(unit);
             return Message.SUCCESS_WORK;
         } else if (building != null) {
-            if (city.getPlayer().haveEnoughMoney(building.getCost())) return Message.NOT_ENOUGH_MONEY;
+            if (!city.getPlayer().haveEnoughMoney(building.getCost())) return Message.NOT_ENOUGH_MONEY;
 
             city.getPlayer().giveMoneyForBuying(building.getCost());
             city.addBuilding(building);

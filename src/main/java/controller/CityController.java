@@ -7,8 +7,7 @@ public class CityController extends Controller{
     protected Unit checkValidationOfUnitName(City city, String unitName) {
         MilitaryType unitType = null;
         for (MilitaryType militaryType: MilitaryType.values()) {
-            if (city.getPlayer().doWeHaveThisTechnology(militaryType.getTechnologyTypes()) &&
-                    (militaryType.getStrategicResources().size() == 0 || city.getPlayer().hasStrategicResource(militaryType.getStrategicResources().get(0)))) {
+            if (canWeHaveThisUnitType(militaryType, city)) {
                 if (militaryType.name().equals(unitName)) {
                     if (militaryType.name().equals("SETTLER") && city.getPlayer().getHappiness() < 0)
                         break;
@@ -28,10 +27,20 @@ public class CityController extends Controller{
         return null;
     }
 
+    public boolean canWeHaveThisUnitType(MilitaryType militaryType, City city) {
+        return city.getPlayer().doWeHaveThisTechnology(militaryType.getTechnologyTypes()) &&
+                (militaryType.getStrategicResources().size() == 0 ||
+                        city.getPlayer().hasStrategicResource(militaryType.getStrategicResources().get(0)));
+    }
+
+    public boolean canWeHaveThisBuildingType(BuildingsType buildingsType, City city) {
+        return city.getPlayer().doWeHaveThisTechnology(buildingsType.getTechnologyType());
+    }
+
     protected Building checkValidationOfBuildingName(City city, String buildingName) {
         BuildingsType building = null;
         for (BuildingsType buildingsType: BuildingsType.values()) {
-            if (city.getPlayer().doWeHaveThisTechnology(buildingsType.getTechnologyType())) {
+            if (canWeHaveThisBuildingType(buildingsType, city)) {
                 if (buildingsType.name().equals(buildingName)) {
                     building = buildingsType;
                     break;

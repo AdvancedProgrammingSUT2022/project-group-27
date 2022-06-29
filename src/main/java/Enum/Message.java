@@ -35,7 +35,8 @@ public enum Message {
     UNIT_CHOICE_SUCCESSFUL("Unit choices successfully"),
     PRODUCTION_IS_ON_PROGRESS("Sorry but production is in progress."),
     UNIT_CAN_NOT_DO("Your unit can't do this action"),
-    SUCCESS_WORK("Everything happens successfully:)");
+    SUCCESS_WORK("Everything happens successfully:)"),
+    FIGHTING_START("fighting is start...");
 
     private String message;
 

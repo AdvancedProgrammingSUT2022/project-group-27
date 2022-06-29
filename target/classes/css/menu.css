@@ -15,11 +15,6 @@
     -fx-background-radius: 8;
 }
 
-.text-field {
-    -fx-background-radius: 8;
-    -fx-background-color: gray;
-}
-
 .scroll-pane {
     -fx-background-color: transparent;
 }
