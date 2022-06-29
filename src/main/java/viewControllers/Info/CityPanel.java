@@ -44,8 +44,10 @@ public class CityPanel extends Menus {
         list.getChildren().add(firstText);
 
         //For Test
-        City city = new City(Ground.getGroundByNumber(15), "happy", player);
-        player.getCities().add(city);
+        if (player.getCities().size() == 0) {
+            City city = new City(Ground.getGroundByNumber(15), "happy", player);
+            player.getCities().add(city);
+        }
         //
         addToList();
         back.setCursor(Cursor.HAND);
