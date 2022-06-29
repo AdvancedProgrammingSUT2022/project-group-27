@@ -23,10 +23,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 import controller.Game;
-import viewControllers.Info.CityPanel;
-import viewControllers.Info.DemographicPanel;
-import viewControllers.Info.TechnologyMenu;
-import viewControllers.Info.UnitPanel;
+import viewControllers.Info.*;
 
 import java.util.ArrayList;
 
@@ -233,6 +230,24 @@ public class GraphicOfGame extends Application {
         setUnitMenu();
         setCityPanel();
         setDemographicPanel();
+        setNotificationPanel();
+
+        //TODO ... diplomacyInformationPanel, winPanel, tradingPanel, diplomacyPanel
+    }
+
+    private void setNotificationPanel() {
+        notificationPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                NotificationPanel notificationPanel = new NotificationPanel();
+                NotificationPanel.setPlayer(Player.whichPlayerTurnIs());
+                try {
+                    notificationPanel.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setDemographicPanel() {
