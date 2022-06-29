@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.*;
+import viewControllers.GraphicOfGame;
 import viewControllers.Menus;
 import Enum.*;
 
@@ -27,6 +28,7 @@ public class CityPanel extends Menus {
     private static Player player;
     private CityMenuController controller;
     private BuildCityController buildController;
+    private static GraphicOfGame game;
 
     @FXML
     private Button back;
@@ -53,8 +55,18 @@ public class CityPanel extends Menus {
         back.setCursor(Cursor.HAND);
     }
 
+    @Override
+    public void stop() throws Exception {
+        game.initializing();
+        super.stop();
+    }
+
     public static void setPlayer(Player player) {
         CityPanel.player = player;
+    }
+
+    public static void setGame(GraphicOfGame game) {
+        CityPanel.game = game;
     }
 
     @Override

@@ -23,6 +23,7 @@ import viewControllers.Menus;
 public class UnitPanel extends Menus {
     private static Stage stage;
     private static Player player;
+    private static GraphicOfGame game;
 
     @FXML
     public Button back;
@@ -40,8 +41,18 @@ public class UnitPanel extends Menus {
         back.setCursor(Cursor.HAND);
     }
 
+    @Override
+    public void stop() throws Exception {
+        game.initializing();
+        super.stop();
+    }
+
     public static void setPlayer(Player player) {
         UnitPanel.player = player;
+    }
+
+    public static void setGame(GraphicOfGame game) {
+        UnitPanel.game = game;
     }
 
     @Override

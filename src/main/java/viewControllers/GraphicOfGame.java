@@ -255,6 +255,7 @@ public class GraphicOfGame extends Application {
             public void handle(MouseEvent mouseEvent) {
                 UnitPanel unitPanel = new UnitPanel();
                 UnitPanel.setPlayer(Player.whichPlayerTurnIs());
+                UnitPanel.setGame(GraphicOfGame.this);
                 try {
                     unitPanel.start(new Stage());
                 } catch (Exception e) {
@@ -270,6 +271,7 @@ public class GraphicOfGame extends Application {
             public void handle(MouseEvent mouseEvent) {
                 CityPanel cityPanel = new CityPanel();
                 CityPanel.setPlayer(Player.whichPlayerTurnIs());
+                CityPanel.setGame(GraphicOfGame.this);
                 try {
                     cityPanel.start(new Stage());
                 } catch (Exception e) {
