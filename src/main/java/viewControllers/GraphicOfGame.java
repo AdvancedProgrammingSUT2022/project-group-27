@@ -24,6 +24,7 @@ import javafx.util.Duration;
 import model.*;
 import controller.Game;
 import viewControllers.Info.CityPanel;
+import viewControllers.Info.DemographicPanel;
 import viewControllers.Info.TechnologyMenu;
 import viewControllers.Info.UnitPanel;
 
@@ -231,6 +232,22 @@ public class GraphicOfGame extends Application {
         setTechnologyMenu();
         setUnitMenu();
         setCityPanel();
+        setDemographicPanel();
+    }
+
+    private void setDemographicPanel() {
+        demographicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                DemographicPanel demographicPanel = new DemographicPanel();
+                DemographicPanel.setPlayer(Player.whichPlayerTurnIs());
+                try {
+                    demographicPanel.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setTechnologyMenu() {

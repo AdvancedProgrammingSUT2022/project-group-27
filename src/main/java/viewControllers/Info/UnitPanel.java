@@ -33,7 +33,7 @@ public class UnitPanel extends Menus {
 
     @FXML
     public void initialize() {
-        Label firstText = new Label("list of technologies you have:");
+        Label firstText = new Label("list of units you have:");
         firstText.setStyle("-fx-text-fill:  #b71135; -fx-font-size: 20; -fx-background-color: rgba(255, 255, 255, 0.61); -fx-font-weight: bold");
         list.getChildren().add(firstText);
 
