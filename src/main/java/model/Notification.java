@@ -1,5 +1,7 @@
 package model;
 
+import javafx.scene.control.Alert;
+
 public class Notification {
     private final String notification;
     private final int whichTurn;
@@ -8,6 +10,10 @@ public class Notification {
         this.notification = notification;
         this.whichTurn = whichTurn;
         System.out.println(notification);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText("Notification");
+        alert.setContentText(notification);
+        alert.show();
         player.getNotificationHistory().add(this);
     }
 
