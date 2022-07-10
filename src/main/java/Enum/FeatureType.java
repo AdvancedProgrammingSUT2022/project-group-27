@@ -8,11 +8,11 @@ import model.GlobalVariables;
 public enum FeatureType {
     NOTHING(0,0,0,0,1,false,0,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.desert).toExternalForm()))),
     WATERSHED(2, 0, 0, -33, 1, false,6,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.WATERSHED).toExternalForm()))),
-    FOREST(1, 1, 0, 25, 2, false,4,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.WATERSHED).toExternalForm()))),
-    ICE(0, 0, 0, 0, 0, true,6,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.WATERSHED).toExternalForm()))),
-    JUNGLE(1, -1, 0, 25, 2, false,7,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.WATERSHED).toExternalForm()))),
-    MARSH(-1, 0, 0, -33, 2, false,4,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.WATERSHED).toExternalForm()))),
-    OASIS(3, 0, 1, -33, 1, false,6,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.WATERSHED).toExternalForm())));
+    FOREST(1, 1, 0, 25, 2, false,4,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.FOREST).toExternalForm()))),
+    ICE(0, 0, 0, 0, 0, true,6,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.ICE).toExternalForm()))),
+    JUNGLE(1, -1, 0, 25, 2, false,7,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.JUNGLE).toExternalForm()))),
+    MARSH(-1, 0, 0, -33, 2, false,4,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.MARSH).toExternalForm()))),
+    OASIS(3, 0, 1, -33, 1, false,6,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.OASIS).toExternalForm())));
 
     private final int food;
     private final int production;
