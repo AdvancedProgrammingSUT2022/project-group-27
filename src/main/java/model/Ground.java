@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import Enum.GroundType;
 
@@ -42,6 +43,8 @@ public class Ground {
     private ArrayList<BonusResource> bonusResource = new ArrayList<>();
     private ArrayList<StrategicResource> strategicResources = new ArrayList<>();
     private ArrayList<LuxuryResource> luxuryResources = new ArrayList<>();
+    private boolean hasRuin = false;
+
     //TODO: luxuryResources to be completed
 
     public ArrayList<Ground> getAdjacentGrounds() {
@@ -559,5 +562,36 @@ public class Ground {
 
     public void deleteAdjacentGround() {
         this.adjacentGrounds.clear();
+    }
+
+
+    public boolean getHasRuin() {
+        return hasRuin;
+    }
+
+    public void setHasRuin(boolean hasRuin) {
+        this.hasRuin = hasRuin;
+    }
+
+    public void implementRuin(Player player) {
+        Random random = new Random();
+        int randomNumber;
+        if (this.isFreeOfUnMilitaryUnit()) {
+            randomNumber = random.nextInt() % 5;
+        }
+        else {
+            randomNumber = random.nextInt() % 4;
+        }
+        switch (randomNumber) {
+            case 3:
+                player.setGold(player.getGold() + 40);
+                break;
+            case 1:
+
+                break;
+        }
+
+        this.hasRuin = false;
+
     }
 }

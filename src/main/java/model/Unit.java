@@ -198,7 +198,9 @@ public abstract class Unit implements Productions {
             }
         }
         if (this.getGround().getNumber()==this.destination.getNumber()) this.destination=null;
-
+        if (this.ground.getHasRuin()) {
+            this.ground.implementRuin(this.player);
+        }
 
 
         return true;

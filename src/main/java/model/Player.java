@@ -405,7 +405,7 @@ public class Player {
 
     public int countScore() {
         int count = 0;
-        //TODO counting...
+        
         return count;
     }
 
