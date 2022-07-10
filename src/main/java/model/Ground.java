@@ -18,6 +18,7 @@ import Enum.ImprovementType;
 import Enum.TechnologyType;
 import controller.ImprovementSettingController;
 import Enum.MilitaryType;
+import controller.UnitController;
 
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
@@ -586,10 +587,36 @@ public class Ground {
             case 3:
                 player.setGold(player.getGold() + 40);
                 break;
-            case 1:
-
+            case 0:
+                for (TechnologyType technologyType : TechnologyType.values()) {
+                    if (player.canWeAddThisTechnology(technologyType)) {
+                        player.addTechnology(technologyType);
+                        break;
+                    }
+                }
                 break;
+            case 1:
+                for (Ground ground : getAdjacentGrounds()) {
+                    for (Ground disTwoGround : ground.getAdjacentGrounds()) {
+                        player.addGroundToClearGround(ground);
+                    }
+                }
+                break;
+
+            case 2:
+                if (player.getCities().size() == 0)
+                    break;
+                City city = player.getCities().get(random.nextInt() % player.getCities().size());
+                city.increasingCitizens();
+                break;
+            case 4:
+                if (random.nextInt() % 2 == 0)
+                    UnitController.addUnit(player, this, MilitaryType.SETTLER);
+
+                else
+                    UnitController.addUnit(player, this, MilitaryType.WORKER);
         }
+
 
         this.hasRuin = false;
 

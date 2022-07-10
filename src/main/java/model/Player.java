@@ -28,6 +28,8 @@ public class Player {
     private final ArrayList<Notification> notificationHistory = new ArrayList<>();
     private ArrayList<LuxuryResource> allLuxuryResources = new ArrayList<>();
     private ArrayList<StrategicResource> allStrategicResources = new ArrayList<>();
+    private ArrayList<TechnologyType> technologyType=new ArrayList<>();
+    private ArrayList<Technology> AllTechnologyTypes=new ArrayList<>();
 
     public ArrayList<LuxuryResource> getAllLuxuryResources() {
         return allLuxuryResources;
@@ -56,14 +58,6 @@ public class Player {
     public void setGold(int gold) {
         this.gold = gold;
     }
-
-   // public void setScience(int science) {
-    //    this.science = science;
-   // }
-
-    private ArrayList<TechnologyType> technologyType=new ArrayList<>();
-
-    private ArrayList<Technology> AllTechnologyTypes=new ArrayList<>();
 
     public Player(User user) {
         this.user = user;
@@ -266,6 +260,7 @@ public class Player {
                 mainCapital = city;
             }
             this.cities.add(city);
+            ground.setHasRuin(false);
         }
 
         for (int i=0;i<this.getUnits().size();i++){
