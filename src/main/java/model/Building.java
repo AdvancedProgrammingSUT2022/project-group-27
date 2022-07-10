@@ -16,6 +16,10 @@ public class Building implements Productions{
         this.turnRemainedToCompleted.setTurns(turnRemainedToCompleted);
     }
 
+    public BuildingsType getType() {
+        return type;
+    }
+
     public int getCost() {
         return type.getCost();
     }
