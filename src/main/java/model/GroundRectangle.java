@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 
+import javax.swing.text.StyledEditorKit;
 import java.awt.*;
 
 public class GroundRectangle extends Polygon {
@@ -47,6 +48,7 @@ public class GroundRectangle extends Polygon {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 setStroke(Color.AQUA);
+                System.out.println("khodesh :" +  ground.getNumber());
                 for (Ground ground1 : ground.getAdjacentGrounds()){
                     System.out.println(ground1.getNumber());
                 }

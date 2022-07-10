@@ -32,8 +32,8 @@ public class Ground {
     private ArrayList<Pair> pixelsOfThisGround = new ArrayList<>();
     private ArrayList<Ground> adjacentGrounds = new ArrayList<>();
     private Player owner;
-    private final int xLocation;
-    private final int yLocation;
+    private int xLocation;
+    private int yLocation;
     private int number;
     private int cost;
     private boolean isWorkedOn = false;
@@ -59,7 +59,12 @@ public class Ground {
         this.cost = 50; //TODO if it become random make it more fun
         allGround.add(this);
     }
-
+    public void setxLocation(int x){
+        this.xLocation=x;
+    }
+    public void setyLocation(int y){
+        this.yLocation=y;
+    }
     public ImprovementType getImprovementType() {
         return improvementType;
     }
@@ -268,8 +273,8 @@ public class Ground {
 
     public static boolean AreTheseTwoGroundAdjacent(Ground firstGround, Ground secondGround) {
         GlobalVariables globalVariables = new GlobalVariables();
-        return abs(firstGround.getxLocation() - secondGround.getxLocation()) <= globalVariables.tool6Zelie
-                && abs(firstGround.getyLocation() - secondGround.getyLocation()) <= globalVariables.arz6Zelie;
+        return (abs(firstGround.getxLocation() - secondGround.getxLocation()) <= GlobalVariables.tool*2+16
+                && abs(firstGround.getyLocation() - secondGround.getyLocation()) <= GlobalVariables.arz*2+8);
     }
 
     public static int distanceOfTheseTwoGround(Ground firstGround, Ground secondGround,Player player,Unit unitType) {
@@ -550,5 +555,9 @@ public class Ground {
                 return i;
         }
         return GlobalVariables.numberOfTiles;
+    }
+
+    public void deleteAdjacentGround() {
+        this.adjacentGrounds.clear();
     }
 }
