@@ -6,6 +6,7 @@ import Enum.MilitaryType;
 import Enum.LuxuryResource;
 import Enum.BonusResource;
 import Enum.StrategicResource;
+import Enum.BuildingsType;
 
 public class City {
     private Player player;
@@ -40,6 +41,24 @@ public class City {
     public void setMainCapital() {
         isMainCapital = true;
         mainCapitalFor = player;
+    }
+
+    public boolean doWeHaveThisBuilding(BuildingsType buildingsType) {
+        for (Building building: buildings) {
+            if (building.name().equals(buildingsType.name())) return true;
+        }
+
+        return false;
+    }
+
+    public boolean doWeHaveThisStrategicResource(StrategicResource strategicResource) {
+        for (Ground ground: rangeOfCity) {
+            for (StrategicResource resource: ground.getStrategicResources()) {
+                if (resource.name().equals(strategicResource.name())) return true;
+            }
+        }
+
+        return false;
     }
 
     public void addBuilding(Building building) {

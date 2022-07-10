@@ -40,7 +40,7 @@ public class CityController extends Controller{
     protected Building checkValidationOfBuildingName(City city, String buildingName) {
         BuildingsType building = null;
         for (BuildingsType buildingsType: BuildingsType.values()) {
-            if (canWeHaveThisBuildingType(buildingsType, city)) {
+            if (canWeHaveThisBuildingType(buildingsType, city) && shouldBreakByNotes(city, buildingsType)) {
                 if (buildingsType.name().equals(buildingName)) {
                     building = buildingsType;
                     break;
@@ -50,5 +50,26 @@ public class CityController extends Controller{
 
         if (building != null) return new Building(building, city);
         else return null;
+    }
+
+    private boolean shouldBreakByNotes(City city, BuildingsType buildingsType) {
+        //Handling notes
+        if (buildingsType.name().equals(BuildingsType.STOCK_EXCHANGE.name()) &&
+                !(city.doWeHaveThisBuilding(BuildingsType.BANK) || city.doWeHaveThisBuilding(BuildingsType.SATRAPS_COURT))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.MILITARY_BASE.name()) && !(city.doWeHaveThisBuilding(BuildingsType.CASTLE))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.FACTORY.name()) && !(city.doWeHaveThisStrategicResource(StrategicResource.COAL))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.BROADCAST_TOWER.name()) && !(city.doWeHaveThisBuilding(BuildingsType.MUSEUM))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.ARSENAL.name()) && !(city.doWeHaveThisBuilding(BuildingsType.MILITARY_ACADEMY))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.WINDMILL.name()) && city.getGround().getGroundType().equals(GroundType.HILL)) return false;
+
+        if (buildingsType.name().equals(BuildingsType.THEATER.name()) && !(city.doWeHaveThisBuilding(BuildingsType.COLOSSEUM))) return false;
+
+        //TODO... Theater to top should handle
+        return true;
     }
 }
