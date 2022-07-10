@@ -333,10 +333,23 @@ public class Player {
     }
 
     public int getHappiness() {
-        int happiness = 20;
+        int happiness = 15;
         int population = 0;
         happiness -= this.cities.size() * 3;
         for (City city : cities) {
+            for (Building building : city.getBuildings()) {
+                if (building.getType().equals(BuildingsType.BURIAL_TOMB) || building.getType().equals(BuildingsType.SATRAPS_COURT)) {
+                    happiness += 2;
+                }
+                if (building.getType().equals(BuildingsType.CIRCUS) || building.getType().equals(BuildingsType.COURTHOUSE)) {
+                    happiness += 3;
+                }
+                if (building.getType().equals(BuildingsType.COLOSSEUM) || building.getType().equals(BuildingsType.THEATER)) {
+                    happiness += 4;
+                }
+
+
+            }
             if (city.isPuppet())
                 happiness++;
             population += city.getListOfCitizens().size();
