@@ -236,8 +236,24 @@ public class GraphicOfGame extends Application {
         setNotificationPanel();
         setMilitaryPanel();
         setEconomicPanel();
+        setWinPage();
 
         //TODO ... diplomacyInformationPanel, winPanel, tradingPanel, diplomacyPanel
+    }
+
+    private void setWinPage() {
+        winPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                WinPage winPage = new WinPage();
+                WinPage.setPlayer(Player.whichPlayerTurnIs());
+                try {
+                    winPage.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setEconomicPanel() {
