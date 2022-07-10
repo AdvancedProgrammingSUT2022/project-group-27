@@ -178,7 +178,7 @@ public class GraphicOfGame extends Application {
         int cnt=0;
         int startingArz=GlobalVariables.arz+50;
         for (int i=gamePane.getChildren().size()-1;i>-1;i--){
-            if (gamePane.getChildren().get(i) instanceof GroundRectangle) gamePane.getChildren().remove(i);
+            if (gamePane.getChildren().get(i) instanceof GroundRectangle || gamePane.getChildren().get(i) instanceof FeatureRectangle) gamePane.getChildren().remove(i);
         }
         for (int i=1;i<=GlobalVariables.numberOfTilesInColumn;i++){
             int startingTool=GlobalVariables.tool+8;
@@ -188,7 +188,9 @@ public class GraphicOfGame extends Application {
             for (int j=1;j<=GlobalVariables.numberOfTilesInRow;j++){
                 GlobalVariables.numberOfTiles=cnt+1;
                 cnt++;
-                gamePane.getChildren().add(new GroundRectangle(Ground.getGroundByNumber(cnt),startingArz,startingTool));
+                GroundRectangle groundRectangle=new GroundRectangle(Ground.getGroundByNumber(cnt),startingArz,startingTool);
+                gamePane.getChildren().add(groundRectangle);
+                gamePane.getChildren().add(new FeatureRectangle(groundRectangle,startingArz,startingTool));
                 Ground ground=Ground.getGroundByNumber(cnt);
                 ground.setxLocation(startingArz);
                 ground.setyLocation(startingTool);
@@ -197,6 +199,7 @@ public class GraphicOfGame extends Application {
             }
             startingArz+=GlobalVariables.arz+8;
         }
+        /*
         for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
             Ground ground=Ground.getGroundByNumber(i);
             ground.deleteAdjacentGround();
@@ -206,6 +209,8 @@ public class GraphicOfGame extends Application {
                 }
             }
         }
+        */
+
     }
 
     private void setHover() {

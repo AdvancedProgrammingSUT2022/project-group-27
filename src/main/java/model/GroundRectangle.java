@@ -50,7 +50,6 @@ public class GroundRectangle extends Polygon {
                 Double.valueOf(y+GlobalVariables.tool/2),x+GlobalVariables.arz,
                 Double.valueOf(y-GlobalVariables.tool/2),x+GlobalVariables.arz,
         });
-
         this.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -72,8 +71,10 @@ public class GroundRectangle extends Polygon {
     }
     public void update(){
       //  Image image = new Image(ProfileController.class.getResource(ground.getGroundType().getColor()).toExternalForm());
-        ImagePattern background = ground.getGroundType().getColor();
-        this.setFill(background);
+        if (ground.getGroundType()!=null) {
+            ImagePattern background = ground.getGroundType().getColor();
+            this.setFill(background);
+        }
     }
 
 

@@ -31,7 +31,6 @@ public class River {
             if (allRiver.firstGround.getNumber() == firstGround.getNumber()
                     && allRiver.secondGround.getNumber() == secondGround.getNumber()) return false;
         GlobalVariables globalVariables = new GlobalVariables();
-        return abs(firstGround.getxLocation() - secondGround.getxLocation()) <= globalVariables.tool6Zelie
-                && abs(firstGround.getyLocation() - secondGround.getyLocation()) <= globalVariables.arz6Zelie;
+        return Ground.AreTheseTwoGroundAdjacent(firstGround,secondGround);
     }
 }
