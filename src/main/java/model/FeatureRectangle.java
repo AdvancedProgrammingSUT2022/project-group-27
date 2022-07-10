@@ -6,16 +6,20 @@ import javafx.scene.shape.Rectangle;
 import Enum.FeatureType;
 public class FeatureRectangle extends Rectangle {
     private GroundRectangle groundRectangle;
+    int xLocation;
+    int yLocation;
 
     public GroundRectangle getGroundRectangle() {
         return groundRectangle;
     }
-    public FeatureRectangle (GroundRectangle groundRectangle){
+    public FeatureRectangle (GroundRectangle groundRectangle,int x,int y){
         this.groundRectangle=groundRectangle;
-        this.setLayoutX(0);
-        this.setLayoutY(0);
-        this.setHeight(1000);
-        this.setWidth(1000);
+        this.setX(y-45);
+        this.setY(x-80);
+        this.setHeight(50);
+        this.setWidth(90);
+        System.out.println(groundRectangle.getXLocation()+ " feature " + groundRectangle.getYLocation());
+        this.update();
     }
     public void update(){
         Ground ground=groundRectangle.getGround();

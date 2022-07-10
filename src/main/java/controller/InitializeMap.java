@@ -23,13 +23,42 @@ public class InitializeMap {
     }
 
     public void run() {
-        setGroundsType();
-        setFirstGroundsForPlayers();
-        setRivers();
         setGroundsAdjacent();
+        setGroundsType();
+        System.out.println("mamad");
+        setFirstGroundsForPlayers();
+        System.out.println("hey");
+        setRivers();
+        setFeature();
         setBonusType();
         setLuxuryType();
         setStrategicType();
+    }
+
+    private void setFeature() {
+        Random random = new Random(seed);
+        for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
+            int rand = random.nextInt(300);
+            if (rand < 25) {
+                Ground.getGroundByNumber(i).setFeatureType(FeatureType.FOREST);
+            } else if (rand < 50) {
+                Ground.getGroundByNumber(i).setFeatureType(FeatureType.ICE);
+            } else if (rand < 75) {
+                Ground.getGroundByNumber(i).setFeatureType(FeatureType.JUNGLE);
+            } else if (rand < 100) {
+                Ground.getGroundByNumber(i).setFeatureType(FeatureType.MARSH);
+            } else if (rand < 150) {
+                if (Ground.getGroundByNumber(i).getGroundType() == GroundType.DESERT) {
+                    Ground.getGroundByNumber(i).setFeatureType(FeatureType.OASIS);
+                } else Ground.getGroundByNumber(i).setFeatureType(FeatureType.FOREST);
+            } else if (rand < 200) {
+                if (Ground.getGroundByNumber(i).containRiver())
+                    Ground.getGroundByNumber(i).setFeatureType(FeatureType.MARSH);
+                else Ground.getGroundByNumber(i).setFeatureType(FeatureType.JUNGLE);
+            } else {
+                Ground.getGroundByNumber(i).setFeatureType(FeatureType.NOTHING);
+            }
+        }
     }
 
     private void setGroundsType() {
@@ -53,26 +82,8 @@ public class InitializeMap {
             } else if (rand < 200) {
                 Ground.getGroundByNumber(i).setGroundType(GroundType.PLAIN);
             }
-            rand = random.nextInt(0, 300);
-            if (rand < 25) {
-                Ground.getGroundByNumber(i).setFeatureType(FeatureType.FOREST);
-            } else if (rand < 50) {
-                Ground.getGroundByNumber(i).setFeatureType(FeatureType.ICE);
-            } else if (rand < 75) {
-                Ground.getGroundByNumber(i).setFeatureType(FeatureType.JUNGLE);
-            } else if (rand < 100) {
-                Ground.getGroundByNumber(i).setFeatureType(FeatureType.MARSH);
-            } else if (rand < 150) {
-                if (Ground.getGroundByNumber(i).getGroundType() == GroundType.DESERT) {
-                    Ground.getGroundByNumber(i).setFeatureType(FeatureType.OASIS);
-                } else Ground.getGroundByNumber(i).setFeatureType(FeatureType.FOREST);
-            } else if (rand < 200) {
-                if (Ground.getGroundByNumber(i).containRiver())
-                    Ground.getGroundByNumber(i).setFeatureType(FeatureType.MARSH);
-                else Ground.getGroundByNumber(i).setFeatureType(FeatureType.JUNGLE);
-            } else {
-                Ground.getGroundByNumber(i).setFeatureType(FeatureType.NOTHING);
-            }
+
+
         }
     }
 
@@ -108,14 +119,35 @@ public class InitializeMap {
     }
 
     private void setGroundsAdjacent() {
-        for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
-            for (int j = i + 1; j <= GlobalVariables.numberOfTiles; j++) {
-                if (Ground.AreTheseTwoGroundAdjacent(Ground.getGroundByNumber(i), Ground.getGroundByNumber(j))) {
-                    Ground.getGroundByNumber(i).addGroundToAdjacentGround(Ground.getGroundByNumber(j));
-                    Ground.getGroundByNumber(j).addGroundToAdjacentGround(Ground.getGroundByNumber(i));
+        int cnt=0;
+        int startingArz=GlobalVariables.arz+50;
+        for (int i=1;i<=GlobalVariables.numberOfTilesInColumn;i++){
+            int startingTool=GlobalVariables.tool+8;
+            if (i%2==1){
+                startingTool+=GlobalVariables.tool+GlobalVariables.tool/2+12;
+            }
+            for (int j=1;j<=GlobalVariables.numberOfTilesInRow;j++){
+                GlobalVariables.numberOfTiles=cnt+1;
+                cnt++;
+                GroundRectangle groundRectangle=new GroundRectangle(Ground.getGroundByNumber(cnt),startingArz,startingTool);
+                Ground ground=Ground.getGroundByNumber(cnt);
+                ground.setxLocation(startingArz);
+                ground.setyLocation(startingTool);
+                System.out.println(Ground.getGroundByNumber(cnt).getxLocation());
+                startingTool+=(GlobalVariables.tool+8)*3;
+            }
+            startingArz+=GlobalVariables.arz+8;
+        }
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            Ground ground=Ground.getGroundByNumber(i);
+            ground.deleteAdjacentGround();
+            for (int j=1;j<=GlobalVariables.numberOfTiles;j++){
+                if (i!=j && Ground.AreTheseTwoGroundAdjacent(ground,Ground.getGroundByNumber(j))){
+                    ground.addGroundToAdjacentGround(Ground.getGroundByNumber(j));
                 }
             }
         }
+        System.out.println(" egnheijideuhgiuhigrhitghrghier");
     }
 
     private void setBonusType() {
