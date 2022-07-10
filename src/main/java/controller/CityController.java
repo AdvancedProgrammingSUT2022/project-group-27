@@ -69,7 +69,37 @@ public class CityController extends Controller{
 
         if (buildingsType.name().equals(BuildingsType.THEATER.name()) && !(city.doWeHaveThisBuilding(BuildingsType.COLOSSEUM))) return false;
 
-        //TODO... Theater to top should handle
+        if (buildingsType.name().equals(BuildingsType.SATRAPS_COURT.name()) && !(city.doWeHaveThisBuilding(BuildingsType.MARKET))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.PUBLIC_SCHOOL.name()) && !(city.doWeHaveThisBuilding(BuildingsType.UNIVERSITY))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.OPERA_HOUSE.name()) &&
+                !(city.doWeHaveThisBuilding(BuildingsType.TEMPLE) && city.doWeHaveThisBuilding(BuildingsType.BURIAL_TOMB))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.MUSEUM.name()) && !(city.doWeHaveThisBuilding(BuildingsType.OPERA_HOUSE))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.MILITARY_ACADEMY.name()) && !(city.doWeHaveThisBuilding(BuildingsType.BARRACKS))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.BANK.name()) && !(city.doWeHaveThisBuilding(BuildingsType.MARKET))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.UNIVERSITY.name()) && !(city.doWeHaveThisBuilding(BuildingsType.LIBRARY))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.GARDEN.name()) && !(city.getGround().containRiver())) return false;
+
+        if (buildingsType.name().equals(BuildingsType.FORGE.name()) && !(city.doWeHaveThisStrategicResource(StrategicResource.IRON))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.CASTLE.name()) && !(city.doWeHaveThisBuilding(BuildingsType.WALLS))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.TEMPLE.name()) && !(city.doWeHaveThisBuilding(BuildingsType.MONUMENT))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.STABLE.name()) && !(city.doWeHaveThisStrategicResource(StrategicResource.HORSE))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.CIRCUS.name()) &&
+                !(city.doWeHaveThisStrategicResource(StrategicResource.HORSE) || city.doWeHaveThisLuxuryResource(LuxuryResource.IVORY))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.ARMORY.name()) && !(city.doWeHaveThisBuilding(BuildingsType.BARRACKS))) return false;
+
+        if (buildingsType.name().equals(BuildingsType.WATER_MILL.name()) && !(city.getGround().containRiver())) return false;
         return true;
     }
 }
