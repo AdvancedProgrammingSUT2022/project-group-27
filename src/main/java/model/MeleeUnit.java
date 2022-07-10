@@ -24,6 +24,7 @@ public class MeleeUnit extends MilitaryUnit {
         }
         double decreasedEnemyHp = (this.hp + 10) / 20 * this.getCombatStrength();
         decreasedEnemyHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
+        decreasedEnemyHp *= (double) 100.0 / (ground.getFeatureType().getCombatCoefficient() + 100.0);
         if ((this.militaryType.equals(MilitaryType.SPEARMAN) || this.militaryType.equals(MilitaryType.PIKEMAN)) && militaryUnit.militaryType.getCombatType().equals("Mounted"))
             decreasedEnemyHp *= 2;
         if (this.militaryType.equals(MilitaryType.CHARIOTARCHER) && (ground.getGroundType().equals(GroundType.HILL) || ground.getFeatureType().equals(FeatureType.FOREST) || ground.getFeatureType().equals(FeatureType.JUNGLE)))
