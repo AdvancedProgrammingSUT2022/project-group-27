@@ -79,6 +79,13 @@ public class Game extends Controller {
             }
         }
     }
+
+    public boolean canWeNextTurn() {
+        Player player = Player.whichPlayerTurnIs();
+        if (!player.isAlive()) return true;
+        return isLimitationOkInCities(player) && decreaseTurnOfConstruction(player);
+    }
+
     public boolean canWeGoNextTurn(){
         Player player = Player.whichPlayerTurnIs();
         if (!player.isAlive()) return true;
