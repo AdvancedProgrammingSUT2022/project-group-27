@@ -7,14 +7,13 @@ import Enum.LuxuryResource;
 import Enum.BonusResource;
 import Enum.StrategicResource;
 import Enum.BuildingsType;
+import Enum.FeatureType;
+import javafx.scene.canvas.GraphicsContext;
 
 public class City {
     private Player player;
     private String name;
     private int savedFood;
-    //private int production;
-    //private int science;
-    //private int gold;
     private RemainedTurns remainedTurnsToBuild = new RemainedTurns(0);
     private MilitaryType buildingUnit = null;
     private Ground ground;
@@ -103,6 +102,7 @@ public class City {
 
     public void setPlayer(Player player) {
         this.player.getCities().remove(this);
+        this.buildings.clear();
 
         this.player = player;
         this.ground.setOwner(player);
@@ -116,10 +116,6 @@ public class City {
     public boolean isPuppet() {
         return isPuppet;
     }
-
-    //public void increaseGold(int amount) {
-      //  this.gold += amount;
-   // }
 
     public ArrayList<Unit> getListOfUnitsInCity() {
         return listOfUnitsInCity;
@@ -157,17 +153,6 @@ public class City {
         this.hp = hp;
     }
 
-    //public int getProduction() {
-     //   return production;
-   // }
-
-    //public int getScience() {
-  //      return science;
-   // }
-
-    //public int getGold() {
-    //    return gold;
-  //  }
 
     public MilitaryType getBuildingUnit() {
         return buildingUnit;
@@ -184,10 +169,6 @@ public class City {
     public void setRemainedTurnsToBuild(int remainedTurnsToBuild) {
         this.remainedTurnsToBuild.setTurns(remainedTurnsToBuild);
     }
-
-    //public void giveMoneyForBuying(int amount) {
-   //     this.gold -= amount;
-   // }
 
     public void finishedConstructed() {
         if (this.construction == null) return;
@@ -283,16 +264,37 @@ public class City {
 
     public int getGold() {
         int gold = 0;
+        int sources = 0;
         for (Ground ground : getRangeOfCity()) {
             if (ground.isWorkedOn()) {
-                if (ground.canWeUseThisLuxuryResource())
+                if (ground.canWeUseThisLuxuryResource()) {
                     gold += ground.getLuxuryResources().get(0).getGold();
-                if (ground.canWeUseThisBonusResource())
+                    sources++;
+                }
+                if (ground.canWeUseThisBonusResource()) {
                     gold += ground.getBonusResource().get(0).getGold();
-                if (ground.canWeUseThisStrategicResource())
+                    sources++;
+                }
+                if (ground.canWeUseThisStrategicResource()) {
                     gold += ground.getStrategicResources().get(0).getGold();
+                    sources++;
+                }
                 gold += ground.getGroundType().getGold();
                 gold += ground.getFeatureType().getGold();
+                sources++;
+            }
+        }
+        for (Building building : this.buildings) {
+            if (building.getType().equals(BuildingsType.MARKET) || building.getType().equals(BuildingsType.BANK) || building.getType().equals(BuildingsType.SATRAPS_COURT)) {
+                gold *= 5;
+                gold /= 4;
+            }
+            if (building.getType().equals(BuildingsType.STOCK_EXCHANGE)) {
+                gold *= 4;
+                gold /= 3;
+            }
+            if (building.getType().equals(BuildingsType.MINT)) {
+                gold += sources * 3;
             }
         }
         return gold;
@@ -310,6 +312,20 @@ public class City {
             if (ground.isWorkedOn()) {
                 production += ground.getGroundType().getProduction();
                 production += ground.getFeatureType().getProduction();
+            }
+        }
+        for (Building building : this.buildings) {
+            if (building.getType().equals(BuildingsType.WORKSHOP) || building.getType().equals(BuildingsType.ARSENAL)) {
+                production *= 6;
+                production /= 5;
+            }
+            if (building.getType().equals(BuildingsType.WINDMILL)) {
+                production *= 115;
+                production /= 100;
+            }
+            if (building.getType().equals(BuildingsType.FACTORY)) {
+                production *= 3;
+                production /= 2;
             }
         }
         return production;
@@ -330,6 +346,11 @@ public class City {
             }
         }
         food -= listOfCitizens.size() * 2;
+        for (Building building : this.buildings) {
+            if (building.getType().equals(BuildingsType.GRANARY) || building.getType().equals(BuildingsType.WATER_MILL)) {
+                food += 2;
+            }
+        }
         if (this.player.getHappiness() < 0)
             food /= 3;
         if (food < 0)
@@ -342,6 +363,23 @@ public class City {
     public int getScience() {
         int science = 5;
         science += this.listOfCitizens.size();
+        for (Building building : this.buildings) {
+            if (building.getType().equals(BuildingsType.LIBRARY)) {
+                science += this.getListOfCitizens().size() / 2;
+            }
+            if (building.getType().equals(BuildingsType.UNIVERSITY) || building.getType().equals(BuildingsType.PUBLIC_SCHOOL)) {
+                science *= 3;
+                science /= 2;
+            }
+            if (building.getType().equals(BuildingsType.UNIVERSITY)) {
+                for (Ground ground : getRangeOfCity()) {
+                    if (ground.isWorkedOn() && ground.getFeatureType().equals(FeatureType.JUNGLE)) {
+                        science += 2;
+                    }
+                }
+            }
+
+        }
         return science;
     }
 
