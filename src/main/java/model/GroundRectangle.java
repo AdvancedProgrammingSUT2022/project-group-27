@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 
+import javax.swing.text.StyledEditorKit;
 import java.awt.*;
 
 public class GroundRectangle extends Polygon {

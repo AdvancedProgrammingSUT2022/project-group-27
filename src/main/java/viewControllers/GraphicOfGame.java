@@ -189,6 +189,9 @@ public class GraphicOfGame extends Application {
                 GlobalVariables.numberOfTiles=cnt+1;
                 cnt++;
                 gamePane.getChildren().add(new GroundRectangle(Ground.getGroundByNumber(cnt),startingArz,startingTool));
+                Ground ground=Ground.getGroundByNumber(cnt);
+                ground.setxLocation(startingArz);
+                ground.setyLocation(startingTool);
                 System.out.println(Ground.getGroundByNumber(cnt).getxLocation());
                 startingTool+=(GlobalVariables.tool+8)*3;
             }
