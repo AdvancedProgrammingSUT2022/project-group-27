@@ -6,6 +6,7 @@ import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
 public class GlobalVariables {
+
     public static int surfaceWidth = 2*209/3-32, surfaceHeight = 8*16;
     public static int numberOfTiles = 30;
     public static int numberOfTilesInRow=surfaceWidth/16;
@@ -42,4 +43,10 @@ public class GlobalVariables {
     public static final String plainImage="/tile/plain.jpg";
     public static final String snow="/tile/snow.jpg";
     public static final String tundra="/tile/tundra.jpeg";
+    public static final String WATERSHED = "/feature/WATERSHED.jpg";
+    public static final String FOREST = "/feature/forests.jpg";
+    public static final String ICE = "/feature/ice.jpg";
+    public static final String JUNGLE = "/feature/jungle.jpg";
+    public static final String marsh = "/feature/marsh.jpg";
+    public static final String OASIS = "/feature/OASIS.png";
 }

@@ -10,11 +10,17 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 
 import javax.swing.text.StyledEditorKit;
-import java.awt.*;
+
+import Enum.FeatureType;
+import javafx.scene.shape.Rectangle;
 
 public class GroundRectangle extends Polygon {
     private Ground ground;
     private int xLocation,yLocation;
+
+    public Ground getGround() {
+        return ground;
+    }
 
     public void setYLocation(int yLocation) {
         this.yLocation = yLocation;
@@ -44,6 +50,7 @@ public class GroundRectangle extends Polygon {
                 Double.valueOf(y+GlobalVariables.tool/2),x+GlobalVariables.arz,
                 Double.valueOf(y-GlobalVariables.tool/2),x+GlobalVariables.arz,
         });
+
         this.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -66,8 +73,6 @@ public class GroundRectangle extends Polygon {
     public void update(){
       //  Image image = new Image(ProfileController.class.getResource(ground.getGroundType().getColor()).toExternalForm());
         ImagePattern background = ground.getGroundType().getColor();
-
-
         this.setFill(background);
     }
 

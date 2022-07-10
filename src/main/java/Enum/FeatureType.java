@@ -1,13 +1,18 @@
 package Enum;
 
+import controller.ProfileController;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import model.GlobalVariables;
+
 public enum FeatureType {
-    NOTHING(0,0,0,0,1,false,0),
-    WATERSHED(2, 0, 0, -33, 1, false,6),
-    FOREST(1, 1, 0, 25, 2, false,4),
-    ICE(0, 0, 0, 0, 0, true,6),
-    JUNGLE(1, -1, 0, 25, 2, false,7),
-    MARSH(-1, 0, 0, -33, 2, false,4),
-    OASIS(3, 0, 1, -33, 1, false,6);
+    NOTHING(0,0,0,0,1,false,0,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.desert).toExternalForm()))),
+    WATERSHED(2, 0, 0, -33, 1, false,6,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.WATERSHED).toExternalForm()))),
+    FOREST(1, 1, 0, 25, 2, false,4,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.WATERSHED).toExternalForm()))),
+    ICE(0, 0, 0, 0, 0, true,6,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.WATERSHED).toExternalForm()))),
+    JUNGLE(1, -1, 0, 25, 2, false,7,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.WATERSHED).toExternalForm()))),
+    MARSH(-1, 0, 0, -33, 2, false,4,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.WATERSHED).toExternalForm()))),
+    OASIS(3, 0, 1, -33, 1, false,6,new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.WATERSHED).toExternalForm())));
 
     private final int food;
     private final int production;
@@ -17,8 +22,9 @@ public enum FeatureType {
     private final boolean isBlock;
 
     private final int turn;
+    private final ImagePattern photo;
 
-    FeatureType(int food, int production, int gold, int combatCoefficient, int movementCost, boolean isBlock,int turn) {
+    FeatureType(int food, int production, int gold, int combatCoefficient, int movementCost, boolean isBlock,int turn,ImagePattern photo) {
         this.food = food;
         this.production = production;
         this.gold = gold;
@@ -26,6 +32,7 @@ public enum FeatureType {
         this.movementCost = movementCost;
         this.isBlock = isBlock;
         this.turn=turn;
+        this.photo=photo;
     }
 
     public int getFood() {
@@ -54,5 +61,9 @@ public enum FeatureType {
 
     public int getTurn() {
         return turn;
+    }
+
+    public ImagePattern getPhoto() {
+        return photo;
     }
 }
