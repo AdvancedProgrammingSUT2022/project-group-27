@@ -167,7 +167,7 @@ public class GraphicOfGame extends Application {
         setIconForPlayer();
         setHappinessImage();
 
-        if (Game.getInstance().canWeGoNextTurn()) {
+        if (Game.getInstance().canWeNextTurn()) {
             nextTurn.setCursor(Cursor.HAND);
             nextTurn.setDisable(false);
         } else {

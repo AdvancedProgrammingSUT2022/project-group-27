@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Player;
 import model.Unit;
 import Enum.*;
@@ -65,6 +66,12 @@ public class UnitPanel extends Menus {
         stage.setScene(scene);
         stage.setTitle("Unit Menu");
         stage.show();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                game.initializing();
+            }
+        });
     }
 
     private ContextMenu buildContextMenu(Unit unit) {
@@ -263,5 +270,6 @@ public class UnitPanel extends Menus {
 
     public void back(MouseEvent mouseEvent) {
         stage.close();
+        game.initializing();
     }
 }
