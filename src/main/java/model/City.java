@@ -61,6 +61,16 @@ public class City {
         return false;
     }
 
+    public boolean doWeHaveThisLuxuryResource(LuxuryResource luxuryResource) {
+        for (Ground ground: rangeOfCity) {
+            for (LuxuryResource resource: ground.getLuxuryResources()) {
+                if (resource.name().equals(luxuryResource.name())) return true;
+            }
+        }
+
+        return false;
+    }
+
     public void addBuilding(Building building) {
         buildings.add(building);
     }
