@@ -314,7 +314,7 @@ public class Player {
                 goldDifference -= building.getMaintenance();
             }
         }
-        
+
         for (Unit unit : this.getUnits()) {
             goldDifference -= (double) unit.getMilitaryType().getCost() / 100;
         }
@@ -406,6 +406,12 @@ public class Player {
         int count = 0;
         
         return count;
+    }
+
+    public City getCapital() {
+        if (doWeHaveOurCapital()) return mainCapital;
+        else if (!cities.isEmpty()) return cities.get(0);
+        else return null;
     }
 
     public void setNumberOfPlayer(int numberOfPlayer) {
