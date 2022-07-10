@@ -178,7 +178,12 @@ public class GraphicOfGame extends Application {
         int cnt=0;
         int startingArz=GlobalVariables.arz+50;
         for (int i=gamePane.getChildren().size()-1;i>-1;i--){
-            if (gamePane.getChildren().get(i) instanceof GroundRectangle || gamePane.getChildren().get(i) instanceof FeatureRectangle) gamePane.getChildren().remove(i);
+            if (gamePane.getChildren().get(i) instanceof GroundRectangle || gamePane.getChildren().get(i) instanceof FeatureRectangle
+            || gamePane.getChildren().get(i) instanceof RiverRectangle) gamePane.getChildren().remove(i);
+        }
+        for (int i=0;i<River.getAllRivers().size();i++){
+            RiverRectangle riverRectangle=new RiverRectangle(River.getAllRivers().get(i).getFirstGround(),River.getAllRivers().get(i).getSecondGround());
+            gamePane.getChildren().add(riverRectangle);
         }
         for (int i=1;i<=GlobalVariables.numberOfTilesInColumn;i++){
             int startingTool=GlobalVariables.tool+8;
@@ -199,17 +204,7 @@ public class GraphicOfGame extends Application {
             }
             startingArz+=GlobalVariables.arz+8;
         }
-        /*
-        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
-            Ground ground=Ground.getGroundByNumber(i);
-            ground.deleteAdjacentGround();
-            for (int j=1;j<=GlobalVariables.numberOfTiles;j++){
-                if (i!=j && Ground.AreTheseTwoGroundAdjacent(ground,Ground.getGroundByNumber(j))){
-                    ground.addGroundToAdjacentGround(Ground.getGroundByNumber(j));
-                }
-            }
-        }
-        */
+
 
     }
 
