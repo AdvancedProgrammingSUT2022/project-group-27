@@ -48,6 +48,7 @@ public class GroundRectangle extends Polygon {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 setStroke(Color.AQUA);
+                System.out.println("khodesh :" +  ground.getNumber());
                 for (Ground ground1 : ground.getAdjacentGrounds()){
                     System.out.println(ground1.getNumber());
                 }

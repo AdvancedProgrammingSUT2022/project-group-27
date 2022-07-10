@@ -197,6 +197,15 @@ public class GraphicOfGame extends Application {
             }
             startingArz+=GlobalVariables.arz+8;
         }
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            Ground ground=Ground.getGroundByNumber(i);
+            ground.deleteAdjacentGround();
+            for (int j=1;j<=GlobalVariables.numberOfTiles;j++){
+                if (i!=j && Ground.AreTheseTwoGroundAdjacent(ground,Ground.getGroundByNumber(j))){
+                    ground.addGroundToAdjacentGround(Ground.getGroundByNumber(j));
+                }
+            }
+        }
     }
 
     private void setHover() {

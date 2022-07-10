@@ -273,8 +273,8 @@ public class Ground {
 
     public static boolean AreTheseTwoGroundAdjacent(Ground firstGround, Ground secondGround) {
         GlobalVariables globalVariables = new GlobalVariables();
-        return abs(firstGround.getxLocation() - secondGround.getxLocation()) <= GlobalVariables.tool
-                && abs(firstGround.getyLocation() - secondGround.getyLocation()) <= GlobalVariables.arz;
+        return (abs(firstGround.getxLocation() - secondGround.getxLocation()) <= GlobalVariables.tool*2+16
+                && abs(firstGround.getyLocation() - secondGround.getyLocation()) <= GlobalVariables.arz*2+8);
     }
 
     public static int distanceOfTheseTwoGround(Ground firstGround, Ground secondGround,Player player,Unit unitType) {
@@ -555,5 +555,9 @@ public class Ground {
                 return i;
         }
         return GlobalVariables.numberOfTiles;
+    }
+
+    public void deleteAdjacentGround() {
+        this.adjacentGrounds.clear();
     }
 }
