@@ -43,6 +43,10 @@ public class City {
         mainCapitalFor = player;
     }
 
+    public ArrayList<Building> getBuildings() {
+        return buildings;
+    }
+
     public boolean doWeHaveThisBuilding(BuildingsType buildingsType) {
         for (Building building: buildings) {
             if (building.name().equals(buildingsType.name())) return true;

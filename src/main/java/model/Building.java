@@ -20,6 +20,10 @@ public class Building implements Productions{
         return type.getCost();
     }
 
+    public int getMaintenance() {
+        return type.getMaintenance();
+    }
+
     @Override
     public String name() {
         return type.name();

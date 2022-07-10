@@ -54,4 +54,8 @@ public enum BuildingsType {
     public int getCost() {
         return cost;
     }
+
+    public int getMaintenance() {
+        return maintenance;
+    }
 }

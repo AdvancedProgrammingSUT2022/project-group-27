@@ -310,7 +310,11 @@ public class Player {
         double goldDifference = 0;
         for (City city : this.getCities()) {
             goldDifference += city.getGold();
+            for (Building building: city.getBuildings()) {
+                goldDifference -= building.getMaintenance();
+            }
         }
+        
         for (Unit unit : this.getUnits()) {
             goldDifference -= (double) unit.getMilitaryType().getCost() / 100;
         }
