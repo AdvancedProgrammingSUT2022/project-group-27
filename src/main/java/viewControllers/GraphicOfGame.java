@@ -205,7 +205,10 @@ public class GraphicOfGame extends Application {
             startingArz+=GlobalVariables.arz+8;
         }
 
-
+        City capital = Player.whichPlayerTurnIs().getCapital();
+        if (capital != null) {
+            //TODO show palace on it
+        }
     }
 
     private void setHover() {
