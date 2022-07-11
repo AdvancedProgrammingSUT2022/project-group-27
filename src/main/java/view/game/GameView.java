@@ -19,6 +19,7 @@ import static java.lang.Math.min;
 
 public class GameView {
     private Game controller;
+
     private ArrayList<User> playerUsers = new ArrayList<>();
 
     public GameView(ArrayList<User> playerUsers,int seed) {

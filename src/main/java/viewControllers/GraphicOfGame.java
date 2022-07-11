@@ -32,8 +32,8 @@ import static java.lang.Math.max;
 public class GraphicOfGame extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
-    public Pane gamePane;
-
+    public  Pane gamePane;
+    public static Pane gamePaneSecond;
     private Game controller;
     private ArrayList<User> playerUsers = new ArrayList<>();
 
@@ -105,6 +105,7 @@ public class GraphicOfGame extends Application {
 
     @FXML
     public void initialize() {
+        gamePaneSecond=gamePane;
         audio.play();
         audio.setOnEndOfMedia(new Runnable() {
             @Override
@@ -224,7 +225,8 @@ public class GraphicOfGame extends Application {
         for (int i=gamePane.getChildren().size()-1;i>-1;i--){
             if (gamePane.getChildren().get(i) instanceof GroundRectangle || gamePane.getChildren().get(i) instanceof FeatureRectangle
             || gamePane.getChildren().get(i) instanceof RiverRectangle ||
-                    gamePane.getChildren().get(i) instanceof VisitedGround) gamePane.getChildren().remove(i);
+                    gamePane.getChildren().get(i) instanceof VisitedGround
+            || gamePane.getChildren().get(i) instanceof UnitRectangle) gamePane.getChildren().remove(i);
         }
         for (int i=0;i<River.getAllRivers().size();i++){
             RiverRectangle riverRectangle=new RiverRectangle(River.getAllRivers().get(i).getFirstGround(),River.getAllRivers().get(i).getSecondGround());
@@ -249,6 +251,12 @@ public class GraphicOfGame extends Application {
             }
             startingArz+=GlobalVariables.arz+8;
         }
+        for (Player user : Player.getAllPlayers()){
+            for (Unit unit : user.getUnits()){
+                UnitRectangle unitRectangle = new UnitRectangle(unit);
+                gamePane.getChildren().add(unitRectangle);
+            }
+        }
         Player player=Player.whichPlayerTurnIs();
         player.handleClearToSee();
         player.handleVisitedGrounds();
@@ -259,6 +267,61 @@ public class GraphicOfGame extends Application {
                 System.out.println("visited");
             }
         }
+
+        City capital = Player.whichPlayerTurnIs().getCapital();
+        if (capital != null) {
+            //TODO show palace on it
+        }
+    }
+    public static void showMap(){
+        int cnt=0;
+        int startingArz=GlobalVariables.arz+50;
+        for (int i=gamePaneSecond.getChildren().size()-1;i>-1;i--){
+            if (gamePaneSecond.getChildren().get(i) instanceof GroundRectangle || gamePaneSecond.getChildren().get(i) instanceof FeatureRectangle
+                    || gamePaneSecond.getChildren().get(i) instanceof RiverRectangle ||
+                    gamePaneSecond.getChildren().get(i) instanceof VisitedGround
+                    || gamePaneSecond.getChildren().get(i) instanceof UnitRectangle) gamePaneSecond.getChildren().remove(i);
+        }
+        for (int i=0;i<River.getAllRivers().size();i++){
+            RiverRectangle riverRectangle=new RiverRectangle(River.getAllRivers().get(i).getFirstGround(),River.getAllRivers().get(i).getSecondGround());
+            gamePaneSecond.getChildren().add(riverRectangle);
+        }
+        for (int i=1;i<=GlobalVariables.numberOfTilesInColumn;i++){
+            int startingTool=GlobalVariables.tool+8;
+            if (i%2==1){
+                startingTool+=GlobalVariables.tool+GlobalVariables.tool/2+12;
+            }
+            for (int j=1;j<=GlobalVariables.numberOfTilesInRow;j++){
+                GlobalVariables.numberOfTiles=cnt+1;
+                cnt++;
+                GroundRectangle groundRectangle=new GroundRectangle(Ground.getGroundByNumber(cnt),startingArz,startingTool);
+                gamePaneSecond.getChildren().add(groundRectangle);
+                gamePaneSecond.getChildren().add(new FeatureRectangle(groundRectangle,startingArz,startingTool));
+                Ground ground=Ground.getGroundByNumber(cnt);
+                ground.setxLocation(startingArz);
+                ground.setyLocation(startingTool);
+                System.out.println(Ground.getGroundByNumber(cnt).getxLocation());
+                startingTool+=(GlobalVariables.tool+8)*3;
+            }
+            startingArz+=GlobalVariables.arz+8;
+        }
+        for (Player user : Player.getAllPlayers()){
+            for (Unit unit : user.getUnits()){
+                UnitRectangle unitRectangle = new UnitRectangle(unit);
+                gamePaneSecond.getChildren().add(unitRectangle);
+            }
+        }
+        Player player=Player.whichPlayerTurnIs();
+        player.handleClearToSee();
+        player.handleVisitedGrounds();
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            if (!player.getWasClearedToSeeGrounds().contains(Ground.getGroundByNumber(i))){
+                VisitedGround visitedGround=new VisitedGround(Ground.getGroundByNumber(i));
+                gamePaneSecond.getChildren().add(visitedGround);
+                System.out.println("visited");
+            }
+        }
+
         City capital = Player.whichPlayerTurnIs().getCapital();
         if (capital != null) {
             //TODO show palace on it

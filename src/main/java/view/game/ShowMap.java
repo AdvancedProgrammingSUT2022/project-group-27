@@ -23,9 +23,9 @@ public class ShowMap {
     }
 
     public void run() {
-        showMap(this.player);
+     //   showMap(this.player);
     }
-
+    /*
     private void showMap(Player player) {
         String[][] showMap = new String[globalVariables.surfaceHeight][globalVariables.surfaceWidth];
         for (int i = 0; i < globalVariables.surfaceHeight; i++) {
@@ -517,7 +517,7 @@ public class ShowMap {
 
         printMap(showMap, globalVariables);
     }
-
+    */
 
     private void printMap(String[][] showMap, GlobalVariables globalVariables) {
         for (int i = 1; i < globalVariables.surfaceHeight - 1; i++) {

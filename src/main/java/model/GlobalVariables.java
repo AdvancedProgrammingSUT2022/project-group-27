@@ -10,6 +10,7 @@ import static java.lang.Math.sqrt;
 
 public class GlobalVariables {
 
+
     public static int surfaceWidth = 2*209/3-32, surfaceHeight = 8*16;
     public static int numberOfTiles = 30;
     public static int numberOfTilesInRow=surfaceWidth/16;
@@ -53,7 +54,9 @@ public class GlobalVariables {
     public static final String MARSH = "/feature/marsh.jpg";
     public static final String OASIS = "/feature/OASIS.png";
     public static final String FOG = "/images/fogOfWar.jpeg";
-
+    public static final String SETTLER ="/images/units/SETTLER.png";
+    public static final String WARRIOR ="/images/units/WARRIOR.png";
+    public static UnitRectangle unitRectangle=null;
     public static ImagePattern getImagePattern(String url) {
         return new ImagePattern(new Image(ProfileController.class.getResource(url).toExternalForm()));
     }

@@ -1,5 +1,6 @@
 package model;
 
+import controller.Game;
 import controller.ProfileController;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -18,6 +19,8 @@ import javax.swing.text.StyledEditorKit;
 import Enum.FeatureType;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import view.game.GameView;
+import viewControllers.GraphicOfGame;
 
 import java.awt.*;
 
@@ -77,12 +80,22 @@ public class GroundRectangle extends Polygon {
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                final Stage preStage = new Stage();
-                VBox vBox = new VBox();
-                Scene scene = new Scene(vBox);
-                setInformation(vBox);
-                preStage.setScene(scene);
-                preStage.show();
+                if (GlobalVariables.unitRectangle==null) {
+                    final Stage preStage = new Stage();
+                    VBox vBox = new VBox();
+                    Scene scene = new Scene(vBox);
+                    setInformation(vBox);
+                    preStage.setScene(scene);
+                    preStage.show();
+                }
+                else{
+                    String s;
+                    if (GlobalVariables.unitRectangle.getUnit() instanceof MilitaryUnit) s="Military";
+                    else s="UnMilitary";
+                    Game.getInstance().moveUnits(GlobalVariables.unitRectangle.getUnit().getGround().getNumber(), ground.getNumber(), s);
+                    GraphicOfGame.showMap();
+                }
+
             }
         });
         this.update();
@@ -100,7 +113,7 @@ public class GroundRectangle extends Polygon {
             player.handleVisitedGrounds();
             //System.out.println("krutjhgiruthiruhtih" + player.getWasClearedToSeeGrounds().size());
             if (!player.getClearToSeeGrounds().contains(ground)) {
-               // this.setFill(FogOfWar.FOG.getColor());
+                this.setFill(FogOfWar.FOG.getColor());
             }
         }
     }
