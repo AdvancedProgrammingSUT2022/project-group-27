@@ -10,14 +10,13 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -26,6 +25,7 @@ import controller.Game;
 import viewControllers.Info.*;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 
 import static java.lang.Math.max;
 
@@ -147,9 +147,53 @@ public class GraphicOfGame extends Application {
         root.getStylesheets().add(Main.class.getResource("/css/game.css").toExternalForm());
         root.getStyleClass().add("background");
         Scene scene = new Scene(root);
+        KeyCombination keyCombination = new KeyCodeCombination(KeyCode.C, KeyCombination.SHIFT_DOWN);
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyCombination.match(keyEvent)) {
+                    final Stage preStage = new Stage();
+                    TextField textField = new TextField();
+                    textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                        @Override
+                        public void handle(KeyEvent keyEvent) {
+                            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                                String command = textField.getText();
+                                cheatCode(command);
+                                preStage.close();
+                            }
+                        }
+                    });
+                    Scene scene = new Scene(textField);
+                    preStage.setScene(scene);
+                    preStage.initOwner(stage);
+                    preStage.show();
+                }
+            }
+        });
         stage.setScene(scene);
         stage.setTitle("Ancient Civilization");
         stage.show();
+    }
+
+    private void cheatCode(String input) {
+        if (input.matches("^next turn ((--numberOfTurns)|(-n)) \\d+$")) {
+            String[] s=input.split(" +");
+            for (int i=0;i<Integer.parseInt(s[3]);i++) Player.nextTurn();
+        } else if (input.matches("^increase gold ((--numberOfGolds)|(-n)) \\d+$")){
+            String[] s=input.split(" +");
+            Player player=Player.whichPlayerTurnIs();
+            player.increaseGold(Integer.parseInt(s[3]));
+        } else if (input.matches("^increase happiness ((--numberOfHappiness)|(-n)) \\d+$")) {
+            String[] s=input.split(" +");
+            Player player=Player.whichPlayerTurnIs();
+            player.increaseHappiness(Integer.parseInt(s[3]));
+        } else if (input.matches("^increase score ((--numberOScore)|(-n)) \\d+$")) {
+            String[] s=input.split(" +");
+            Player player=Player.whichPlayerTurnIs();
+            player.getUser().increaseScore(Integer.parseInt(s[3]));
+        }
     }
 
     public void initializing() { //TODO it should run at every steps, every moves and ...
