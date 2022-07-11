@@ -179,7 +179,8 @@ public class GraphicOfGame extends Application {
         int startingArz=GlobalVariables.arz+50;
         for (int i=gamePane.getChildren().size()-1;i>-1;i--){
             if (gamePane.getChildren().get(i) instanceof GroundRectangle || gamePane.getChildren().get(i) instanceof FeatureRectangle
-            || gamePane.getChildren().get(i) instanceof RiverRectangle) gamePane.getChildren().remove(i);
+            || gamePane.getChildren().get(i) instanceof RiverRectangle ||
+                    gamePane.getChildren().get(i) instanceof VisitedGround) gamePane.getChildren().remove(i);
         }
         for (int i=0;i<River.getAllRivers().size();i++){
             RiverRectangle riverRectangle=new RiverRectangle(River.getAllRivers().get(i).getFirstGround(),River.getAllRivers().get(i).getSecondGround());
@@ -204,7 +205,16 @@ public class GraphicOfGame extends Application {
             }
             startingArz+=GlobalVariables.arz+8;
         }
-
+        Player player=Player.whichPlayerTurnIs();
+        player.handleClearToSee();
+        player.handleVisitedGrounds();
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            if (!player.getWasClearedToSeeGrounds().contains(Ground.getGroundByNumber(i))){
+                VisitedGround visitedGround=new VisitedGround(Ground.getGroundByNumber(i));
+                gamePane.getChildren().add(visitedGround);
+                System.out.println("visited");
+            }
+        }
         City capital = Player.whichPlayerTurnIs().getCapital();
         if (capital != null) {
             //TODO show palace on it

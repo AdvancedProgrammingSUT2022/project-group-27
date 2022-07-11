@@ -136,36 +136,11 @@ public class Player {
 
             if (ground.getGroundType().isBlock() && ground.unitsOfASpecificPlayerInThisGround(this).size() == 0)
                 continue;
-            for (int x = ground.getxLocation() - globalVariables.tool6Zelie; x <= ground.getxLocation() + globalVariables.tool6Zelie; x++) {
-                for (int y = ground.getyLocation() - globalVariables.arz6Zelie; y <= ground.getyLocation() + globalVariables.arz6Zelie; y++) {
-                    if (x == 0 && y == 0) continue;
-
-                    Ground newGround = Ground.getGroundByXY(x, y);
-                    if (newGround == null) continue;
-
-                    if (newGround.getxLocation() == 0 || newGround.getxLocation() == globalVariables.surfaceHeight - 1 || newGround.getyLocation() == 0
-                            || newGround.getyLocation() == globalVariables.surfaceWidth - 1) continue;
-
-                    boolean shouldWeAddThisGround = false;
-                    for (Ground clearToSeeGround : clearToSeeGrounds) {
-                        if (clearToSeeGround.equals(newGround)) {
-                            shouldWeAddThisGround = true;
-                            break;
-                        }
-                    }
-
-                    for (Ground value : newArray) {
-                        if (value.equals(newGround)) {
-                            shouldWeAddThisGround = true;
-                            break;
-                        }
-                    }
-
-                    if (shouldWeAddThisGround) continue;
-
-                    newArray.add(newGround);
-                }
+            for (Ground ground1 : ground.getAdjacentGrounds()){
+                if (newArray.contains(ground1) || clearToSeeGrounds.contains(ground1)) continue;
+                else newArray.add(ground1);
             }
+
         }
 
         clearToSeeGrounds.addAll(newArray);
@@ -226,6 +201,11 @@ public class Player {
         if (exist) return;
         Ground copyGround = ground.copyOfCurrentGround();
         wasClearedToSeeGrounds.add(copyGround);
+    }
+    public void handleVisitedGrounds(){
+        for (Ground ground : clearToSeeGrounds){
+            if (!wasClearedToSeeGrounds.contains(ground)) wasClearedToSeeGrounds.add(ground);
+        }
     }
 
     public boolean isThisGroundVisible(Ground ground) {

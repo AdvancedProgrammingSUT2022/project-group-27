@@ -49,4 +49,5 @@ public class GlobalVariables {
     public static final String JUNGLE = "/feature/jungle.jpg";
     public static final String MARSH = "/feature/marsh.jpg";
     public static final String OASIS = "/feature/OASIS.png";
+    public static final String FOG = "/images/fogOfWar.jpeg";
 }

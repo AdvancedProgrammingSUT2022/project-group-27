@@ -19,6 +19,8 @@ import Enum.FeatureType;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 public class GroundRectangle extends Polygon {
     private Ground ground;
     private int xLocation,yLocation;
@@ -91,6 +93,15 @@ public class GroundRectangle extends Polygon {
         if (ground.getGroundType()!=null) {
             ImagePattern background = ground.getGroundType().getColor();
             this.setFill(background);
+        }
+        if (Player.getAllPlayers().size()!=0) {
+            Player player = Player.whichPlayerTurnIs();
+            player.handleClearToSee();
+            player.handleVisitedGrounds();
+            //System.out.println("krutjhgiruthiruhtih" + player.getWasClearedToSeeGrounds().size());
+            if (!player.getClearToSeeGrounds().contains(ground)) {
+               // this.setFill(FogOfWar.FOG.getColor());
+            }
         }
     }
 
