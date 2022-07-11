@@ -279,6 +279,7 @@ public class Player {
     }
 
     public void addTechnology(TechnologyType technologyType){
+        underConstructionTechnology = null;
         this.technologyType.add(technologyType);
     }
 
