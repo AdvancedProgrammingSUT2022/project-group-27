@@ -11,6 +11,8 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -444,10 +446,39 @@ public class CityPanel extends Menus {
     }
 
     private void showOutputOfCity(City city, VBox vBox) {
-        vBox.getChildren().add(new Label("How much food does this city store? " + city.getSavedFood()));
-        vBox.getChildren().add(new Label("How much production does this city have? " + city.getProduction()));
-        vBox.getChildren().add(new Label("How much gold does this city have? " + city.getGold()));
-        vBox.getChildren().add(new Label("How much science does this city have? " + city.getScience()));
+        Label food = new Label("How much food does this city store? " + city.getSavedFood());
+        Label production = new Label("How much production does this city have? " + city.getProduction());
+        Label gold = new Label("How much gold does this city have? " + city.getGold());
+        Label science = new Label("How much science does this city have? " + city.getScience());
+
+        Image foodImage = new Image(GraphicOfGame.class.getResource("/iconsOfGame/food.jpg").toExternalForm());
+        ImageView foodIcon = new ImageView(foodImage);
+        foodIcon.setFitWidth(50);
+        foodIcon.setFitHeight(50);
+        food.setGraphic(foodIcon);
+
+        Image productionImage = new Image(GraphicOfGame.class.getResource("/iconsOfGame/production.jpeg").toExternalForm());
+        ImageView productionIcon = new ImageView(productionImage);
+        productionIcon.setFitWidth(50);
+        productionIcon.setFitHeight(50);
+        production.setGraphic(productionIcon);
+
+        Image coin = new Image(GraphicOfGame.class.getResource("/iconsOfGame/coinIcon.png").toExternalForm());
+        ImageView coinIcon = new ImageView(coin);
+        coinIcon.setFitWidth(50);
+        coinIcon.setFitHeight(50);
+        gold.setGraphic(coinIcon);
+
+        Image scienceImage = new Image(GraphicOfGame.class.getResource("/iconsOfGame/science.png.png").toExternalForm());
+        ImageView scienceIcon = new ImageView(scienceImage);
+        scienceIcon.setFitHeight(50);
+        scienceIcon.setFitWidth(50);
+        science.setGraphic(scienceIcon);
+
+        vBox.getChildren().add(food);
+        vBox.getChildren().add(production);
+        vBox.getChildren().add(gold);
+        vBox.getChildren().add(science);
     }
 
     private void removeFromWork(City city, VBox vBox) {
