@@ -1,5 +1,8 @@
 package model;
 
+import controller.ProfileController;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import view.game.GameView;
 
 import static java.lang.Math.abs;
@@ -50,4 +53,9 @@ public class GlobalVariables {
     public static final String MARSH = "/feature/marsh.jpg";
     public static final String OASIS = "/feature/OASIS.png";
     public static final String FOG = "/images/fogOfWar.jpeg";
+
+    public static ImagePattern getImagePattern(String url) {
+        return new ImagePattern(new Image(ProfileController.class.getResource(url).toExternalForm()));
+    }
+
 }
