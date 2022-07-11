@@ -128,7 +128,7 @@ public class GroundRectangle extends Polygon {
                 ground.getGroundType().getGold() + "on food: " + ground.getGroundType().getFood() + "on production: " +
                 ground.getGroundType().getProduction()));
 
-        vBox.getChildren().add(new Label(ground.getFeatureType().name() + " the change that it has on gold: " +
+        if (!ground.getFeatureType().name().equals("NOTHING")) vBox.getChildren().add(new Label(ground.getFeatureType().name() + " the change that it has on gold: " +
                 ground.getFeatureType().getGold() + "on food: " + ground.getFeatureType().getFood() + "on production: " +
                 ground.getFeatureType().getProduction()));
     }
