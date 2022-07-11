@@ -27,10 +27,10 @@ public class RiverRectangle extends Polygon {
         }
         if (y1!=y2) {
             this.getPoints().addAll(new Double[]{
-                    Double.valueOf(y1) + 7, Double.valueOf(x1) + 7,
-                    Double.valueOf(y1) + 7, Double.valueOf(x2) - 7,
-                    Double.valueOf(y2) - 7, Double.valueOf(x2) - 7,
-                    Double.valueOf(y2) - 7, Double.valueOf(x1) + 7,
+                    Double.valueOf(y1) + 8, Double.valueOf(x1) + 8,
+                    Double.valueOf(y1) + 8, Double.valueOf(x2) - 8,
+                    Double.valueOf(y2) - 8, Double.valueOf(x2) - 8,
+                    Double.valueOf(y2) - 8, Double.valueOf(x1) + 8,
             });
         }
         else{
