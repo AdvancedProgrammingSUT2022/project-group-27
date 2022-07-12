@@ -50,6 +50,12 @@ public class UnitRectangle extends Circle {
                 hbox = new HBox(circle, label);
                 unitSelect = unit;
 
+                if (unit.getPlayer() != Player.whichPlayerTurnIs()) {
+                    hbox = new HBox();
+                    unitSelect = null;
+                    stage.close();
+                }
+
                 if (GlobalVariables.unitRectangle==null){
                     GlobalVariables.unitRectangle=UnitRectangle.this;
                     UnitRectangle.this.setStroke(Color.RED);
