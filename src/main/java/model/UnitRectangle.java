@@ -2,10 +2,12 @@ package model;
 
 
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -86,8 +88,38 @@ public class UnitRectangle extends Circle {
                 }
             }
         });
+
+        setHoverForWorker(unit);
     }
 
+    private void setHoverForWorker(Unit unit) {
+        if (!(unit instanceof Worker)) return;
+        Stage stage = new Stage();
+        stage.setMinHeight(100);
+        stage.setMinWidth(100);
+
+        this.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Improvement improvement = unit.getGround().getImprovementTypeInProgress();
+                Label label;
+                if (improvement == null) label = new Label("nothing");
+                else label = new Label(improvement.getImprovementType().name() + ": " + improvement.getTurnRemained());
+
+                label.setAlignment(Pos.CENTER);
+                label.setStyle("-fx-background-color: Black; -fx-text-fill: white");
+                stage.setScene(new Scene(label));
+                stage.show();
+            }
+        });
+
+        this.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                stage.close();
+            }
+        });
+    }
 
     private void addingSettler(SettlerUnit settlerUnit) {
         Button button = new Button("create city");
