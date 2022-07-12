@@ -143,8 +143,11 @@ public abstract class Unit implements Productions {
             this.destination = null;
             return false;
         }
+        if (this.mp<=0){
+            return true;
+        }
         System.out.println(distanceFloyd[this.getGround().getNumber()][this.destination.getNumber()]);
-        Ground middle = this.getGround().getAdjacentGrounds().get(0);
+        Ground middle = this.getGround();
         if (middle.getNumber()==this.getGround().getNumber()) middle=this.getGround().getAdjacentGrounds().get(1);
         for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
             Ground ground1 = Ground.getGroundByNumber(i);
@@ -183,6 +186,7 @@ public abstract class Unit implements Productions {
                 }
             }
         }
+        /*
         while (this.getGround().getNumber()!=middle.getNumber()){
             for (Ground betweenGround : this.ground.getAdjacentGrounds()){
                 if (betweenGround.getNumber()==this.ground.getNumber()) continue;
@@ -197,6 +201,12 @@ public abstract class Unit implements Productions {
                 }
             }
         }
+
+         */
+        this.mp-=distanceFloyd[this.ground.getNumber()][middle.getNumber()];
+        System.out.println("Mp : " + this.mp + " " + this.ground.getNumber() + " " + middle.getNumber() + " " + this.destination.getNumber());
+        System.out.println(" rwutghirhgirhtighriguhrituhgirtuhgirthgirthgirtgh " + distanceFloyd[this.ground.getNumber()][this.destination.getNumber()] + " " + distanceFloyd[this.ground.getNumber()][middle.getNumber()]);
+        this.ground=middle;
         if (this.getGround().getNumber()==this.destination.getNumber()) this.destination=null;
         if (this.ground.getHasRuin()) {
             this.ground.implementRuin(this.player);
