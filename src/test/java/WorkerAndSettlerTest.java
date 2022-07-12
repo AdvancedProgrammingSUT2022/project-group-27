@@ -29,7 +29,7 @@ public class WorkerAndSettlerTest {
         Ground ground = mock(Ground.class);
         Player player = mock(Player.class);
         SettlerUnit settlerUnit = new SettlerUnit(ground, player);
-        doNothing().when(player).addCityToThisGround(ground);
+        doNothing().when(player).addCityToThisGround(ground, "...");
 
         settlerUnit.buildCity("hello");
     }

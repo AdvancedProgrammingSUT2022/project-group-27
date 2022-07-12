@@ -258,7 +258,7 @@ public class Game extends Controller {
         if (Ground.getGroundByNumber(secondGroundNumber).getGroundType().isBlock()) exit=true;
         for (Unit unit : Ground.getGroundByNumber(secondGroundNumber).unitsInThisGround()) {
             if (unit.getGround().getNumber() == secondGroundNumber && ((unit instanceof MilitaryUnit && type.equals("Military"))
-                    || (type.equals("UnMilitary")))) {
+                    || (type.equals("UnMilitary")) && !player.equals(unit.getPlayer()))) {
                 exit = true;
                 break;
             }

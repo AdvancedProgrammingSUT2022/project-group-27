@@ -215,7 +215,7 @@ public class Player {
         return false;
     }
 
-    public void addCityToThisGround(Ground ground){
+    public void addCityToThisGround(Ground ground, String name){
 
         boolean settlerExist=false;
         for (Unit unit : this.getUnits()){
@@ -234,7 +234,7 @@ public class Player {
         }
         if (canWeCreateCity){
             /// TODO : change something;
-            City city = new City(ground,"something", this);
+            City city = new City(ground, name, this);
             if (cities.size() == 0) {
                 city.setMainCapital();
                 mainCapital = city;

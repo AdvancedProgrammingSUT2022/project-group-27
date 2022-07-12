@@ -225,15 +225,16 @@ public class GraphicOfGame extends Application {
         setMenus();
         int cnt=0;
         int startingArz=GlobalVariables.arz+50;
-        for (int i=gamePane.getChildren().size()-1;i>-1;i--){
-            if (gamePane.getChildren().get(i) instanceof GroundRectangle || gamePane.getChildren().get(i) instanceof FeatureRectangle
-            || gamePane.getChildren().get(i) instanceof RiverRectangle ||
-                    gamePane.getChildren().get(i) instanceof VisitedGround
-            || gamePane.getChildren().get(i) instanceof UnitRectangle) gamePane.getChildren().remove(i);
+        for (int i=gamePaneSecond.getChildren().size()-1;i>-1;i--){
+            if (gamePaneSecond.getChildren().get(i) instanceof GroundRectangle || gamePaneSecond.getChildren().get(i) instanceof FeatureRectangle
+                    || gamePaneSecond.getChildren().get(i) instanceof RiverRectangle ||
+                    gamePaneSecond.getChildren().get(i) instanceof VisitedGround
+                    || gamePaneSecond.getChildren().get(i) instanceof UnitRectangle) gamePaneSecond.getChildren().remove(i);
         }
+
         for (int i=0;i<River.getAllRivers().size();i++){
             RiverRectangle riverRectangle=new RiverRectangle(River.getAllRivers().get(i).getFirstGround(),River.getAllRivers().get(i).getSecondGround());
-            gamePane.getChildren().add(riverRectangle);
+            gamePaneSecond.getChildren().add(riverRectangle);
         }
         for (int i=1;i<=GlobalVariables.numberOfTilesInColumn;i++){
             int startingTool=GlobalVariables.tool+8;
@@ -244,8 +245,8 @@ public class GraphicOfGame extends Application {
                 GlobalVariables.numberOfTiles=cnt+1;
                 cnt++;
                 GroundRectangle groundRectangle=new GroundRectangle(Ground.getGroundByNumber(cnt),startingArz,startingTool);
-                gamePane.getChildren().add(groundRectangle);
-                gamePane.getChildren().add(new FeatureRectangle(groundRectangle,startingArz,startingTool));
+                gamePaneSecond.getChildren().add(groundRectangle);
+                gamePaneSecond.getChildren().add(new FeatureRectangle(groundRectangle,startingArz,startingTool));
                 Ground ground=Ground.getGroundByNumber(cnt);
                 ground.setxLocation(startingArz);
                 ground.setyLocation(startingTool);
@@ -256,8 +257,10 @@ public class GraphicOfGame extends Application {
         }
         for (Player user : Player.getAllPlayers()){
             for (Unit unit : user.getUnits()){
-                UnitRectangle unitRectangle = new UnitRectangle(unit);
-                if (player.getClearToSeeGrounds().contains(unit.getGround())) gamePane.getChildren().add(unitRectangle);
+                if (player.getClearToSeeGrounds().contains(unit.getGround())) {
+                    UnitRectangle unitRectangle = new UnitRectangle(unit);
+                    gamePaneSecond.getChildren().add(unitRectangle);
+                }
             }
         }
         for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
@@ -312,8 +315,10 @@ public class GraphicOfGame extends Application {
         }
         for (Player user : Player.getAllPlayers()){
             for (Unit unit : user.getUnits()){
-                UnitRectangle unitRectangle = new UnitRectangle(unit);
-                gamePaneSecond.getChildren().add(unitRectangle);
+                if (player.getClearToSeeGrounds().contains(unit.getGround())) {
+                    UnitRectangle unitRectangle = new UnitRectangle(unit);
+                    gamePaneSecond.getChildren().add(unitRectangle);
+                }
             }
         }
         for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
