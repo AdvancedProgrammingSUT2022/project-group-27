@@ -219,6 +219,9 @@ public class GraphicOfGame extends Application {
             nextTurn.setCursor(Cursor.DISAPPEAR);
             nextTurn.setDisable(true);
         }
+        Player player=Player.whichPlayerTurnIs();
+        player.handleClearToSee();
+        player.handleVisitedGrounds();
         setMenus();
         int cnt=0;
         int startingArz=GlobalVariables.arz+50;
@@ -254,17 +257,15 @@ public class GraphicOfGame extends Application {
         for (Player user : Player.getAllPlayers()){
             for (Unit unit : user.getUnits()){
                 UnitRectangle unitRectangle = new UnitRectangle(unit);
-                gamePane.getChildren().add(unitRectangle);
+                if (player.getClearToSeeGrounds().contains(unit.getGround())) gamePane.getChildren().add(unitRectangle);
             }
         }
-        Player player=Player.whichPlayerTurnIs();
-        player.handleClearToSee();
-        player.handleVisitedGrounds();
         for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
-            if (!player.getWasClearedToSeeGrounds().contains(Ground.getGroundByNumber(i))){
+            if (!player.getClearToSeeGrounds().contains(Ground.getGroundByNumber(i)) && player.getWasClearedToSeeGrounds().contains(Ground.getGroundByNumber(i))){
+
                 VisitedGround visitedGround=new VisitedGround(Ground.getGroundByNumber(i));
-                gamePane.getChildren().add(visitedGround);
-                System.out.println("visited");
+                gamePaneSecond.getChildren().add(visitedGround);
+                System.out.println("higuhurhgrthgirh" + player.getClearToSeeGrounds().size() + " " + player.getWasClearedToSeeGrounds().size());
             }
         }
 
@@ -274,6 +275,9 @@ public class GraphicOfGame extends Application {
         }
     }
     public static void showMap(){
+        Player player=Player.whichPlayerTurnIs();
+        player.handleClearToSee();
+        player.handleVisitedGrounds();
         int cnt=0;
         int startingArz=GlobalVariables.arz+50;
         for (int i=gamePaneSecond.getChildren().size()-1;i>-1;i--){
@@ -282,6 +286,7 @@ public class GraphicOfGame extends Application {
                     gamePaneSecond.getChildren().get(i) instanceof VisitedGround
                     || gamePaneSecond.getChildren().get(i) instanceof UnitRectangle) gamePaneSecond.getChildren().remove(i);
         }
+
         for (int i=0;i<River.getAllRivers().size();i++){
             RiverRectangle riverRectangle=new RiverRectangle(River.getAllRivers().get(i).getFirstGround(),River.getAllRivers().get(i).getSecondGround());
             gamePaneSecond.getChildren().add(riverRectangle);
@@ -311,14 +316,12 @@ public class GraphicOfGame extends Application {
                 gamePaneSecond.getChildren().add(unitRectangle);
             }
         }
-        Player player=Player.whichPlayerTurnIs();
-        player.handleClearToSee();
-        player.handleVisitedGrounds();
         for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
-            if (!player.getWasClearedToSeeGrounds().contains(Ground.getGroundByNumber(i))){
+            if (!player.getClearToSeeGrounds().contains(Ground.getGroundByNumber(i)) && player.getWasClearedToSeeGrounds().contains(Ground.getGroundByNumber(i))){
+
                 VisitedGround visitedGround=new VisitedGround(Ground.getGroundByNumber(i));
                 gamePaneSecond.getChildren().add(visitedGround);
-                System.out.println("visited");
+                System.out.println("higuhurhgrthgirh" + player.getClearToSeeGrounds().size() + " " + player.getWasClearedToSeeGrounds().size());
             }
         }
 

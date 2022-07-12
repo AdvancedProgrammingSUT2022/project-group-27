@@ -112,7 +112,7 @@ public class GroundRectangle extends Polygon {
             player.handleClearToSee();
             player.handleVisitedGrounds();
             //System.out.println("krutjhgiruthiruhtih" + player.getWasClearedToSeeGrounds().size());
-            if (!player.getClearToSeeGrounds().contains(ground)) {
+            if (!player.getWasClearedToSeeGrounds().contains(ground)) {
                 this.setFill(FogOfWar.FOG.getColor());
             }
         }

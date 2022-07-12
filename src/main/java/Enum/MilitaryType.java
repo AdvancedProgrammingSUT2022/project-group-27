@@ -22,7 +22,7 @@ public enum MilitaryType {
     SPEARMAN(50, "Melee", 7, 0, 0, 2,
             new ArrayList<StrategicResource>(), TechnologyType.BRONZE_WORKING, GlobalVariables.getImagePattern("/images/units/SPEARMAN.png")),
     WARRIOR(40, "Melee", 6, 0, 0, 2,
-            new ArrayList<StrategicResource>(), null, GlobalVariables.getImagePattern("/images/units/ARCHER.png")),
+            new ArrayList<StrategicResource>(), null, GlobalVariables.getImagePattern("/images/units/SETTLER.png")),
     CATAPULT(100, "Siege", 4, 14, 2, 2,
             new ArrayList<StrategicResource>(List.of(StrategicResource.IRON)), TechnologyType.MATHEMATICS, GlobalVariables.getImagePattern("/images/units/CATAPULT.png")),
     HORSEMAN(80, "Mounted", 12, 0, 0, 4,
