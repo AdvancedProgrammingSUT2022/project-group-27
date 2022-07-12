@@ -56,7 +56,7 @@ public class Game extends Controller {
             if (city.getRemainedTurnsToBuild() == 0) {
                 city.finishedConstructed();
                 UnitController.spawnUnit(city);
-                return false;
+                //return false;
             }
         }
         return true;
@@ -89,14 +89,19 @@ public class Game extends Controller {
     public boolean canWeGoNextTurn(){
         Player player = Player.whichPlayerTurnIs();
         if (!player.isAlive()) return true;
-        if (!isLimitationOkInCities(player)) {
-            new Notification("One of your cities doesn't obey the rule of one unit of each type limitation.",
-                    Player.getCounterOfNextRound(), player);
-            return false;
-        }
 
         if (!decreaseTurnOfConstruction(player)) {
             new Notification("Your construction is finished. So, you should build a new one.",
+                    Player.getCounterOfNextRound(), player);
+            if (!isLimitationOkInCities(player)) {
+                new Notification("One of your cities doesn't obey the rule of one unit of each type limitation.",
+                        Player.getCounterOfNextRound(), player);
+            }
+            return false;
+        }
+
+        if (!isLimitationOkInCities(player)) {
+            new Notification("One of your cities doesn't obey the rule of one unit of each type limitation.",
                     Player.getCounterOfNextRound(), player);
             return false;
         }
