@@ -3,7 +3,11 @@ package model;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -48,6 +52,7 @@ public class UnitRectangle extends Circle {
                         " status: " + unit.getStatus());
 
                 hbox = new HBox(circle, label);
+                if (unit instanceof SettlerUnit) addingSettler((SettlerUnit) unit);
                 unitSelect = unit;
 
                 if (unit.getPlayer() != Player.whichPlayerTurnIs()) {
@@ -83,4 +88,31 @@ public class UnitRectangle extends Circle {
         });
     }
 
+
+    private void addingSettler(SettlerUnit settlerUnit) {
+        Button button = new Button("create city");
+        button.setDisable(City.findCityByGround(unit.getGround(), unit.getPlayer()) != null);
+
+        hbox.getChildren().add(button);
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hbox.getChildren().remove(button);
+                TextField textField = new TextField();
+                textField.setPromptText("enter city name");
+                hbox.getChildren().add(textField);
+                textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent keyEvent) {
+                        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                            settlerUnit.buildCity(textField.getText());
+                            stage.close();
+                            GraphicOfGame.showMap();
+                            //TODO show result by popup
+                        }
+                    }
+                });
+            }
+        });
+    }
 }

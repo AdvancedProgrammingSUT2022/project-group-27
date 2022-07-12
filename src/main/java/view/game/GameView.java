@@ -149,7 +149,7 @@ public class GameView {
     }
     private void createCity(int groundNumber){
         Player player=Player.whichPlayerTurnIs();
-        player.addCityToThisGround(Ground.getGroundByNumber(groundNumber));
+        player.addCityToThisGround(Ground.getGroundByNumber(groundNumber), "....");
         System.out.println(player.getCities().size());
 
     }
