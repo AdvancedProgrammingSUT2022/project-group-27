@@ -1,24 +1,30 @@
 package model;
 
 
+import controller.Game;
+import controller.UnitController;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import viewControllers.GraphicOfGame;
+import Enum.*;
+
+import java.util.ArrayList;
 
 public class UnitRectangle extends Circle {
+    private Game controller=Game.getInstance();
     private Unit unit;
     private static HBox hbox;
     private static Unit unitSelect = null;
@@ -57,6 +63,8 @@ public class UnitRectangle extends Circle {
                 if (unit instanceof SettlerUnit) addingSettler((SettlerUnit) unit);
                 unitSelect = unit;
 
+                if (unit instanceof Worker) setContextMenu((Worker) unit).show(UnitRectangle.this, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+
                 if (unit.getPlayer() != Player.whichPlayerTurnIs()) {
                     hbox = new HBox();
                     unitSelect = null;
@@ -90,6 +98,134 @@ public class UnitRectangle extends Circle {
         });
 
         setHoverForWorker(unit);
+    }
+
+    private void alertSuccess(String name) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Success");
+        alert.setContentText(name + " happens successfully");
+        alert.show();
+    }
+
+    private ContextMenu setContextMenu(Worker worker) {
+        final ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem clearLand = new MenuItem("clear land");
+        clearLand.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                worker.setWorking(true);
+                controller.clearLand(worker.getGround());
+                alertSuccess("clear land");
+            }
+        });
+
+        MenuItem buildRoad = new MenuItem("build road");
+        buildRoad.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                worker.setWorking(true);
+                controller.buildRoad(worker.getGround());
+                alertSuccess("build road");
+            }
+        });
+
+        MenuItem buildRailway = new MenuItem("build railway");
+        buildRailway.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                worker.setWorking(true);
+                controller.buildRailway(worker.getGround());
+                alertSuccess("build railway");
+            }
+        });
+
+        MenuItem improvementMenu = new MenuItem("improvement menu");
+        improvementMenu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                setImprovementMenu(worker, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
+        MenuItem delete = new MenuItem("delete road and railway");
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                worker.setWorking(true);
+                worker.getGround().deleteRoadAndRailway();
+                alertSuccess("delete road and railway");
+            }
+        });
+
+        MenuItem repair = new MenuItem("repair");
+        repair.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (worker.getGround().getImprovementType()==null){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("No Improvement");
+                    alert.setContentText("Unfortunately, you don't have any improvement here");
+                    alert.show();
+                } else {
+                    worker.setWorking(true);
+                    UnitController.freePlundering(worker);
+                    alertSuccess("repair");
+                }
+            }
+        });
+
+        contextMenu.getItems().add(clearLand);
+        contextMenu.getItems().add(buildRoad);
+        contextMenu.getItems().add(buildRailway);
+        contextMenu.getItems().add(improvementMenu);
+        contextMenu.getItems().add(delete);
+        contextMenu.getItems().add(repair);
+        return contextMenu;
+    }
+
+    private void setImprovementMenu(Worker worker, VBox vBox) {
+        Improvement improvementInProgress = worker.getGround().getImprovementTypeInProgress();
+
+        if (improvementInProgress != null) vBox.getChildren().add(new Label("The improvement that you have here is: " +
+                improvementInProgress.getImprovementType().name() + "turns in progress: " + improvementInProgress.getTurnRemained())); //TODO test if .name work as we want
+
+        ArrayList<ImprovementType> list = worker.getGround().listOfImprovementTypes();
+        Button button = new Button("list of improvement");
+        vBox.getChildren().add(button);
+
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                improvementContextMenu(list, worker).show(button, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+            }
+        });
+    }
+
+    private ContextMenu improvementContextMenu(ArrayList<ImprovementType> list, Worker worker) {
+        final ContextMenu contextMenu = new ContextMenu();
+
+        for (int i = 0; i < list.size(); i++){
+            MenuItem menuItem = new MenuItem(list.get(i).name());
+            Integer I = i;
+            menuItem.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    worker.getGround().setImprovementTypeInProgress(list.get(I));
+                    worker.setWorking(true);
+                }
+            });
+
+            contextMenu.getItems().add(menuItem);
+        }
+
+        return contextMenu;
     }
 
     private void setHoverForWorker(Unit unit) {
@@ -140,7 +276,7 @@ public class UnitRectangle extends Circle {
                             settlerUnit.buildCity(textField.getText());
                             stage.close();
                             GraphicOfGame.showMap();
-                            //TODO show result by popup
+                            alertSuccess("create city");
                         }
                     }
                 });

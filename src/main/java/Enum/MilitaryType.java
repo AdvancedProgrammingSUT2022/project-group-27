@@ -10,7 +10,7 @@ import java.util.List;
 
 public enum MilitaryType {
     WORKER(70, "Civilian", 0, 0, 0, 2,
-            new ArrayList<StrategicResource>(), null, GlobalVariables.getImagePattern("/images/units/WORKER.png")),
+            new ArrayList<StrategicResource>(), null, GlobalVariables.getImagePattern("/images/units/SETTLER.png")),
     SETTLER(89, "Civilian", 0, 0, 0, 2,
             new ArrayList<StrategicResource>(), null, new ImagePattern(new Image(ProfileController.class.getResource(GlobalVariables.SETTLER).toExternalForm()))),
     ARCHER(70, "Archery", 4, 6, 2, 2,

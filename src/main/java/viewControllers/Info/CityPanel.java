@@ -48,12 +48,6 @@ public class CityPanel extends Menus {
         firstText.setStyle("-fx-text-fill:  #b71135; -fx-font-size: 20; -fx-background-color: rgba(255, 255, 255, 0.61); -fx-font-weight: bold");
         list.getChildren().add(firstText);
 
-        //For Test
-        if (player.getCities().size() == 0) {
-            City city = new City(Ground.getGroundByNumber(15), "happy", player);
-            player.getCities().add(city);
-        }
-        //
         addToList();
         back.setCursor(Cursor.HAND);
     }
