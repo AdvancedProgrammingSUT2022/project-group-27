@@ -229,7 +229,8 @@ public class GraphicOfGame extends Application {
             if (gamePaneSecond.getChildren().get(i) instanceof GroundRectangle || gamePaneSecond.getChildren().get(i) instanceof FeatureRectangle
                     || gamePaneSecond.getChildren().get(i) instanceof RiverRectangle ||
                     gamePaneSecond.getChildren().get(i) instanceof VisitedGround
-                    || gamePaneSecond.getChildren().get(i) instanceof UnitRectangle) gamePaneSecond.getChildren().remove(i);
+                    || gamePaneSecond.getChildren().get(i) instanceof UnitRectangle ||
+                    gamePaneSecond.getChildren().get(i) instanceof CityRectangle) gamePaneSecond.getChildren().remove(i);
         }
 
         for (int i=0;i<River.getAllRivers().size();i++){
@@ -254,6 +255,10 @@ public class GraphicOfGame extends Application {
                 startingTool+=(GlobalVariables.tool+8)*3;
             }
             startingArz+=GlobalVariables.arz+8;
+        }
+        for (City city : player.getCities()) {
+            CityRectangle cityRectangle = new CityRectangle(city);
+            gamePaneSecond.getChildren().add(cityRectangle);
         }
         for (Player user : Player.getAllPlayers()){
             for (Unit unit : user.getUnits()){
@@ -287,7 +292,8 @@ public class GraphicOfGame extends Application {
             if (gamePaneSecond.getChildren().get(i) instanceof GroundRectangle || gamePaneSecond.getChildren().get(i) instanceof FeatureRectangle
                     || gamePaneSecond.getChildren().get(i) instanceof RiverRectangle ||
                     gamePaneSecond.getChildren().get(i) instanceof VisitedGround
-                    || gamePaneSecond.getChildren().get(i) instanceof UnitRectangle) gamePaneSecond.getChildren().remove(i);
+                    || gamePaneSecond.getChildren().get(i) instanceof UnitRectangle
+                    || gamePaneSecond.getChildren().get(i) instanceof CityRectangle) gamePaneSecond.getChildren().remove(i);
         }
 
         for (int i=0;i<River.getAllRivers().size();i++){
@@ -312,6 +318,10 @@ public class GraphicOfGame extends Application {
                 startingTool+=(GlobalVariables.tool+8)*3;
             }
             startingArz+=GlobalVariables.arz+8;
+        }
+        for (City city : player.getCities()) {
+            CityRectangle cityRectangle = new CityRectangle(city);
+            gamePaneSecond.getChildren().add(cityRectangle);
         }
         for (Player user : Player.getAllPlayers()){
             for (Unit unit : user.getUnits()){
