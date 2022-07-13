@@ -389,8 +389,9 @@ public class GraphicOfGame extends Application {
         setMilitaryPanel();
         setEconomicPanel();
         setWinPage();
+        setDiplomacyPanel();
 
-        //TODO ... diplomacyInformationPanel, winPanel, tradingPanel, diplomacyPanel
+        //TODO ... diplomacyInformationPanel, tradingPanel
     }
 
     private void setWinPage() {
@@ -401,6 +402,21 @@ public class GraphicOfGame extends Application {
                 WinPage.setPlayer(Player.whichPlayerTurnIs());
                 try {
                     winPage.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void setDiplomacyPanel() {
+        diplomacyPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                DiplomacyPanel diplomacyPanel = new DiplomacyPanel();
+                DiplomacyPanel.setPlayer(Player.whichPlayerTurnIs());
+                try {
+                    diplomacyPanel.start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
