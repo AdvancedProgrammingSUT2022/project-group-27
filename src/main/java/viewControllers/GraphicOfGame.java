@@ -148,52 +148,57 @@ public class GraphicOfGame extends Application {
         root.getStylesheets().add(Main.class.getResource("/css/game.css").toExternalForm());
         root.getStyleClass().add("background");
         Scene scene = new Scene(root);
-        KeyCombination keyCombination = new KeyCodeCombination(KeyCode.C, KeyCombination.SHIFT_DOWN);
-
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyCombination.match(keyEvent)) {
-                    final Stage preStage = new Stage();
-                    TextField textField = new TextField();
-                    textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                        @Override
-                        public void handle(KeyEvent keyEvent) {
-                            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-                                String command = textField.getText();
-                                cheatCode(command);
-                                preStage.close();
-                            }
-                        }
-                    });
-                    Scene scene = new Scene(textField);
-                    preStage.setScene(scene);
-                    preStage.initOwner(stage);
-                    preStage.show();
-                }
-            }
-        });
         stage.setScene(scene);
         stage.setTitle("Ancient Civilization");
         stage.show();
     }
 
+    @FXML
+    private void setCheatCode(KeyEvent keyEvent) {
+        KeyCombination keyCombination = new KeyCodeCombination(KeyCode.C, KeyCombination.SHIFT_DOWN);
+
+        if (keyCombination.match(keyEvent)) {
+            final Stage preStage = new Stage();
+            TextField textField = new TextField();
+            textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                        String command = textField.getText();
+                        cheatCode(command);
+                        preStage.close();
+                    }
+                }
+            });
+            Scene scene = new Scene(textField);
+            preStage.setScene(scene);
+            preStage.initOwner(stage);
+            preStage.show();
+        }
+    }
+
     private void cheatCode(String input) {
         if (input.matches("^next turn ((--numberOfTurns)|(-n)) \\d+$")) {
             String[] s=input.split(" +");
-            for (int i=0;i<Integer.parseInt(s[3]);i++) Player.nextTurn();
+            for (int i = 0; i < Integer.parseInt(s[3]); i++) {
+                Player.nextTurn();
+                initializing();
+            }
         } else if (input.matches("^increase gold ((--numberOfGolds)|(-n)) \\d+$")){
             String[] s=input.split(" +");
             Player player=Player.whichPlayerTurnIs();
             player.increaseGold(Integer.parseInt(s[3]));
+            initializing();
         } else if (input.matches("^increase happiness ((--numberOfHappiness)|(-n)) \\d+$")) {
             String[] s=input.split(" +");
             Player player=Player.whichPlayerTurnIs();
             player.increaseHappiness(Integer.parseInt(s[3]));
+            initializing();
         } else if (input.matches("^increase score ((--numberOScore)|(-n)) \\d+$")) {
             String[] s=input.split(" +");
             Player player=Player.whichPlayerTurnIs();
             player.getUser().increaseScore(Integer.parseInt(s[3]));
+            initializing();
         }
     }
 
