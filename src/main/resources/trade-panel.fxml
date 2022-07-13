@@ -13,7 +13,7 @@
 
     <center>
         <VBox alignment="CENTER" spacing="5">
-            <ComboBox fx:id="comboBox" prefWidth="200"/>
+            <ComboBox fx:id="comboBox" prefWidth="200" promptText="user"/>
             <HBox alignment="CENTER" spacing="5">
                 <ComboBox fx:id="sendingObject" prefWidth="200" promptText="sending object"/>
                 <TextField fx:id="sendingNumber" promptText="sending number" prefWidth="50"/>
@@ -22,6 +22,7 @@
                 <ComboBox fx:id="receivingObject" prefWidth="200" promptText="receiving object"/>
                 <TextField fx:id="receivingNumber" promptText="receiving number" prefWidth="50"/>
             </HBox>
+            <Button fx:id="submit" text="submit" alignment="CENTER" onMouseClicked="#submit"/>
         </VBox>
     </center>
 </BorderPane>

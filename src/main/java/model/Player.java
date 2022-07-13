@@ -47,6 +47,15 @@ public class Player {
         this.allStrategicResources = allStrategicResources;
     }
 
+    public ArrayList<BonusResource> getAllBonusResources() {
+        ArrayList<BonusResource> list = new ArrayList<>();
+        for (Ground ground: Ground.getAllGround()) {
+            if (ground.ownerOfThisGround() == this) list.addAll(ground.getBonusResource());
+        }
+
+        return list;
+    }
+
     public ArrayList<Notification> getNotificationHistory() {
         return notificationHistory;
     }
@@ -66,6 +75,11 @@ public class Player {
         for (TechnologyType technologyType : TechnologyType.values()) AllTechnologyTypes.add(new Technology(technologyType,technologyType.getCost()));
 
     }
+
+    public static void emptyList() {
+        allPlayers.clear();
+    }
+
     public int getFood() {
         int food = 0;
         for (City city: getCities()) food += city.getSavedFood();

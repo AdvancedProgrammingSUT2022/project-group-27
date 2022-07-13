@@ -20,6 +20,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.GlobalVariables;
+import model.Player;
 import model.User;
 import view.Menu;
 
@@ -119,6 +120,7 @@ public class GameView extends Application {
         System.out.println(Message.START_GAME);
         gameView.run();*/
         GraphicOfGame game = new GraphicOfGame();
+        Player.emptyList();
         game.setting(new ArrayList<User>(listOfPlayers),seed);
         audio.stop();
         try {
