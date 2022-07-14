@@ -19,6 +19,7 @@ import Enum.TechnologyType;
 import controller.ImprovementSettingController;
 import Enum.MilitaryType;
 import controller.UnitController;
+import javafx.scene.control.Alert;
 import viewControllers.GraphicOfGame;
 
 import javax.swing.plaf.basic.BasicRootPaneUI;
@@ -45,7 +46,7 @@ public class Ground {
     private ArrayList<BonusResource> bonusResource = new ArrayList<>();
     private ArrayList<StrategicResource> strategicResources = new ArrayList<>();
     private ArrayList<LuxuryResource> luxuryResources = new ArrayList<>();
-    private boolean hasRuin = false;
+    private boolean hasRuin = true;
 
     //TODO: luxuryResources to be completed
 
@@ -585,42 +586,65 @@ public class Ground {
             randomNumber = random.nextInt() % 4;
         }
         //System.out.println("74444444444444444444444444444444444444444444444444444444444444444 " + randomNumber);
+        String whatHappen = "nothing";
         switch (randomNumber) {
-            case 3:
+            case 3: {
                 player.setGold(player.getGold() + 40);
+                whatHappen = "increase gold 40 steps";
                 break;
-            case 0:
+            }
+            case 0: {
                 for (TechnologyType technologyType : TechnologyType.values()) {
                     if (player.canWeAddThisTechnology(technologyType)) {
                         player.addTechnology(technologyType);
                         break;
                     }
                 }
+                whatHappen = "add every technology that you have prerequisites";
                 break;
-            case 1:
+            }
+            case 1: {
                 for (Ground ground : getAdjacentGrounds()) {
                     for (Ground disTwoGround : ground.getAdjacentGrounds()) {
                         player.addGroundToClearGround(ground);
                     }
                 }
+                whatHappen = "add some grounds in clear to see";
                 break;
+            }
 
-            case 2:
+            case 2: {
                 if (player.getCities().size() == 0)
                     break;
                 City city = player.getCities().get(random.nextInt() % player.getCities().size());
                 city.increasingCitizens();
+                whatHappen = "increase your citizens of one of your random cities";
                 break;
+            }
             case 4:
-                if (random.nextInt() % 2 == 0)
+                if (random.nextInt() % 2 == 0) {
                     UnitController.addUnit(player, this, MilitaryType.SETTLER);
-
-                else
+                    whatHappen = "adding one settler in this ground";
+                } else {
                     UnitController.addUnit(player, this, MilitaryType.WORKER);
+                    whatHappen = "adding one worker in this ground";
+                }
         }
 
-
+        setAlertForRuins(whatHappen);
         this.hasRuin = false;
-        GraphicOfGame.getInstance().initializing();
+
+        try {
+            GraphicOfGame.getInstance().initializing();
+        } catch (NullPointerException e) {
+            GraphicOfGame.showMap();
+        }
+    }
+
+    private void setAlertForRuins(String whatHappen) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Ruins Benefits");
+        alert.setContentText(whatHappen);
+        alert.show();
     }
 }

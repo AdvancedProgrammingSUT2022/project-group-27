@@ -33,8 +33,6 @@ import static java.lang.Math.max;
 public class GraphicOfGame extends Application {
     private static GraphicOfGame instance = null;
     public static GraphicOfGame getInstance() {
-        if (instance == null) instance = new GraphicOfGame();
-
         return instance;
     }
 
