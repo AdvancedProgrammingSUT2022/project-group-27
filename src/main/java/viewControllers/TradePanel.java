@@ -70,11 +70,6 @@ public class TradePanel extends Application {
             products.add(strategicResource.name());
         }
 
-        for (BonusResource bonusResource: BonusResource.values()) {
-            if (bonusResource.name().equals("NOTHING")) break;
-            products.add(bonusResource.name());
-        }
-
         for (LuxuryResource luxuryResource: LuxuryResource.values()) {
             if (luxuryResource.name().equals("NOTHING")) break;
             products.add(luxuryResource.name());
@@ -89,10 +84,6 @@ public class TradePanel extends Application {
 
         for (StrategicResource strategicResource: Player.whichPlayerTurnIs().getAllStrategicResources()) {
             products.add(strategicResource.name());
-        }
-
-        for (BonusResource bonusResource: Player.whichPlayerTurnIs().getAllBonusResources()) {
-            products.add(bonusResource.name());
         }
 
         for (LuxuryResource luxuryResource: Player.whichPlayerTurnIs().getAllLuxuryResources()) {

@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.control.Alert;
+import Enum.*;
 
 import java.util.ArrayList;
 
@@ -29,11 +30,50 @@ public class Trade {
 
     public void accept() {
         isAccepted = true;
-        //TODO ... do things should do by accept should happen and show errors, too.
         if (receive.equals("gold") && Player.findPlayerByUser(receiver).getGold() < numberReceive) invalidAlert();
         else if (receive.equals("gold") && send.equals("gold")) {
             Player.findPlayerByUser(sender).setGold(Player.findPlayerByUser(sender).getGold() - numberSend + numberReceive);
             Player.findPlayerByUser(receiver).setGold(Player.findPlayerByUser(receiver).getGold() - numberReceive + numberSend);
+        } else if (receive.equals("gold")) {
+            Player receiverPlayer = Player.findPlayerByUser(sender);
+            for (LuxuryResource luxuryResource: receiverPlayer.getAllLuxuryResources()) {
+                if (luxuryResource.name().equals(send.toUpperCase())) Player.findPlayerByUser(receiver).getAllLuxuryResources().add(luxuryResource);
+            }
+
+            for (StrategicResource strategicResource: receiverPlayer.getAllStrategicResources()) {
+                if (strategicResource.name().equals(send.toUpperCase())) Player.findPlayerByUser(receiver).getAllStrategicResources().add(strategicResource);
+            }
+
+            Player.findPlayerByUser(receiver).setGold(Player.findPlayerByUser(receiver).getGold() - numberReceive);
+        } else {
+            boolean canDo = false;
+            Player receiverPlayer = Player.findPlayerByUser(receiver);
+            for (LuxuryResource luxuryResource: receiverPlayer.getAllLuxuryResources()) {
+                if (luxuryResource.name().equals(receive.toUpperCase())) {
+                    canDo = true;
+                    Player.findPlayerByUser(sender).getAllLuxuryResources().add(luxuryResource);
+                }
+            }
+
+            for (StrategicResource strategicResource: receiverPlayer.getAllStrategicResources()) {
+                if (strategicResource.name().equals(receive.toUpperCase())) {
+                    canDo = true;
+                    Player.findPlayerByUser(sender).getAllStrategicResources().add(strategicResource);
+                }
+            }
+
+            if (send.equals("gold")) {
+                if (canDo) Player.findPlayerByUser(sender).setGold(Player.findPlayerByUser(sender).getGold() - numberSend);
+                else invalidAlert();
+            } else {
+                for (LuxuryResource luxuryResource: receiverPlayer.getAllLuxuryResources()) {
+                    if (luxuryResource.name().equals(send.toUpperCase())) Player.findPlayerByUser(receiver).getAllLuxuryResources().add(luxuryResource);
+                }
+
+                for (StrategicResource strategicResource: receiverPlayer.getAllStrategicResources()) {
+                    if (strategicResource.name().equals(send.toUpperCase())) Player.findPlayerByUser(receiver).getAllStrategicResources().add(strategicResource);
+                }
+            }
         }
     }
 
