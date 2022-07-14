@@ -4,20 +4,17 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class RuinRectangle extends Rectangle {
-    private GroundRectangle groundRectangle;
+    private Ground ground;
     int xLocation;
     int yLocation;
 
-    public GroundRectangle getGroundRectangle() {
-        return groundRectangle;
-    }
-    public RuinRectangle (GroundRectangle groundRectangle ,int x ,int y){
-        this.groundRectangle=groundRectangle;
-        this.setX(y);
-        this.setY(x-100);
+    public RuinRectangle(Ground ground) {
+        this.ground=ground;
+        this.setX(ground.getyLocation());
+        this.setY(ground.getxLocation());
         this.setHeight(80);
         this.setWidth(80);
-        //this.setFill(GlobalVariables.getImagePattern("/images/ruins.png"));
+        this.setFill(GlobalVariables.getImagePattern("/images/ruin.png"));
         //System.out.println(groundRectangle.getXLocation()+ " feature " + groundRectangle.getYLocation());
         //this.update();
     }
