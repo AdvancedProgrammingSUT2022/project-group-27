@@ -16,6 +16,7 @@
             <Label text="diplomacy menu" prefWidth="300" textFill="crimson" style="-fx-font-size: 20;" alignment="CENTER"/>
             <Button fx:id="trade" text="trading" prefWidth="200" onMouseClicked="#tradePanel"/>
             <Button fx:id="discuss" text="discuss" prefWidth="200" onMouseClicked="#discussPanel"/>
+            <Button fx:id="declareWar" text="declare war" prefWidth="200" onMouseClicked="#declareWar"/>
             <Button fx:id="back" text="back" prefWidth="200" onMouseClicked="#back"/>
         </VBox>
     </center>

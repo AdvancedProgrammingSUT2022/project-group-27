@@ -37,4 +37,12 @@ public abstract class Menus extends Application {
         alert.setContentText(message.toString());
         alert.show();
     }
+
+    protected void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Success");
+
+        alert.setContentText(message);
+        alert.show();
+    }
 }
