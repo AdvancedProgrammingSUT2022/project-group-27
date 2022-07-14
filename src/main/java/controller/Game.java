@@ -1,8 +1,12 @@
 package controller;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import model.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
+
 import Enum.LuxuryResource;
 import Enum.StrategicResource;
 import Enum.UnitStatus;

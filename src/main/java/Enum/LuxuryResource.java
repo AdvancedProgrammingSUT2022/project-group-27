@@ -66,4 +66,9 @@ public enum LuxuryResource {
     public ImprovementType getImprovementType() {
         return improvementType;
     }
+
+    @Override
+    public String toString() {
+        return name();
+    }
 }

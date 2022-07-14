@@ -108,7 +108,7 @@ public class ChatRoomView extends Application {
         for (ChatGroup chatGroup: ChatGroup.listOfGroupsWithUser(Menu.getLoggedInUser())) {
             if (chatGroup.getName().equals("")) {
                 User user = chatGroup.getOtherUser(Menu.getLoggedInUser());
-                ChatController.newPrivateChat(user, rooms, chat);
+                if (user != null) ChatController.newPrivateChat(user, rooms, chat);
             } else if (chatGroup.getName().equals("public"));
             else {
                 ChatController.newRoomChat(chatGroup.getListOfUsers(), chatGroup.getName(), rooms, chat);

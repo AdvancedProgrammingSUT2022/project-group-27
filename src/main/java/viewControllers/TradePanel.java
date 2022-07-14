@@ -117,8 +117,8 @@ public class TradePanel extends Application {
         try {
             sendNumber = Integer.parseInt(sendingNumber.getText());
             receiveNumber = Integer.parseInt(receivingNumber.getText());
-            if (sendNumber > 1 && !sendingObject.getSelectionModel().toString().equals("gold")) throw new RuntimeException();
-            if (receiveNumber > 1 && !receivingObject.getSelectionModel().toString().equals("gold")) throw new RuntimeException();
+            if (sendNumber > 1 && !sendingObject.getSelectionModel().getSelectedItem().equals("gold")) throw new RuntimeException();
+            if (receiveNumber > 1 && !receivingObject.getSelectionModel().getSelectedItem().equals("gold")) throw new RuntimeException();
             if (Player.whichPlayerTurnIs().getGold() < sendNumber) throw new RuntimeException();
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
