@@ -249,6 +249,11 @@ public class City {
 
     public void combat(Ground ground) {
         MilitaryUnit militaryUnit = ground.getMilitaryUnit();
+        if (militaryUnit == null) {
+            return;
+        }
+        this.player.setInWar(militaryUnit.getPlayer());
+        militaryUnit.getPlayer().setInWar(this.player);
         double decreasedHp = this.getCityStrength();
         decreasedHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
         if (militaryUnit.militaryType.getCombatType() != "Mounted" && militaryUnit.militaryType.getCombatType() != "Siege") {

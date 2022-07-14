@@ -22,6 +22,8 @@ public class MeleeUnit extends MilitaryUnit {
             }
             return;
         }
+        this.player.setInWar(militaryUnit.player);
+        militaryUnit.player.setInWar(this.player);
         double decreasedEnemyHp = (this.hp + 10) / 20 * this.getCombatStrength();
         decreasedEnemyHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
         decreasedEnemyHp *= (double) 100.0 / (ground.getFeatureType().getCombatCoefficient() + 100.0);
@@ -62,6 +64,8 @@ public class MeleeUnit extends MilitaryUnit {
     }
     @Override
     public void combat(City city) {
+        this.player.setInWar(city.getPlayer());
+        city.getPlayer().setInWar(this.player);
         MilitaryUnit militaryUnit = city.getGround().getMilitaryUnit();
         UnMilitaryUnit unMilitaryUnit = city.getGround().getUnMilitaryUnit();
         double decreasedEnemyHp = (this.hp + 10) / 20 * this.getCombatStrength();

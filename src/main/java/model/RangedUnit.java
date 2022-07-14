@@ -22,7 +22,8 @@ public class RangedUnit extends MilitaryUnit{
         MilitaryUnit militaryUnit = ground.getMilitaryUnit();
         if (militaryUnit == null)
             return;
-
+        this.player.setInWar(militaryUnit.player);
+        militaryUnit.player.setInWar(this.player);
         double decreasedHp = (this.hp + 10) / 20 * this.getRangedCombatStrength();
         decreasedHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
         decreasedHp *= (double) 100.0 / (ground.getFeatureType().getCombatCoefficient() + 100.0);
@@ -41,6 +42,8 @@ public class RangedUnit extends MilitaryUnit{
 
     @Override
     public void combat(City city) {
+        this.player.setInWar(city.getPlayer());
+        city.getPlayer().setInWar(this.player);
         double decreasedHp = (this.hp + 10) / 20 * this.getRangedCombatStrength();
         decreasedHp *= (double) 100.0 / (city.getGround().getGroundType().getCombatCoefficient() + 100.0);
 

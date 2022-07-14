@@ -446,6 +446,7 @@ public class Player {
 
 
     public void setInWar(Player player) {
+        //call it in both sides
         for (int i = 0; i < allPlayers.size(); i++) {
             if (allPlayers.get(i).equals(player)) {
                 this.isInWar.set(i, true);
