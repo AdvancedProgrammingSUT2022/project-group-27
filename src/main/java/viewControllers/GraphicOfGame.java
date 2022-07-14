@@ -418,8 +418,22 @@ public class GraphicOfGame extends Application {
         setWinPage();
         setDiplomacyPanel();
         setDiplomacyInformationPanel();
+        setTradingPanel();
+    }
 
-        //TODO ... diplomacyInformationPanel, tradingPanel
+    private void setTradingPanel() {
+        tradingPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                TradingInformationPanel tradingInformationPanel = new TradingInformationPanel();
+                TradingInformationPanel.setPlayer(Player.whichPlayerTurnIs());
+                try {
+                    tradingInformationPanel.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setDiplomacyInformationPanel() {
