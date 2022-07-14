@@ -57,6 +57,10 @@ public class Player {
         return list;
     }
 
+    public ArrayList<Boolean> getIsInWar() {
+        return isInWar;
+    }
+
     public ArrayList<Notification> getNotificationHistory() {
         return notificationHistory;
     }

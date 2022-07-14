@@ -52,7 +52,14 @@ public class DiplomacyInformationPanel extends Application {
     }
 
     private void setList() {
-        //TODO show list with peace or in war positions
+        for (int i = 0; i < player.getIsInWar().size(); i++) {
+            Player other = Player.getAllPlayers().get(i);
+            if (Player.getAllPlayers().get(i) == player) continue;
+
+            if (player.getIsInWar().get(i))
+                list.getChildren().add(new Label("player name: " + other.getUser().getUsername() + " in war"));
+            else list.getChildren().add(new Label("player name: " + other.getUser().getUsername() + " in peace"));
+        }
     }
 
     public void back(MouseEvent mouseEvent) {
