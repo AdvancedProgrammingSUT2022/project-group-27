@@ -325,6 +325,7 @@ public class GraphicOfGame extends Application {
                 gamePaneSecond.getChildren().add(groundRectangle);
                 gamePaneSecond.getChildren().add(new FeatureRectangle(groundRectangle,startingArz,startingTool));
                 Ground ground=Ground.getGroundByNumber(cnt);
+                gamePaneSecond.getChildren().add(new RuinRectangle(groundRectangle,startingArz,startingTool));
                 ground.setxLocation(startingArz);
                 ground.setyLocation(startingTool);
                 System.out.println(Ground.getGroundByNumber(cnt).getxLocation());
@@ -340,6 +341,12 @@ public class GraphicOfGame extends Application {
                 }
             }
         }
+        /*for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
+            Ground ground = Ground.getGroundByNumber(i);
+            if (player.getClearToSeeGrounds().contains(ground) && ground.getHasRuin()) {
+                RuinRectangle ruinRectangle = new RuinRectangle(groun)
+            }
+        }*/
         for (Player user : Player.getAllPlayers()){
             for (Unit unit : user.getUnits()){
                 if (player.getClearToSeeGrounds().contains(unit.getGround())) {
