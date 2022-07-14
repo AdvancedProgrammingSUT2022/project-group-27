@@ -1,5 +1,7 @@
 package model;
 
+import javafx.scene.control.Alert;
+
 import java.util.ArrayList;
 
 public class Trade {
@@ -7,15 +9,15 @@ public class Trade {
 
     private User sender;
     private User receiver;
-    private Object receive;
+    private String receive;
     private int numberReceive;
-    private Object send;
+    private String send;
     private int numberSend;
 
     private boolean isAccepted = false;
     private boolean isDeny = false;
 
-    public Trade(User sender, User receiver, Object receive, int numberReceive, Object send, int numberSend) {
+    public Trade(User sender, User receiver, String receive, int numberReceive, String send, int numberSend) {
         this.sender = sender;
         this.receiver = receiver;
         this.receive = receive;
@@ -28,6 +30,18 @@ public class Trade {
     public void accept() {
         isAccepted = true;
         //TODO ... do things should do by accept should happen and show errors, too.
+        if (receive.equals("gold") && Player.findPlayerByUser(receiver).getGold() < numberReceive) invalidAlert();
+        else if (receive.equals("gold") && send.equals("gold")) {
+            Player.findPlayerByUser(sender).setGold(Player.findPlayerByUser(sender).getGold() - numberSend + numberReceive);
+            Player.findPlayerByUser(receiver).setGold(Player.findPlayerByUser(receiver).getGold() - numberReceive + numberSend);
+        }
+    }
+
+    private void invalidAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Error");
+        alert.setContentText("you don't have enough recourse for trading.");
+        alert.show();
     }
 
     public void deny() {

@@ -31,6 +31,17 @@ import java.util.regex.Matcher;
 import static java.lang.Math.max;
 
 public class GraphicOfGame extends Application {
+    private static GraphicOfGame instance = null;
+    public static GraphicOfGame getInstance() {
+        if (instance == null) instance = new GraphicOfGame();
+
+        return instance;
+    }
+
+    public static void setInstance(GraphicOfGame game) {
+        instance = game;
+    }
+
     private static Stage stage;
     private static MediaPlayer audio;
     public  Pane gamePane;
@@ -369,7 +380,7 @@ public class GraphicOfGame extends Application {
             //TODO show palace on it
         }
 
-        setTradeAlert();
+        GraphicOfGame.getInstance().setTradeAlert();
     }
 
     private void setHover() {
@@ -662,7 +673,8 @@ public class GraphicOfGame extends Application {
         happiness.setTooltip(tooltip);
     }
 
-    private static void setTradeAlert() {
+    private void setTradeAlert() {
+        boolean shouldChange = false;
         for (Trade trade: Trade.userReceiverTrades(Player.whichPlayerTurnIs().getUser())) {
             if (!trade.isAccepted() && !trade.isDeny()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -671,11 +683,14 @@ public class GraphicOfGame extends Application {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     trade.accept();
+                    shouldChange = true;
                 } else if (result.isPresent() && result.get() == ButtonType.CANCEL) {
                     trade.deny();
                 }
             }
         }
+
+        if (shouldChange) initializing();
     }
 
     public void nextTurn(MouseEvent mouseEvent) {
