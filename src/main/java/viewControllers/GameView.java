@@ -122,6 +122,7 @@ public class GameView extends Application {
         GraphicOfGame game = new GraphicOfGame();
         Player.emptyList();
         game.setting(new ArrayList<User>(listOfPlayers),seed);
+        GraphicOfGame.setInstance(game);
         audio.stop();
         try {
             game.start(stage);

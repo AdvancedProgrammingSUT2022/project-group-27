@@ -13,11 +13,12 @@ public class RuinRectangle extends Rectangle {
     }
     public RuinRectangle (GroundRectangle groundRectangle ,int x ,int y){
         this.groundRectangle=groundRectangle;
-        this.setX(y-45);
-        this.setY(x-80);
-        this.setHeight(0);
-        this.setWidth(0);
-        System.out.println(groundRectangle.getXLocation()+ " feature " + groundRectangle.getYLocation());
+        this.setX(y);
+        this.setY(x-100);
+        this.setHeight(80);
+        this.setWidth(80);
+        //this.setFill(GlobalVariables.getImagePattern("/images/ruins.png"));
+        //System.out.println(groundRectangle.getXLocation()+ " feature " + groundRectangle.getYLocation());
         //this.update();
     }
     /*public void update(){
