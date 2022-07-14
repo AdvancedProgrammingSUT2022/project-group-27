@@ -64,6 +64,7 @@ public class TradePanel extends Application {
     private void setReceivingObject() {
         ArrayList<String> products = new ArrayList<>();
         products.add("gold");
+        products.add("piece");
 
         for (StrategicResource strategicResource: StrategicResource.values()) {
             if (strategicResource.name().equals("NOTHING")) break;
@@ -81,6 +82,7 @@ public class TradePanel extends Application {
     private void setSendingObject() {
         ArrayList<String> products = new ArrayList<>();
         products.add("gold");
+        products.add("piece");
 
         for (StrategicResource strategicResource: Player.whichPlayerTurnIs().getAllStrategicResources()) {
             products.add(strategicResource.name());
@@ -108,9 +110,10 @@ public class TradePanel extends Application {
         try {
             sendNumber = Integer.parseInt(sendingNumber.getText());
             receiveNumber = Integer.parseInt(receivingNumber.getText());
-            if (sendNumber > 1 && !sendingObject.getSelectionModel().getSelectedItem().equals("gold")) throw new RuntimeException();
-            if (receiveNumber > 1 && !receivingObject.getSelectionModel().getSelectedItem().equals("gold")) throw new RuntimeException();
-            if (Player.whichPlayerTurnIs().getGold() < sendNumber) throw new RuntimeException();
+            if (sendNumber != 1 && !sendingObject.getSelectionModel().getSelectedItem().equals("gold")) throw new RuntimeException();
+            if (receiveNumber != 1 && !receivingObject.getSelectionModel().getSelectedItem().equals("gold")) throw new RuntimeException();
+            if (sendingObject.getSelectionModel().getSelectedItem().equals("gold") &&
+                    Player.whichPlayerTurnIs().getGold() < sendNumber) throw new RuntimeException();
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("invalid input");

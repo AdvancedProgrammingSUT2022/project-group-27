@@ -44,6 +44,11 @@ public class Trade {
                 if (strategicResource.name().equals(send.toUpperCase())) Player.findPlayerByUser(receiver).getAllStrategicResources().add(strategicResource);
             }
 
+            if (send.equals("piece")) {
+                Player.findPlayerByUser(sender).setInPeace(Player.findPlayerByUser(receiver));
+                Player.findPlayerByUser(receiver).setInPeace(Player.findPlayerByUser(sender));
+            }
+
             Player.findPlayerByUser(receiver).setGold(Player.findPlayerByUser(receiver).getGold() - numberReceive);
         } else {
             boolean canDo = false;
@@ -62,9 +67,18 @@ public class Trade {
                 }
             }
 
+            if (receive.equals("piece")) {
+                canDo = true;
+                Player.findPlayerByUser(sender).setInPeace(Player.findPlayerByUser(receiver));
+                Player.findPlayerByUser(receiver).setInPeace(Player.findPlayerByUser(sender));
+            }
+
             if (send.equals("gold")) {
                 if (canDo) Player.findPlayerByUser(sender).setGold(Player.findPlayerByUser(sender).getGold() - numberSend);
                 else invalidAlert();
+            } else if (send.equals("piece")) {
+                Player.findPlayerByUser(sender).setInPeace(Player.findPlayerByUser(receiver));
+                Player.findPlayerByUser(receiver).setInPeace(Player.findPlayerByUser(sender));
             } else {
                 for (LuxuryResource luxuryResource: receiverPlayer.getAllLuxuryResources()) {
                     if (luxuryResource.name().equals(send.toUpperCase())) Player.findPlayerByUser(receiver).getAllLuxuryResources().add(luxuryResource);
@@ -86,6 +100,10 @@ public class Trade {
 
     public void deny() {
         isDeny = true;
+        if (send.equals("piece") || receive.equals("piece")) {
+            Player.findPlayerByUser(sender).setInWar(Player.findPlayerByUser(receiver));
+            Player.findPlayerByUser(receiver).setInWar(Player.findPlayerByUser(sender));
+        }
     }
 
     public static ArrayList<Trade> userTradesAll(User user) {
