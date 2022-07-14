@@ -261,10 +261,15 @@ public class GraphicOfGame extends Application {
             }
             startingArz+=GlobalVariables.arz+8;
         }
-        for (City city : player.getCities()) {
-            CityRectangle cityRectangle = new CityRectangle(city);
-            gamePaneSecond.getChildren().add(cityRectangle);
+        for (Player player1 : Player.getAllPlayers()) {
+            for (City city : player1.getCities()) {
+                if (player.getClearToSeeGrounds().contains(city.getGround())) {
+                    CityRectangle cityRectangle = new CityRectangle(city);
+                    gamePaneSecond.getChildren().add(cityRectangle);
+                }
+            }
         }
+
         for (Player user : Player.getAllPlayers()){
             for (Unit unit : user.getUnits()){
                 if (player.getClearToSeeGrounds().contains(unit.getGround())) {
@@ -324,9 +329,13 @@ public class GraphicOfGame extends Application {
             }
             startingArz+=GlobalVariables.arz+8;
         }
-        for (City city : player.getCities()) {
-            CityRectangle cityRectangle = new CityRectangle(city);
-            gamePaneSecond.getChildren().add(cityRectangle);
+        for (Player player1 : Player.getAllPlayers()) {
+            for (City city : player1.getCities()) {
+                if (player.getClearToSeeGrounds().contains(city.getGround())) {
+                    CityRectangle cityRectangle = new CityRectangle(city);
+                    gamePaneSecond.getChildren().add(cityRectangle);
+                }
+            }
         }
         for (Player user : Player.getAllPlayers()){
             for (Unit unit : user.getUnits()){
