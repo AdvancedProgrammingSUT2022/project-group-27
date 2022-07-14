@@ -30,6 +30,7 @@ public class Player {
     private ArrayList<StrategicResource> allStrategicResources = new ArrayList<>();
     private ArrayList<TechnologyType> technologyType=new ArrayList<>();
     private ArrayList<Technology> AllTechnologyTypes=new ArrayList<>();
+    public ArrayList<Boolean> isInWar = new ArrayList<>();
 
     public ArrayList<LuxuryResource> getAllLuxuryResources() {
         return allLuxuryResources;
@@ -56,7 +57,7 @@ public class Player {
         return list;
     }
 
-    public ArrayList<Notification> getNotificationHistory() {
+    private ArrayList<Notification> getNotificationHistory() {
         return notificationHistory;
     }
 
@@ -70,6 +71,11 @@ public class Player {
 
     public Player(User user) {
         this.user = user;
+        for (int i = 0; i < this.allPlayers.size(); i++) {
+            this.isInWar.add(false);
+            allPlayers.get(i).isInWar.add(false);
+        }
+        this.isInWar.add(false);
         allPlayers.add(this);
         this.numberOfPlayer=allPlayers.size();
         for (TechnologyType technologyType : TechnologyType.values()) AllTechnologyTypes.add(new Technology(technologyType,technologyType.getCost()));
@@ -437,4 +443,31 @@ public class Player {
     public int getNumberOfPlayer() {
         return numberOfPlayer;
     }
+
+
+    public void setInWar(Player player) {
+        for (int i = 0; i < allPlayers.size(); i++) {
+            if (allPlayers.get(i).equals(player)) {
+                this.isInWar.set(i, true);
+            }
+        }
+    }
+
+    public void setInPeace(Player player) {
+        for (int i = 0; i < allPlayers.size(); i++) {
+            if (allPlayers.get(i).equals(player)) {
+                this.isInWar.set(i, false);
+            }
+        }
+    }
+
+    public boolean checkIfInWar(Player player) {
+        for (int i = 0; i < allPlayers.size(); i++) {
+            if (allPlayers.get(i).equals(player)) {
+                return this.isInWar.get(i);
+            }
+        }
+        return false;
+    }
+
 }

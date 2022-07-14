@@ -614,11 +614,11 @@ public class Ground {
             }
 
             case 2: {
+                whatHappen = "increase your citizens of one of your random cities";
                 if (player.getCities().size() == 0)
                     break;
                 City city = player.getCities().get(random.nextInt() % player.getCities().size());
                 city.increasingCitizens();
-                whatHappen = "increase your citizens of one of your random cities";
                 break;
             }
             case 4:
