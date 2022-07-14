@@ -30,7 +30,7 @@ public class Player {
     private ArrayList<StrategicResource> allStrategicResources = new ArrayList<>();
     private ArrayList<TechnologyType> technologyType=new ArrayList<>();
     private ArrayList<Technology> AllTechnologyTypes=new ArrayList<>();
-    public ArrayList<Boolean> isInWar = new ArrayList<>();
+    private ArrayList<Boolean> isInWar = new ArrayList<>();
 
     public ArrayList<LuxuryResource> getAllLuxuryResources() {
         return allLuxuryResources;
@@ -57,7 +57,7 @@ public class Player {
         return list;
     }
 
-    private ArrayList<Notification> getNotificationHistory() {
+    public ArrayList<Notification> getNotificationHistory() {
         return notificationHistory;
     }
 
