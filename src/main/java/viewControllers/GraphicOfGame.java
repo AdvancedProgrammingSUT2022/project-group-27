@@ -657,7 +657,7 @@ public class GraphicOfGame extends Application {
 
     private static void setTradeAlert() {
         for (Trade trade: Trade.userReceiverTrades(Player.whichPlayerTurnIs().getUser())) {
-            if (!trade.isAccepted() && !trade.isAccepted()) {
+            if (!trade.isAccepted() && !trade.isDeny()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setHeaderText("Trade");
                 alert.setContentText(trade.toString());
