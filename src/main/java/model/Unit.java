@@ -222,6 +222,7 @@ public abstract class Unit implements Productions {
     public void changeOwner(Player player) {
         this.getPlayer().getUnits().remove(this);
         player.getUnits().add(this);
+        this.player = player;
     }
 
     public RemainedTurns getTurnRemainedToComplete() {
