@@ -56,6 +56,7 @@ public class GlobalVariables {
     public static final String FOG = "/images/fogOfWar.jpeg";
     public static final String SETTLER ="/images/units/SETTLER.png";
     public static final String WARRIOR ="/images/units/WARRIOR.png";
+
     public static UnitRectangle unitRectangle=null;
     public static ImagePattern getImagePattern(String url) {
         return new ImagePattern(new Image(ProfileController.class.getResource(url).toExternalForm()));

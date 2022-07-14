@@ -268,6 +268,8 @@ public class GraphicOfGame extends Application {
                 Ground ground=Ground.getGroundByNumber(cnt);
                 ground.setxLocation(startingArz);
                 ground.setyLocation(startingTool);
+                if (ground.getHasRuin() && player.getClearToSeeGrounds().contains(ground))
+                    gamePaneSecond.getChildren().add(new RuinRectangle(ground));
                 System.out.println(Ground.getGroundByNumber(cnt).getxLocation());
                 startingTool+=(GlobalVariables.tool+8)*3;
             }
@@ -336,9 +338,10 @@ public class GraphicOfGame extends Application {
                 gamePaneSecond.getChildren().add(groundRectangle);
                 gamePaneSecond.getChildren().add(new FeatureRectangle(groundRectangle,startingArz,startingTool));
                 Ground ground=Ground.getGroundByNumber(cnt);
-                gamePaneSecond.getChildren().add(new RuinRectangle(groundRectangle,startingArz,startingTool));
                 ground.setxLocation(startingArz);
                 ground.setyLocation(startingTool);
+                if (ground.getHasRuin() && player.getClearToSeeGrounds().contains(ground))
+                    gamePaneSecond.getChildren().add(new RuinRectangle(ground));
                 System.out.println(Ground.getGroundByNumber(cnt).getxLocation());
                 startingTool+=(GlobalVariables.tool+8)*3;
             }
@@ -352,12 +355,6 @@ public class GraphicOfGame extends Application {
                 }
             }
         }
-        /*for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
-            Ground ground = Ground.getGroundByNumber(i);
-            if (player.getClearToSeeGrounds().contains(ground) && ground.getHasRuin()) {
-                RuinRectangle ruinRectangle = new RuinRectangle(groun)
-            }
-        }*/
         for (Player user : Player.getAllPlayers()){
             for (Unit unit : user.getUnits()){
                 if (player.getClearToSeeGrounds().contains(unit.getGround())) {

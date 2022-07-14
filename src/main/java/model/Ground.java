@@ -19,6 +19,7 @@ import Enum.TechnologyType;
 import controller.ImprovementSettingController;
 import Enum.MilitaryType;
 import controller.UnitController;
+import viewControllers.GraphicOfGame;
 
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
@@ -583,6 +584,7 @@ public class Ground {
         else {
             randomNumber = random.nextInt() % 4;
         }
+        //System.out.println("74444444444444444444444444444444444444444444444444444444444444444 " + randomNumber);
         switch (randomNumber) {
             case 3:
                 player.setGold(player.getGold() + 40);
@@ -619,6 +621,6 @@ public class Ground {
 
 
         this.hasRuin = false;
-
+        GraphicOfGame.getInstance().initializing();
     }
 }

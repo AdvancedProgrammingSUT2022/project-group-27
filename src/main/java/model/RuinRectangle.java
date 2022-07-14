@@ -10,7 +10,7 @@ public class RuinRectangle extends Rectangle {
 
     public RuinRectangle(Ground ground) {
         this.ground=ground;
-        this.setX(ground.getyLocation());
+        this.setX(ground.getyLocation() - 40);
         this.setY(ground.getxLocation());
         this.setHeight(80);
         this.setWidth(80);
