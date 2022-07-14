@@ -25,6 +25,7 @@ import controller.Game;
 import viewControllers.Info.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.regex.Matcher;
 
 import static java.lang.Math.max;
@@ -291,6 +292,8 @@ public class GraphicOfGame extends Application {
         if (capital != null) {
             //TODO show palace on it
         }
+
+        setTradeAlert();
     }
     public static void showMap(){
         Player player=Player.whichPlayerTurnIs();
@@ -358,6 +361,8 @@ public class GraphicOfGame extends Application {
         if (capital != null) {
             //TODO show palace on it
         }
+
+        setTradeAlert();
     }
 
     private void setHover() {
@@ -648,6 +653,22 @@ public class GraphicOfGame extends Application {
         Tooltip tooltip = new Tooltip();
         tooltip.setGraphic(imageView);
         happiness.setTooltip(tooltip);
+    }
+
+    private static void setTradeAlert() {
+        for (Trade trade: Trade.userReceiverTrades(Player.whichPlayerTurnIs().getUser())) {
+            if (!trade.isAccepted() && !trade.isAccepted()) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText("Trade");
+                alert.setContentText(trade.toString());
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    trade.accept();
+                } else if (result.isPresent() && result.get() == ButtonType.CANCEL) {
+                    trade.deny();
+                }
+            }
+        }
     }
 
     public void nextTurn(MouseEvent mouseEvent) {
