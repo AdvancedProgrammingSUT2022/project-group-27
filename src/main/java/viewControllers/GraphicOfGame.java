@@ -137,7 +137,7 @@ public class GraphicOfGame extends Application {
 
         setIcons();
         initializing();
-        setTooltip(); //TODO set on Mouse Clicked for every panel :) ...
+        setTooltip();
         setHover();
 
         setting.setCursor(Cursor.HAND);
@@ -417,8 +417,24 @@ public class GraphicOfGame extends Application {
         setEconomicPanel();
         setWinPage();
         setDiplomacyPanel();
+        setDiplomacyInformationPanel();
 
         //TODO ... diplomacyInformationPanel, tradingPanel
+    }
+
+    private void setDiplomacyInformationPanel() {
+        diplomacyInformationPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                DiplomacyInformationPanel diplomacyInformationPanel = new DiplomacyInformationPanel();
+                DiplomacyInformationPanel.setPlayer(Player.whichPlayerTurnIs());
+                try {
+                    diplomacyInformationPanel.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setWinPage() {
