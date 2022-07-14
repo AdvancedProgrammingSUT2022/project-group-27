@@ -135,8 +135,8 @@ public class TradePanel extends Application {
         }
 
         new Trade(Player.whichPlayerTurnIs().getUser(), User.findUser(comboBox.getSelectionModel().getSelectedItem()),
-                sendingObject.getSelectionModel().getSelectedItem(), sendNumber, receivingObject.getSelectionModel().getSelectedItem(),
-                receiveNumber);
+                receivingObject.getSelectionModel().getSelectedItem(), receiveNumber,
+                sendingObject.getSelectionModel().getSelectedItem(), sendNumber);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("successful trade");
         alert.setContentText("sending object: " + sendingNumber.getText() + "- " + sendingObject.getSelectionModel().getSelectedItem() +

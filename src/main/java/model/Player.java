@@ -199,6 +199,14 @@ public class Player {
         Game.getInstance().nextTurn();
     }
 
+    public static Player findPlayerByUser(User user) {
+        for (Player player: allPlayers) {
+            if (player.getUser().getUsername().equals(user.getUsername())) return player;
+        }
+
+        return null;
+    }
+
     public static Player whichPlayerTurnIs() {
         return allPlayers.get(counterOfNextRound % allPlayers.size());
     }
