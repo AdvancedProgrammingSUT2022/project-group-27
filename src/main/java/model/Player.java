@@ -391,7 +391,7 @@ public class Player {
     }
 
     public boolean doWeHaveOurCapital() {
-        return mainCapital != null && mainCapital.getPlayer() == this;
+        return (mainCapital != null && mainCapital.getPlayer() == this) || (mainCapital == null && units.size() > 0);
     }
 
     public static int numberOfAliveAndHaveCapitalPlayer() {
@@ -401,6 +401,14 @@ public class Player {
         }
 
         return count;
+    }
+
+    public static Player playerOfAliveAndHaveCapitalPlayer() {
+        for (Player player: allPlayers) {
+            if (player.isAlive() && player.doWeHaveOurCapital()) return player;
+        }
+
+        return null;
     }
 
     public static int getYear() {

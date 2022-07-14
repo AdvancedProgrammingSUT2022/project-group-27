@@ -18,6 +18,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
@@ -305,7 +307,10 @@ public class GraphicOfGame extends Application {
         }
 
         setTradeAlert();
+        Player.whichPlayerTurnIs().checkDies();
+        if (Game.getInstance().isFinished()) endOfGame();
     }
+
     public static void showMap(){
         Player player=Player.whichPlayerTurnIs();
         player.handleClearToSee();
@@ -376,6 +381,8 @@ public class GraphicOfGame extends Application {
         }
 
         GraphicOfGame.getInstance().setTradeAlert();
+        Player.whichPlayerTurnIs().checkDies();
+        if (Game.getInstance().isFinished()) GraphicOfGame.getInstance().endOfGame();
     }
 
     private void setHover() {
@@ -726,5 +733,26 @@ public class GraphicOfGame extends Application {
 
     public void setting(MouseEvent mouseEvent) {
         //TODO...
+    }
+
+    private void endOfGame() {
+        Player player = Player.playerOfAliveAndHaveCapitalPlayer();
+        if (player == null) return;
+
+        for (Player player1: Player.getAllPlayers()) {
+            player1.setScoreAndTimeAtEnd();
+        }
+
+        Stage preStage = new Stage();
+        preStage.initOwner(stage);
+        End end = new End();
+        End.setPlayer(player);
+        try {
+            end.start(preStage);
+            MainMenuView mainMenuView = new MainMenuView();
+            mainMenuView.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
