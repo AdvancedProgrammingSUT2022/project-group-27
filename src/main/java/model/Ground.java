@@ -46,7 +46,7 @@ public class Ground {
     private ArrayList<BonusResource> bonusResource = new ArrayList<>();
     private ArrayList<StrategicResource> strategicResources = new ArrayList<>();
     private ArrayList<LuxuryResource> luxuryResources = new ArrayList<>();
-    private boolean hasRuin = true;
+    private boolean hasRuin = false;
 
     //TODO: luxuryResources to be completed
 

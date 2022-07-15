@@ -83,7 +83,7 @@ public class InitializeMap {
                 Ground.getGroundByNumber(i).setGroundType(GroundType.PLAIN);
             }
 
-
+            if (i % 10 == 0) Ground.getGroundByNumber(i).setHasRuin(true);
         }
     }
 
