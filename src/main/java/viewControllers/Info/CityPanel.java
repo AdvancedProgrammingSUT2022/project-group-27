@@ -305,15 +305,17 @@ public class CityPanel extends Menus {
     private void buildBuilding(City city, VBox vBox) {
         ArrayList<String> building = new ArrayList<>();
         for (BuildingsType buildingsType: BuildingsType.values()) {
-            if (controller.canWeHaveThisBuildingType(buildingsType, city)) building.add(buildingsType.name());
+            if (controller.canWeHaveThisBuildingType(buildingsType, city)) building.add(buildingsType.name() + " : technology is " +
+                    buildingsType.getTechnologyType() + ", maintenance: " + buildingsType.getMaintenance() + ", turns: " +
+                    (buildingsType.getCost() + city.getProduction() - 1) / city.getProduction());
         }
 
         ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList(building));
         vBox.getChildren().add(comboBox);
 
         comboBox.setOnAction((event) -> {
-            String selection = comboBox.getSelectionModel().getSelectedItem();
-            Message message = buildController.buildBuilding(city, selection);
+            String[] selection = comboBox.getSelectionModel().getSelectedItem().split(" ");
+            Message message = buildController.buildBuilding(city, selection[0]);
             showAlert(message);
         });
     }
