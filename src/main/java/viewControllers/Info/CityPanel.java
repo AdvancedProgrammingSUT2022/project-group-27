@@ -17,6 +17,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.*;
@@ -266,6 +268,20 @@ public class CityPanel extends Menus {
             }
         });
 
+        MenuItem buildings = new MenuItem("buildings");
+        buildings.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                final Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                setBuildingsAndUnits(city, vBox);
+                Scene scene = new Scene(vBox);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+
         contextMenu.getItems().add(strength);
         contextMenu.getItems().add(remains);
         contextMenu.getItems().add(lock);
@@ -279,7 +295,19 @@ public class CityPanel extends Menus {
         contextMenu.getItems().add(buildUnit);
         contextMenu.getItems().add(buildBuilding);
         contextMenu.getItems().add(changeConstruction);
+        contextMenu.getItems().add(buildings);
         return contextMenu;
+    }
+
+    private void setBuildingsAndUnits(City city, VBox vBox) {
+        for (Building building: city.getBuildings()) {
+            Label label = new Label(building.name());
+            Circle circle = new Circle();
+            circle.setRadius(30);
+            //circle.setFill(unit.getMilitaryType().getImage()); //TODO adding images
+            label.setGraphic(circle);
+            vBox.getChildren().add(label);
+        }
     }
 
     private void changeConstruction(City city, VBox vBox) {
