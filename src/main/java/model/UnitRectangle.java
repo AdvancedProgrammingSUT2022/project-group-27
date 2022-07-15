@@ -41,6 +41,8 @@ public class UnitRectangle extends Circle {
         this.setLayoutY(unit.getGround().getxLocation()+30);
         this.setRadius(30);
        // this.setFill(Color.AQUA);
+        this.setStroke(unit.getStatus().getColor());
+        this.setStrokeWidth(5);
         this.setFill(unit.getMilitaryType().getImage());
         hbox = new HBox();
         unitSelect = null;

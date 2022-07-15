@@ -1,18 +1,26 @@
 package Enum;
 
+import javafx.scene.paint.Color;
+
 public enum UnitStatus {
-    SLEEP("Sleeping..."),
-    AWAKE("awaking..."),
-    READY("Ready to fight..."),
-    IMPROVING("Improving status"),
-    HEALTH_IMPROVING("health improving is on"),
-    READY_TO_FIGHT("ready to fight..."),
-    READY_TO_RANGED("ready to ranged fight...");
+    SLEEP("Sleeping...", Color.GRAY),
+    AWAKE("awaking...", Color.GREEN),
+    READY("Ready to fight...", Color.YELLOW),
+    IMPROVING("Improving status", Color.PINK),
+    HEALTH_IMPROVING("health improving is on", Color.PURPLE),
+    READY_TO_FIGHT("ready to fight...", Color.WHITE),
+    READY_TO_RANGED("ready to ranged fight...", Color.WHITE);
 
     private final String status;
+    private final Color color;
 
-    UnitStatus(String status) {
+    UnitStatus(String status, Color color) {
         this.status = status;
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     @Override
