@@ -12,11 +12,13 @@ import javafx.scene.shape.Rectangle;
 
 public class CityRectangle extends Circle {
     private City city;
-    public CityRectangle (City unit){
-        this.setLayoutX(unit.getGround().getyLocation());
-        this.setLayoutY(unit.getGround().getxLocation());
+    public CityRectangle (City cityUnit){
+        this.setLayoutX(cityUnit.getGround().getyLocation());
+        this.setLayoutY(cityUnit.getGround().getxLocation());
         this.setRadius(40);
-        this.setFill(GlobalVariables.getImagePattern("/images/city.png"));
+        if (Player.whichPlayerTurnIs().getCapital().getGround().getNumber() == cityUnit.getGround().getNumber())
+            this.setFill(GlobalVariables.getImagePattern("/images/crown-red.png"));
+        else this.setFill(GlobalVariables.getImagePattern("/images/city.png"));
     }
 
 }
