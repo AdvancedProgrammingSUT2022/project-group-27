@@ -1,0 +1,23 @@
+.background {
+    -fx-background-image: url(../images/conquer.JPG);
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.label {
+    -fx-text-fill: #b71135;
+    -fx-background-color: rgba(255, 255, 255, 0.51);
+    -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-background-radius: 8;
+    -fx-background-color: gray;
+}
+
+.button {
+    -fx-background-color: #b71135;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+}

@@ -728,7 +728,6 @@ public class GraphicOfGame extends Application {
     public void nextTurn(MouseEvent mouseEvent) {
         Player.nextTurn();
         initializing();
-        //TODO adding trade accept or deny window
     }
 
     public void setting(MouseEvent mouseEvent) {

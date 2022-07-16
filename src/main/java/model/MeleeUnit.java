@@ -3,7 +3,9 @@ package model;
 import Enum.MilitaryType;
 import Enum.GroundType;
 import Enum.FeatureType;
+import javafx.stage.Stage;
 import view.game.ConquerCityMenu;
+import viewControllers.ConquerCityPanel;
 
 public class MeleeUnit extends MilitaryUnit {
     public MeleeUnit(Ground ground, Player player, MilitaryType militaryType) {
@@ -93,7 +95,15 @@ public class MeleeUnit extends MilitaryUnit {
                 this.ground = city.getGround();
             player.setGold(player.getGold() + 40);
             city.getPlayer().setGold((city.getPlayer().getGold() * 2) / 3);
-            ConquerCityMenu.run(city, this.player);
+            //ConquerCityMenu.run(city, this.player);
+            ConquerCityPanel conquerCityPanel = new ConquerCityPanel();
+            ConquerCityPanel.setCity(city);
+            ConquerCityPanel.setPlayer(this.player);
+            try {
+                conquerCityPanel.start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
         if (this.militaryType.equals(MilitaryType.HORSEMAN) || this.militaryType.equals(MilitaryType.KNIGHT) ||
