@@ -304,7 +304,7 @@ public class CityPanel extends Menus {
             Label label = new Label(building.name());
             Circle circle = new Circle();
             circle.setRadius(30);
-            //circle.setFill(unit.getMilitaryType().getImage()); //TODO adding images
+            circle.setFill(building.getType().getImage());
             label.setGraphic(circle);
             vBox.getChildren().add(label);
         }
