@@ -30,7 +30,7 @@ import java.util.Random;
 
 import Enum.Message;
 public class GameView extends Application {
-    private int seed=1;
+    private static int seed=1;
     private static Stage stage;
     private static MediaPlayer audio;
     public TextField arrayOfEnemies;
@@ -90,6 +90,7 @@ public class GameView extends Application {
     }
 
     public void startGame(MouseEvent mouseEvent) {
+
         String s[]=arrayOfEnemies.getText().split(",");
         ArrayList<String> arrayList=new ArrayList<>();
         for (int i=0;i<s.length;i++){
@@ -116,6 +117,8 @@ public class GameView extends Application {
         if (seed==3) GlobalVariables.surfaceWidth+=GlobalVariables.surfaceWidth-16;
         if (seed==4) GlobalVariables.surfaceWidth+=GlobalVariables.surfaceWidth+16;
         if (seed==5) GlobalVariables.surfaceWidth+=GlobalVariables.surfaceWidth+3*16;
+        if (seed==6) GlobalVariables.surfaceWidth=GlobalVariables.surfaceWidth-3*16;
+        System.err.println(seed);
         /*view.game.GameView gameView = new view.game.GameView(new ArrayList<User>(listOfPlayers),seed);
         System.out.println(Message.START_GAME);
         gameView.run();*/
@@ -233,5 +236,15 @@ public class GameView extends Application {
         randomMap.setDisable(false);
         map4Clicked.setDisable(true);
         seed=5;
+    }
+
+    public void createMapButton(MouseEvent mouseEvent) throws Exception {
+        seed=6;
+        CreateMap createMap= new CreateMap();
+        createMap.start(stage);
+
+    }
+    public static void setSeed(int sed){
+        seed=sed;
     }
 }

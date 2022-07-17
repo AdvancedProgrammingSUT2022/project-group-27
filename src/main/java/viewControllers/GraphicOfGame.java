@@ -148,8 +148,11 @@ public class GraphicOfGame extends Application {
     public void setting(ArrayList<User> playerUsers,int seed) {
         this.controller = Game.getInstance();
         this.playerUsers = playerUsers;
-        InitializeMap initializeMap = new InitializeMap(playerUsers,seed);
-        initializeMap.run();
+        System.out.println("initialize");
+        InitializeMap initializeMap = new InitializeMap(playerUsers, seed);
+     //   if (seed!=6) {
+            initializeMap.run();
+       // }
     }
 
     @Override

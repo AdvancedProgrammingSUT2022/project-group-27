@@ -24,8 +24,7 @@ public class InitializeMap {
 
     public void run() {
         setGroundsAdjacent();
-        setGroundsType();
-        System.out.println("mamad");
+        if (seed!=6) setGroundsType();
         setFirstGroundsForPlayers();
         System.out.println("hey");
         setRivers();
@@ -102,19 +101,21 @@ public class InitializeMap {
 
     private void setFirstGroundsForPlayers() {
         Random rand = new Random(seed);
-        for (User playerUser : playerUsers) {
-            int idStartGround = rand.nextInt(GlobalVariables.numberOfTiles) + 1;
-            while (!Ground.getGroundByNumber(idStartGround).isFreeOfMilitaryUnit() || Ground.getGroundByNumber(idStartGround).getGroundType()==GroundType.OCEAN
-            || Ground.getGroundByNumber(idStartGround).getGroundType()==GroundType.HILL || Ground.getGroundByNumber(idStartGround).getGroundType()==GroundType.MOUNTAIN) {
-                idStartGround = rand.nextInt(GlobalVariables.numberOfTiles) + 1;
-            }
+        if (playerUsers!=null) {
+            for (User playerUser : playerUsers) {
+                int idStartGround = rand.nextInt(GlobalVariables.numberOfTiles) + 1;
+                while (!Ground.getGroundByNumber(idStartGround).isFreeOfMilitaryUnit() || Ground.getGroundByNumber(idStartGround).getGroundType() == GroundType.OCEAN
+                        || Ground.getGroundByNumber(idStartGround).getGroundType() == GroundType.HILL || Ground.getGroundByNumber(idStartGround).getGroundType() == GroundType.MOUNTAIN) {
+                    idStartGround = rand.nextInt(GlobalVariables.numberOfTiles) + 1;
+                }
 
-            Ground ground = Ground.getGroundByNumber(idStartGround);
-            Player player = new Player(playerUser);
-            SettlerUnit unMilitaryUnit = new SettlerUnit(ground, player);
-            MeleeUnit militaryUnit = new MeleeUnit(ground, player, MilitaryType.WARRIOR);
-            player.getUnits().add(militaryUnit);
-            player.getUnits().add(unMilitaryUnit);
+                Ground ground = Ground.getGroundByNumber(idStartGround);
+                Player player = new Player(playerUser);
+                SettlerUnit unMilitaryUnit = new SettlerUnit(ground, player);
+                MeleeUnit militaryUnit = new MeleeUnit(ground, player, MilitaryType.WARRIOR);
+                player.getUnits().add(militaryUnit);
+                player.getUnits().add(unMilitaryUnit);
+            }
         }
     }
 

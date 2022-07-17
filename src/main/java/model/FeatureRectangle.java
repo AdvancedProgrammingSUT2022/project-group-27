@@ -23,20 +23,21 @@ public class FeatureRectangle extends Rectangle {
     }
     public void update(){
         Ground ground=groundRectangle.getGround();
-        Player player=Player.whichPlayerTurnIs();
-        player.handleClearToSee();
-        if (!player.getWasClearedToSeeGrounds().contains(ground)){
-            return;
-        }
-        if (ground.getFeatureType()!= FeatureType.NOTHING) {
-            this.setWidth(90);
-            this.setHeight(50);
-            ImagePattern featureBackGround = ground.getFeatureType().getPhoto();
-            this.setFill(featureBackGround);
-        }
-        else{
-            this.setWidth(0);
-            this.setHeight(0);
+        if (Player.getAllPlayers().size()!=0) {
+            Player player = Player.whichPlayerTurnIs();
+            player.handleClearToSee();
+            if (!player.getWasClearedToSeeGrounds().contains(ground)) {
+                return;
+            }
+            if (ground.getFeatureType() != FeatureType.NOTHING) {
+                this.setWidth(90);
+                this.setHeight(50);
+                ImagePattern featureBackGround = ground.getFeatureType().getPhoto();
+                this.setFill(featureBackGround);
+            } else {
+                this.setWidth(0);
+                this.setHeight(0);
+            }
         }
     }
 }

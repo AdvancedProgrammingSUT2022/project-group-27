@@ -32,7 +32,10 @@
                     <Button fx:id="map4Clicked" alignment="CENTER" text="map 4" onMouseClicked="#map4Clicked"/>
                 </HBox>
             </VBox>
-            <Button fx:id="startGameButton" alignment="CENTER" text="start game" onMouseClicked="#startGame" disable="true"/>
+            <VBox alignment="CENTER" spacing="10">
+                <Button fx:id="startGameButton" alignment="CENTER" text="start game" onMouseClicked="#startGame" disable="true"/>
+                <Button fx:id="createMapButton" alignment="CENTER" text="create map" onMouseClicked="#createMapButton" />
+            </VBox>
         </VBox>
     </center>
 </BorderPane>
