@@ -11,7 +11,6 @@ import Enum.FeatureType;
 import javafx.scene.canvas.GraphicsContext;
 
 public class City {
-    private Player player;
     private String name;
     private int savedFood;
     private RemainedTurns remainedTurnsToBuild = new RemainedTurns(0);
@@ -21,7 +20,6 @@ public class City {
     private boolean isPuppet = false;
     private double hp = 20;
     private boolean isMainCapital;
-    private Player mainCapitalFor;
 
     private final ArrayList<Unit> listOfUnitsInCity = new ArrayList<>();
     private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
@@ -33,13 +31,12 @@ public class City {
         this.ground = ground;
         this.rangeOfCity.add(ground);
         this.rangeOfCity.addAll(ground.getAdjacentGrounds());
-        this.player=player;
         this.increasingCitizens();
     }
 
     public void setMainCapital() {
         isMainCapital = true;
-        mainCapitalFor = player;
+
     }
 
     public ArrayList<Building> getBuildings() {
@@ -101,14 +98,8 @@ public class City {
     }
 
     public void setPlayer(Player player) {
-        this.player.getCities().remove(this);
+        this.getOwner().getCities().remove(this);
         this.buildings.clear();
-
-        this.player = player;
-        this.ground.setOwner(player);
-        for (Ground ground: this.rangeOfCity) {
-            ground.setOwner(player);
-        }
 
         player.getCities().add(this);
     }
@@ -129,9 +120,7 @@ public class City {
         return name;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
+
 
     public ArrayList<Citizen> getListOfCitizens() {
         return listOfCitizens;
@@ -181,7 +170,6 @@ public class City {
 
     public void addGroundToRangeOfCity(Ground ground){
         this.rangeOfCity.add(ground);
-        ground.setOwner(this.player);
     }
 
     public boolean isThisGroundInThisCityRange(Ground ground){
@@ -252,8 +240,8 @@ public class City {
         if (militaryUnit == null) {
             return;
         }
-        this.player.setInWar(militaryUnit.getPlayer());
-        militaryUnit.getPlayer().setInWar(this.player);
+        this.getOwner().setInWar(militaryUnit.getPlayer());
+        militaryUnit.getPlayer().setInWar(this.getOwner());
         double decreasedHp = this.getCityStrength();
         decreasedHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
         if (militaryUnit.militaryType.getCombatType() != "Mounted" && militaryUnit.militaryType.getCombatType() != "Siege") {
@@ -356,7 +344,7 @@ public class City {
                 food += 2;
             }
         }
-        if (this.player.getHappiness() < 0)
+        if (this.getOwner().getHappiness() < 0)
             food /= 3;
         if (food < 0)
             food = 0;
@@ -386,6 +374,14 @@ public class City {
 
         }
         return science;
+    }
+    public Player getOwner(){
+        for (Player player : Player.getAllPlayers()){
+            for (City city : player.getCities()){
+                if (city.equals(this)) return player;
+            }
+        }
+        return null;
     }
 
     public static City findCityByGround(Ground ground, Player player) {

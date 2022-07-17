@@ -27,7 +27,7 @@ public class ConquerCityMenu {
 
         int number = Integer.parseInt(input);
         if (number == 1) {
-            city.getPlayer().getCities().remove(city);
+            city.getOwner().getCities().remove(city);
             System.out.println("city is destroyed");
         }
         else if (number == 2) {

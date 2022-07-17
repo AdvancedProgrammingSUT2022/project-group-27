@@ -555,12 +555,12 @@ public class CityPanel extends Menus {
 
     private void showRemainTimes(City city, VBox vBox) {
         vBox.getChildren().add(new Label("Technologies which remain:"));
-        for (Technology technology: city.getPlayer().technologiesThatCanBeObtained()) {
-            if (city.getPlayer().getUnderConstructionTechnology() == null) {
+        for (Technology technology: city.getOwner().technologiesThatCanBeObtained()) {
+            if (city.getOwner().getUnderConstructionTechnology() == null) {
                 vBox.getChildren().add(new Label("nothing"));
                 break;
             }
-            if (technology.getTechnologyType().name().equals(city.getPlayer().getUnderConstructionTechnology().getTechnologyType().name()))
+            if (technology.getTechnologyType().name().equals(city.getOwner().getUnderConstructionTechnology().getTechnologyType().name()))
                 vBox.getChildren().add(new Label(technology.getTechnologyType().name() + "remain time is: " +
                         technology.getTimeRemain()));
         }

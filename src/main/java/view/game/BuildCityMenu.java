@@ -20,8 +20,8 @@ public class BuildCityMenu extends ViewOfCity{
     }
 
     private void run(City city) {
-        this.showThingsToBuild(city.getPlayer());
-        this.unitListCanBuy(city.getPlayer());
+        this.showThingsToBuild(city.getOwner());
+        this.unitListCanBuy(city.getOwner());
         String input =  Menu.getScanner().nextLine();
         String regex;
         Matcher matcher;

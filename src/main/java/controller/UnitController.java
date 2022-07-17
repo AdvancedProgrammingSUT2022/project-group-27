@@ -23,7 +23,7 @@ public class UnitController extends Controller {
     }
 
     public static void buildUnit(City city, MilitaryType militaryType) {
-        Player player = city.getPlayer();
+        Player player = city.getOwner();
         if (city.getRemainedTurnsToBuild() > 0) {
             System.out.println("Another building is in process");
             return;
@@ -59,7 +59,7 @@ public class UnitController extends Controller {
         for (Ground ground : city.getRangeOfCity()) {
             if ((militaryType.getCombatType() == "Civilian" && ground.getUnMilitaryUnit() == null) ||
                     (militaryType.getCombatType() != "Civilian" && ground.getMilitaryUnit() == null)) {
-                addUnit(city.getPlayer(), ground, militaryType);
+                addUnit(city.getOwner(), ground, militaryType);
                 city.setBuildingUnit(null);
                 System.out.println(militaryType + " mili");
                 return;
@@ -95,7 +95,7 @@ public class UnitController extends Controller {
                     ((RangedUnit)unit).isReadyToRangedFight())) {
                 if ((unit.getMilitaryType().equals(MilitaryType.ARTILLERY) && unit.getGround().getDistance(ground) <= unit.getMilitaryType().getRange()) ||
                         (!unit.getMilitaryType().equals(MilitaryType.ARTILLERY) && unit.getGround().getDistanceWithoutBlocks(ground) <= unit.getMilitaryType().getRange())) {
-                    City city = City.findCityByGround(ground, ground.getOwner());
+                    City city = City.findCityByGround(ground, ground.ownerOfThisGround());
                     if (city == null) ((RangedUnit) unit).combat(ground);
                     else ((RangedUnit) unit).combat(city);
 
@@ -141,7 +141,7 @@ public class UnitController extends Controller {
         if (ground == null) return Message.INVALID_GROUND_NUMBER;
 
         if (unit instanceof MeleeUnit && unit.getGround().AreTheseTwoGroundAdjacent(unit.getGround(), ground)) {
-            City city = City.findCityByGround(ground, ground.getOwner());
+            City city = City.findCityByGround(ground, ground.ownerOfThisGround());
             if (city == null) ((MeleeUnit)unit).combat(ground);
             else ((MeleeUnit)unit).combat(city);
             return Message.SUCCESS_WORK;

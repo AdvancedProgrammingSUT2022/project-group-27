@@ -41,9 +41,9 @@ public class CityMenuController extends CityController{
         if (ground == null) return Message.INVALID_GROUND_NUMBER;
         else if (!city.isThisGroundNearThisCity(ground)) return Message.GROUND_NOT_NEAR_CITY;
         else {
-            if (!city.getPlayer().haveEnoughMoney(ground.getCost())) return Message.NOT_ENOUGH_MONEY;
+            if (!city.getOwner().haveEnoughMoney(ground.getCost())) return Message.NOT_ENOUGH_MONEY;
 
-            city.getPlayer().giveMoneyForBuying(ground.getCost());
+            city.getOwner().giveMoneyForBuying(ground.getCost());
             city.addGroundToRangeOfCity(ground);
             return Message.SUCCESS_WORK;
         }
@@ -53,15 +53,15 @@ public class CityMenuController extends CityController{
         Unit unit = checkValidationOfUnitName(city, whatPlayerWantToBuy);
         Building building = checkValidationOfBuildingName(city, whatPlayerWantToBuy);
         if (unit != null) {
-            if (!city.getPlayer().haveEnoughMoney(unit.getCost())) return Message.NOT_ENOUGH_MONEY;
+            if (!city.getOwner().haveEnoughMoney(unit.getCost())) return Message.NOT_ENOUGH_MONEY;
 
-            city.getPlayer().giveMoneyForBuying(unit.getCost());
+            city.getOwner().giveMoneyForBuying(unit.getCost());
             city.getListOfUnitsInCity().add(unit);
             return Message.SUCCESS_WORK;
         } else if (building != null) {
-            if (!city.getPlayer().haveEnoughMoney(building.getCost())) return Message.NOT_ENOUGH_MONEY;
+            if (!city.getOwner().haveEnoughMoney(building.getCost())) return Message.NOT_ENOUGH_MONEY;
 
-            city.getPlayer().giveMoneyForBuying(building.getCost());
+            city.getOwner().giveMoneyForBuying(building.getCost());
             city.addBuilding(building);
             return Message.SUCCESS_WORK;
         } else return Message.INVALID_PRODUCTION_NAME;

@@ -391,7 +391,7 @@ public class Player {
     }
 
     public boolean doWeHaveOurCapital() {
-        return (mainCapital != null && mainCapital.getPlayer() == this) || (mainCapital == null && units.size() > 0);
+        return (mainCapital != null && mainCapital.getOwner() == this) || (mainCapital == null && units.size() > 0);
     }
 
     public static int numberOfAliveAndHaveCapitalPlayer() {

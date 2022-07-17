@@ -70,7 +70,7 @@ public class ConquerCityPanel extends Application {
     }
 
     public void destroy(MouseEvent mouseEvent) {
-        city.getPlayer().getCities().remove(city);
+        city.getOwner().getCities().remove(city);
         setAlert("you destroy the city");
     }
 

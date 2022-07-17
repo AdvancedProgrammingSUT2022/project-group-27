@@ -45,7 +45,7 @@ public class CityView extends ViewOfCity{
         else if (input.matches("^show without work citizens$")) this.showWithoutWorkCitizens(city);
         else if (input.matches("^buy ground$")) this.buyGround(city);
         else if (input.matches("^lets buy$")) this.buy(city);
-        else if (input.matches("^choice another city$")) this.cityMenus(city.getPlayer());
+        else if (input.matches("^choice another city$")) this.cityMenus(city.getOwner());
         else if (input.matches((regex = "^fight to ground ((--groundNumber)|(-n)) (?<groundNumber>\\d+)$"))) {
             matcher = controller.findMatcherFromString(input, regex);
             this.fightToGround(matcher, city);
@@ -60,10 +60,10 @@ public class CityView extends ViewOfCity{
             city.setSavedFood(city.getSavedFood() + Integer.parseInt(s[4]));
             this.run(city);
         } else if (input.matches("^free worker$")) {
-            city.getListOfUnitsInCity().add(new Worker(city.getGround(), city.getPlayer()));
+            city.getListOfUnitsInCity().add(new Worker(city.getGround(), city.getOwner()));
             this.run(city);
         } else if (input.matches("^free settler$")) {
-            city.getListOfUnitsInCity().add(new SettlerUnit(city.getGround(), city.getPlayer()));
+            city.getListOfUnitsInCity().add(new SettlerUnit(city.getGround(), city.getOwner()));
             this.run(city);
         }
         else {
@@ -95,7 +95,7 @@ public class CityView extends ViewOfCity{
     }
 
     private void buy(City city) {
-        this.unitListCanBuy(city.getPlayer());
+        this.unitListCanBuy(city.getOwner());
         String input = Menu.getScanner().nextLine();
         Message message = controller.buyThings(city, input);
         System.out.println(message);
@@ -129,7 +129,7 @@ public class CityView extends ViewOfCity{
     }
 
     private void showOutputOfCivilization(City city) {
-        Player player = city.getPlayer();
+        Player player = city.getOwner();
         System.out.println("Science per turn by this city: " + city.getScience());
         System.out.println("Gold of civilization produced by this city: " + city.getGold());
         System.out.println("The city production: " + city.getProduction());
@@ -178,9 +178,9 @@ public class CityView extends ViewOfCity{
 
     private void showRemainTimes(City city) {
         System.out.println("Technologies which remain:");
-        for (Technology technology: city.getPlayer().technologiesThatCanBeObtained()){
-            if (city.getPlayer().getUnderConstructionTechnology() == null) break;
-            if (technology.getTechnologyType().name().equals(city.getPlayer().getUnderConstructionTechnology().getTechnologyType().name()))
+        for (Technology technology: city.getOwner().technologiesThatCanBeObtained()){
+            if (city.getOwner().getUnderConstructionTechnology() == null) break;
+            if (technology.getTechnologyType().name().equals(city.getOwner().getUnderConstructionTechnology().getTechnologyType().name()))
                 System.out.println(technology.getTechnologyType().name() + "remain time is: " +
                         technology.getTimeRemain());
         }

@@ -35,7 +35,6 @@ public class Ground {
     private Improvement improvementTypeInProgress=null;
     private ArrayList<Pair> pixelsOfThisGround = new ArrayList<>();
     private ArrayList<Ground> adjacentGrounds = new ArrayList<>();
-    private Player owner;
     private int xLocation;
     private int yLocation;
     private int number;
@@ -132,9 +131,7 @@ public class Ground {
         return isWorkedOn;
     }
 
-    public Player getOwner() {
-        return owner;
-    }
+
 
     public static ArrayList<Ground> getAllGround() {
         return allGround;
@@ -172,9 +169,7 @@ public class Ground {
         this.number = number;
     }
 
-    public void setOwner(Player owner) {
-        this.owner = owner;
-    }
+
 
     public void setWorkedOn() {
         isWorkedOn = true;
@@ -198,7 +193,6 @@ public class Ground {
 
     public Ground copyOfCurrentGround() {
         Ground newGround = new Ground(this.xLocation, this.yLocation, this.number);
-        newGround.setOwner(this.owner);
         newGround.setGroundType(this.groundType);
         newGround.setPixelsOfThisGround(this.pixelsOfThisGround);
         return newGround;
