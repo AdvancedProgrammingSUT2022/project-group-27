@@ -26,6 +26,62 @@ public class Unit implements Productions {
         combatStrength = militaryType.getCombatStrength();
     }
 
+    public SettlerUnit copySettler() {
+        SettlerUnit settlerUnit = new SettlerUnit(ground, Player.findPlayerByUser(User.findUser(playerName)));
+        settlerUnit.destination = destination;
+        settlerUnit.mp = mp;
+        settlerUnit.hp = hp;
+        settlerUnit.turnsFortified = turnsFortified;
+        settlerUnit.status = status;
+        settlerUnit.turnRemainedToCompleted = turnRemainedToCompleted;
+        settlerUnit.combatStrength = combatStrength;
+        settlerUnit.rangedCombatStrength = rangedCombatStrength;
+
+        return settlerUnit;
+    }
+
+    public Worker copyWorker() {
+        Worker worker = new Worker(ground, Player.findPlayerByUser(User.findUser(playerName)));
+        worker.destination = destination;
+        worker.mp = mp;
+        worker.hp = hp;
+        worker.turnsFortified = turnsFortified;
+        worker.status = status;
+        worker.turnRemainedToCompleted = turnRemainedToCompleted;
+        worker.combatStrength = combatStrength;
+        worker.rangedCombatStrength = rangedCombatStrength;
+
+        return worker;
+    }
+
+    public RangedUnit copyRanged() {
+        RangedUnit ranged = new RangedUnit(ground, Player.findPlayerByUser(User.findUser(playerName)), militaryType);
+        ranged.destination = destination;
+        ranged.mp = mp;
+        ranged.hp = hp;
+        ranged.turnsFortified = turnsFortified;
+        ranged.status = status;
+        ranged.turnRemainedToCompleted = turnRemainedToCompleted;
+        ranged.combatStrength = combatStrength;
+        ranged.rangedCombatStrength = rangedCombatStrength;
+
+        return ranged;
+    }
+
+    public MeleeUnit copyMelee() {
+        MeleeUnit meleeUnit = new MeleeUnit(ground, Player.findPlayerByUser(User.findUser(playerName)), militaryType);
+        meleeUnit.destination = destination;
+        meleeUnit.mp = mp;
+        meleeUnit.hp = hp;
+        meleeUnit.turnsFortified = turnsFortified;
+        meleeUnit.status = status;
+        meleeUnit.turnRemainedToCompleted = turnRemainedToCompleted;
+        meleeUnit.combatStrength = combatStrength;
+        meleeUnit.rangedCombatStrength = rangedCombatStrength;
+
+        return meleeUnit;
+    }
+
     public int getRangedCombatStrength() {
         Player player = Player.findPlayerByUser(User.findUser(playerName));
         if (player.getHappiness() < 0) return rangedCombatStrength * 3 / 4;

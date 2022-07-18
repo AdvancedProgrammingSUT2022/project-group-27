@@ -3,10 +3,8 @@ package database;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import model.ChatGroup;
-import model.Player;
-import model.Unit;
-import model.User;
+import model.*;
+import Enum.MilitaryType;
 //import com.gilecode.yagson.YaGson;
 
 import java.io.FileWriter;
@@ -27,10 +25,33 @@ public class Database {
         list = gson.fromJson(json, new TypeToken<List<Player>>(){}.getType());
         if (list == null) list = new ArrayList<>();
         Player.setAllPlayer(list);
+
+        for (Player player: Player.getAllPlayers()) {
+            for (int i = 0; i < player.getUnits().size(); i++) {
+                Unit unit = player.getUnits().get(i);
+                if (unit.getMilitaryType().equals(MilitaryType.SETTLER)) {
+                    player.getUnits().add(player.getUnits().indexOf(unit), unit.copySettler());
+                    player.getUnits().remove(unit);
+                } else if (unit.getMilitaryType().equals(MilitaryType.WORKER)) {
+                    player.getUnits().add(player.getUnits().indexOf(unit), unit.copyWorker());
+                    player.getUnits().remove(unit);
+                } else if (unit.getMilitaryType().getCombatType().matches("Archery|Mounted|Siege")) {
+                    player.getUnits().add(player.getUnits().indexOf(unit), unit.copyRanged());
+                    player.getUnits().remove(unit);
+                } else if (unit.getMilitaryType().getCombatType().matches("Recon|Melee|Gunpowder|Armored")) {
+                    player.getUnits().add(player.getUnits().indexOf(unit), unit.copyMelee());
+                    player.getUnits().remove(unit);
+                }
+            }
+        }
     }
 
     public static void writeGameDatabase() throws IOException {
         FileWriter dataBase = new FileWriter("game.txt");
+        writingGame(dataBase);
+    }
+
+    public static void writingGame(FileWriter dataBase) throws IOException {
         //YaGson gson = new YaGson();
         Gson gson = new Gson();
         dataBase.write(gson.toJson(Player.getAllPlayers()));
@@ -39,10 +60,7 @@ public class Database {
 
     public static void writeGameDatabase(int number) throws IOException {
         FileWriter dataBase = new FileWriter(number + ".txt");
-        //YaGson gson = new YaGson();
-        Gson gson = new Gson();
-        dataBase.write(gson.toJson(Player.getAllPlayers()));
-        dataBase.close();
+        writingGame(dataBase);
     }
 
     public static void readFromDatabase() throws IOException {

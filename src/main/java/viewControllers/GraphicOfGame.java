@@ -795,6 +795,15 @@ public class GraphicOfGame extends Application {
     }
 
     public void stopGame(MouseEvent mouseEvent) throws Exception {
+        for (City city: Player.whichPlayerTurnIs().getCities()) {
+            if (city.getConstruction() != null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("can not stop here");
+                alert.setContentText("you have production so we can't stop this game.");
+                alert.show();
+                return;
+            }
+        }
         Database.writeGameDatabase();
         MainMenuView mainMenuView = new MainMenuView();
         mainMenuView.start(stage);
