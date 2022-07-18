@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -739,7 +740,37 @@ public class GraphicOfGame extends Application {
     }
 
     public void setting(MouseEvent mouseEvent) {
-        //TODO...
+        Stage preStage = new Stage();
+        Label first = new Label("For enabling auto save fill the fields and then click submit button,\n if you don't want to have just click on refuse");
+        TextField turns = new TextField("enter number of turns");
+        TextField number = new TextField("enter number of files");
+        Button refuse = new Button("refuse");
+        Button submit = new Button("submit");
+
+        refuse.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GlobalVariables.numberOfAutoSave = 0;
+                GlobalVariables.numberOfFilesOfAutoSave = 0;
+                preStage.close();
+            }
+        });
+
+        submit.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GlobalVariables.numberOfAutoSave = Integer.parseInt(turns.getText());
+                GlobalVariables.numberOfFilesOfAutoSave = Integer.parseInt(number.getText());
+                preStage.close();
+            }
+        });
+
+        VBox vBox = new VBox(first, turns, number, refuse, submit);
+        vBox.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(vBox);
+        preStage.setScene(scene);
+        preStage.initOwner(stage);
+        preStage.show();
     }
 
     private void endOfGame() {

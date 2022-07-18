@@ -257,6 +257,7 @@ public class GameView extends Application {
 
     public void resumeGame(MouseEvent mouseEvent) throws IOException {
         if (Player.getAllPlayers().size() == 0) Database.readGameDatabase();
+        //TODO handle polymorphism in data
 
         if (Player.getAllPlayers().size() == 0) {
             resumeGameButton.setDisable(true);

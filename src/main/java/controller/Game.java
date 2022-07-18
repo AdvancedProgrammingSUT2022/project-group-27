@@ -1,7 +1,10 @@
 package controller;
 
+import database.Database;
 import model.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import Enum.LuxuryResource;
@@ -190,6 +193,18 @@ public class Game extends Controller {
                         }
                     }
                 }
+            }
+        }
+
+        if (GlobalVariables.numberOfAutoSave != 0 && GlobalVariables.numberOfFilesOfAutoSave != 0 &&
+                Player.getCounterOfNextRound() % GlobalVariables.numberOfAutoSave == 0) {
+            int number = (Player.getCounterOfNextRound() / GlobalVariables.numberOfAutoSave ) %
+                    GlobalVariables.numberOfFilesOfAutoSave;
+            try {
+                Database.writeGameDatabase(number);
+                System.out.println("saving");
+            } catch (IOException e) {
+                System.out.println("error in saving file " + number);
             }
         }
     }

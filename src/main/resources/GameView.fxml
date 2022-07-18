@@ -33,7 +33,7 @@
                 </HBox>
             </VBox>
             <VBox alignment="CENTER" spacing="10">
-                <HBox>
+                <HBox alignment="CENTER">
                     <Button fx:id="startGameButton" alignment="CENTER" text="start new game" onMouseClicked="#startGame" disable="true"/>
                     <Button fx:id="resumeGameButton" alignment="CENTER" text="resume previous game" onMouseClicked="#resumeGame"/>
                 </HBox>

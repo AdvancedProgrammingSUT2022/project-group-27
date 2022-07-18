@@ -18,6 +18,8 @@ public class GlobalVariables {
     public int tool6Zelie = 8, arz6Zelie = 16;
     public static int tool=100,arz=90;
     public double epsilon = 0.1;
+    public static int numberOfAutoSave = 0;
+    public static int numberOfFilesOfAutoSave = 0;
 
     public int isEqual(double x, double y) {
         if (abs(x - y) < this.epsilon) return 1;

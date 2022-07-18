@@ -37,6 +37,14 @@ public class Database {
         dataBase.close();
     }
 
+    public static void writeGameDatabase(int number) throws IOException {
+        FileWriter dataBase = new FileWriter(number + ".txt");
+        //YaGson gson = new YaGson();
+        Gson gson = new Gson();
+        dataBase.write(gson.toJson(Player.getAllPlayers()));
+        dataBase.close();
+    }
+
     public static void readFromDatabase() throws IOException {
         String json = new String(Files.readAllBytes(Paths.get("database.txt")));
         ArrayList<User> listOfUsers;
