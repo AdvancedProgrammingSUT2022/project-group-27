@@ -234,7 +234,7 @@ public class Game extends Controller {
                     numberOfCity--;
                 }
 
-                Ground.getAllGround().add(ground);
+                Ground.add(ground);
             }
             GlobalVariables.numberOfTiles=numberOfCity-1;
         }

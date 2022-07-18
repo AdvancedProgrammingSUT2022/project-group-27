@@ -23,8 +23,8 @@ public class InitializeMap {
     }
 
     public void run() {
+        if (seed != 6) setGroundsType();
         setGroundsAdjacent();
-        if (seed!=6) setGroundsType();
         setFirstGroundsForPlayers();
         System.out.println("hey");
         setRivers();

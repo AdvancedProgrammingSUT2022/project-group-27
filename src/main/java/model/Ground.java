@@ -39,7 +39,7 @@ public class Ground {
     private int xLocation;
     private int yLocation;
     private int number;
-    private int cost;
+    private int cost = 50;
     private boolean isWorkedOn = false;
     private GroundType groundType;
     private FeatureType featureType;
@@ -60,6 +60,11 @@ public class Ground {
 
     public void addGroundToAdjacentGround(Ground ground){
         this.adjacentGrounds.add(ground.getNumber());
+    }
+
+    public static void add(Ground ground) {
+        if (allGround.contains(ground)) return;
+        allGround.add(ground);
     }
 
     public Ground(int x, int y, int number) {
