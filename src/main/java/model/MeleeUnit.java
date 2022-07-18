@@ -4,7 +4,6 @@ import Enum.MilitaryType;
 import Enum.GroundType;
 import Enum.FeatureType;
 import javafx.stage.Stage;
-import view.game.ConquerCityMenu;
 import viewControllers.ConquerCityPanel;
 
 public class MeleeUnit extends MilitaryUnit {
@@ -18,14 +17,17 @@ public class MeleeUnit extends MilitaryUnit {
 
         MilitaryUnit militaryUnit = ground.getMilitaryUnit();
         UnMilitaryUnit unMilitaryUnit = ground.getUnMilitaryUnit();
+        Player player = Player.findPlayerByUser(User.findUser(playerName));
+
         if (militaryUnit == null) {
             if (unMilitaryUnit != null) {
-                unMilitaryUnit.changeOwner(this.player);
+                unMilitaryUnit.changeOwner(player);
             }
             return;
         }
-        this.player.setInWar(militaryUnit.player);
-        militaryUnit.player.setInWar(this.player);
+        Player militaryPlayer = Player.findPlayerByUser(User.findUser(militaryUnit.playerName));
+        player.setInWar(Player.findPlayerByUser(User.findUser(militaryUnit.playerName)));
+        militaryPlayer.setInWar(player);
         double decreasedEnemyHp = (this.hp + 10) / 20 * this.getCombatStrength();
         decreasedEnemyHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
         decreasedEnemyHp *= (double) 100.0 / (ground.getFeatureType().getCombatCoefficient() + 100.0);
@@ -52,7 +54,7 @@ public class MeleeUnit extends MilitaryUnit {
             if (!isThisDestroyed) {
                 this.ground = ground;
                 if (unMilitaryUnit != null) {
-                    unMilitaryUnit.changeOwner(this.player);
+                    unMilitaryUnit.changeOwner(player);
                 }
             }
         }
@@ -66,8 +68,9 @@ public class MeleeUnit extends MilitaryUnit {
     }
     @Override
     public void combat(City city) {
-        this.player.setInWar(city.getOwner());
-        city.getOwner().setInWar(this.player);
+        Player player = Player.findPlayerByUser(User.findUser(playerName));
+        player.setInWar(city.getOwner());
+        city.getOwner().setInWar(player);
         MilitaryUnit militaryUnit = city.getGround().getMilitaryUnit();
         UnMilitaryUnit unMilitaryUnit = city.getGround().getUnMilitaryUnit();
         double decreasedEnemyHp = (this.hp + 10) / 20 * this.getCombatStrength();
@@ -98,7 +101,7 @@ public class MeleeUnit extends MilitaryUnit {
             //ConquerCityMenu.run(city, this.player);
             ConquerCityPanel conquerCityPanel = new ConquerCityPanel();
             ConquerCityPanel.setCity(city);
-            ConquerCityPanel.setPlayer(this.player);
+            ConquerCityPanel.setPlayer(player);
             try {
                 conquerCityPanel.start(new Stage());
             } catch (Exception e) {

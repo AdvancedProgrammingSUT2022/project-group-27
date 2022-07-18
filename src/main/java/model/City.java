@@ -1,14 +1,11 @@
 package model;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
 import Enum.MilitaryType;
 import Enum.LuxuryResource;
-import Enum.BonusResource;
 import Enum.StrategicResource;
 import Enum.BuildingsType;
 import Enum.FeatureType;
-import javafx.scene.canvas.GraphicsContext;
 
 public class City {
     private String name;

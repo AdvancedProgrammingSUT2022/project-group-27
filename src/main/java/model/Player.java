@@ -16,7 +16,7 @@ public class Player {
     private City mainCapital = null;
     //private int science;
     private int extraHappiness = 0;
-    private static final ArrayList<Player> allPlayers = new ArrayList<>();
+    private static ArrayList<Player> allPlayers = new ArrayList<>();
     private final ArrayList<City> cities = new ArrayList<>();
     private final ArrayList<Unit> units = new ArrayList<>();
     private ArrayList<Ground> clearToSeeGrounds = new ArrayList<>();
@@ -31,6 +31,10 @@ public class Player {
     private ArrayList<TechnologyType> technologyType=new ArrayList<>();
     private ArrayList<Technology> AllTechnologyTypes=new ArrayList<>();
     private ArrayList<Boolean> isInWar = new ArrayList<>();
+
+    public static void setAllPlayer(ArrayList<Player> players) {
+        allPlayers = players;
+    }
 
     public ArrayList<LuxuryResource> getAllLuxuryResources() {
         return allLuxuryResources;
@@ -84,6 +88,13 @@ public class Player {
         this.numberOfPlayer=allPlayers.size();
         for (TechnologyType technologyType : TechnologyType.values()) AllTechnologyTypes.add(new Technology(technologyType,technologyType.getCost()));
 
+    }
+
+    public static boolean isDuplicated(User user) {
+        for (Player player: allPlayers) {
+            if (player.getUser().getUsername().equals(user.getUsername())) return true;
+        }
+        return false;
     }
 
     public static void emptyList() {

@@ -4,7 +4,7 @@ import Enum.MilitaryType;
 
 public abstract class MilitaryUnit extends Unit {
     public MilitaryUnit(Ground ground, Player player, MilitaryType militaryType) {
-        super(ground, player, militaryType);
+        super(ground, player.getUser().getUsername(), militaryType);
     }
 
     public abstract void combat(Ground ground);

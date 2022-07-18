@@ -8,6 +8,7 @@ public class SettlerUnit extends UnMilitaryUnit{
         super(ground, player, MilitaryType.SETTLER);
     }
     public void buildCity(String name) {
-        this.player.addCityToThisGround(this.ground, name);
+        Player player = Player.findPlayerByUser(User.findUser(playerName));
+        player.addCityToThisGround(this.ground, name);
     }
 }

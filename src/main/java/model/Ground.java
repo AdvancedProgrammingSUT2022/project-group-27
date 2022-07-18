@@ -34,7 +34,8 @@ public class Ground {
     private Improvement plunderingImprovementType = null;
     private Improvement improvementTypeInProgress=null;
     private ArrayList<Pair> pixelsOfThisGround = new ArrayList<>();
-    private ArrayList<Ground> adjacentGrounds = new ArrayList<>();
+    //private transient ArrayList<Ground> adjacentGrounds = new ArrayList<>();
+    private ArrayList<Integer> adjacentGrounds = new ArrayList<>();
     private int xLocation;
     private int yLocation;
     private int number;
@@ -50,11 +51,15 @@ public class Ground {
     //TODO: luxuryResources to be completed
 
     public ArrayList<Ground> getAdjacentGrounds() {
-        return adjacentGrounds;
+        ArrayList<Ground> adjacentGroundsList = new ArrayList<>();
+        for (Integer integer: adjacentGrounds) {
+            adjacentGroundsList.add(Ground.getGroundByNumber(integer));
+        }
+        return adjacentGroundsList;
     }
 
     public void addGroundToAdjacentGround(Ground ground){
-        this.adjacentGrounds.add(ground);
+        this.adjacentGrounds.add(ground.getNumber());
     }
 
     public Ground(int x, int y, int number) {

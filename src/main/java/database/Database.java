@@ -1,9 +1,13 @@
 package database;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import model.ChatGroup;
+import model.Player;
+import model.Unit;
 import model.User;
+//import com.gilecode.yagson.YaGson;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,6 +17,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
+
+    public static void readGameDatabase() throws IOException {
+        String json = new String(Files.readAllBytes(Paths.get("game.txt")));
+        ArrayList<Player> list;
+        //YaGson gson = new YaGson();
+        //Gson gson = new GsonBuilder().registerTypeAdapter(Unit.class, new UnitTypeAdapter()).create();
+        Gson gson = new Gson();
+        list = gson.fromJson(json, new TypeToken<List<Player>>(){}.getType());
+        if (list == null) list = new ArrayList<>();
+        Player.setAllPlayer(list);
+    }
+
+    public static void writeGameDatabase() throws IOException {
+        FileWriter dataBase = new FileWriter("game.txt");
+        //YaGson gson = new YaGson();
+        Gson gson = new Gson();
+        dataBase.write(gson.toJson(Player.getAllPlayers()));
+        dataBase.close();
+    }
 
     public static void readFromDatabase() throws IOException {
         String json = new String(Files.readAllBytes(Paths.get("database.txt")));

@@ -45,6 +45,7 @@
         <HBox fx:id="bottom_hBox" spacing="10">
             <Button fx:id="nextTurn" text="next turn" onMouseClicked="#nextTurn"/>
             <Button fx:id="setting" text="setting" onMouseClicked="#setting"/>
+            <Button fx:id="stopButton" text="stop" onMouseClicked="#stopGame"/>
         </HBox>
     </bottom>
 </BorderPane>

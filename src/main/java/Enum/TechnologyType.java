@@ -53,7 +53,7 @@ public enum TechnologyType {
     TELEGRAPH(2200, new ArrayList<>(List.of(TechnologyType.ELECTRICITY)),3);
 
     private final int cost;
-    private final ArrayList<TechnologyType> prerequisites;
+    private transient final ArrayList<TechnologyType> prerequisites;
     private final int time;
 
     TechnologyType(int cost, ArrayList<TechnologyType> prerequisites,int time) {

@@ -33,7 +33,10 @@
                 </HBox>
             </VBox>
             <VBox alignment="CENTER" spacing="10">
-                <Button fx:id="startGameButton" alignment="CENTER" text="start game" onMouseClicked="#startGame" disable="true"/>
+                <HBox>
+                    <Button fx:id="startGameButton" alignment="CENTER" text="start new game" onMouseClicked="#startGame" disable="true"/>
+                    <Button fx:id="resumeGameButton" alignment="CENTER" text="resume previous game" onMouseClicked="#resumeGame"/>
+                </HBox>
                 <Button fx:id="createMapButton" alignment="CENTER" text="create map" onMouseClicked="#createMapButton" />
             </VBox>
         </VBox>

@@ -1,16 +1,14 @@
 package viewControllers;
 
 import Main.Main;
+import database.Database;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -24,6 +22,7 @@ import model.Player;
 import model.User;
 import view.Menu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -44,6 +43,12 @@ public class GameView extends Application {
     public Button map2Clicked;
     public Button map3Clicked;
     public Button map4Clicked;
+
+    @FXML
+    private Button createMapButton;
+
+    @FXML
+    private Button resumeGameButton;
 
     @FXML
     private VBox box;
@@ -76,6 +81,8 @@ public class GameView extends Application {
             }
         });
         back.setCursor(Cursor.HAND);
+        createMapButton.setCursor(Cursor.HAND);
+        resumeGameButton.setCursor(Cursor.HAND);
         Tooltip backToolTip = new Tooltip("back to main menu");
         //backToolTip.widthProperty().addListener((obs, b, b1) -> System.out.println(backToolTip.getWidth()));
         backToolTip.setTextAlignment(TextAlignment.CENTER);
@@ -246,5 +253,34 @@ public class GameView extends Application {
     }
     public static void setSeed(int sed){
         seed=sed;
+    }
+
+    public void resumeGame(MouseEvent mouseEvent) throws IOException {
+        if (Player.getAllPlayers().size() == 0) Database.readGameDatabase();
+
+        if (Player.getAllPlayers().size() == 0) {
+            resumeGameButton.setDisable(true);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("No Stopped Game");
+            alert.setContentText("you don't have any stopped game");
+            alert.show();
+            return;
+        }
+
+        GlobalVariables.surfaceWidth += (4 - Player.getAllPlayers().size()) * 16;
+        GraphicOfGame game = new GraphicOfGame();
+        ArrayList<User> listOfPlayers = new ArrayList<>();
+        for (Player player: Player.getAllPlayers()) {
+            listOfPlayers.add(player.getUser());
+        }
+
+        game.setting(listOfPlayers, seed);
+        GraphicOfGame.setInstance(game);
+        audio.stop();
+        try {
+            game.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

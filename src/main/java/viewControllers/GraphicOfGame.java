@@ -3,6 +3,7 @@ package viewControllers;
 import Main.Main;
 import controller.InitializeMap;
 import controller.ProfileController;
+import database.Database;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -26,6 +27,7 @@ import model.*;
 import controller.Game;
 import viewControllers.Info.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -41,13 +43,15 @@ public class GraphicOfGame extends Application {
     public static void setInstance(GraphicOfGame game) {
         instance = game;
     }
-
     private static Stage stage;
     private static MediaPlayer audio;
     public  Pane gamePane;
     public static Pane gamePaneSecond;
     private Game controller;
     private ArrayList<User> playerUsers = new ArrayList<>();
+
+    @FXML
+    private Button stopButton;
 
     @FXML
     private Label technologyPanel;
@@ -143,6 +147,7 @@ public class GraphicOfGame extends Application {
         setHover();
 
         setting.setCursor(Cursor.HAND);
+        stopButton.setCursor(Cursor.HAND);
     }
 
     public void setting(ArrayList<User> playerUsers,int seed) {
@@ -756,5 +761,11 @@ public class GraphicOfGame extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void stopGame(MouseEvent mouseEvent) throws Exception {
+        Database.writeGameDatabase();
+        MainMenuView mainMenuView = new MainMenuView();
+        mainMenuView.start(stage);
     }
 }

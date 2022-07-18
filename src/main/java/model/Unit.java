@@ -1,15 +1,13 @@
 package model;
 
-import view.game.ShowMap;
-
 import static java.lang.Math.min;
 import Enum.MilitaryType;
 import Enum.UnitStatus;
 
-public abstract class Unit implements Productions {
+public class Unit implements Productions {
     protected MilitaryType militaryType;
     protected Ground ground;
-    protected Player player;
+    protected String playerName;
     protected Ground destination = null;
     protected double mp = 10;
     protected double hp = 10;
@@ -21,21 +19,23 @@ public abstract class Unit implements Productions {
     //protected boolean isSleeping = false;
     //protected boolean hasDoneSomething = false;
 
-    public Unit(Ground ground, Player player, MilitaryType militaryType) {
-        this.player = player;
+    public Unit(Ground ground, String player, MilitaryType militaryType) {
+        this.playerName = player;
         this.ground = ground;
         this.militaryType = militaryType;
         combatStrength = militaryType.getCombatStrength();
     }
 
     public int getRangedCombatStrength() {
-        if (this.player.getHappiness() < 0) return rangedCombatStrength * 3 / 4;
+        Player player = Player.findPlayerByUser(User.findUser(playerName));
+        if (player.getHappiness() < 0) return rangedCombatStrength * 3 / 4;
 
         return rangedCombatStrength;
     }
 
     public int getCombatStrength() {
-        if (this.player.getHappiness() < 0) return combatStrength * 3 / 4;
+        Player player = Player.findPlayerByUser(User.findUser(playerName));
+        if (player.getHappiness() < 0) return combatStrength * 3 / 4;
 
         return combatStrength;
     }
@@ -93,7 +93,7 @@ public abstract class Unit implements Productions {
     }
 
     public Player getPlayer() {
-        return player;
+        return Player.findPlayerByUser(User.findUser(playerName));
     }
 
     public int getCost() {
@@ -127,6 +127,7 @@ public abstract class Unit implements Productions {
         int[][] distanceFloyd = new int[GlobalVariables.numberOfTiles + 1][GlobalVariables.numberOfTiles + 1];
         for (int i = 1; i <= GlobalVariables.numberOfTiles; i++) {
             for (int j = i + 1; j <= GlobalVariables.numberOfTiles; j++) {
+                Player player = Player.findPlayerByUser(User.findUser(playerName));
                 distanceFloyd[i][j] = Ground.distanceOfTheseTwoGround(Ground.getGroundByNumber(i), Ground.getGroundByNumber(j), player, this);
                 distanceFloyd[j][i] = Ground.distanceOfTheseTwoGround(Ground.getGroundByNumber(j), Ground.getGroundByNumber(i), player, this);
                 ;
@@ -153,7 +154,7 @@ public abstract class Unit implements Productions {
             Ground ground1 = Ground.getGroundByNumber(i);
             boolean isOk = false;
             for (Player opponent : Player.getAllPlayers()) {
-                if (player.equals(opponent)) continue;
+                if (playerName.equals(opponent)) continue;
                 for (Unit unit : opponent.getUnits()) {
                     if (unit instanceof MilitaryUnit && unit.getGround().getNumber() == ground1.getNumber())
                         isOk = true;
@@ -209,20 +210,22 @@ public abstract class Unit implements Productions {
         this.ground=middle;
         if (this.getGround().getNumber()==this.destination.getNumber()) this.destination=null;
         if (this.ground.getHasRuin()) {
-            this.ground.implementRuin(this.player);
+            Player player = Player.findPlayerByUser(User.findUser(playerName));
+            this.ground.implementRuin(player);
         }
 
 
         return true;
     }
     public void removeUnit() {
-        this.player.getUnits().remove(this);
+        Player player = Player.findPlayerByUser(User.findUser(playerName));
+        player.getUnits().remove(this);
     }
 
     public void changeOwner(Player player) {
         this.getPlayer().getUnits().remove(this);
         player.getUnits().add(this);
-        this.player = player;
+        this.playerName = player.getUser().getUsername();
     }
 
     public RemainedTurns getTurnRemainedToComplete() {
