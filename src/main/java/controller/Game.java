@@ -207,7 +207,15 @@ public class Game extends Controller {
             int starter = 0;
             if (counter % 2 == 0) starter += globalVariables.tool6Zelie / 2;
             for (int j = starter; j < globalVariables.surfaceHeight; j += globalVariables.tool6Zelie) {
-                Ground ground = new Ground(j, i, numberOfCity++);
+                Ground ground;
+                if ((ground = Ground.getGroundByNumber(numberOfCity++)) != null) {
+                    ground.setxLocation(j);
+                    ground.setyLocation(i);
+                }
+                else {
+                    numberOfCity--;
+                    ground = new Ground(j, i, numberOfCity++);
+                }
                 //TODO
                 if (!ground.checkIsGroundInPage()) {
                     ground.setNumber(0);
