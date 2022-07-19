@@ -79,12 +79,16 @@ public class GroundRectangle extends Polygon {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (GlobalVariables.unitRectangle==null) {
-                    final Stage preStage = new Stage();
-                    VBox vBox = new VBox();
-                    Scene scene = new Scene(vBox);
-                    setInformation(vBox);
-                    preStage.setScene(scene);
-                    preStage.show();
+                    if (Player.getAllPlayers().size()!=0) {
+                        if (Player.whichPlayerTurnIs().getWasClearedToSeeGrounds().contains(ground)) {
+                            final Stage preStage = new Stage();
+                            VBox vBox = new VBox();
+                            Scene scene = new Scene(vBox);
+                            setInformation(vBox);
+                            preStage.setScene(scene);
+                            preStage.show();
+                        }
+                    }
                 }
                 else{
                     String s;

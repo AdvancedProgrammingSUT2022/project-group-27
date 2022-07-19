@@ -34,5 +34,6 @@ public class VisitedGround extends Polygon {
                 Double.valueOf(y-GlobalVariables.tool/2),x+GlobalVariables.arz,
         });
         this.setFill(Color.color(1,1,1,0.8));
+        this.setDisable(true);
     }
 }
