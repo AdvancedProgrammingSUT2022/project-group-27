@@ -3,9 +3,11 @@ package viewControllers.Info;
 import Main.Main;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +30,9 @@ public class TechnologyMenu extends Menus {
     private static GraphicOfGame game;
 
     @FXML
+    private Button technologyTree;
+
+    @FXML
     private VBox technologyPlayerHave;
 
     @FXML
@@ -45,6 +50,7 @@ public class TechnologyMenu extends Menus {
 
         addingHaveTechnologyToList();
         addingObtainedTechnologyList();
+        technologyTree.setCursor(Cursor.HAND);
     }
 
     public static void setPlayer(Player player) {
@@ -101,5 +107,13 @@ public class TechnologyMenu extends Menus {
             Label text = new Label("* Sorry, but you haven't have any technologies, yet");
             technologyPlayerHave.getChildren().add(text);
         }
+    }
+
+    public void technologyTree(MouseEvent mouseEvent) throws Exception {
+        TechnologyTree technologyTree = new TechnologyTree();
+        TechnologyTree.setGame(game);
+        TechnologyTree.setPlayer(player);
+        technologyTree.start(new Stage());
+        stage.close();
     }
 }

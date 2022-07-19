@@ -14,6 +14,7 @@
     <center>
         <ScrollPane fitToWidth="true" fitToHeight="true">
             <VBox alignment="CENTER" spacing="30">
+                <Button fx:id="technologyTree" text="technology tree" alignment="CENTER" onMouseClicked="#technologyTree"/>
                 <VBox fx:id="technologyPlayerHave" alignment="CENTER"/>
                 <VBox fx:id="technologyObtained" alignment="CENTER"/>
             </VBox>
