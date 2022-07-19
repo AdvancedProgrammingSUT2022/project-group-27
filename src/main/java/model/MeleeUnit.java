@@ -3,6 +3,7 @@ package model;
 import Enum.MilitaryType;
 import Enum.GroundType;
 import Enum.FeatureType;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import viewControllers.ConquerCityPanel;
 
@@ -65,6 +66,7 @@ public class MeleeUnit extends MilitaryUnit {
         else
             this.mp = 0;
 
+        setAlert(militaryUnit.militaryType.name(), militaryUnit.hp <= 0.0001);
     }
     @Override
     public void combat(City city) {
@@ -115,5 +117,21 @@ public class MeleeUnit extends MilitaryUnit {
             this.mp = 10;
         else
             this.mp = 0;
+    }
+
+    private void setAlert(String enemyName, boolean isWin) {
+        Alert alert;
+        if (isWin) {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("You win the war");
+            alert.setContentText(enemyName + " lose and you win:)");
+        }
+        else {
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("You lose the war");
+            alert.setContentText(enemyName + " win and you lose and you lost your melee unit:(");
+        }
+
+        alert.show();
     }
 }

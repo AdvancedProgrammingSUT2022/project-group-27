@@ -119,6 +119,7 @@ public class GroundRectangle extends Polygon {
     }
 
     private void setInformation(VBox vBox) {
+        vBox.getChildren().add(new Label("ground number: " + ground.getNumber()));
         for (StrategicResource strategicResource: ground.getStrategicResources()) {
             if (strategicResource.name().equals("NOTHING")) break;
             vBox.getChildren().add(new Label(strategicResource.name() + " the change that it has on productions is: " +
