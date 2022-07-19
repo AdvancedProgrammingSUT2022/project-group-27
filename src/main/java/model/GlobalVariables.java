@@ -59,9 +59,12 @@ public class GlobalVariables {
     public static final String SETTLER ="/images/units/SETTLER.png";
     public static final String WARRIOR ="/images/units/WARRIOR.png";
 
+
     public static UnitRectangle unitRectangle=null;
     public static ImagePattern getImagePattern(String url) {
         return new ImagePattern(new Image(ProfileController.class.getResource(url).toExternalForm()));
     }
+
+    public static ImagePattern ruinPattern = GlobalVariables.getImagePattern("/images/ruin.png");
 
 }

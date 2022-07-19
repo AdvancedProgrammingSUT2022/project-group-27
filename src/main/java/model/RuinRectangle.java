@@ -14,7 +14,7 @@ public class RuinRectangle extends Rectangle {
         this.setY(ground.getxLocation());
         this.setHeight(80);
         this.setWidth(80);
-        this.setFill(GlobalVariables.getImagePattern("/images/ruin.png"));
+        this.setFill(GlobalVariables.ruinPattern);
         //System.out.println(groundRectangle.getXLocation()+ " feature " + groundRectangle.getYLocation());
         //this.update();
     }
