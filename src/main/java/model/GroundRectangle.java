@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -63,17 +64,14 @@ public class GroundRectangle extends Polygon {
         this.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                setStroke(Color.AQUA);
-                System.out.println("khodesh :" +  ground.getNumber());
-                for (Ground ground1 : ground.getAdjacentGrounds()){
-                    System.out.println(ground1.getNumber());
-                }
+                setEffect(new InnerShadow(100,1,1,Color.YELLOW));
+
             }
         });
         this.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                setStroke(Color.WHITE);
+                setEffect(null);
             }
         });
 
@@ -93,6 +91,7 @@ public class GroundRectangle extends Polygon {
                     if (GlobalVariables.unitRectangle.getUnit() instanceof MilitaryUnit) s="Military";
                     else s="UnMilitary";
                     Game.getInstance().moveUnits(GlobalVariables.unitRectangle.getUnit().getGround().getNumber(), ground.getNumber(), s);
+                    GlobalVariables.unitRectangle=null;
                     GraphicOfGame.showMap();
                 }
 
