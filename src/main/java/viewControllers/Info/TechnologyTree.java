@@ -53,6 +53,7 @@ public class TechnologyTree extends Application {
     }
     @FXML
     public void initialize(){
+        TechnologyRectangle.allTechnologyRectangle.clear();
         int x=100,y=200;
         for (Technology technology : player.getAllTechnologyTypes()){
             TechnologyRectangle technologyRectangle =new TechnologyRectangle(technology,x,y);
@@ -63,6 +64,9 @@ public class TechnologyTree extends Application {
             }
             if (technology.getTimeRemain()<=0){
                 technologyRectangle.setEffect(new InnerShadow(100,1,1,Color.GREEN));
+            }
+            if (player.getUnderConstructionTechnology()!=null &&  player.getUnderConstructionTechnology().getTechnologyType().equals(technology.getTechnologyType())){
+                technologyRectangle.setEffect(new InnerShadow(100,1,1,Color.RED));
             }
         }
         Random random=new Random(2);

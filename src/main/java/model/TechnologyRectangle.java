@@ -1,5 +1,9 @@
 package model;
 
+import javafx.event.EventHandler;
+import javafx.scene.effect.InnerShadow;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import viewControllers.Info.TechnologyTree;
 
@@ -33,6 +37,27 @@ public class TechnologyRectangle extends Circle {
         this.setLayoutX(xLocation);
         this.setLayoutY(yLocation);
         this.setRadius(50);
+        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+                Player player=Player.whichPlayerTurnIs();
+                if (player.doWeHaveThisTechnology(technology.getTechnologyType())) return;
+                if (player.canWeAddThisTechnology(technology.getTechnologyType())){
+                    player.setUnderConstructionTechnology(technology);
+                    setEffect(new InnerShadow(100,1,1, Color.RED));
+                }
+                for (TechnologyRectangle technologyRectangle : allTechnologyRectangle){
+                    if (technologyRectangle.technology.equals(technology)) continue;
+                    if (player.canWeAddThisTechnology(technologyRectangle.technology.getTechnologyType())){
+                        technologyRectangle.setEffect(new InnerShadow(100,1,1,Color.YELLOW));
+                    }
+                    if (player.doWeHaveThisTechnology(technologyRectangle.technology.getTechnologyType())){
+                        technologyRectangle.setEffect(new InnerShadow(100,1,1,Color.GREEN));
+                    }
+                }
+            }
+        });
         allTechnologyRectangle.add(this);
     }
     public static TechnologyRectangle getTechnologyRectangle(TechnologyType technologyType){
