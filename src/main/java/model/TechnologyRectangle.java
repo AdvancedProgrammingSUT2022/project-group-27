@@ -1,6 +1,7 @@
 package model;
 
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -46,6 +47,10 @@ public class TechnologyRectangle extends Circle {
                 if (player.canWeAddThisTechnology(technology.getTechnologyType())){
                     player.setUnderConstructionTechnology(technology);
                     setEffect(new InnerShadow(100,1,1, Color.RED));
+                    Alert alert=new Alert(Alert.AlertType.INFORMATION);
+                    alert.setHeaderText("Technology");
+                    alert.setContentText("you have started to learn " + technology.getTechnologyType());
+                    alert.show();
                 }
                 for (TechnologyRectangle technologyRectangle : allTechnologyRectangle){
                     if (technologyRectangle.technology.equals(technology)) continue;

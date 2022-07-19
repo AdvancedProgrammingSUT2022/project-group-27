@@ -5,8 +5,11 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.effect.Shadow;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -27,6 +30,7 @@ public class TechnologyTree extends Application {
     private static Player player;
     private static GraphicOfGame game;
     public Pane gamePane;
+    public TextField search;
 
 
     public static void setPlayer(Player player) {
@@ -101,6 +105,32 @@ public class TechnologyTree extends Application {
             technologyRectangle.setStroke(Color.WHITE);
             gamePane.getChildren().add(technologyRectangle);
         }
+        for (TechnologyRectangle technologyRectangle : TechnologyRectangle.allTechnologyRectangle){
+            Label label=new Label(technologyRectangle.technology.getTechnologyType().toString());
+            label.setLayoutX(technologyRectangle.getxLocation()-technologyRectangle.technology.getTechnologyType().toString().length()*4);
+            label.setLayoutY(technologyRectangle.getyLocation()-70);
+            gamePane.getChildren().add(label);
+        }
 
+    }
+
+    public void searching(KeyEvent keyEvent) {
+        for (TechnologyRectangle technologyRectangle : TechnologyRectangle.allTechnologyRectangle){
+            technologyRectangle.setEffect(null);
+        }
+        for (TechnologyRectangle technologyRectangle : TechnologyRectangle.allTechnologyRectangle){
+            if (player.canWeAddThisTechnology(technologyRectangle.technology.getTechnologyType())){
+                technologyRectangle.setEffect(new InnerShadow(100,1,1,Color.YELLOW));
+            }
+            if (player.doWeHaveThisTechnology(technologyRectangle.technology.getTechnologyType())){
+                technologyRectangle.setEffect(new InnerShadow(100,1,1,Color.GREEN));
+            }
+        }
+        if (search.getText().equals("")) return ;
+        for (TechnologyRectangle technologyRectangle : TechnologyRectangle.allTechnologyRectangle){
+            if (technologyRectangle.technology.getTechnologyType().toString().startsWith(search.getText())){
+                technologyRectangle.setEffect(new InnerShadow(100,1,1,Color.AQUA));
+            }
+        }
     }
 }
