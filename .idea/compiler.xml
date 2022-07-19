@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="newerer-project" />
         <module name="apProjectGroup27" />
         <module name="project-group-27" />
         <module name="new-project" />

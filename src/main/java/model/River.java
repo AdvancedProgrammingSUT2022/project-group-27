@@ -33,4 +33,13 @@ public class River {
         GlobalVariables globalVariables = new GlobalVariables();
         return Ground.AreTheseTwoGroundAdjacent(firstGround,secondGround);
     }
+    public static boolean doWeHaveGroundBetweenTheseTwoGrounds(Ground firstGround,Ground secondGround){
+        for (River river : allRivers){
+            if (river.getFirstGround().equals(firstGround) && river.getSecondGround().equals(secondGround))
+                return true;
+            if (river.getFirstGround().equals(secondGround) && river.getSecondGround().equals(firstGround))
+                return true;
+        }
+        return false;
+    }
 }

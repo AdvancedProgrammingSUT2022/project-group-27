@@ -229,6 +229,19 @@ public class City {
         double cityStrength = (double) this.rangeOfCity.size() / 2;
         if (this.ground.getMilitaryUnit() != null)
             cityStrength += 1.5;
+        for (Building building: this.buildings) {
+            if (building.getType().equals(BuildingsType.WALLS)) {
+                cityStrength += 1.25;
+
+            }
+            if (building.getType().equals(BuildingsType.CASTLE)) {
+                cityStrength += 1.875;
+            }
+            if (building.getType().equals(BuildingsType.MILITARY_BASE)) {
+                cityStrength += 3;
+
+            }
+        }
         return cityStrength;
     }
 

@@ -20,7 +20,7 @@ import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 public class UnitControllerTest {
-    Ground ground1 = new Ground(10, 11, 10);
+    /*Ground ground1 = new Ground(10, 11, 10);
     static MockedStatic<Ground> groundMockedStatic = Mockito.mockStatic(Ground.class);
     static MockedStatic<City> cityMockedStatic = Mockito.mockStatic(City.class);
 
@@ -285,5 +285,5 @@ public class UnitControllerTest {
         when(city.getRangeOfCity()).thenReturn(new ArrayList<>(List.of(ground)));
         doNothing().when(city).setBuildingUnit(null);
         UnitController.spawnUnit(city);
-    }
+    }*/
 }

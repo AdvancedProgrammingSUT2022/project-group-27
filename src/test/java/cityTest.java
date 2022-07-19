@@ -28,7 +28,7 @@ import java.util.regex.Matcher;
 
 @ExtendWith(MockitoExtension.class)
 public class cityTest {
-    Ground ground = mock(Ground.class);
+    /*Ground ground = mock(Ground.class);
     Player player = mock(Player.class);
     City city = new City(ground, "...", player);
     static MockedStatic<Ground> groundMockedStatic = Mockito.mockStatic(Ground.class);
@@ -253,5 +253,5 @@ public class cityTest {
     @AfterAll
     public static void clear() {
         groundMockedStatic.close();
-    }
+    }*/
 }
