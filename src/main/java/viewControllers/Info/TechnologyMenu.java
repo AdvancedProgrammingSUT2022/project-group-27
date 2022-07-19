@@ -113,7 +113,9 @@ public class TechnologyMenu extends Menus {
         TechnologyTree technologyTree = new TechnologyTree();
         TechnologyTree.setGame(game);
         TechnologyTree.setPlayer(player);
-        technologyTree.start(new Stage());
-        stage.close();
+       // Stage newStage=new Stage();
+        System.out.println("new");
+        technologyTree.start(stage);
+       // stage.close();
     }
 }

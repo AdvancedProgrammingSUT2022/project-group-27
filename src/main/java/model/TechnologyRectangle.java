@@ -25,7 +25,7 @@ public class TechnologyRectangle extends Circle {
     public void setxLocation(int xLocation) {
         this.xLocation = xLocation;
     }
-    Technology technology;
+    public Technology technology;
     public TechnologyRectangle (Technology technology,int xLocation,int yLocation){
         this.xLocation=xLocation;
         this.yLocation=yLocation;
