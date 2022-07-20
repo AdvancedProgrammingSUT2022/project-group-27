@@ -1,9 +1,10 @@
-module client.client {
+module Client {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
     requires com.google.gson;
 
 
-    opens client.client.view to javafx.fxml;
-    exports client.client.view;
+    opens view to javafx.fxml;
+    exports view;
 }

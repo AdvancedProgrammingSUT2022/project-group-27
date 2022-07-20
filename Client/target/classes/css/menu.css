@@ -1,0 +1,24 @@
+.background {
+    -fx-background-image: url(../images/map.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.label {
+    -fx-background-color: rgba(255, 255, 255, 0.61);
+}
+
+.button {
+    -fx-background-color: #b71135;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}

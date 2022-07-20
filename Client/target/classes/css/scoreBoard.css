@@ -1,0 +1,11 @@
+. background {
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.button {
+    -fx-background-color: #b71135;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+}
