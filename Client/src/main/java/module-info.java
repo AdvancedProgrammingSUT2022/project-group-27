@@ -5,6 +5,7 @@ module Client {
     requires com.google.gson;
 
 
-    opens view to javafx.fxml;
-    exports view;
+    opens viewControllers to javafx.fxml;
+    opens model to com.google.gson;
+    exports viewControllers;
 }

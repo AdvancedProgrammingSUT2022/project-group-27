@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.cell.TextFieldTableCell?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="viewControllers.LoginView"
+            prefHeight="1000.0" prefWidth="800.0">
+    <center>
+        <VBox alignment="CENTER" spacing="10" maxWidth="300">
+            <Label fx:id="text" text="what do you wish to do?"/>
+            <HBox alignment="CENTER">
+                <Button fx:id="signIn" text="Sign in" onMouseClicked="#signInFields"/>
+                <Button fx:id="signUp" text="Sign up" onMouseClicked="#signUpFields"/>
+            </HBox>
+            <TextField fx:id="username" promptText="enter your username"/>
+            <TextField fx:id="password" promptText="enter your password"/>
+            <TextField fx:id="nickname" promptText="enter your nickname"/>
+            <Button fx:id="submit" text="submit" onMouseClicked="#submit"/>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,1 @@
+[{"username":"a","password":"a","nickname":"a","score":0,"timeOfScoreGame":"0","lastLoginTime":"2022-07-20 03:42:05"}]

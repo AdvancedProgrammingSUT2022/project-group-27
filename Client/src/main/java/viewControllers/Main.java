@@ -1,4 +1,4 @@
-package view;
+package viewControllers;
 
 import controller.NetworkController;
 import controller.UserController;
@@ -20,8 +20,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Main extends Application {
     private static Stage stage;
@@ -31,11 +29,11 @@ public class Main extends Application {
     private Label author;
 
     public static void main(String[] args) {
-        launch();
-
         if (!NetworkController.connect()) {
             return;
         }
+
+        launch();
 
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             @Override
