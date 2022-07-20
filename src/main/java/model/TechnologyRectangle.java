@@ -6,6 +6,7 @@ import javafx.scene.effect.InnerShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import viewControllers.GraphicOfGame;
 import viewControllers.Info.TechnologyTree;
 
 import java.util.ArrayList;
@@ -14,6 +15,11 @@ import Enum.*;
 public class TechnologyRectangle extends Circle {
     public static ArrayList<TechnologyRectangle> allTechnologyRectangle=new ArrayList<>();
     private int xLocation,yLocation;
+    private static GraphicOfGame game;
+
+    public static void setGame(GraphicOfGame game) {
+        TechnologyRectangle.game = game;
+    }
 
     public int getyLocation() {
         return yLocation;
@@ -51,6 +57,7 @@ public class TechnologyRectangle extends Circle {
                     alert.setHeaderText("Technology");
                     alert.setContentText("you have started to learn " + technology.getTechnologyType());
                     alert.show();
+                    game.initializing();
                 }
                 for (TechnologyRectangle technologyRectangle : allTechnologyRectangle){
                     if (technologyRectangle.technology.equals(technology)) continue;

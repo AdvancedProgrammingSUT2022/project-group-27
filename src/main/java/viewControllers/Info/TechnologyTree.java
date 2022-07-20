@@ -57,6 +57,7 @@ public class TechnologyTree extends Application {
     }
     @FXML
     public void initialize(){
+        TechnologyRectangle.setGame(game);
         TechnologyRectangle.allTechnologyRectangle.clear();
         int x=100,y=200;
         for (Technology technology : player.getAllTechnologyTypes()){
