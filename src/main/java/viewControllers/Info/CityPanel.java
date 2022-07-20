@@ -575,7 +575,8 @@ public class CityPanel extends Menus {
 
     private void addToList() {
         for (City city: player.getCities()) {
-            Label label = new Label("Name city: " + city.getName() + " Ground number: " + city.getGround().getNumber());
+            Label label = new Label("Name city: " + city.getName() + " Ground number: " + city.getGround().getNumber() + " Hp: " +
+                    city.getHp());
             settingHoverToEach(label);
 
             label.setOnMouseClicked(new EventHandler<MouseEvent>() {
