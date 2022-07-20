@@ -1,1 +1,1 @@
-[{"username":"a","password":"a","nickname":"a","score":0,"timeOfScoreGame":"0","lastLoginTime":"2022-07-20 03:42:05"}]
+[{"username":"a","password":"a","nickname":"a","profileImage":"troy-2.jpg","score":0,"timeOfScoreGame":"0","lastLoginTime":"2022-07-20 10:13:02"},{"username":"b","password":"b","nickname":"b","profileImage":"troy-1.jpg","score":0,"timeOfScoreGame":"0","lastLoginTime":"2022-07-20 10:12:06"}]

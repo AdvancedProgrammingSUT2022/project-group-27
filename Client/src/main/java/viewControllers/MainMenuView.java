@@ -134,7 +134,7 @@ public class MainMenuView extends Application {
 
     public void chatRoomMenu(MouseEvent mouseEvent) throws Exception {
         audio.stop();
-        //ChatRoomView chatRoomView = new ChatRoomView();
-        //chatRoomView.start(stage);
+        ChatRoomView chatRoomView = new ChatRoomView();
+        chatRoomView.start(stage);
     }
 }

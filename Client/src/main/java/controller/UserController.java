@@ -1,11 +1,16 @@
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import model.ChatGroup;
+import model.ChatText;
 import model.Request;
 import model.Response;
 import Enum.Message;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class UserController {
     private static UserController instance = null;
@@ -52,14 +57,14 @@ public class UserController {
         return (String) response.getData().get("username");
     }
 
-    public String getScore() {
+    public Double getScore() {
         Request request = new Request();
         request.setHeader("getScore");
         request.addData("token", userLoggedIn);
         Response response = NetworkController.send(request);
         if (response == null) return null;
 
-        return (String) response.getData().get("score");
+        return (Double) response.getData().get("score");
     }
 
     public void setLastLoginTime(String time) {
@@ -95,20 +100,20 @@ public class UserController {
         return (String) response.getData().get("message");
     }
 
-    public String getProfileImage() {
+    public String getProfileImage(String user) {
         Request request = new Request();
         request.setHeader("profileImage");
-        request.addData("token", userLoggedIn);
+        request.addData("token", user);
         Response response = NetworkController.send(request);
         if (response == null) return null;
 
         return (String) response.getData().get("image");
     }
 
-    public String getCurrentImage() {
+    public String getCurrentImage(String user) {
         Request request = new Request();
         request.setHeader("currentImage");
-        request.addData("token", userLoggedIn);
+        request.addData("token", user);
         Response response = NetworkController.send(request);
         if (response == null) return null;
 
@@ -129,5 +134,37 @@ public class UserController {
         request.addData("token", userLoggedIn);
         request.addData("image", image);
         Response response = NetworkController.send(request);
+    }
+
+    public ArrayList<String> getListOfAllUsers() {
+        Request request = new Request();
+        request.setHeader("getListOfUsers");
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        String answer = new Gson().toJson(response.getData().get("list"));
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<String>>(){}.getType());
+    }
+
+    public ArrayList<ChatGroup> getListOfAllChatsUser() {
+        Request request = new Request();
+        request.setHeader("getListOfChatsUser");
+        request.addData("token", userLoggedIn);
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<ChatGroup>>(){}.getType());
+    }
+
+    public ArrayList<ChatText> getListOfAllChatTexts(ChatGroup chatGroup) {
+        Request request = new Request();
+        request.setHeader("getListOfChatTexts");
+        request.addData("token", userLoggedIn);
+        request.addData("chat", new Gson().toJson(chatGroup));
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        String answer = new Gson().toJson(response.getData().get("list"));
+        return new Gson().fromJson(answer, new TypeToken<ArrayList<ChatText>>(){}.getType());
     }
 }

@@ -73,6 +73,26 @@ public class SocketHandler extends Thread{
                 response = handleSetProfileImage(request);
             } case "setImage" -> {
                 response = handleSetImage(request);
+            } case "getListOfChatTexts" -> {
+                response = ChatController.getListOfAllChatTexts(request);
+            } case "getListOfChatsUser" -> {
+                response = ChatController.getListOfAllChatsUser(request);
+            } case "getListOfUsers" -> {
+                response = ChatController.getListOfAllUsers(request);
+            } case "addChatText" -> {
+                response = ChatController.addChatText(request);
+            } case "deleteChatText" -> {
+                response = ChatController.delete(request);
+            } case "setSeen" -> {
+                response = ChatController.setSeen(request);
+            } case "setText" -> {
+                response = ChatController.setText(request);
+            } case "setDeleted" -> {
+                response = ChatController.setDeleted(request);
+            } case "addChatGroup" -> {
+                response = ChatController.addChatGroup(request);
+            } case "getListOfChats" -> {
+                response = ChatController.getListOfAllChats(request);
             }
             default -> {
                 response.setStatus(400);

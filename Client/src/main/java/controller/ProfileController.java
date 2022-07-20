@@ -40,13 +40,13 @@ public class ProfileController {
     }
 
     public ImagePattern getImage(String user) {
-        String profileModel = UserController.getInstance().getProfileImage();
+        String profileModel = UserController.getInstance().getProfileImage(user);
 
         if (profileModel == null) profileModel = randomImage().toString();
 
 
         Image image;
-        String currentImage = UserController.getInstance().getCurrentImage();
+        String currentImage = UserController.getInstance().getCurrentImage(user);
         if (currentImage == null) {
             image = new Image(ProfileController.class.getResource("/profile/" + profileModel).toExternalForm());
         }
@@ -64,13 +64,13 @@ public class ProfileController {
     }
 
     public void settingProfile(Rectangle profile, String user) {
-        String profileModel = UserController.getInstance().getProfileImage();
+        String profileModel = UserController.getInstance().getProfileImage(user);
         File file = null;
 
         if (profileModel == null) profileModel = randomImage().toString();
 
         Image image;
-        String currentImage = UserController.getInstance().getCurrentImage();
+        String currentImage = UserController.getInstance().getCurrentImage(user);
         if (currentImage == null) {
             image = new Image(ProfileController.class.getResource("/profile/" + profileModel).toExternalForm());
             file = new File("./src/main/resources/profile/" + profileModel);
