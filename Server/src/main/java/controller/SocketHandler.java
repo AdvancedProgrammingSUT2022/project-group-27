@@ -2,6 +2,7 @@ package controller;
 
 import model.Request;
 import model.Response;
+import model.User;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -39,7 +40,15 @@ public class SocketHandler extends Thread{
         Response response = new Response();
 
         switch (request.getHeader()) {
-            //TODO adding other cases
+            case "nullCurrentImage" -> {
+                User user = User.findUserByToken((String) request.getData().get("token"));
+                user.setCurrentImage(null);
+                response.setStatus(400);
+            } case "lastTime" -> {
+                User user = User.findUserByToken((String) request.getData().get("token"));
+                user.setLastLoginTime((String) request.getData().get("time"));
+                response.setStatus(400);
+            }
             default -> {
                 response.setStatus(400);
                 response.addData("error", "invalid command");

@@ -101,6 +101,14 @@ public class User {
         return null;
     }
 
+    public String getToken() {
+        return username; //TODO maybe should change it
+    }
+
+    public static User findUserByToken(String token) {
+        return findUser(token);
+    }
+
     public static User findUser(String username) {
         for (User user : listOfUsers) {
             if (user.username.equals(username)) return user;

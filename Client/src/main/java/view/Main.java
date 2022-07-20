@@ -1,6 +1,7 @@
 package view;
 
-import client.client.controller.NetworkController;
+import controller.NetworkController;
+import controller.UserController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,6 +20,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Main extends Application {
     private static Stage stage;
@@ -33,6 +36,13 @@ public class Main extends Application {
         if (!NetworkController.connect()) {
             return;
         }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserController.getInstance().atEndWorks();
+            }
+        }));
     }
 
     @FXML

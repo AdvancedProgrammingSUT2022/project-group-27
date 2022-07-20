@@ -1,7 +1,7 @@
-package client.client.controller;
+package controller;
 
-import client.client.model.Request;
-import client.client.model.Response;
+import model.Request;
+import model.Response;
 import com.google.gson.Gson;
 
 import java.io.DataInputStream;
