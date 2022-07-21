@@ -82,6 +82,9 @@ public class SocketHandler extends Thread{
             } case "setImage" -> {
                 response = handleSetImage(request);
                 update();
+            } case "setCurrentImage" -> {
+                response = handleSetCurrentImage(request);
+                update();
             } case "getListOfChatTexts" -> {
                 response = ChatController.getListOfAllChatTexts(request);
             } case "getListOfChatsUser" -> {
@@ -111,6 +114,10 @@ public class SocketHandler extends Thread{
                 User user = User.findUserByToken(token);
                 System.out.println("Registered update socket for " + token);
                 user.setUpdateSocket(socket);
+            } case "changeNickname" -> {
+                response = ProfileController.getInstance().handleChangeNickname(request);
+            } case "changePassword" -> {
+                response = ProfileController.getInstance().handleChangePassword(request);
             }
             default -> {
                 response.setStatus(400);
@@ -172,6 +179,16 @@ public class SocketHandler extends Thread{
         String image = (String) request.getData().get("image");
 
         user.setProfileImage(image);
+        response.setStatus(200);
+        return response;
+    }
+
+    private Response handleSetCurrentImage(Request request) {
+        Response response = new Response();
+        User user = User.findUserByToken((String) request.getData().get("token"));
+        String image = (String) request.getData().get("image");
+
+        user.setCurrentImage(image);
         response.setStatus(200);
         return response;
     }

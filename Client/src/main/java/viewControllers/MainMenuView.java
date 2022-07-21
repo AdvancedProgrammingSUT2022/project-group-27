@@ -1,7 +1,6 @@
 package viewControllers;
 
 import Enum.Message;
-import controller.NetworkController;
 import controller.ProfileController;
 import controller.UserController;
 import javafx.application.Application;
@@ -117,8 +116,8 @@ public class MainMenuView extends Application {
 
     public void profileMenu(MouseEvent mouseEvent) throws Exception {
         audio.stop();
-        //ProfileView profileView = new ProfileView();
-        //profileView.start(stage);
+        ProfileView profileView = new ProfileView();
+        profileView.start(stage);
     }
 
     public void gameMenu(MouseEvent mouseEvent) throws Exception {

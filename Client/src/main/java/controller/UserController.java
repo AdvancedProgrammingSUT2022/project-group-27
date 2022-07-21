@@ -134,6 +134,14 @@ public class UserController {
         Response response = NetworkController.send(request);
     }
 
+    public void setCurrentImage(String image) {
+        Request request = new Request();
+        request.setHeader("setCurrentImage");
+        request.addData("token", userLoggedIn);
+        request.addData("image", image);
+        Response response = NetworkController.send(request);
+    }
+
     public void setImage(byte[] image, String user) {
         Request request = new Request();
         request.setHeader("setImage");

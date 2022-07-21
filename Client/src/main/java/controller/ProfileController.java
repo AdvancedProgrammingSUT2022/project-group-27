@@ -5,6 +5,8 @@ import Enum.ProfileImages;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import model.Request;
+import model.Response;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,15 +30,27 @@ public class ProfileController {
         return ProfileController.instance;
     }
 
-    public Message changeNickname(String nickname) {
-        //if (Menu.getLoggedInUser().changeNickname(nickname)) return Message.NICKNAME_CHANGED;
-        return Message.EXIST_NICKNAME;
+    public String changeNickname(String nickname) {
+        Request request = new Request();
+        request.setHeader("changeNickname");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("nickname", nickname);
+        Response response = NetworkController.send(request);
+        if (response == null) return Message.LOST_RESPONSE.toString();
+
+        return (String) response.getData().get("result");
     }
 
-    public Message changePassword(String newPassword, String oldPassword) {
-        //if (!Menu.getLoggedInUser().isPasswordCorrect(oldPassword)) return Message.INVALID_PASSWORD;
-        //if (!Menu.getLoggedInUser().changePassword(newPassword)) return Message.DUPLICSTED_PASSWORD;
-        return Message.PASSWORD_CHANGED;
+    public String changePassword(String newPassword, String oldPassword) {
+        Request request = new Request();
+        request.setHeader("changePassword");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("newPassword", newPassword);
+        request.addData("oldPassword", oldPassword);
+        Response response = NetworkController.send(request);
+        if (response == null) return Message.LOST_RESPONSE.toString();
+
+        return (String) response.getData().get("result");
     }
 
     public ImagePattern getImage(String user) {
