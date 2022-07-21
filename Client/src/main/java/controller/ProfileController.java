@@ -5,6 +5,8 @@ import Enum.ProfileImages;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import model.Request;
+import model.Response;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,25 +30,37 @@ public class ProfileController {
         return ProfileController.instance;
     }
 
-    public Message changeNickname(String nickname) {
-        //if (Menu.getLoggedInUser().changeNickname(nickname)) return Message.NICKNAME_CHANGED;
-        return Message.EXIST_NICKNAME;
+    public String changeNickname(String nickname) {
+        Request request = new Request();
+        request.setHeader("changeNickname");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("nickname", nickname);
+        Response response = NetworkController.send(request);
+        if (response == null) return Message.LOST_RESPONSE.toString();
+
+        return (String) response.getData().get("result");
     }
 
-    public Message changePassword(String newPassword, String oldPassword) {
-        //if (!Menu.getLoggedInUser().isPasswordCorrect(oldPassword)) return Message.INVALID_PASSWORD;
-        //if (!Menu.getLoggedInUser().changePassword(newPassword)) return Message.DUPLICSTED_PASSWORD;
-        return Message.PASSWORD_CHANGED;
+    public String changePassword(String newPassword, String oldPassword) {
+        Request request = new Request();
+        request.setHeader("changePassword");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("newPassword", newPassword);
+        request.addData("oldPassword", oldPassword);
+        Response response = NetworkController.send(request);
+        if (response == null) return Message.LOST_RESPONSE.toString();
+
+        return (String) response.getData().get("result");
     }
 
     public ImagePattern getImage(String user) {
-        String profileModel = UserController.getInstance().getProfileImage();
+        String profileModel = UserController.getInstance().getProfileImage(user);
 
         if (profileModel == null) profileModel = randomImage().toString();
 
 
         Image image;
-        String currentImage = UserController.getInstance().getCurrentImage();
+        String currentImage = UserController.getInstance().getCurrentImage(user);
         if (currentImage == null) {
             image = new Image(ProfileController.class.getResource("/profile/" + profileModel).toExternalForm());
         }
@@ -64,13 +78,13 @@ public class ProfileController {
     }
 
     public void settingProfile(Rectangle profile, String user) {
-        String profileModel = UserController.getInstance().getProfileImage();
+        String profileModel = UserController.getInstance().getProfileImage(user);
         File file = null;
 
         if (profileModel == null) profileModel = randomImage().toString();
 
         Image image;
-        String currentImage = UserController.getInstance().getCurrentImage();
+        String currentImage = UserController.getInstance().getCurrentImage(user);
         if (currentImage == null) {
             image = new Image(ProfileController.class.getResource("/profile/" + profileModel).toExternalForm());
             file = new File("./src/main/resources/profile/" + profileModel);
@@ -101,7 +115,7 @@ public class ProfileController {
         }catch (IOException e) {
             e.printStackTrace();
         }
-        UserController.getInstance().setImage(bFile);
+        UserController.getInstance().setImage(bFile, user);
     }
 
     public void settingAllImages(Rectangle[] images) {
@@ -115,7 +129,7 @@ public class ProfileController {
         }
     }
 
-    private ProfileImages randomImage() {
+    public ProfileImages randomImage() {
         int max = ProfileImages.values().length;
         Random random = new Random();
         int randomNumber = random.nextInt(max);

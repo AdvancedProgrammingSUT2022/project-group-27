@@ -116,8 +116,8 @@ public class MainMenuView extends Application {
 
     public void profileMenu(MouseEvent mouseEvent) throws Exception {
         audio.stop();
-        //ProfileView profileView = new ProfileView();
-        //profileView.start(stage);
+        ProfileView profileView = new ProfileView();
+        profileView.start(stage);
     }
 
     public void gameMenu(MouseEvent mouseEvent) throws Exception {
@@ -128,13 +128,13 @@ public class MainMenuView extends Application {
 
     public void scoreBoardMenu(MouseEvent mouseEvent) throws Exception {
         audio.stop();
-        //ScoreBoardView scoreBoardView = new ScoreBoardView();
-        //scoreBoardView.start(stage);
+        ScoreBoardView scoreBoardView = new ScoreBoardView();
+        scoreBoardView.start(stage);
     }
 
     public void chatRoomMenu(MouseEvent mouseEvent) throws Exception {
         audio.stop();
-        //ChatRoomView chatRoomView = new ChatRoomView();
-        //chatRoomView.start(stage);
+        ChatRoomView chatRoomView = new ChatRoomView();
+        chatRoomView.start(stage);
     }
 }

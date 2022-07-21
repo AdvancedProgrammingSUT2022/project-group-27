@@ -1,5 +1,8 @@
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import model.ChatGroup;
 import model.Request;
 import model.Response;
 import model.User;
@@ -10,6 +13,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SocketHandler extends Thread{
     private final Socket socket;
@@ -49,10 +53,13 @@ public class SocketHandler extends Thread{
                 User user = User.findUserByToken((String) request.getData().get("token"));
                 user.setLastLoginTime((String) request.getData().get("time"));
                 response.setStatus(200);
+                update();
             } case "loginUser" -> {
                 response = handleLoginUser(request);
+                update();
             } case "createUser" -> {
                 response = handleCreateUser(request);
+                update();
             } case "getUsername" -> {
                 User user = User.findUserByToken((String) request.getData().get("token"));
                 response.setStatus(200);
@@ -71,8 +78,46 @@ public class SocketHandler extends Thread{
                 response.addData("image", user.getCurrentImage());
             } case "setProfileImage" -> {
                 response = handleSetProfileImage(request);
+                update();
             } case "setImage" -> {
                 response = handleSetImage(request);
+                update();
+            } case "setCurrentImage" -> {
+                response = handleSetCurrentImage(request);
+                update();
+            } case "getListOfChatTexts" -> {
+                response = ChatController.getListOfAllChatTexts(request);
+            } case "getListOfChatsUser" -> {
+                response = ChatController.getListOfAllChatsUser(request);
+            } case "getListOfUsers" -> {
+                response = ChatController.getListOfAllUsers(request);
+            } case "addChatText" -> {
+                response = ChatController.addChatText(request);
+            } case "deleteChatText" -> {
+                response = ChatController.delete(request);
+            } case "setSeen" -> {
+                response = ChatController.setSeen(request);
+            } case "setText" -> {
+                response = ChatController.setText(request);
+            } case "setDeleted" -> {
+                response = ChatController.setDeleted(request);
+            } case "addChatGroup" -> {
+                response = ChatController.addChatGroup(request);
+            } case "getListOfChats" -> {
+                response = ChatController.getListOfAllChats(request);
+            } case "scoreBoardList" -> {
+                response = handleScoreBoardList(request);
+            } case "getImage" -> {
+                response = handleGetImage(request);
+            } case "register_update" -> {
+                String token = (String) request.getData().get("token");
+                User user = User.findUserByToken(token);
+                System.out.println("Registered update socket for " + token);
+                user.setUpdateSocket(socket);
+            } case "changeNickname" -> {
+                response = ProfileController.getInstance().handleChangeNickname(request);
+            } case "changePassword" -> {
+                response = ProfileController.getInstance().handleChangePassword(request);
             }
             default -> {
                 response.setStatus(400);
@@ -83,12 +128,47 @@ public class SocketHandler extends Thread{
         return response;
     }
 
+    public void update() {
+        Response update = new Response();
+        update.setStatus(400);
+        update.addData("update", "update");
+        for (int i = 0; i < User.getListOfUsers().size(); i++) {
+            User receiver = User.getListOfUsers().get(i);
+            try {
+                if (receiver.getUpdateOutputStream() == null) continue;
+                receiver.getUpdateOutputStream().writeUTF(update.toJson());
+                receiver.getUpdateOutputStream().flush();
+            } catch (IOException ignored) {
+                //Nothing
+            }
+        }
+    }
+
+    private Response handleGetImage(Request request) {
+        Response response = new Response();
+
+        User user = User.findUser((String) request.getData().get("username"));
+        response.addData("image", new Gson().toJson(user.getImage()));
+
+        response.setStatus(200);
+        return response;
+    }
+
+    private Response handleScoreBoardList(Request request) {
+        Response response = new Response();
+        User.sort();
+        response.addData("list", new Gson().toJson(User.getListOfUsers()));
+        response.setStatus(200);
+        return response;
+    }
+
     private Response handleSetImage(Request request) {
         Response response = new Response();
         User user = User.findUserByToken((String) request.getData().get("token"));
-        byte[] image = (byte[]) request.getData().get("image");
+        //byte[] image = new Gson().fromJson((String) request.getData().get("image"), new TypeToken<byte []>(){}.getType());
+        //byte[] image = (byte[]) request.getData().get("image");
 
-        user.setImage(image);
+        //ProfileController.getInstance().settingProfile(user);
         response.setStatus(200);
         return response;
     }
@@ -99,6 +179,16 @@ public class SocketHandler extends Thread{
         String image = (String) request.getData().get("image");
 
         user.setProfileImage(image);
+        response.setStatus(200);
+        return response;
+    }
+
+    private Response handleSetCurrentImage(Request request) {
+        Response response = new Response();
+        User user = User.findUserByToken((String) request.getData().get("token"));
+        String image = (String) request.getData().get("image");
+
+        user.setCurrentImage(image);
         response.setStatus(200);
         return response;
     }

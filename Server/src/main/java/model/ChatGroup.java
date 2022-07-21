@@ -86,7 +86,7 @@ public class ChatGroup {
 
     public static ChatGroup findChat(User one, User two) {
         for (ChatGroup chatGroup: listOfGroups) {
-            if (chatGroup.listOfUsers.contains(one.getUsername()) && chatGroup.listOfUsers.contains(two.getUsername()) && chatGroup.listOfUsers.size() == 2)
+            if (chatGroup.name.equals("") && chatGroup.listOfUsers.contains(one.getUsername()) && chatGroup.listOfUsers.contains(two.getUsername()) && chatGroup.listOfUsers.size() == 2)
                 return chatGroup;
         }
 
@@ -107,5 +107,14 @@ public class ChatGroup {
         }
 
         return null;
+    }
+
+    public static void add(ChatGroup chatGroup) {
+        ChatGroup newChatGroup;
+        if (chatGroup.name.equals("")) newChatGroup = new ChatGroup(chatGroup.getListOfUsers());
+        else newChatGroup = new ChatGroup(chatGroup.getListOfUsers(), chatGroup.name);
+        for (ChatText chatText: chatGroup.chats) {
+            newChatGroup.add(chatText);
+        }
     }
 }

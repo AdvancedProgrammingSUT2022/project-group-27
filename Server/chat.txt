@@ -1,1 +1,1 @@
-[]
+[{"listOfUsers":["a"],"chats":[],"name":"public"}]

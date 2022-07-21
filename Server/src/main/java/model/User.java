@@ -1,5 +1,8 @@
 package model;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -7,6 +10,8 @@ public class User {
     private String username;
     private String password;
     private String nickname;
+    private transient Socket updateSocket;
+    private transient DataOutputStream updateOutputStream;
     private String profileImage = null;
     private String currentImage = null;
     private int score;
@@ -83,6 +88,15 @@ public class User {
 
     public byte[] getImage() {
         return image;
+    }
+
+    public void setUpdateSocket(Socket updateSocket) throws IOException {
+        this.updateSocket = updateSocket;
+        this.updateOutputStream = new DataOutputStream(updateSocket.getOutputStream());
+    }
+
+    public DataOutputStream getUpdateOutputStream() {
+        return updateOutputStream;
     }
 
     public static void setListOfUsers(ArrayList<User> listOfUsers) {
