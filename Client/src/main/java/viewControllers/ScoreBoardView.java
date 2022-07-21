@@ -61,6 +61,8 @@ public class ScoreBoardView extends Application {
 
     @FXML
     public void initialize() {
+        if (scoreBoard == null) return;
+
         scoreBoard.getItems().clear();
         profileImageColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -133,7 +135,7 @@ public class ScoreBoardView extends Application {
 
     public void back(MouseEvent mouseEvent) throws Exception {
         audio.stop();
-        isBack = true;
+        this.isBack = true;
         MainMenuView mainMenuView = new MainMenuView();
         mainMenuView.start(stage);
     }

@@ -146,6 +146,8 @@ public class UserController {
         String profileModel = UserController.getInstance().getProfileImage(user);
         File file;
 
+        if (profileModel == null) profileModel = ProfileController.getInstance().randomImage().toString();
+
         String currentImage = UserController.getInstance().getCurrentImage(user);
         if (currentImage == null) file = new File("./src/main/resources/profile/" + profileModel);
         else file = new File(currentImage);

@@ -115,7 +115,7 @@ public class ProfileController {
         }
     }
 
-    private ProfileImages randomImage() {
+    public ProfileImages randomImage() {
         int max = ProfileImages.values().length;
         Random random = new Random();
         int randomNumber = random.nextInt(max);
