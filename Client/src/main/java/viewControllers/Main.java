@@ -30,6 +30,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         if (!NetworkController.connect()) {
+            System.out.println("can not connect");
             return;
         }
 

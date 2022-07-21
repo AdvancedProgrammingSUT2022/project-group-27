@@ -125,7 +125,8 @@ public class SocketHandler extends Thread{
         Response update = new Response();
         update.setStatus(400);
         update.addData("update", "update");
-        for (User receiver: User.getListOfUsers()) {
+        for (int i = 0; i < User.getListOfUsers().size(); i++) {
+            User receiver = User.getListOfUsers().get(i);
             try {
                 if (receiver.getUpdateOutputStream() == null) continue;
                 receiver.getUpdateOutputStream().writeUTF(update.toJson());

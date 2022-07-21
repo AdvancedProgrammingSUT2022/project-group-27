@@ -58,6 +58,7 @@ public class NetworkController {
                         Response response = Response.fromJson(inputStream.readUTF());
                         System.out.println("update received");
                         if (!scoreBoardView.isBack) handleUpdate(response, scoreBoardView);
+                        else break;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -70,7 +71,7 @@ public class NetworkController {
 
     public static void handleUpdate(Response response, ScoreBoardView scoreBoardView) {
         //UserForScoreBoard.sort();
-        if (!scoreBoardView.isBack) scoreBoardView.initialize();
+        if (!scoreBoardView.isBack) scoreBoardView.initializing();
         System.out.println("update");
         //String messageJson = new Gson().toJson(response.getData().get("message"));
         //Message message = new Gson().fromJson(messageJson, Message.class);

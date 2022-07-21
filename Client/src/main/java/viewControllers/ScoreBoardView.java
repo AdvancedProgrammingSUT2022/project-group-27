@@ -5,6 +5,7 @@ import controller.UserController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
@@ -61,9 +62,6 @@ public class ScoreBoardView extends Application {
 
     @FXML
     public void initialize() {
-        if (scoreBoard == null) return;
-
-        scoreBoard.getItems().clear();
         profileImageColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
@@ -96,6 +94,11 @@ public class ScoreBoardView extends Application {
                 if (!isEmpty()) {
                     if (UserController.getInstance().getUsername().equals(item))
                         currentRow.setStyle("-fx-background-color: rgba(0,168,0,0.55)");
+                    else {
+                        if (currentRow.getIndex() % 2 == 0)
+                            currentRow.setStyle("-fx-background-color: #1dbbdd11;-fx-background-insets: 0, 0 0 1 0;-fx-padding: 0.0em;");
+                        else currentRow.setStyle("-fx-background-color: #93f9b911;-fx-background-insets: 0, 0 0 1 0;-fx-padding: 0.0em;");
+                    }
                     setText(item);
                 }
             }
@@ -118,6 +121,16 @@ public class ScoreBoardView extends Application {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void initializing() {
+        if (scoreBoard == null) return;
+
+        ObservableList<UserForScoreBoard> items = FXCollections.<UserForScoreBoard>observableArrayList();
+        UserForScoreBoard.sort();
+        items.addAll(UserForScoreBoard.getListOfUsers());
+        scoreBoard.getItems().clear();
+        scoreBoard.getItems().addAll(items);
     }
 
     @Override
