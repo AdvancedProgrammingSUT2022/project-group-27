@@ -53,10 +53,13 @@ public class SocketHandler extends Thread{
                 User user = User.findUserByToken((String) request.getData().get("token"));
                 user.setLastLoginTime((String) request.getData().get("time"));
                 response.setStatus(200);
+                update();
             } case "loginUser" -> {
                 response = handleLoginUser(request);
+                update();
             } case "createUser" -> {
                 response = handleCreateUser(request);
+                update();
             } case "getUsername" -> {
                 User user = User.findUserByToken((String) request.getData().get("token"));
                 response.setStatus(200);
@@ -75,8 +78,10 @@ public class SocketHandler extends Thread{
                 response.addData("image", user.getCurrentImage());
             } case "setProfileImage" -> {
                 response = handleSetProfileImage(request);
+                update();
             } case "setImage" -> {
                 response = handleSetImage(request);
+                update();
             } case "getListOfChatTexts" -> {
                 response = ChatController.getListOfAllChatTexts(request);
             } case "getListOfChatsUser" -> {
@@ -101,6 +106,11 @@ public class SocketHandler extends Thread{
                 response = handleScoreBoardList(request);
             } case "getImage" -> {
                 response = handleGetImage(request);
+            } case "register_update" -> {
+                String token = (String) request.getData().get("token");
+                User user = User.findUserByToken(token);
+                System.out.println("Registered update socket for " + token);
+                user.setUpdateSocket(socket);
             }
             default -> {
                 response.setStatus(400);
@@ -109,6 +119,21 @@ public class SocketHandler extends Thread{
         }
 
         return response;
+    }
+
+    public void update() {
+        Response update = new Response();
+        update.setStatus(400);
+        update.addData("update", "update");
+        for (User receiver: User.getListOfUsers()) {
+            try {
+                if (receiver.getUpdateOutputStream() == null) continue;
+                receiver.getUpdateOutputStream().writeUTF(update.toJson());
+                receiver.getUpdateOutputStream().flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private Response handleGetImage(Request request) {

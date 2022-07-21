@@ -1,6 +1,7 @@
 package viewControllers;
 
 import Enum.Message;
+import controller.NetworkController;
 import controller.ProfileController;
 import controller.UserController;
 import javafx.application.Application;

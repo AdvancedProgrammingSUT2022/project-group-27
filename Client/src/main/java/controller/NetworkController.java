@@ -3,6 +3,8 @@ package controller;
 import model.Request;
 import model.Response;
 import com.google.gson.Gson;
+import model.UserForScoreBoard;
+import viewControllers.ScoreBoardView;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -26,33 +28,53 @@ public class NetworkController {
         return true;
     }
 
-    public static void listenForUpdates() throws IOException {
+    public static void listenForUpdates(ScoreBoardView scoreBoardView) throws IOException {
         readerSocket = new Socket("localhost", 8000);
         DataOutputStream outputStream = new DataOutputStream(readerSocket.getOutputStream());
         DataInputStream inputStream = new DataInputStream(readerSocket.getInputStream());
         Request request = new Request();
-        //request.setHeader("register_reader");
-        //request.addData("nickname", Database.getInstance().getNickname());
+        request.setHeader("register_update");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
         outputStream.writeUTF(request.toJson());
         outputStream.flush();
-        new Thread(() -> {
-            while (true) {
+        /*new Thread(() -> {
+            while (!ScoreBoardView.getInstance().isBack) {
                 try {
-                    //System.out.println("Waiting for update");
+                    System.out.println("Waiting for update");
                     Response response = Response.fromJson(inputStream.readUTF());
-                    //System.out.println("update received");
-                    handleUpdate(response);
+                    System.out.println("update received");
+                    if (!ScoreBoardView.getInstance().isBack) handleUpdate(response);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }).start();*/
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!scoreBoardView.isBack) {
+                    try {
+                        System.out.println("Waiting for update");
+                        Response response = Response.fromJson(inputStream.readUTF());
+                        System.out.println("update received");
+                        if (!scoreBoardView.isBack) handleUpdate(response, scoreBoardView);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 
-    public static void handleUpdate(Response response) {
-        String messageJson = new Gson().toJson(response.getData().get("message"));
+    public static void handleUpdate(Response response, ScoreBoardView scoreBoardView) {
+        //UserForScoreBoard.sort();
+        scoreBoardView.initialize();
+        System.out.println("update");
+        //String messageJson = new Gson().toJson(response.getData().get("message"));
         //Message message = new Gson().fromJson(messageJson, Message.class);
-        int fromId = (int) Math.floor((Double) response.getData().get("fromId"));
+        //int fromId = (int) Math.floor((Double) response.getData().get("fromId"));
         //ChatController.addMessageToChat(fromId, message);
     }
 

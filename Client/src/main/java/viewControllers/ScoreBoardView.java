@@ -1,5 +1,6 @@
 package viewControllers;
 
+import controller.NetworkController;
 import controller.UserController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -27,6 +28,15 @@ import java.io.IOException;
 public class ScoreBoardView extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
+    public boolean isBack = false;
+
+    public ScoreBoardView() {
+        try {
+            NetworkController.listenForUpdates(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private Button back;
@@ -51,6 +61,7 @@ public class ScoreBoardView extends Application {
 
     @FXML
     public void initialize() {
+        scoreBoard.getItems().clear();
         profileImageColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
@@ -122,6 +133,7 @@ public class ScoreBoardView extends Application {
 
     public void back(MouseEvent mouseEvent) throws Exception {
         audio.stop();
+        isBack = true;
         MainMenuView mainMenuView = new MainMenuView();
         mainMenuView.start(stage);
     }

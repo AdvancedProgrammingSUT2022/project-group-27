@@ -77,6 +77,7 @@ public class UserForScoreBoard {
         list = new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<UserForScoreBoard>>(){}.getType());
         for (UserForScoreBoard user: list) {
             user.image = UserController.getInstance().getImage(user.username);
+            System.out.println("user: " + user.username);
         }
     }
 }
