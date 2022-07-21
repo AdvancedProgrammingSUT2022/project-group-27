@@ -128,8 +128,8 @@ public class MainMenuView extends Application {
 
     public void scoreBoardMenu(MouseEvent mouseEvent) throws Exception {
         audio.stop();
-        //ScoreBoardView scoreBoardView = new ScoreBoardView();
-        //scoreBoardView.start(stage);
+        ScoreBoardView scoreBoardView = new ScoreBoardView();
+        scoreBoardView.start(stage);
     }
 
     public void chatRoomMenu(MouseEvent mouseEvent) throws Exception {

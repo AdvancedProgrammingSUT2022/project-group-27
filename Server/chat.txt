@@ -1,1 +1,1 @@
-[{"listOfUsers":["a"],"chats":[{"sender":"a","time":"2022-07-20 10:11:15","text":"hi","isSeen":false,"isDeleted":false}],"name":"public"},{"listOfUsers":["a","b"],"chats":[{"sender":"b","time":"2022-07-20 10:11:59","text":"hi a","isSeen":false,"isDeleted":false},{"sender":"a","time":"2022-07-20 10:12:37","text":"salam","isSeen":false,"isDeleted":false}],"name":"hello"}]
+[]

@@ -101,7 +101,7 @@ public class ProfileController {
         }catch (IOException e) {
             e.printStackTrace();
         }
-        UserController.getInstance().setImage(bFile);
+        UserController.getInstance().setImage(bFile, user);
     }
 
     public void settingAllImages(Rectangle[] images) {

@@ -62,6 +62,7 @@ public class NetworkController {
             outputStream.flush();
             return Response.fromJson(inputStream.readUTF());
         } catch (IOException ignored) {
+            System.out.println("oh no!");
             return null;
         }
     }

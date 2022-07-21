@@ -1,5 +1,8 @@
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import model.ChatGroup;
 import model.Request;
 import model.Response;
 import model.User;
@@ -10,6 +13,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SocketHandler extends Thread{
     private final Socket socket;
@@ -93,6 +97,10 @@ public class SocketHandler extends Thread{
                 response = ChatController.addChatGroup(request);
             } case "getListOfChats" -> {
                 response = ChatController.getListOfAllChats(request);
+            } case "scoreBoardList" -> {
+                response = handleScoreBoardList(request);
+            } case "getImage" -> {
+                response = handleGetImage(request);
             }
             default -> {
                 response.setStatus(400);
@@ -103,12 +111,31 @@ public class SocketHandler extends Thread{
         return response;
     }
 
+    private Response handleGetImage(Request request) {
+        Response response = new Response();
+
+        User user = User.findUser((String) request.getData().get("username"));
+        response.addData("image", new Gson().toJson(user.getImage()));
+
+        response.setStatus(200);
+        return response;
+    }
+
+    private Response handleScoreBoardList(Request request) {
+        Response response = new Response();
+        User.sort();
+        response.addData("list", new Gson().toJson(User.getListOfUsers()));
+        response.setStatus(200);
+        return response;
+    }
+
     private Response handleSetImage(Request request) {
         Response response = new Response();
         User user = User.findUserByToken((String) request.getData().get("token"));
-        byte[] image = (byte[]) request.getData().get("image");
+        //byte[] image = new Gson().fromJson((String) request.getData().get("image"), new TypeToken<byte []>(){}.getType());
+        //byte[] image = (byte[]) request.getData().get("image");
 
-        user.setImage(image);
+        //ProfileController.getInstance().settingProfile(user);
         response.setStatus(200);
         return response;
     }

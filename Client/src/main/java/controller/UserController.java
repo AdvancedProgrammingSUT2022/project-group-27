@@ -2,12 +2,18 @@ package controller;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import model.ChatGroup;
 import model.ChatText;
 import model.Request;
 import model.Response;
 import Enum.Message;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -128,12 +134,32 @@ public class UserController {
         Response response = NetworkController.send(request);
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(byte[] image, String user) {
         Request request = new Request();
         request.setHeader("setImage");
-        request.addData("token", userLoggedIn);
-        request.addData("image", image);
+        request.addData("token", user);
+        //request.addData("image", new Gson().toJson(image));
         Response response = NetworkController.send(request);
+    }
+
+    public byte[] getImage(String user) {
+        String profileModel = UserController.getInstance().getProfileImage(user);
+        File file;
+
+        String currentImage = UserController.getInstance().getCurrentImage(user);
+        if (currentImage == null) file = new File("./src/main/resources/profile/" + profileModel);
+        else file = new File(currentImage);
+
+        byte[] bFile = new byte[(int) file.length()];
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bFile;
     }
 
     public ArrayList<String> getListOfAllUsers() {
