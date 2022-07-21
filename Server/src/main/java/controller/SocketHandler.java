@@ -130,8 +130,8 @@ public class SocketHandler extends Thread{
                 if (receiver.getUpdateOutputStream() == null) continue;
                 receiver.getUpdateOutputStream().writeUTF(update.toJson());
                 receiver.getUpdateOutputStream().flush();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ignored) {
+                //Nothing
             }
         }
     }
