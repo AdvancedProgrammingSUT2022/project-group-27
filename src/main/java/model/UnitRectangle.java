@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -42,6 +43,8 @@ public class UnitRectangle extends Circle {
         this.setStroke(unit.getStatus().getColor());
         this.setStrokeWidth(5);
         this.setFill(unit.getMilitaryType().getImage());
+        if (unit.getHp() < 9.7)
+            setEffect(new InnerShadow((int) ((10 - unit.getHp()) * 5),1,1,Color.RED));
         hbox = new HBox();
         unitSelect = null;
         stage.close();
