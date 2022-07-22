@@ -118,6 +118,16 @@ public class SocketHandler extends Thread{
                 response = ProfileController.getInstance().handleChangeNickname(request);
             } case "changePassword" -> {
                 response = ProfileController.getInstance().handleChangePassword(request);
+            } case "addFriendship" -> {
+                response = FriendshipController.addFriendship(request);
+            } case "setAccepted" -> {
+                response = FriendshipController.setAccepted(request);
+            } case "listOfFriendshipRequest" -> {
+                response = FriendshipController.listOfFriendshipRequest(request);
+            } case "listOfSenderFriendship" -> {
+                response = FriendshipController.listOfSenderFriendship(request);
+            } case "listOfFriends" -> {
+                response = FriendshipController.listOfFriends(request);
             }
             default -> {
                 response.setStatus(400);

@@ -13,8 +13,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -23,11 +26,14 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Friendship;
+import Enum.FriendshipEnum;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 
 public class ProfileView extends Application {
     private static Stage stage;
@@ -38,8 +44,15 @@ public class ProfileView extends Application {
     private TextField newNickname;
     private TextField newPassword;
     private TextField oldPassword;
+    private ComboBox<Label> listOfUsers = new ComboBox<>();
     private final Rectangle[] images = new Rectangle[ProfileImages.values().length];
     private final Button exploreFile = new Button("explore file");
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    private Button friends;
 
     @FXML
     private AnchorPane pane;
@@ -121,6 +134,7 @@ public class ProfileView extends Application {
             box.getChildren().remove(images[i]);
         }
         box.getChildren().remove(submit);
+        box.getChildren().clear();
         box.getChildren().add(submit);
     }
 
@@ -129,6 +143,7 @@ public class ProfileView extends Application {
         password.setDisable(true);
         nickname.setDisable(false);
         profile.setDisable(false);
+        friends.setDisable(false);
         removingElementsFromBox();
         oldPassword = new TextField();
         oldPassword.setPromptText("enter your old password");
@@ -136,7 +151,7 @@ public class ProfileView extends Application {
         newPassword.setPromptText("enter your new password");
         box.getChildren().add(0,newPassword);
         box.getChildren().add(0, oldPassword);
-        box.setLayoutX(320);
+        scrollPane.setLayoutX(360);
     }
 
     public void changeNicknameButton(MouseEvent mouseEvent) {
@@ -144,11 +159,12 @@ public class ProfileView extends Application {
         password.setDisable(false);
         nickname.setDisable(true);
         profile.setDisable(false);
+        friends.setDisable(false);
         removingElementsFromBox();
         newNickname = new TextField();
         newNickname.setPromptText("enter your new nickname");
         box.getChildren().add(0, newNickname);
-        box.setLayoutX(320);
+        scrollPane.setLayoutX(360);
     }
 
     public void changeImageButton(MouseEvent mouseEvent) {
@@ -156,9 +172,10 @@ public class ProfileView extends Application {
         password.setDisable(false);
         nickname.setDisable(false);
         profile.setDisable(true);
+        friends.setDisable(false);
         removingElementsFromBox();
         box.getChildren().remove(submit);
-        box.setLayoutX(360);
+        scrollPane.setLayoutX(400);
 
         ProfileController.getInstance().settingAllImages(images);
         for (int i = 0; i < ProfileImages.values().length; i++) {
@@ -231,6 +248,7 @@ public class ProfileView extends Application {
         switch (menus) {
             case CHANGING_PASSWORD -> changePasswordAction();
             case CHANGING_NICKNAME -> changeNicknameAction();
+            case FRIENDSHIP -> sendFriendshipRequest();
         }
     }
 
@@ -300,6 +318,118 @@ public class ProfileView extends Application {
             alert.setContentText(message);
             alert.show();
             newNickname.clear();
+        }
+    }
+
+    public void friendship(MouseEvent mouseEvent) {
+        menus = MenusInProfile.FRIENDSHIP;
+        password.setDisable(false);
+        nickname.setDisable(false);
+        profile.setDisable(false);
+        friends.setDisable(true);
+        removingElementsFromBox();
+        box.getChildren().remove(submit);
+        scrollPane.setLayoutX(350);
+
+        showFriendships();
+        makeComboBox();
+
+        Label label = new Label("list of friendship request: ");
+        box.getChildren().add(label);
+        ArrayList<Friendship> list = Friendship.listOfFriendshipRequest(UserController.getInstance().getUserLoggedIn());
+
+        for (Friendship friendship: list) {
+            Label label1 = new Label("sender is : " + friendship.getSender());
+            Button accept = new Button("accept");
+            Button deny = new Button("deny");
+            HBox hBox = new HBox(label1, accept, deny);
+            box.getChildren().add(hBox);
+
+            accept.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    friendship.setAccepted(FriendshipEnum.ACCEPTED);
+                    box.getChildren().remove(hBox);
+                    showAlertFriendship(FriendshipEnum.ACCEPTED);
+                }
+            });
+
+            deny.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    friendship.setAccepted(FriendshipEnum.DENIED);
+                    box.getChildren().remove(hBox);
+                    showAlertFriendship(FriendshipEnum.DENIED);
+                }
+            });
+        }
+    }
+
+    private void makeComboBox() {
+        listOfUsers.getItems().clear();
+        ArrayList<Label> list = new ArrayList<>();
+        for (String user: UserController.getInstance().getListOfAllUsers()) {
+            Label label = new Label(user);
+            ImageView imageView = new ImageView(ProfileController.getInstance().getImage(user).getImage());
+            imageView.setFitWidth(40);
+            imageView.setFitHeight(40);
+            label.setGraphic(imageView);
+            list.add(label);
+        }
+
+        listOfUsers.getItems().addAll(list);
+        listOfUsers.setPromptText("Enter one user below: ");
+        box.getChildren().add(listOfUsers);
+        box.getChildren().add(submit);
+    }
+
+    private void sendFriendshipRequest() {
+        String user = listOfUsers.getValue().getText();
+        Friendship friendship = new Friendship(UserController.getInstance().getUserLoggedIn(), user);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Sending request");
+        alert.setContentText("the friendship request is send");
+        alert.show();
+    }
+
+    private void showAlertFriendship(FriendshipEnum friendshipEnum) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(friendshipEnum.name());
+        alert.setContentText("the friendship request is " + friendshipEnum.name());
+        alert.show();
+    }
+
+    private void showFriendships() {
+        Button button = new Button("list of friendships: ");
+        box.getChildren().add(button);
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Stage preStage = new Stage();
+                VBox vBox = new VBox();
+                initFriendship(vBox);
+                ScrollPane scrollPane = new ScrollPane(vBox);
+                Scene scene = new Scene(scrollPane);
+                preStage.setScene(scene);
+                preStage.initOwner(stage);
+                preStage.show();
+            }
+        });
+    }
+
+    private void initFriendship(VBox vBox) {
+        Label label = new Label("list of friends: ");
+        vBox.getChildren().add(label);
+        for (Friendship friendship: Friendship.listOfFriends(UserController.getInstance().getUserLoggedIn())) {
+            Label label1 = new Label(friendship.getOther(UserController.getInstance().getUsername()));
+            vBox.getChildren().add(label1);
+        }
+
+        Label label1 = new Label("friendship requests: ");
+        vBox.getChildren().add(label1);
+        for (Friendship friendship: Friendship.listOfSenderFriendship(UserController.getInstance().getUserLoggedIn())) {
+            Label label2 = new Label(friendship.toString());
+            vBox.getChildren().add(label2);
         }
     }
 }

@@ -20,9 +20,12 @@
             <Button fx:id="password" text="change password" onMouseClicked="#changePasswordButton"/>
             <Button fx:id="nickname" text="change nickname" onMouseClicked="#changeNicknameButton"/>
             <Button fx:id="profile" text="change profile image" onMouseClicked="#changeImageButton"/>
+            <Button fx:id="friends" text="friendship panel" onMouseClicked="#friendship"/>
         </HBox>
     </VBox>
-    <VBox fx:id="box" alignment="CENTER" spacing="10" layoutX="220" layoutY="340">
-        <Button fx:id="submit" text="submit" onMouseClicked="#submitChanges"/>
-    </VBox>
+    <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" maxHeight="600" prefHeight="600" layoutX="360" layoutY="340" style="-fx-background-color: transparent">
+        <VBox fx:id="box" alignment="TOP_CENTER" spacing="10">
+            <Button fx:id="submit" text="submit" onMouseClicked="#submitChanges"/>
+        </VBox>
+    </ScrollPane>
 </AnchorPane>
