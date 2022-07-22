@@ -1,6 +1,7 @@
 package viewControllers;
 
 import Enum.Message;
+import controller.NetworkController;
 import controller.ProfileController;
 import controller.UserController;
 import javafx.application.Application;
@@ -20,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Request;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -112,6 +114,11 @@ public class MainMenuView extends Application {
             LoginView loginView = new LoginView();
             loginView.start(stage);
         }
+
+        Request request = new Request();
+        request.setHeader("logout");
+        request.addData("token", user);
+        NetworkController.send(request);
     }
 
     public void profileMenu(MouseEvent mouseEvent) throws Exception {

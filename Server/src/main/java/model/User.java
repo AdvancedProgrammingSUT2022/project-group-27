@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class User {
+    public transient boolean isConnect = false;
     private String username;
     private String password;
     private String nickname;

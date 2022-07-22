@@ -128,11 +128,28 @@ public class SocketHandler extends Thread{
                 response = FriendshipController.listOfSenderFriendship(request);
             } case "listOfFriends" -> {
                 response = FriendshipController.listOfFriends(request);
+            } case "logout" -> {
+                response = handleLogout(request);
             }
             default -> {
                 response.setStatus(400);
                 response.addData("error", "invalid command");
             }
+        }
+
+        return response;
+    }
+
+    private Response handleLogout(Request request) {
+        Response response = new Response();
+
+        String token = (String) request.getData().get("token");
+
+        response.setStatus(200);
+        try {
+            User.findUserByToken(token).isConnect = true;
+        } catch (NullPointerException e) {
+            response.setStatus(400);
         }
 
         return response;
@@ -215,6 +232,7 @@ public class SocketHandler extends Thread{
             response.setStatus(200);
             try {
                 response.addData("token", User.findUser(username).getToken());
+                User.findUser(username).isConnect = true;
             } catch (NullPointerException e) {
                 response.setStatus(400);
             }
@@ -237,6 +255,7 @@ public class SocketHandler extends Thread{
             response.setStatus(200);
             try {
                 response.addData("token", User.findUser(username).getToken());
+                User.findUser(username).isConnect = true;
             } catch (NullPointerException e) {
                 response.setStatus(400);
             }
