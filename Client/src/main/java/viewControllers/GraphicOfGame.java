@@ -764,7 +764,7 @@ public class GraphicOfGame extends Application {
     }
 
     public void nextTurn(MouseEvent mouseEvent) {
-        //Player.nextTurn();
+        playerInstance.nextTurn();
         initializing();
     }
 

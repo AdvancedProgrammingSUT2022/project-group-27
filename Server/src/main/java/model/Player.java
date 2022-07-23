@@ -3,7 +3,10 @@ package model;
 import Enum.LuxuryResource;
 import Enum.StrategicResource;
 import Enum.TechnologyType;
+import controller.Game;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +27,7 @@ public class Player {
     private User user;
     private Technology underConstructionTechnology=null;
     private boolean isAlive = true;
-    //private final ArrayList<Notification> notificationHistory = new ArrayList<>();
+    private final ArrayList<Notification> notificationHistory = new ArrayList<>();
     private ArrayList<LuxuryResource> allLuxuryResources = new ArrayList<>();
     private ArrayList<StrategicResource> allStrategicResources = new ArrayList<>();
     private ArrayList<TechnologyType> technologyType=new ArrayList<>();
@@ -35,21 +38,21 @@ public class Player {
         allPlayers = players;
     }
 
-   /* public ArrayList<LuxuryResource> getAllLuxuryResources() {
+    public ArrayList<LuxuryResource> getAllLuxuryResources() {
         return allLuxuryResources;
-    }*/
+    }
 
-    /*public void setAllLuxuryResources(ArrayList<LuxuryResource> allLuxuryResources) {
+    public void setAllLuxuryResources(ArrayList<LuxuryResource> allLuxuryResources) {
         this.allLuxuryResources = allLuxuryResources;
-    }*/
+    }
 
-    /*public ArrayList<StrategicResource> getAllStrategicResources() {
+    public ArrayList<StrategicResource> getAllStrategicResources() {
         return allStrategicResources;
-    }*/
+    }
 
-    /*public void setAllStrategicResources(ArrayList<StrategicResource> allStrategicResources) {
+    public void setAllStrategicResources(ArrayList<StrategicResource> allStrategicResources) {
         this.allStrategicResources = allStrategicResources;
-    }*/
+    }
 
     /*public ArrayList<BonusResource> getAllBonusResources() {
         ArrayList<BonusResource> list = new ArrayList<>();
@@ -64,9 +67,9 @@ public class Player {
         return isInWar;
     }
 
-    /*public ArrayList<Notification> getNotificationHistory() {
+    public ArrayList<Notification> getNotificationHistory() {
         return notificationHistory;
-    }*/
+    }
 
     public void increaseHappiness(int amount) {
         this.extraHappiness += amount;
@@ -78,6 +81,14 @@ public class Player {
 
     public void setSocket(Socket socket) {
         this.socket = socket;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public DataOutputStream getDataOutputStream() throws IOException {
+        return new DataOutputStream(socket.getOutputStream());
     }
 
     public Player(User user) {
@@ -145,9 +156,9 @@ public class Player {
         return user;
     }
 
-    /*public ArrayList<Technology> getAllTechnologyTypes() {
+    public ArrayList<Technology> getAllTechnologyTypes() {
         return AllTechnologyTypes;
-    }*/
+    }
 
     public Technology getUnderConstructionTechnology() {
         return underConstructionTechnology;
@@ -216,10 +227,10 @@ public class Player {
     }*/
 
     public static void nextTurn() {
-        //if (!Game.getInstance().canWeGoNextTurn()) return ;
+        if (!Game.getInstance().canWeGoNextTurn()) return ;
         counterOfNextRound++;
         while (!whichPlayerTurnIs().isAlive) counterOfNextRound++;
-        //Game.getInstance().nextTurn();
+        Game.getInstance().nextTurn();
     }
 
     public static Player findPlayerByUser(User user) {
@@ -323,18 +334,18 @@ public class Player {
         underConstructionTechnology = technology;
     }*/
 
-    /*public void addTechnology(TechnologyType technologyType){
+    public void addTechnology(TechnologyType technologyType){
         underConstructionTechnology = null;
         this.technologyType.add(technologyType);
-    }*/
+    }
 
     /*public ArrayList<TechnologyType> getTechnologyType() {
         return technologyType;
     }*/
 
-    /*public int getGoldDifference() {
+    public int getGoldDifference() {
         double goldDifference = 0;
-        for (City city : this.getCities()) {
+        /*for (City city : this.getCities()) {
             goldDifference += city.getGold();
             for (Building building: city.getBuildings()) {
                 goldDifference -= building.getMaintenance();
@@ -349,10 +360,10 @@ public class Player {
             if (ground.ownerOfThisGround()!=null && ground.ownerOfThisGround().equals(this) && ground.getRoad() != null) {
                 goldDifference -= 0.1;
             }
-        }
+        }*/
 
         return (int) (goldDifference + 0.5);
-    }*/
+    }
 
     public void increaseGold(int amount) {
         this.gold += amount;

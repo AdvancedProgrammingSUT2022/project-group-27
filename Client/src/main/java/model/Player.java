@@ -51,6 +51,19 @@ public class Player {
         return year;
     }
 
+    public void nextTurn() {
+        Request request = new Request();
+        request.setHeader("nextTurn");
+        Response response = NetworkController.send(request);
+        if (response != null && response.getStatus() == 200) {
+            try {
+                listenForTurn();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public String getUser() {
         return user;
     }
@@ -64,6 +77,7 @@ public class Player {
     }
 
     public void listenForTurn() throws IOException {
+        server = new Socket("localhost", 8000);
         DataOutputStream outputStreamGame = new DataOutputStream(server.getOutputStream());
         DataInputStream inputStreamGame = new DataInputStream(server.getInputStream());
         Request request = new Request();
