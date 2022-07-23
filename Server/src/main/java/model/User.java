@@ -13,6 +13,8 @@ public class User {
     private String nickname;
     private transient Socket updateSocket;
     private transient DataOutputStream updateOutputStream;
+    private transient Socket startGameSocket;
+    private transient DataOutputStream startGameOutputStream;
     private ArrayList<String> listOfInvitation=new ArrayList<>();
     private String profileImage = null;
     private String currentImage = null;
@@ -99,6 +101,15 @@ public class User {
     public void setUpdateSocket(Socket updateSocket) throws IOException {
         this.updateSocket = updateSocket;
         this.updateOutputStream = new DataOutputStream(updateSocket.getOutputStream());
+    }
+
+    public void setStartGameSocket(Socket startGameSocket) throws IOException {
+        this.startGameSocket = startGameSocket;
+        this.startGameOutputStream = new DataOutputStream(startGameSocket.getOutputStream());
+    }
+
+    public DataOutputStream getStartGameOutputStream() {
+        return startGameOutputStream;
     }
 
     public DataOutputStream getUpdateOutputStream() {

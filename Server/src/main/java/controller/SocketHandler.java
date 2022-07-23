@@ -135,11 +135,18 @@ public class SocketHandler extends Thread{
                 response.setStatus(200);
                 response.addData("list",User.findUser((String) request.getData().get("token")).getListOfInvitation());
             } case "rejectInvitation" -> {
-                User.findUser((String) request.getData().get("token")).removeInvitation((String) request.getData().get("user"));
+                User.findUser((String) request.getData().get("user")).removeInvitation((String) request.getData().get("token"));
+                notStartingGame();
             } case "acceptInvitation" -> {
-                User.findUser((String) request.getData().get("token")).addToAccepted((String) request.getData().get("user"));
-                System.out.println(User.findUser((String) request.getData().get("token")).canWeStart());
-                System.out.println("admin : " + User.findUser((String) request.getData().get("token")).getUsername());
+                User.findUser((String) request.getData().get("token")).addToAccepted((String) request.getData().get("admin"));
+                User.findUser((String) request.getData().get("admin")).removeInvitation((String) request.getData().get("token"));
+                //User.findUser((String) request.getData().get("admin")).setStartGameSocket(new Socket());
+                if (User.findUser((String) request.getData().get("token")).canWeStart()) startingGame();
+            } case "register_startGame" -> {
+                String token = (String) request.getData().get("token");
+                User user = User.findUserByToken(token);
+                System.out.println("Registered start game socket for " + token);
+                user.setStartGameSocket(socket);
             }
 
             default -> {
@@ -193,6 +200,38 @@ public class SocketHandler extends Thread{
         }
 
         return response;
+    }
+
+    public void notStartingGame() {
+        Response update = new Response();
+        update.setStatus(400);
+        update.addData("status", "no");
+        for (int i = 0; i < User.getListOfUsers().size(); i++) {
+            User receiver = User.getListOfUsers().get(i);
+            try {
+                if (receiver.getStartGameOutputStream() == null) continue;
+                receiver.getStartGameOutputStream().writeUTF(update.toJson());
+                receiver.getStartGameOutputStream().flush();
+            } catch (IOException ignored) {
+                //Nothing
+            }
+        }
+    }
+
+    public void startingGame() {
+        Response update = new Response();
+        update.setStatus(200);
+        update.addData("status", "yes");
+        for (int i = 0; i < User.getListOfUsers().size(); i++) {
+            User receiver = User.getListOfUsers().get(i);
+            try {
+                if (receiver.getStartGameOutputStream() == null) continue;
+                receiver.getStartGameOutputStream().writeUTF(update.toJson());
+                receiver.getStartGameOutputStream().flush();
+            } catch (IOException ignored) {
+                //Nothing
+            }
+        }
     }
 
     public void update() {

@@ -84,7 +84,7 @@ public class GameView extends Application {
         box.setPadding(new Insets(20));
     }
 
-    public void back(MouseEvent mouseEvent) throws Exception {
+    public void back() throws Exception {
         audio.stop();
         MainMenuView mainMenuView = new MainMenuView();
         mainMenuView.start(stage);
@@ -139,6 +139,11 @@ public class GameView extends Application {
         request.addData("list",arrayOfEnemies.getText());
         Response response=NetworkController.send(request);
         System.out.println(response.getStatus());
+        try {
+            NetworkController.listenForStartGame(this, arrayList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void textFieldEditor(KeyEvent keyEvent) {
@@ -260,5 +265,7 @@ public class GameView extends Application {
         seed=sed;
     }
 
-
+    public void enterGame(ArrayList<String> arrayList, Response response) {
+        System.out.println("yes we got it");
+    }
 }

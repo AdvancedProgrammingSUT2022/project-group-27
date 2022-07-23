@@ -4,16 +4,19 @@ import model.Request;
 import model.Response;
 import com.google.gson.Gson;
 import model.UserForScoreBoard;
+import viewControllers.GameView;
 import viewControllers.ScoreBoardView;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class NetworkController {
     private static Socket socket;
     private static Socket readerSocket;
+    private static Socket readerForGameSocket;
     private static DataInputStream inputStream;
     private static DataOutputStream outputStream;
 
@@ -26,6 +29,56 @@ public class NetworkController {
             return false;
         }
         return true;
+    }
+
+    public static void listenForStartGame(GameView gameView, ArrayList<String> arrayList) throws IOException {
+        readerForGameSocket = new Socket("localhost", 8000);
+        DataOutputStream outputStreamGame = new DataOutputStream(readerForGameSocket.getOutputStream());
+        DataInputStream inputStreamGame = new DataInputStream(readerForGameSocket.getInputStream());
+        Request request = new Request();
+        request.setHeader("register_startGame");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        outputStreamGame.writeUTF(request.toJson());
+        outputStreamGame.flush();
+        /*Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("Waiting for update of game");
+                    Response response = Response.fromJson(inputStreamGame.readUTF());
+                    System.out.println("update of game received");
+                    if (response.getStatus() == 200) gameView.enterGame(arrayList, response);
+                    else gameView.back();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        thread.setDaemon(true);
+        thread.start();*/
+
+        while (true) {
+            try {
+                System.out.println("Waiting for update of game");
+                 Response response = Response.fromJson(inputStreamGame.readUTF());
+                System.out.println("update of game received");
+                if (response.getStatus() == 200) {
+                    gameView.enterGame(arrayList, response);
+                    System.out.println("break");
+                    break;
+                }
+                else if (response.getStatus() == 400) {
+                    gameView.back();
+                    System.out.println("break");
+                    break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("yes");
     }
 
     public static void listenForUpdates(ScoreBoardView scoreBoardView) throws IOException {
