@@ -1,21 +1,43 @@
 package model;
 
+import controller.NetworkController;
 import controller.UserController;
-import javafx.scene.control.Alert;
+import javafx.stage.Stage;
+import viewControllers.GraphicOfGame;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Player {
-    String user;
-    Socket server;
+    private static ArrayList<Player> list;
+    private GraphicOfGame graphicOfGame;
+    private String user;
+    private Socket server;
+    private Stage stage;
 
-    public Player(String user, Socket server) {
+    public Player(String user, Socket server, Stage stage) {
         this.user = user;
         this.server = server;
+        this.stage = stage;
+        graphicOfGame = new GraphicOfGame(this);
+        GraphicOfGame game = new GraphicOfGame(this);
+        try {
+            game.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //TODO request to server
+        Request request = new Request();
+        request.setHeader("addingPlayer");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+    }
+
+    public String getUser() {
+        return user;
     }
 
     public void listenForTurn() throws IOException {
@@ -44,5 +66,11 @@ public class Player {
                 e.printStackTrace();
             }
         }
+    }
+
+    public int getHappiness() {
+        int happiness = 0;
+        //TODO get it from server
+        return happiness;
     }
 }

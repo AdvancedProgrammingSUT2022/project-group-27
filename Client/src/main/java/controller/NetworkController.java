@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 import model.Player;
 import model.Request;
 import model.Response;
@@ -33,7 +34,7 @@ public class NetworkController {
         return true;
     }
 
-    public static void listenForStartGameOthers() throws IOException {
+    public static void listenForStartGameOthers(Stage stage) throws IOException {
         Socket readerForGameSocketOther = new Socket("localhost", 8000);
         DataOutputStream outputStreamGame = new DataOutputStream(readerForGameSocketOther.getOutputStream());
         DataInputStream inputStreamGame = new DataInputStream(readerForGameSocketOther.getInputStream());
@@ -52,7 +53,7 @@ public class NetworkController {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setHeaderText("game is starting");
                     alert.show();
-                    Player player = new Player(UserController.getInstance().getUsername(), new Socket("localhost", 8000));
+                    Player player = new Player(UserController.getInstance().getUsername(), new Socket("localhost", 8000), stage);
                     break;
                 }
                 else if (response.getStatus() == 400) {

@@ -85,7 +85,7 @@ public class InvitationMenu extends Application {
                     System.out.println(response.getStatus());
                     if (response.getStatus() == 200) {
                         try {
-                            NetworkController.listenForStartGameOthers();
+                            NetworkController.listenForStartGameOthers(stage);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -94,7 +94,7 @@ public class InvitationMenu extends Application {
                         alert.setHeaderText("game is starting");
                         alert.show();
                         try {
-                            Player player = new Player(UserController.getInstance().getUsername(), new Socket("localhost", 8000));
+                            Player player = new Player(UserController.getInstance().getUsername(), new Socket("localhost", 8000), stage);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
