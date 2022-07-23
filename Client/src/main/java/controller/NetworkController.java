@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.scene.control.Alert;
+import model.Player;
 import model.Request;
 import model.Response;
 import com.google.gson.Gson;
@@ -31,6 +33,42 @@ public class NetworkController {
         return true;
     }
 
+    public static void listenForStartGameOthers() throws IOException {
+        Socket readerForGameSocketOther = new Socket("localhost", 8000);
+        DataOutputStream outputStreamGame = new DataOutputStream(readerForGameSocketOther.getOutputStream());
+        DataInputStream inputStreamGame = new DataInputStream(readerForGameSocketOther.getInputStream());
+        Request request = new Request();
+        request.setHeader("register_startGame");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        outputStreamGame.writeUTF(request.toJson());
+        outputStreamGame.flush();
+
+        while (true) {
+            try {
+                System.out.println("Waiting for update of game");
+                Response response = Response.fromJson(inputStreamGame.readUTF());
+                System.out.println("update of game received");
+                if (response.getStatus() == 200) {  //TODO if you change this change Invitation menu line 92
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("game is starting");
+                    alert.show();
+                    Player player = new Player(UserController.getInstance().getUsername(), new Socket("localhost", 8000));
+                    break;
+                }
+                else if (response.getStatus() == 400) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("game is canceled");
+                    alert.show();
+                    break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("yes");
+    }
+
     public static void listenForStartGame(GameView gameView, ArrayList<String> arrayList) throws IOException {
         readerForGameSocket = new Socket("localhost", 8000);
         DataOutputStream outputStreamGame = new DataOutputStream(readerForGameSocket.getOutputStream());
@@ -40,23 +78,6 @@ public class NetworkController {
         request.addData("token", UserController.getInstance().getUserLoggedIn());
         outputStreamGame.writeUTF(request.toJson());
         outputStreamGame.flush();
-        /*Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    System.out.println("Waiting for update of game");
-                    Response response = Response.fromJson(inputStreamGame.readUTF());
-                    System.out.println("update of game received");
-                    if (response.getStatus() == 200) gameView.enterGame(arrayList, response);
-                    else gameView.back();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-        thread.setDaemon(true);
-        thread.start();*/
 
         while (true) {
             try {

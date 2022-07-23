@@ -50,6 +50,10 @@ public class User {
         return currentImage;
     }
 
+    public void clearAcceptedUsers() {
+        listOfAcceptedUsers.clear();
+    }
+
     public String getProfileImage() {
         return profileImage;
     }

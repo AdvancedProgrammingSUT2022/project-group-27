@@ -136,19 +136,22 @@ public class SocketHandler extends Thread{
                 response.addData("list",User.findUser((String) request.getData().get("token")).getListOfInvitation());
             } case "rejectInvitation" -> {
                 User.findUser((String) request.getData().get("user")).removeInvitation((String) request.getData().get("token"));
-                notStartingGame();
+                notStartingGame(User.findUser((String) request.getData().get("token")));
             } case "acceptInvitation" -> {
+                response.setStatus(200);
                 User.findUser((String) request.getData().get("token")).addToAccepted((String) request.getData().get("admin"));
                 User.findUser((String) request.getData().get("admin")).removeInvitation((String) request.getData().get("token"));
-                //User.findUser((String) request.getData().get("admin")).setStartGameSocket(new Socket());
-                if (User.findUser((String) request.getData().get("token")).canWeStart()) startingGame();
+                
+                if (User.findUser((String) request.getData().get("token")).canWeStart()) {
+                    startingGame();
+                    response.setStatus(201);
+                }
             } case "register_startGame" -> {
                 String token = (String) request.getData().get("token");
                 User user = User.findUserByToken(token);
                 System.out.println("Registered start game socket for " + token);
                 user.setStartGameSocket(socket);
             }
-
             default -> {
                 response.setStatus(400);
                 response.addData("error", "invalid command");
@@ -202,7 +205,8 @@ public class SocketHandler extends Thread{
         return response;
     }
 
-    public void notStartingGame() {
+    public void notStartingGame(User user) {
+        if (user!= null) user.clearAcceptedUsers();
         Response update = new Response();
         update.setStatus(400);
         update.addData("status", "no");

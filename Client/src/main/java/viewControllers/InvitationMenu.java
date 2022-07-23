@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -13,8 +14,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.Player;
 import model.Request;
 import model.Response;
+
+import java.io.IOException;
+import java.net.Socket;
 
 public class InvitationMenu extends Application {
     private static Stage stage;
@@ -78,6 +83,22 @@ public class InvitationMenu extends Application {
                     request.addData("token",admin);
                     Response response=NetworkController.send(request);
                     System.out.println(response.getStatus());
+                    if (response.getStatus() == 200) {
+                        try {
+                            NetworkController.listenForStartGameOthers();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else { //TODO if you change this change Network controller line 51
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setHeaderText("game is starting");
+                        alert.show();
+                        try {
+                            Player player = new Player(UserController.getInstance().getUsername(), new Socket("localhost", 8000));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             });
             reject.setTextFill(Color.RED);
