@@ -227,6 +227,7 @@ public class User {
         System.out.println(listOfInvitation);
     }
     public void addToAdminList(String s){
+        if (adminList.contains(s)) return ;
         adminList.add(s);
     }
     public void addToAccepted(String s){
@@ -234,6 +235,7 @@ public class User {
         listOfAcceptedUsers.add(s);
     }
     public boolean canWeStart(){
+        System.out.println(adminList.size() + " " + listOfAcceptedUsers.size());
         if (adminList.size()==listOfAcceptedUsers.size()) return true;
         return false;
     }

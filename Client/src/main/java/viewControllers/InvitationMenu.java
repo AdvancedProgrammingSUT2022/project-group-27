@@ -62,8 +62,9 @@ public class InvitationMenu extends Application {
                 public void handle(MouseEvent mouseEvent) {
                     Request request=new Request();
                     request.setHeader("rejectInvitation");
-                    request.addData("token",UserController.getInstance().getUserLoggedIn());
-                    request.addData("user",admin);
+                    request.addData("user",UserController.getInstance().getUserLoggedIn());
+                    request.addData("token",admin);
+                    System.out.println("token : "+ admin);
                     Response response=NetworkController.send(request);
                     System.out.println(response.getStatus());
                 }
@@ -73,8 +74,8 @@ public class InvitationMenu extends Application {
                 public void handle(MouseEvent mouseEvent) {
                     Request request=new Request();
                     request.setHeader("acceptInvitation");
-                    request.addData("token",UserController.getInstance().getUserLoggedIn());
-                    request.addData("user",admin);
+                    request.addData("admin",UserController.getInstance().getUserLoggedIn());
+                    request.addData("token",admin);
                     Response response=NetworkController.send(request);
                     System.out.println(response.getStatus());
                 }

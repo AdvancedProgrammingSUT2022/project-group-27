@@ -139,6 +139,7 @@ public class SocketHandler extends Thread{
             } case "acceptInvitation" -> {
                 User.findUser((String) request.getData().get("token")).addToAccepted((String) request.getData().get("user"));
                 System.out.println(User.findUser((String) request.getData().get("token")).canWeStart());
+                System.out.println("admin : " + User.findUser((String) request.getData().get("token")).getUsername());
             }
 
             default -> {
@@ -163,6 +164,7 @@ public class SocketHandler extends Thread{
             if (string.equals(admin)) continue;
             user.addInvitation(admin);
             User.findUser(admin).addToAdminList(string);
+            System.out.println("admin = "+ User.findUser(admin).getUsername());
         }
     }
 
