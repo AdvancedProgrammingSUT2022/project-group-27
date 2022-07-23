@@ -154,12 +154,38 @@ public class SocketHandler extends Thread{
             } case "addingPlayer" -> {
                 User user = User.findUser((String) request.getData().get("user"));
                 Player player = new Player(user);
+                player.setSocket(socket);
             } case "register_turn" -> {
                 String token = (String) request.getData().get("token");
                 User user = User.findUserByToken(token);
                 Player player = Player.findPlayerByUser(user);
                 System.out.println("Registered turn socket for " + token);
                 if (player != null) player.setSocket(socket);
+            } case "getScience" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("player")));
+                response.setStatus(200);
+                response.addData("science", player.getScience());
+            } case "getGold" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("player")));
+                response.setStatus(200);
+                response.addData("gold", player.getGold());
+            } case "getYear" -> {
+                response.setStatus(200);
+                response.addData("year", Player.getYear());
+            } case "getUnderConstructionTechnology" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("player")));
+                response.setStatus(200);
+                response.addData("technology", player.getUnderConstructionTechnology());
+            } case "getHappiness" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("player")));
+                response.setStatus(200);
+                response.addData("happiness", player.getHappiness());
+            } case "nextTurn" -> {
+                if (Game.getInstance().canWeNextTurn()) {
+                    response.setStatus(200);
+                    Player.nextTurn();
+                    turnPlayerNotify();
+                } else response.setStatus(400);
             }
             default -> {
                 response.setStatus(400);
@@ -168,6 +194,20 @@ public class SocketHandler extends Thread{
         }
 
         return response;
+    }
+
+    private void turnPlayerNotify() {
+        Response update = new Response();
+        update.setStatus(200);
+        update.addData("status", "you");
+        Player player = Player.whichPlayerTurnIs();
+        try {
+            if (player.getDataOutputStream() == null) return;
+            player.getDataOutputStream().writeUTF(update.toJson());
+            player.getDataOutputStream().flush();
+        } catch (IOException ignored) {
+            //Nothing
+        }
     }
 
     private void startGame(String list, String token) {

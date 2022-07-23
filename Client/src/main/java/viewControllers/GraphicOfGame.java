@@ -1,6 +1,7 @@
 package viewControllers;
 
 import controller.ProfileController;
+import controller.UserController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -26,15 +27,9 @@ import model.Player;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class GraphicOfGame extends Application {
-    //private static GraphicOfGame instance = null;
-    //public static GraphicOfGame getInstance() {
-    //    return instance;
-    //}
+import static java.lang.Math.max;
 
-    //public static void setInstance(GraphicOfGame game) {
-    //    instance = game;
-    //}
+public class GraphicOfGame extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
     public  Pane gamePane;
@@ -110,12 +105,13 @@ public class GraphicOfGame extends Application {
     @FXML
     private HBox statusBar;
 
-    public GraphicOfGame(Player player) {
+    public void setPlayerInstance(Player player) {
         this.playerInstance = player;
     }
 
     @FXML
     public void initialize() {
+        playerInstance = Player.getPlayerByUser(UserController.getInstance().getUsername());
         gamePaneSecond=gamePane;
         audio.play();
         audio.setOnEndOfMedia(new Runnable() {
@@ -218,7 +214,7 @@ public class GraphicOfGame extends Application {
     }
 
     public void initializing() { //TODO it should run at every steps, every moves and ...
-        /*
+
         science.setText("science: " + playerInstance.getScience());
         gold.setText("gold: " + playerInstance.getGold());
         happiness.setText("happiness: " + playerInstance.getHappiness());
@@ -232,7 +228,7 @@ public class GraphicOfGame extends Application {
 
         setIconForPlayer();
         setHappinessImage();
-
+        /*
         if (Game.getInstance().canWeNextTurn()) {
             nextTurn.setCursor(Cursor.HAND);
             nextTurn.setDisable(false);
@@ -731,7 +727,7 @@ public class GraphicOfGame extends Application {
     }
 
     private void setHappinessImage() {
-        int countOfHappiness = playerInstance.getHappiness();
+        Double countOfHappiness = playerInstance.getHappiness();
         Image image;
         if (countOfHappiness > 0) image = new Image(GraphicOfGame.class.getResource("/iconsOfGame/Happy-citizens.jpg").toExternalForm());
         else image = new Image(GraphicOfGame.class.getResource("/iconsOfGame/unhappy-citizens.jpg").toExternalForm());
@@ -768,7 +764,7 @@ public class GraphicOfGame extends Application {
     }
 
     public void nextTurn(MouseEvent mouseEvent) {
-        //Player.nextTurn();
+        playerInstance.nextTurn();
         initializing();
     }
 
@@ -831,6 +827,7 @@ public class GraphicOfGame extends Application {
     }
 
     public void stopGame(MouseEvent mouseEvent) throws Exception {
+        audio.stop();
         /*
         for (City city: Player.whichPlayerTurnIs().getCities()) {
             if (city.getConstruction() != null) {
