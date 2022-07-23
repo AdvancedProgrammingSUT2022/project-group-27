@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="viewControllers.InvitationMenu"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox layoutY="60" layoutX="20" spacing="30">
+        <Button fx:id="back" text="back" layoutY="20" layoutX="20" onMouseClicked="#back"/>
+        <Button fx:id="update" text="update" layoutY="20" layoutX="20" onMouseClicked="#update"/>
+        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="600" prefHeight="600" vbarPolicy="ALWAYS">
+            <VBox fx:id="invites" prefWidth="250" spacing="10"/>
+        </ScrollPane>
+
+    </VBox>
+</AnchorPane>

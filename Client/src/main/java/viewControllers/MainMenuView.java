@@ -1,6 +1,7 @@
 package viewControllers;
 
 import Enum.Message;
+import controller.NetworkController;
 import controller.ProfileController;
 import controller.UserController;
 import javafx.application.Application;
@@ -20,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Request;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -112,6 +114,11 @@ public class MainMenuView extends Application {
             LoginView loginView = new LoginView();
             loginView.start(stage);
         }
+
+        Request request = new Request();
+        request.setHeader("logout");
+        request.addData("token", user);
+        NetworkController.send(request);
     }
 
     public void profileMenu(MouseEvent mouseEvent) throws Exception {
@@ -122,8 +129,8 @@ public class MainMenuView extends Application {
 
     public void gameMenu(MouseEvent mouseEvent) throws Exception {
         audio.stop();
-        //GameView gameView = new GameView();
-        //gameView.start(stage);
+        GameView gameView = new GameView();
+        gameView.start(stage);
     }
 
     public void scoreBoardMenu(MouseEvent mouseEvent) throws Exception {
@@ -136,5 +143,11 @@ public class MainMenuView extends Application {
         audio.stop();
         ChatRoomView chatRoomView = new ChatRoomView();
         chatRoomView.start(stage);
+    }
+
+    public void invitationMenu(MouseEvent mouseEvent) throws Exception {
+        audio.stop();
+        InvitationMenu invitationMenu = new InvitationMenu();
+        invitationMenu.start(stage);
     }
 }

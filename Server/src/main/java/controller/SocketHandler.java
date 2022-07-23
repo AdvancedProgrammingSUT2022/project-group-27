@@ -1,11 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import model.ChatGroup;
-import model.Request;
-import model.Response;
-import model.User;
+import model.*;
 import Enum.Message;
 
 import java.io.DataInputStream;
@@ -13,7 +9,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SocketHandler extends Thread{
     private final Socket socket;
@@ -118,6 +113,44 @@ public class SocketHandler extends Thread{
                 response = ProfileController.getInstance().handleChangeNickname(request);
             } case "changePassword" -> {
                 response = ProfileController.getInstance().handleChangePassword(request);
+            } case "addFriendship" -> {
+                response = FriendshipController.addFriendship(request);
+            } case "setAccepted" -> {
+                response = FriendshipController.setAccepted(request);
+            } case "listOfFriendshipRequest" -> {
+                response = FriendshipController.listOfFriendshipRequest(request);
+            } case "listOfSenderFriendship" -> {
+                response = FriendshipController.listOfSenderFriendship(request);
+            } case "listOfFriends" -> {
+                response = FriendshipController.listOfFriends(request);
+            } case "logout" -> {
+                response = handleLogout(request);
+            } case "listOfOnlineUsers" -> {
+                response = listOfOnlineUsers(request);
+            } case "startGame" -> {
+                startGame((String) request.getData().get("list"), (String) request.getData().get("token"));
+                response.setStatus(200);
+                response.addData("message","invitation sent to users");
+            } case "updateInvitationList" -> {
+                response.setStatus(200);
+                response.addData("list",User.findUser((String) request.getData().get("token")).getListOfInvitation());
+            } case "rejectInvitation" -> {
+                User.findUser((String) request.getData().get("user")).removeInvitation((String) request.getData().get("token"));
+                notStartingGame(User.findUser((String) request.getData().get("token")));
+            } case "acceptInvitation" -> {
+                response.setStatus(200);
+                User.findUser((String) request.getData().get("token")).addToAccepted((String) request.getData().get("admin"));
+                User.findUser((String) request.getData().get("admin")).removeInvitation((String) request.getData().get("token"));
+                
+                if (User.findUser((String) request.getData().get("token")).canWeStart()) {
+                    startingGame();
+                    response.setStatus(201);
+                }
+            } case "register_startGame" -> {
+                String token = (String) request.getData().get("token");
+                User user = User.findUserByToken(token);
+                System.out.println("Registered start game socket for " + token);
+                user.setStartGameSocket(socket);
             }
             default -> {
                 response.setStatus(400);
@@ -126,6 +159,83 @@ public class SocketHandler extends Thread{
         }
 
         return response;
+    }
+
+    private void startGame(String list, String token) {
+        String s[]=list.split(",");
+        ArrayList<String> arrayList=new ArrayList<>();
+        for (int i=0;i<s.length;i++){
+            if (s[i].trim().equals("")) continue;
+            arrayList.add(s[i].trim());
+        }
+        String admin=token;
+        for (String string : arrayList){
+            User user=User.findUser(string);
+            if (string.equals(admin)) continue;
+            user.addInvitation(admin);
+            User.findUser(admin).addToAdminList(string);
+            System.out.println("admin = "+ User.findUser(admin).getUsername());
+        }
+    }
+
+    private Response listOfOnlineUsers(Request request) {
+        Response response = new Response();
+
+        User user = User.findUserByToken((String) request.getData().get("token"));
+        ArrayList<String> allUsers = new ArrayList<>();
+        for (User user1: User.getListOfUsers()) if (user1.isConnect) allUsers.add(user1.getUsername());
+        response.addData("list", new Gson().toJson(allUsers));
+        response.setStatus(200);
+        return response;
+
+    }
+
+    private Response handleLogout(Request request) {
+        Response response = new Response();
+
+        String token = (String) request.getData().get("token");
+
+        response.setStatus(200);
+        try {
+            User.findUserByToken(token).isConnect = false;
+        } catch (NullPointerException e) {
+            response.setStatus(400);
+        }
+
+        return response;
+    }
+
+    public void notStartingGame(User user) {
+        if (user!= null) user.clearAcceptedUsers();
+        Response update = new Response();
+        update.setStatus(400);
+        update.addData("status", "no");
+        for (int i = 0; i < User.getListOfUsers().size(); i++) {
+            User receiver = User.getListOfUsers().get(i);
+            try {
+                if (receiver.getStartGameOutputStream() == null) continue;
+                receiver.getStartGameOutputStream().writeUTF(update.toJson());
+                receiver.getStartGameOutputStream().flush();
+            } catch (IOException ignored) {
+                //Nothing
+            }
+        }
+    }
+
+    public void startingGame() {
+        Response update = new Response();
+        update.setStatus(200);
+        update.addData("status", "yes");
+        for (int i = 0; i < User.getListOfUsers().size(); i++) {
+            User receiver = User.getListOfUsers().get(i);
+            try {
+                if (receiver.getStartGameOutputStream() == null) continue;
+                receiver.getStartGameOutputStream().writeUTF(update.toJson());
+                receiver.getStartGameOutputStream().flush();
+            } catch (IOException ignored) {
+                //Nothing
+            }
+        }
     }
 
     public void update() {
@@ -205,6 +315,7 @@ public class SocketHandler extends Thread{
             response.setStatus(200);
             try {
                 response.addData("token", User.findUser(username).getToken());
+                User.findUser(username).isConnect = true;
             } catch (NullPointerException e) {
                 response.setStatus(400);
             }
@@ -227,6 +338,7 @@ public class SocketHandler extends Thread{
             response.setStatus(200);
             try {
                 response.addData("token", User.findUser(username).getToken());
+                User.findUser(username).isConnect = true;
             } catch (NullPointerException e) {
                 response.setStatus(400);
             }

@@ -30,6 +30,31 @@ public class UserController {
 
     private String userLoggedIn = null;
 
+    public static boolean doWeHaveAllOfTheseOnlineUsers(ArrayList<String> arrayList) {
+        Request request = new Request();
+        request.setHeader("listOfOnlineUsers");
+        request.addData("token", UserController.getInstance().userLoggedIn);
+        Response response = NetworkController.send(request);
+        if (response == null) return false;
+
+        ArrayList<String> allUsers=new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<String>>(){}.getType());
+
+        for (String user : arrayList){
+
+            if (!allUsers.contains(user)) return false;
+        }
+        return true;
+    }
+
+    public static boolean isThisListOfUsersUnique(ArrayList<String> arrayList) {
+        for (int i=0;i<arrayList.size();i++){
+            for (int j=i+1;j<arrayList.size();j++){
+                if (arrayList.get(i).equals(arrayList.get(j))) return false;
+            }
+        }
+        return true;
+    }
+
     public String getUserLoggedIn() {
         return userLoggedIn;
     }
