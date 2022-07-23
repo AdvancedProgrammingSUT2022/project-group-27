@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="viewControllers.GameView"
+            prefHeight="720.0" prefWidth="1280.0">
+    <top>
+        <VBox fx:id="box">
+            <Button fx:id="back" text="back" onMouseClicked="#back"/>
+        </VBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="10" maxWidth="500">
+            <TextField fx:id="arrayOfEnemies" alignment="CENTER" promptText="enter your enemies username and ',' between them" onKeyTyped="#textFieldEditor"/>
+            <Label fx:id="errorOfStartGame" alignment="CENTER" />
+            <TextField fx:id="numberOfEnemies" alignment="CENTER" promptText="enter the number of players" onKeyTyped="#numberOfEnemiesEditor"/>
+            <Label fx:id="errorOfNumberOfEnemies" alignment="CENTER" />
+            <VBox alignment="CENTER" spacing="10">
+                <Button fx:id="randomMap" alignment="CENTER" text="random map" onMouseClicked="#randomMap"/>
+                <HBox alignment="CENTER" spacing="10">
+                    <Button fx:id="map1Clicked" alignment="CENTER" text="map 1" onMouseClicked="#map1Clicked"/>
+                    <Button fx:id="map2Clicked" alignment="CENTER" text="map 2" onMouseClicked="#map2Clicked"/>
+                </HBox>
+                <HBox alignment="CENTER" spacing="10">
+                    <Button fx:id="map3Clicked" alignment="CENTER" text="map 3" onMouseClicked="#map3Clicked"/>
+                    <Button fx:id="map4Clicked" alignment="CENTER" text="map 4" onMouseClicked="#map4Clicked"/>
+                </HBox>
+            </VBox>
+            <VBox alignment="CENTER" spacing="10">
+                <HBox alignment="CENTER">
+                    <Button fx:id="startGameButton" alignment="CENTER" text="start new game" onMouseClicked="#startGame" disable="true"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

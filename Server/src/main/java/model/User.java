@@ -13,14 +13,19 @@ public class User {
     private String nickname;
     private transient Socket updateSocket;
     private transient DataOutputStream updateOutputStream;
+    private ArrayList<String> listOfInvitation=new ArrayList<>();
     private String profileImage = null;
     private String currentImage = null;
     private int score;
     private String timeOfScoreGame;
     private String lastLoginTime;
+    private ArrayList <String> adminList=new ArrayList<>();
+    private ArrayList<String> listOfAcceptedUsers=new ArrayList<>();
     private byte[] image;
+    private int isInGame=0;
 
     private static ArrayList<User> listOfUsers = new ArrayList<>();
+
 
     public User(String username, String password, String nickname) {
         this.username = username;
@@ -169,7 +174,6 @@ public class User {
             user.setCurrentImage(null);
         }
     }
-
     public static void sort() {
         Comparator<User> sortByScore = Comparator.comparing(User::getScore).reversed();
         Comparator<User> sortByTime = Comparator.comparing(User::getTimeOfScoreGame);
@@ -188,6 +192,7 @@ public class User {
         }
         return true;
     }
+
     public static boolean isThisListOfUsersUnique(ArrayList<String> list){
         for (int i=0;i<list.size();i++){
             for (int j=i+1;j<list.size();j++){
@@ -195,5 +200,41 @@ public class User {
             }
         }
         return true;
+    }
+
+    public Socket getUpdateSocket() {
+        return updateSocket;
+    }
+
+
+    public void addInvitation(String s){
+        listOfInvitation.add(s);
+    }
+
+    public String getListOfInvitation() {
+        String ans="";
+        if (listOfInvitation.size()>0){
+            ans+=listOfInvitation.get(0);
+        }
+        for (int i=1;i<listOfInvitation.size();i++){
+            ans+=',' + listOfInvitation.get(i);
+        }
+        System.out.println(ans+ " eirfj ");
+        return ans;
+    }
+    public void removeInvitation(String s){
+        listOfInvitation.remove(s);
+        System.out.println(listOfInvitation);
+    }
+    public void addToAdminList(String s){
+        adminList.add(s);
+    }
+    public void addToAccepted(String s){
+        if (listOfAcceptedUsers.contains(s)) return ;
+        listOfAcceptedUsers.add(s);
+    }
+    public boolean canWeStart(){
+        if (adminList.size()==listOfAcceptedUsers.size()) return true;
+        return false;
     }
 }

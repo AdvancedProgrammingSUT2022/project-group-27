@@ -21,6 +21,7 @@
         <Button fx:id="game" text="game menu" alignment="CENTER" prefWidth="100" onMouseClicked="#gameMenu"/>
         <Button fx:id="scoreBoard" text="score board" alignment="CENTER" prefWidth="100" onMouseClicked="#scoreBoardMenu"/>
         <Button fx:id="chat" text="chat room" alignment="CENTER" prefWidth="100" onMouseClicked="#chatRoomMenu"/>
+        <Button fx:id="invitation" text="invitation" alignment="CENTER" prefWidth="100" onMouseClicked="#invitationMenu"/>
     </VBox>
 
 </AnchorPane>

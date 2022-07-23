@@ -1,11 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import model.ChatGroup;
-import model.Request;
-import model.Response;
-import model.User;
+import model.*;
 import Enum.Message;
 
 import java.io.DataInputStream;
@@ -13,7 +9,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SocketHandler extends Thread{
     private final Socket socket;
@@ -130,7 +125,22 @@ public class SocketHandler extends Thread{
                 response = FriendshipController.listOfFriends(request);
             } case "logout" -> {
                 response = handleLogout(request);
+            } case "listOfOnlineUsers" -> {
+                response = listOfOnlineUsers(request);
+            } case "startGame" -> {
+                startGame((String) request.getData().get("list"), (String) request.getData().get("token"));
+                response.setStatus(200);
+                response.addData("message","invitation sent to users");
+            } case "updateInvitationList" -> {
+                response.setStatus(200);
+                response.addData("list",User.findUser((String) request.getData().get("token")).getListOfInvitation());
+            } case "rejectInvitation" -> {
+                User.findUser((String) request.getData().get("token")).removeInvitation((String) request.getData().get("user"));
+            } case "acceptInvitation" -> {
+                User.findUser((String) request.getData().get("token")).addToAccepted((String) request.getData().get("user"));
+                System.out.println(User.findUser((String) request.getData().get("token")).canWeStart());
             }
+
             default -> {
                 response.setStatus(400);
                 response.addData("error", "invalid command");
@@ -140,6 +150,34 @@ public class SocketHandler extends Thread{
         return response;
     }
 
+    private void startGame(String list, String token) {
+        String s[]=list.split(",");
+        ArrayList<String> arrayList=new ArrayList<>();
+        for (int i=0;i<s.length;i++){
+            if (s[i].trim().equals("")) continue;
+            arrayList.add(s[i].trim());
+        }
+        String admin=token;
+        for (String string : arrayList){
+            User user=User.findUser(string);
+            if (string.equals(admin)) continue;
+            user.addInvitation(admin);
+            User.findUser(admin).addToAdminList(string);
+        }
+    }
+
+    private Response listOfOnlineUsers(Request request) {
+        Response response = new Response();
+
+        User user = User.findUserByToken((String) request.getData().get("token"));
+        ArrayList<String> allUsers = new ArrayList<>();
+        for (User user1: User.getListOfUsers()) if (user1.isConnect) allUsers.add(user1.getUsername());
+        response.addData("list", new Gson().toJson(allUsers));
+        response.setStatus(200);
+        return response;
+
+    }
+
     private Response handleLogout(Request request) {
         Response response = new Response();
 
@@ -147,7 +185,7 @@ public class SocketHandler extends Thread{
 
         response.setStatus(200);
         try {
-            User.findUserByToken(token).isConnect = true;
+            User.findUserByToken(token).isConnect = false;
         } catch (NullPointerException e) {
             response.setStatus(400);
         }
