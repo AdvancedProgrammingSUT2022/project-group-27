@@ -1,5 +1,7 @@
 package model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import controller.NetworkController;
 import controller.UserController;
 import javafx.stage.Stage;
@@ -27,16 +29,26 @@ public class Player {
         game.setPlayerInstance(this);
         graphicOfGame = game;
         list.add(this);
+        Request request = new Request();
+        request.setHeader("addingPlayer");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+
         try {
             game.start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //TODO request to server
+    }
+
+    public static Double getYear() {
+        Double year = 0.0;
         Request request = new Request();
-        request.setHeader("addingPlayer");
-        request.addData("user", user);
+        request.setHeader("getYear");
         Response response = NetworkController.send(request);
+
+        if (response != null) year = (Double) response.getData().get("year");
+        return year;
     }
 
     public String getUser() {
@@ -79,9 +91,47 @@ public class Player {
         }
     }
 
-    public int getHappiness() {
-        int happiness = 0;
-        //TODO get it from server
+    public Double getHappiness() {
+        Double happiness = 0.0;
+        Request request = new Request();
+        request.setHeader("getHappiness");
+        request.addData("player", user);
+        Response response = NetworkController.send(request);
+
+        if (response != null) happiness = (Double) response.getData().get("happiness");
         return happiness;
+    }
+
+    public Double getScience() {
+        Double science = 0.0;
+        Request request = new Request();
+        request.setHeader("getScience");
+        request.addData("player", user);
+        Response response = NetworkController.send(request);
+
+        if (response != null) science = (Double) response.getData().get("science");
+        return science;
+    }
+
+    public Double getGold() {
+        Double gold = 0.0;
+        Request request = new Request();
+        request.setHeader("getGold");
+        request.addData("player", user);
+        Response response = NetworkController.send(request);
+
+        if (response != null) gold = (Double) response.getData().get("gold");
+        return gold;
+    }
+
+    public Technology getUnderConstructionTechnology() {
+        Technology technology = null;
+        Request request = new Request();
+        request.setHeader("getUnderConstructionTechnology");
+        request.addData("player", user);
+        Response response = NetworkController.send(request);
+
+        if (response != null) technology = new Gson().fromJson((String) response.getData().get("technology"), new TypeToken<Technology>(){}.getType());
+        return technology;
     }
 }

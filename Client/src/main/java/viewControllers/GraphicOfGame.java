@@ -27,6 +27,8 @@ import model.Player;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static java.lang.Math.max;
+
 public class GraphicOfGame extends Application {
     private static Stage stage;
     private static MediaPlayer audio;
@@ -212,7 +214,7 @@ public class GraphicOfGame extends Application {
     }
 
     public void initializing() { //TODO it should run at every steps, every moves and ...
-        /*
+
         science.setText("science: " + playerInstance.getScience());
         gold.setText("gold: " + playerInstance.getGold());
         happiness.setText("happiness: " + playerInstance.getHappiness());
@@ -226,7 +228,7 @@ public class GraphicOfGame extends Application {
 
         setIconForPlayer();
         setHappinessImage();
-
+        /*
         if (Game.getInstance().canWeNextTurn()) {
             nextTurn.setCursor(Cursor.HAND);
             nextTurn.setDisable(false);
@@ -725,7 +727,7 @@ public class GraphicOfGame extends Application {
     }
 
     private void setHappinessImage() {
-        int countOfHappiness = playerInstance.getHappiness();
+        Double countOfHappiness = playerInstance.getHappiness();
         Image image;
         if (countOfHappiness > 0) image = new Image(GraphicOfGame.class.getResource("/iconsOfGame/Happy-citizens.jpg").toExternalForm());
         else image = new Image(GraphicOfGame.class.getResource("/iconsOfGame/unhappy-citizens.jpg").toExternalForm());

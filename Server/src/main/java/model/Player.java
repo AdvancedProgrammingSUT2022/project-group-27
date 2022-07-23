@@ -1,7 +1,7 @@
 package model;
 
-//import Enum.LuxuryResource;
-//import Enum.StrategicResource;
+import Enum.LuxuryResource;
+import Enum.StrategicResource;
 import Enum.TechnologyType;
 
 import java.net.Socket;
@@ -16,19 +16,19 @@ public class Player {
     //private City mainCapital = null;
     private int extraHappiness = 0;
     private static ArrayList<Player> allPlayers = new ArrayList<>();
-    //private final ArrayList<City> cities = new ArrayList<>();
+    private final ArrayList<City> cities = new ArrayList<>();
     //private final ArrayList<Unit> units = new ArrayList<>();
     //private ArrayList<Ground> clearToSeeGrounds = new ArrayList<>();
     //private ArrayList<Ground> wasClearedToSeeGrounds = new ArrayList<>();
     private static int counterOfNextRound = 0;
     private User user;
-    //private Technology underConstructionTechnology=null;
+    private Technology underConstructionTechnology=null;
     private boolean isAlive = true;
     //private final ArrayList<Notification> notificationHistory = new ArrayList<>();
-    //private ArrayList<LuxuryResource> allLuxuryResources = new ArrayList<>();
-    //private ArrayList<StrategicResource> allStrategicResources = new ArrayList<>();
-    //private ArrayList<TechnologyType> technologyType=new ArrayList<>();
-    //private ArrayList<Technology> AllTechnologyTypes=new ArrayList<>();
+    private ArrayList<LuxuryResource> allLuxuryResources = new ArrayList<>();
+    private ArrayList<StrategicResource> allStrategicResources = new ArrayList<>();
+    private ArrayList<TechnologyType> technologyType=new ArrayList<>();
+    private ArrayList<Technology> AllTechnologyTypes=new ArrayList<>();
     private ArrayList<Boolean> isInWar = new ArrayList<>();
 
     public static void setAllPlayer(ArrayList<Player> players) {
@@ -129,9 +129,9 @@ public class Player {
         return allPlayers;
     }
 
-    /*public ArrayList<City> getCities() {
+    public ArrayList<City> getCities() {
         return cities;
-    }*/
+    }
 
     /*public ArrayList<Unit> getUnits() {
         return units;
@@ -149,9 +149,9 @@ public class Player {
         return AllTechnologyTypes;
     }*/
 
-    /*public Technology getUnderConstructionTechnology() {
+    public Technology getUnderConstructionTechnology() {
         return underConstructionTechnology;
-    }*/
+    }
 
     public boolean isAlive() {
         return isAlive;
@@ -358,12 +358,12 @@ public class Player {
         this.gold += amount;
     }
 
-    /*public int getHappiness() {
+    public int getHappiness() {
         int happiness = 15;
         int population = 0;
         happiness -= this.cities.size() * 3;
         for (City city : cities) {
-            for (Building building : city.getBuildings()) {
+            /*for (Building building : city.getBuildings()) {
                 if (building.getType().equals(BuildingsType.BURIAL_TOMB) || building.getType().equals(BuildingsType.SATRAPS_COURT)) {
                     happiness += 2;
                 }
@@ -379,11 +379,13 @@ public class Player {
             if (city.isPuppet())
                 happiness++;
             population += city.getListOfCitizens().size();
+
+             */
         }
         happiness -= population / 7;
         happiness += this.allLuxuryResources.size() * 3;
         return happiness + this.extraHappiness;
-    }*/
+    }
 
     /*public boolean hasStrategicResource(StrategicResource strategicResource) {
         for (StrategicResource eachStrategicResource : this.allStrategicResources) {
@@ -393,7 +395,7 @@ public class Player {
         return false;
     }*/
 
-    /*public int getScience() {
+    public int getScience() {
         int science = 0;
         for (City city : this.cities) {
             science += city.getScience();
@@ -401,7 +403,7 @@ public class Player {
         if (this.gold <= 0)
             science = 0;
         return science;
-    }*/
+    }
 
     /*public boolean doWeHaveOurCapital() {
         return (mainCapital != null && mainCapital.getOwner() == this) || (mainCapital == null && units.size() > 0);

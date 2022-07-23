@@ -160,6 +160,25 @@ public class SocketHandler extends Thread{
                 Player player = Player.findPlayerByUser(user);
                 System.out.println("Registered turn socket for " + token);
                 if (player != null) player.setSocket(socket);
+            } case "getScience" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("player")));
+                response.setStatus(200);
+                response.addData("science", player.getScience());
+            } case "getGold" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("player")));
+                response.setStatus(200);
+                response.addData("gold", player.getGold());
+            } case "getYear" -> {
+                response.setStatus(200);
+                response.addData("year", Player.getYear());
+            } case "getUnderConstructionTechnology" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("player")));
+                response.setStatus(200);
+                response.addData("technology", player.getUnderConstructionTechnology());
+            } case "getHappiness" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("player")));
+                response.setStatus(200);
+                response.addData("happiness", player.getHappiness());
             }
             default -> {
                 response.setStatus(400);
