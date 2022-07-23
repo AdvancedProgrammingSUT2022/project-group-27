@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Player {
-    private static ArrayList<Player> list;
+    private static ArrayList<Player> list = new ArrayList<>();
     private GraphicOfGame graphicOfGame;
     private String user;
     private Socket server;
@@ -22,8 +22,11 @@ public class Player {
         this.user = user;
         this.server = server;
         this.stage = stage;
-        graphicOfGame = new GraphicOfGame(this);
-        GraphicOfGame game = new GraphicOfGame(this);
+
+        GraphicOfGame game = new GraphicOfGame();
+        game.setPlayerInstance(this);
+        graphicOfGame = game;
+        list.add(this);
         try {
             game.start(stage);
         } catch (Exception e) {
@@ -38,6 +41,14 @@ public class Player {
 
     public String getUser() {
         return user;
+    }
+
+    public static Player getPlayerByUser(String user) {
+        for (Player player: list) {
+            if (player.user.equals(user)) return player;
+        }
+
+        return null;
     }
 
     public void listenForTurn() throws IOException {

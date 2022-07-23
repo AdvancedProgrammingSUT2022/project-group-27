@@ -1,6 +1,7 @@
 package viewControllers;
 
 import controller.ProfileController;
+import controller.UserController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,14 +28,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class GraphicOfGame extends Application {
-    //private static GraphicOfGame instance = null;
-    //public static GraphicOfGame getInstance() {
-    //    return instance;
-    //}
-
-    //public static void setInstance(GraphicOfGame game) {
-    //    instance = game;
-    //}
     private static Stage stage;
     private static MediaPlayer audio;
     public  Pane gamePane;
@@ -110,12 +103,13 @@ public class GraphicOfGame extends Application {
     @FXML
     private HBox statusBar;
 
-    public GraphicOfGame(Player player) {
+    public void setPlayerInstance(Player player) {
         this.playerInstance = player;
     }
 
     @FXML
     public void initialize() {
+        playerInstance = Player.getPlayerByUser(UserController.getInstance().getUsername());
         gamePaneSecond=gamePane;
         audio.play();
         audio.setOnEndOfMedia(new Runnable() {
@@ -831,6 +825,7 @@ public class GraphicOfGame extends Application {
     }
 
     public void stopGame(MouseEvent mouseEvent) throws Exception {
+        audio.stop();
         /*
         for (City city: Player.whichPlayerTurnIs().getCities()) {
             if (city.getConstruction() != null) {
