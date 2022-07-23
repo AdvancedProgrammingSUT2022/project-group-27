@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="viewControllers.GraphicOfGame"
+            prefHeight="720.0" prefWidth="1280.0" onKeyPressed="#setCheatCode">
+
+    <top>
+        <VBox>
+            <HBox fx:id="statusBar" spacing="10">
+                <Label fx:id="science"/>
+                <Label fx:id="gold"/>
+                <Label fx:id="happiness"/>
+                <Label fx:id="player"/>
+                <Label fx:id="turn"/>
+            </HBox>
+            <HBox fx:id="secondBar" spacing="10" alignment="CENTER_LEFT">
+                <Label fx:id="technology"/>
+                <Label fx:id="technologyPanel" text="Technology Panel"/>
+                <Label fx:id="unitPanel" text="Unit Panel"/>
+                <Label fx:id="cityPanel" text="City Panel"/>
+                <Label fx:id="diplomacyInformationPanel" text="Diplomacy Information Panel"/>
+                <Label fx:id="winPanel" text="Win Panel"/>
+                <Label fx:id="demographicPanel" text="Demographic Panel"/>
+                <Label fx:id="notificationPanel" text="Notification Panel"/>
+                <Label fx:id="militaryPanel" text="Military Panel"/>
+                <Label fx:id="economicPanel" text="Economic Panel"/>
+                <Label fx:id="tradingPanel" text="Trading Panel"/>
+                <Label fx:id="diplomacyPanel" text="Diplomacy Panel"/>
+            </HBox>
+            <ScrollPane prefHeight="600">
+                <Pane fx:id="gamePane">
+                    
+                </Pane>
+            </ScrollPane>
+        </VBox>
+    </top>
+    <bottom>
+        <HBox fx:id="bottom_hBox" spacing="10">
+            <Button fx:id="nextTurn" text="next turn" onMouseClicked="#nextTurn"/>
+            <Button fx:id="setting" text="setting" onMouseClicked="#setting"/>
+            <Button fx:id="stopButton" text="stop" onMouseClicked="#stopGame"/>
+        </HBox>
+    </bottom>
+</BorderPane>

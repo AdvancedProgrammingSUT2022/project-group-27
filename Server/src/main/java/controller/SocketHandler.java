@@ -141,7 +141,7 @@ public class SocketHandler extends Thread{
                 response.setStatus(200);
                 User.findUser((String) request.getData().get("token")).addToAccepted((String) request.getData().get("admin"));
                 User.findUser((String) request.getData().get("admin")).removeInvitation((String) request.getData().get("token"));
-                
+
                 if (User.findUser((String) request.getData().get("token")).canWeStart()) {
                     startingGame();
                     response.setStatus(201);
@@ -151,6 +151,15 @@ public class SocketHandler extends Thread{
                 User user = User.findUserByToken(token);
                 System.out.println("Registered start game socket for " + token);
                 user.setStartGameSocket(socket);
+            } case "addingPlayer" -> {
+                User user = User.findUser((String) request.getData().get("user"));
+                Player player = new Player(user);
+            } case "register_turn" -> {
+                String token = (String) request.getData().get("token");
+                User user = User.findUserByToken(token);
+                Player player = Player.findPlayerByUser(user);
+                System.out.println("Registered turn socket for " + token);
+                if (player != null) player.setSocket(socket);
             }
             default -> {
                 response.setStatus(400);

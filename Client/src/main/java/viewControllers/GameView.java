@@ -21,11 +21,14 @@ import javafx.util.Duration;
 
 
 import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
 import Enum.Message;
+import model.GlobalVariables;
+import model.Player;
 import model.Request;
 import model.Response;
 
@@ -44,7 +47,6 @@ public class GameView extends Application {
     public Button map2Clicked;
     public Button map3Clicked;
     public Button map4Clicked;
-
 
     @FXML
     private VBox box;
@@ -133,6 +135,14 @@ public class GameView extends Application {
             e.printStackTrace();
         }
         */
+        if (seed==1) GlobalVariables.surfaceWidth+=(4-Integer.parseInt(numberOfEnemies.getText()))*16;
+        if (seed==2) GlobalVariables.surfaceWidth+=GlobalVariables.surfaceWidth-3*16;
+        if (seed==3) GlobalVariables.surfaceWidth+=GlobalVariables.surfaceWidth-16;
+        if (seed==4) GlobalVariables.surfaceWidth+=GlobalVariables.surfaceWidth+16;
+        if (seed==5) GlobalVariables.surfaceWidth+=GlobalVariables.surfaceWidth+3*16;
+        if (seed==6) GlobalVariables.surfaceWidth=GlobalVariables.surfaceWidth-3*16;
+
+        audio.stop();
         Request request=new Request();
         request.setHeader("startGame");
         request.addData("token",UserController.getInstance().getUserLoggedIn());
@@ -267,5 +277,7 @@ public class GameView extends Application {
 
     public void enterGame(ArrayList<String> arrayList, Response response) {
         System.out.println("yes we got it");
+        //TODO request to server for start game:   game.setting(new ArrayList<User>(listOfPlayers),seed);
+        Player player = new Player(UserController.getInstance().getUsername(), new Socket(), stage);
     }
 }
