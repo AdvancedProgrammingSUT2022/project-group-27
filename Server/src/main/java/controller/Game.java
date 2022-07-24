@@ -36,7 +36,7 @@ public class Game extends Controller {
 
     private boolean isLimitationOkInCities(Player player) {
         for (City city: player.getCities()) {
-            /*if (city.getListOfUnitsInCity().size() > 2) return false;
+            if (city.getListOfUnitsInCity().size() > 2) return false;
             else if (city.getListOfUnitsInCity().size() == 0) continue;
 
             Unit unit = city.getListOfUnitsInCity().get(0);
@@ -47,7 +47,6 @@ public class Game extends Controller {
             unit = city.getListOfUnitsInCity().get(1);
             if (!Unit.addingUnitFromArrayOfCityToCity(player, city, unit)) return false;
 
-             */
         }
 
         return true;
@@ -60,7 +59,7 @@ public class Game extends Controller {
             city.setRemainedTurnsToBuild(city.getRemainedTurnsToBuild() - 1);
             if (city.getRemainedTurnsToBuild() == 0) {
                 city.finishedConstructed();
-                //UnitController.spawnUnit(city);
+                UnitController.spawnUnit(city);
                 //return false; not get it back
             }
         }
@@ -68,7 +67,7 @@ public class Game extends Controller {
     }
 
     private void unitActionsInNextTurn(Player player) {
-        /*for (Unit unit: player.getUnits()) {
+        for (Unit unit: player.getUnits()) {
             unit.putMp(10);
             unit.checkDestination();
             if (unit instanceof MilitaryUnit militaryUnit) {
@@ -83,8 +82,6 @@ public class Game extends Controller {
                     new Notification("your unit health completed", Player.getCounterOfNextRound(), player);
             }
         }
-
-         */
     }
 
     public boolean canWeNextTurn() {
@@ -128,7 +125,7 @@ public class Game extends Controller {
             City city = player.getCities().get(i);
             if (city.getHp() < 20) city.setHp(city.getHp() + 1);
             city.setSavedFood(city.getSavedFood() + city.getFoodPerTurn());
-            /*if (city.getSavedFood() > city.getListOfCitizens().size() * 10) {
+            if (city.getSavedFood() > city.getListOfCitizens().size() * 10) {
                 city.setSavedFood(city.getSavedFood() - city.getListOfCitizens().size() * 10);
                 city.increasingCitizens();
             }
@@ -158,8 +155,6 @@ public class Game extends Controller {
 
                 }
             }
-
-             */
             //TODO : 1 science for each Citizen
         }
         for (int i=0;i<player.getAllTechnologyTypes().size();i++){
@@ -173,7 +168,7 @@ public class Game extends Controller {
                 }
             }
         }
-        /*for (int i=0;i<player.getUnits().size();i++){
+        for (int i=0;i<player.getUnits().size();i++){
             if (player.getUnits().get(i) instanceof Worker){   
                 if (((Worker) player.getUnits().get(i)).getIsWorking()){
                     Ground ground=player.getUnits().get(i).getGround();
@@ -201,7 +196,6 @@ public class Game extends Controller {
             }
         }
 
-         */
     }
 
     private void createMap() {
@@ -214,7 +208,7 @@ public class Game extends Controller {
             int starter = 0;
             if (counter % 2 == 0) starter += globalVariables.tool6Zelie / 2;
             for (int j = starter; j < globalVariables.surfaceHeight; j += globalVariables.tool6Zelie) {
-                /*Ground ground;
+                Ground ground;
                 if ((ground = Ground.getGroundByNumber(numberOfCity++)) != null) {
                     ground.setxLocation(j);
                     ground.setyLocation(i);
@@ -230,8 +224,6 @@ public class Game extends Controller {
                 }
 
                 Ground.add(ground);
-
-                 */
             }
             GlobalVariables.numberOfTiles=numberOfCity-1;
         }
@@ -242,7 +234,7 @@ public class Game extends Controller {
                 Pair idOfBestMatch = new Pair(0, 0);
                 for (int a = max(i - globalVariables.tool6Zelie, 0); a < min(i + globalVariables.tool6Zelie + 1, globalVariables.surfaceHeight); a++) {
                     for (int b = max(0, j - globalVariables.arz6Zelie); b < min(j + globalVariables.arz6Zelie + 1, globalVariables.surfaceWidth); b++) {
-                        /*(Ground ground = Ground.getGroundByXY(a, b);
+                        Ground ground = Ground.getGroundByXY(a, b);
                         if (ground == null) ;
                         else if (globalVariables.isEqual(bestForMatchPixels, globalVariables.distanceOfTwoPoints(i, j, a, b)) == 1) {
                             checkPixelType = 1;
@@ -251,20 +243,17 @@ public class Game extends Controller {
                             checkPixelType = 0;
                             idOfBestMatch = new Pair(a, b);
                         }
-
-                         */
                     }
                 }
 
                 if (checkPixelType == 0) {
-                    /*Ground ground = Ground.getGroundByXY(idOfBestMatch.getFirstInt(), idOfBestMatch.getSecondInt());
+                    Ground ground = Ground.getGroundByXY(idOfBestMatch.getFirstInt(), idOfBestMatch.getSecondInt());
                     if (ground != null) {
                         Pair pixel = new Pair(i, j);
                         ground.getPixelsOfThisGround().add(pixel);
                         Ground.getPixelInWhichGround().put(Ground.PairToInt(pixel.getFirstInt(), pixel.getSecondInt()), ground);
                     }
 
-                     */
                 }
             }
         }
@@ -272,7 +261,7 @@ public class Game extends Controller {
 
     public String moveUnits(int firstGroundNumber, int secondGroundNumber, String type) {
         Player player = Player.whichPlayerTurnIs();
-        /*ArrayList<Unit> unitArrayList = Ground.getGroundByNumber(firstGroundNumber).unitsOfASpecificPlayerInThisGround(player);
+        ArrayList<Unit> unitArrayList = Ground.getGroundByNumber(firstGroundNumber).unitsOfASpecificPlayerInThisGround(player);
         Unit unitInThisGround=null;
         for (Unit unit : unitArrayList){
             if (unit instanceof UnMilitaryUnit && type.equals("UnMilitary")) unitInThisGround=unit;
@@ -297,9 +286,8 @@ public class Game extends Controller {
             return "unit can not go to that ground:(";
         }
 
-         */
         boolean fail=false;
-        /*for (Unit unit : unitArrayList) {
+        for (Unit unit : unitArrayList) {
             if ((unit instanceof MilitaryUnit && type.equals("Military")) || (unit instanceof UnMilitaryUnit && type.equals("UnMilitary"))) {
                 unit.setDestination(Ground.getGroundByNumber(secondGroundNumber));
                 if (unit instanceof Worker) ((Worker) unit).setWorking(false);
@@ -311,32 +299,26 @@ public class Game extends Controller {
             fail=true;
         }
 
-         */
 
         if (fail) return "unit move failed successfully :)";
         return "unit moved successfully";
     }
 
-    /*public void deleteUnit(Unit unit) {
+    public void deleteUnit(Unit unit) {
 
     }
 
-     */
-    /*public void clearLand(Ground ground){
+    public void clearLand(Ground ground){
         System.out.println(ground.getNumber());
         ground.setCounterOfDestroyingFeature(1);
     }
 
-     */
-    /*public void buildRoad(Ground ground){
+    public void buildRoad(Ground ground){
         ground.buildRoad();
     }
 
-     */
-    /*public void buildRailway(Ground ground){
+    public void buildRailway(Ground ground){
         ground.buildRailWay();
     }
-
-     */
 
 }

@@ -21,6 +21,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.GlobalVariables;
+import model.Ground;
+import model.GroundRectangle;
 import model.Player;
 //import viewControllers.Info.*;
 
@@ -111,6 +113,10 @@ public class GraphicOfGame extends Application {
 
     @FXML
     public void initialize() {
+        for (int i = 0; i < Ground.getAllGround().size(); i++) {
+            Ground ground = Ground.getGroundByNumber(i);
+            GroundRectangle groundRectangle=new GroundRectangle(ground, ground.getxLocation(),ground.getyLocation());
+        }
         playerInstance = Player.getPlayerByUser(UserController.getInstance().getUsername());
         gamePaneSecond=gamePane;
         audio.play();
@@ -228,15 +234,15 @@ public class GraphicOfGame extends Application {
 
         setIconForPlayer();
         setHappinessImage();
-        /*
-        if (Game.getInstance().canWeNextTurn()) {
+
+        if (playerInstance.canWeNextTurn()) {
             nextTurn.setCursor(Cursor.HAND);
             nextTurn.setDisable(false);
         } else {
             nextTurn.setCursor(Cursor.DISAPPEAR);
             nextTurn.setDisable(true);
         }
-        Player player=Player.whichPlayerTurnIs();
+        /*
         player.handleClearToSee();
         player.handleVisitedGrounds();
         setMenus();

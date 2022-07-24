@@ -1,8 +1,9 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import model.*;
-import Enum.Message;
+import Enum.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -186,6 +187,158 @@ public class SocketHandler extends Thread{
                     Player.nextTurn();
                     turnPlayerNotify();
                 } else response.setStatus(400);
+            } case "canWeNextTurn" -> {
+                if (Game.getInstance().canWeNextTurn()) response.setStatus(200);
+                else response.setStatus(400);
+            } case "settingGame" -> {
+                ArrayList<String> users = new Gson().fromJson((String) request.getData().get("users"), new TypeToken<ArrayList<String>>(){}.getType());
+                Double seed = (Double) request.getData().get("seed");
+                GameModel.getInstance().setting(users, seed);
+            } case "getTurnRemained" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                String improvementType = (String) request.getData().get("improvementType");
+                if (Ground.getGroundByNumber(groundNumber).getPlunderingImprovementType().getImprovementType().toString().equals(improvementType))
+                    response.addData("turnRemained", Ground.getGroundByNumber(groundNumber).getPlunderingImprovementType().getTurnRemained());
+                if (Ground.getGroundByNumber(groundNumber).getImprovementTypeInProgress().getImprovementType().toString().equals(improvementType))
+                    response.addData("turnRemained", Ground.getGroundByNumber(groundNumber).getImprovementTypeInProgress().getTurnRemained());
+            } case "listOfGrounds" -> {
+                response.addData("listOfGrounds", new Gson().toJson(Ground.getAllGround()));
+            } case "doWeHaveThisTechnology" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String technologyType = (String) request.getData().get("technologyType");
+                Boolean answer = player.doWeHaveThisTechnology(TechnologyType.findByName(technologyType));
+                response.addData("answer", answer);
+            } case "canWeAddThisTechnology" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String technologyType = (String) request.getData().get("technologyType");
+                Boolean answer = player.canWeAddThisTechnology(TechnologyType.findByName(technologyType));
+                response.addData("answer", answer);
+            } case "getTimeRemain" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String technologyType = (String) request.getData().get("technologyType");
+                response.addData("timeRemain",player.getUnderConstructionTechnology().getTimeRemain());
+            } case "setUnderConstructionTechnology" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String technologyType = (String) request.getData().get("technologyType");
+                Technology technology = null;
+                for (Technology technology1: player.technologiesThatCanBeObtained()) {
+                    if (technology1.getTechnologyType().name().equals(technologyType)) technology = technology1;
+                }
+                player.setUnderConstructionTechnology(technology);
+            } case "getTurnRemainedToComplete" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String militaryType = (String) request.getData().get("militaryType");
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("timeRemain", City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getRemainedTurnsToBuild());
+            }  case "getStatus" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String militaryType = (String) request.getData().get("militaryType");
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                for (Unit unit: player.getUnits()) {
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) response.addData("status", unit.getStatus());
+                }
+            } case "getImprovementTypeInProgress" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                Improvement improvement = Ground.getGroundByNumber(groundNumber).getImprovementTypeInProgress();
+                response.addData("improvementType", improvement.getImprovementType().toString());
+                response.addData("timeRemain", improvement.getTurnRemained());
+            } case "getHp" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String militaryType = (String) request.getData().get("militaryType");
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                for (Unit unit: player.getUnits()) {
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) response.addData("hp", unit.getHp());
+                }
+            } case "getMp" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String militaryType = (String) request.getData().get("militaryType");
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                for (Unit unit: player.getUnits()) {
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) response.addData("mp", unit.getHp());
+                }
+            } case "getCities" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("player")));
+                ArrayList<Integer> list = new ArrayList<>();
+                for (City city: player.getCities()) {
+                    list.add(city.getGround().getNumber());
+                }
+                response.addData("cities", new Gson().toJson(list));
+            } case "getWasClearedToSeeGrounds" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                Boolean answer = player.getWasClearedToSeeGrounds().contains(Ground.getGroundByNumber(groundNumber));
+                response.addData("answer", answer);
+            } case "getStrategicResources" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("list", new Gson().toJson(Ground.getGroundByNumber(groundNumber).getStrategicResources()));
+            } case "getLuxuryResources" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("list", new Gson().toJson(Ground.getGroundByNumber(groundNumber).getLuxuryResources()));
+            } case "getBonusResource" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("list", new Gson().toJson(Ground.getGroundByNumber(groundNumber).getBonusResource()));
+            } case "getFeatureType" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("feature", new Gson().toJson(Ground.getGroundByNumber(groundNumber).getFeatureType()));
+            } case "handleVisitedGrounds" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                player.handleVisitedGrounds();
+            } case "handleClearToSee" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                player.handleClearToSee();
+            } case "moveUnits" -> {
+                int first = (int) Math.floor((Double) request.getData().get("firstGroundNumber"));
+                int second = (int) Math.floor((Double) request.getData().get("secondGroundNumber"));
+                String type = (String) request.getData().get("type");
+                Game.getInstance().moveUnits(first, second, type);
+            } case "buildCity" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                String name = (String) request.getData().get("name");
+                for (Unit unit: player.getUnits()) {
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType() == MilitaryType.SETTLER) {
+                        ((SettlerUnit) unit).buildCity(name);
+                    }
+                }
+            } case "setImprovementTypeInProgress" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                String improvementType = (String) request.getData().get("improvementType");
+                Ground.getGroundByNumber(groundNumber).setImprovementTypeInProgress(ImprovementType.getImprovementByName(improvementType));
+            } case "setWorking" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                boolean working = (Boolean) request.getData().get("working");
+                for (Unit unit: player.getUnits()) {
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType() == MilitaryType.WORKER) {
+                        ((Worker) unit).setWorking(working);
+                    }
+                }
+            } case "listOfImprovementTypes" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("list", new Gson().toJson(Ground.getGroundByNumber(groundNumber).listOfImprovementTypes()));
+            } case "getImprovementType" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("improvement", new Gson().toJson(Ground.getGroundByNumber(groundNumber).getImprovementType()));
+            } case "deleteRoadAndRailway" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                Ground.getGroundByNumber(groundNumber).deleteRoadAndRailway();
+            } case "clearLand" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                Game.getInstance().clearLand(Ground.getGroundByNumber(groundNumber));
+            } case "buildRoad" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                Game.getInstance().buildRoad(Ground.getGroundByNumber(groundNumber));
+            } case "buildRailway" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                Game.getInstance().buildRailway(Ground.getGroundByNumber(groundNumber));
+            } case "freePlundering" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                for (Unit unit: player.getUnits()) {
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType() == MilitaryType.WORKER) {
+                        UnitController.freePlundering((Worker) unit);
+                    }
+                }
             }
             default -> {
                 response.setStatus(400);

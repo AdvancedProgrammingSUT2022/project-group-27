@@ -86,7 +86,7 @@ public class NetworkController {
                  Response response = Response.fromJson(inputStreamGame.readUTF());
                 System.out.println("update of game received");
                 if (response.getStatus() == 200) {
-                    gameView.enterGame(arrayList, response);
+                    gameView.enterGame(arrayList);
                     System.out.println("break");
                     break;
                 }

@@ -75,4 +75,11 @@ public enum TechnologyType {
     public int getTime() {
         return time;
     }
+
+    public static TechnologyType findByName(String name) {
+        for (TechnologyType technologyType: TechnologyType.values()) {
+            if (technologyType.name().equals(name)) return technologyType;
+        }
+        return null;
+    }
 }
