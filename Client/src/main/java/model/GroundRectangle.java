@@ -2,6 +2,7 @@ package model;
 
 import Enum.*;
 import controller.Game;
+import controller.UserController;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -38,7 +39,7 @@ public class GroundRectangle extends Polygon {
         return xLocation;
     }
 
-    public GroundRectangle(Ground ground, double x, double y, Player player){
+    public GroundRectangle(Ground ground, double x, double y){
         this.ground=ground;
         xLocation= (int) x;
         yLocation= (int) y;
@@ -64,6 +65,8 @@ public class GroundRectangle extends Polygon {
             }
         });
 
+        Player player = Player.getPlayerByUser(UserController.getInstance().getUsername());
+
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -81,7 +84,7 @@ public class GroundRectangle extends Polygon {
                 }
                 else{
                     String s;
-                    if (GlobalVariables.unitRectangle.getUnit() instanceof MilitaryUnit) s="Military";
+                    if (GlobalVariables.unitRectangle.getUnit().isMilitary()) s="Military";
                     else s="UnMilitary";
                     Game.getInstance().moveUnits(GlobalVariables.unitRectangle.getUnit().getGround().getNumber(), ground.getNumber(), s);
                     GlobalVariables.unitRectangle=null;

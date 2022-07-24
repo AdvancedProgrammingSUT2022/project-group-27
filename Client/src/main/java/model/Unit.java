@@ -36,6 +36,10 @@ public class Unit implements Productions{
         return ground;
     }
 
+    public boolean isMilitary() {
+        return !name().equals(MilitaryType.SETTLER.name()) && !name().equals(MilitaryType.WORKER.name());
+    }
+
     @Override
     public String name() {
         return this.getMilitaryType().name();
@@ -82,5 +86,27 @@ public class Unit implements Productions{
         Response response = NetworkController.send(request);
         mp = (Double) response.getData().get("mp");
         return mp;
+    }
+
+    public void buildCity(String name) {
+        if (militaryType.name().equals(MilitaryType.SETTLER.name())) {
+            Request request = new Request();
+            request.setHeader("buildCity");
+            request.addData("token", UserController.getInstance().getUserLoggedIn());
+            request.addData("name", name);
+            request.addData("groundNumber", ground.getNumber());
+            Response response = NetworkController.send(request);
+        }
+    }
+
+    public void setWorking(boolean working) {
+        if (militaryType.name().equals(MilitaryType.WORKER.name())) {
+            Request request = new Request();
+            request.setHeader("setWorking");
+            request.addData("token", UserController.getInstance().getUserLoggedIn());
+            request.addData("working", working);
+            request.addData("groundNumber", ground.getNumber());
+            Response response = NetworkController.send(request);
+        }
     }
 }

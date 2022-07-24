@@ -1,7 +1,9 @@
 package controller;
 
+import model.Ground;
 import model.Request;
 import model.Response;
+import model.Unit;
 
 public class Game {
     //singleton pattern
@@ -26,6 +28,35 @@ public class Game {
         request.addData("firstGroundNumber", firstGroundNumber);
         request.addData("secondGroundNumber", secondGroundNumber);
         request.addData("type", type);
+        Response response = NetworkController.send(request);
+    }
+
+    public void clearLand(Ground ground) {
+        Request request = new Request();
+        request.setHeader("clearLand");
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+    }
+
+    public void buildRoad(Ground ground) {
+        Request request = new Request();
+        request.setHeader("buildRoad");
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+    }
+
+    public void buildRailway(Ground ground) {
+        Request request = new Request();
+        request.setHeader("buildRailway");
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+    }
+
+    public void freePlundering(Unit worker) {
+        Request request = new Request();
+        request.setHeader("freePlundering");
+        request.addData("groundNumber", worker.getGround().getNumber());
+        request.addData("token", worker.getPlayer().getUser());
         Response response = NetworkController.send(request);
     }
 }

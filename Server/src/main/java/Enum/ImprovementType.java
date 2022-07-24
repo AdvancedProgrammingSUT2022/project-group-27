@@ -75,4 +75,12 @@ public enum ImprovementType {
     public int getTurn() {
         return turn;
     }
+
+    public static ImprovementType getImprovementByName(String name) {
+        for (ImprovementType improvementType: ImprovementType.values()) {
+            if (improvementType.name().equals(name)) return improvementType;
+        }
+
+        return null;
+    }
 }

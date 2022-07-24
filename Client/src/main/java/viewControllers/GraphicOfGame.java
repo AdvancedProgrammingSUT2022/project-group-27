@@ -21,6 +21,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.GlobalVariables;
+import model.Ground;
+import model.GroundRectangle;
 import model.Player;
 //import viewControllers.Info.*;
 
@@ -111,6 +113,10 @@ public class GraphicOfGame extends Application {
 
     @FXML
     public void initialize() {
+        for (int i = 0; i < Ground.getAllGround().size(); i++) {
+            Ground ground = Ground.getGroundByNumber(i);
+            GroundRectangle groundRectangle=new GroundRectangle(ground, ground.getxLocation(),ground.getyLocation());
+        }
         playerInstance = Player.getPlayerByUser(UserController.getInstance().getUsername());
         gamePaneSecond=gamePane;
         audio.play();

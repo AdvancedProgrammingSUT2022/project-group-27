@@ -107,4 +107,35 @@ public class Ground {
         Response response = NetworkController.send(request);
         return new Gson().fromJson((String) response.getData().get("feature"), new TypeToken<FeatureType>(){}.getType());
     }
+
+    public void setImprovementTypeInProgress(ImprovementType improvementType) {
+        Request request = new Request();
+        request.setHeader("setImprovementTypeInProgress");
+        request.addData("groundNumber", this.getNumber());
+        request.addData("improvementType", improvementType);
+        Response response = NetworkController.send(request);
+    }
+
+    public ArrayList<ImprovementType> listOfImprovementTypes() {
+        Request request = new Request();
+        request.setHeader("listOfImprovementTypes");
+        request.addData("groundNumber", this.getNumber());
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<ImprovementType>>(){}.getType());
+    }
+
+    public ImprovementType getImprovementType() {
+        Request request = new Request();
+        request.setHeader("getImprovementType");
+        request.addData("groundNumber", this.getNumber());
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("improvement"), new TypeToken<ImprovementType>(){}.getType());
+    }
+
+    public void deleteRoadAndRailway() {
+        Request request = new Request();
+        request.setHeader("deleteRoadAndRailway");
+        request.addData("groundNumber", this.getNumber());
+        Response response = NetworkController.send(request);
+    }
 }

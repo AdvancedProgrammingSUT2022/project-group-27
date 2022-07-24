@@ -2,6 +2,7 @@ package model;
 
 
 import Enum.ImprovementType;
+import controller.Game;
 import controller.UserController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import viewControllers.GraphicOfGame;
+import Enum.MilitaryType;
 
 import java.util.ArrayList;
 
@@ -33,7 +35,7 @@ public class UnitRectangle extends Circle {
 
     public UnitRectangle(Unit unit){
         this.unit=unit;
-        if (unit instanceof MilitaryUnit) this.setLayoutX(unit.getGround().getyLocation()-30);
+        if (unit.isMilitary()) this.setLayoutX(unit.getGround().getyLocation()-30);
         else this.setLayoutX(unit.getGround().getyLocation()+30);
         this.setLayoutY(unit.getGround().getxLocation()+30);
         this.setRadius(30);
@@ -61,10 +63,10 @@ public class UnitRectangle extends Circle {
                         " status: " + unit.getStatus());
 
                 hbox = new HBox(circle, label);
-                if (unit instanceof SettlerUnit) addingSettler((SettlerUnit) unit);
+                if (unit.getMilitaryType().equals(MilitaryType.SETTLER)) addingSettler(unit);
                 unitSelect = unit;
 
-                if (unit instanceof Worker) setContextMenu((Worker) unit).show(UnitRectangle.this, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+                if (unit.getMilitaryType().equals(MilitaryType.WORKER)) setContextMenu(unit).show(UnitRectangle.this, mouseEvent.getScreenX(), mouseEvent.getScreenY());
 
                 if (unit.getPlayer() != Player.getPlayerByUser(UserController.getInstance().getUsername())) {
                     hbox = new HBox();
@@ -108,7 +110,7 @@ public class UnitRectangle extends Circle {
         alert.show();
     }
 
-    private ContextMenu setContextMenu(Worker worker) {
+    private ContextMenu setContextMenu(Unit worker) {
         final ContextMenu contextMenu = new ContextMenu();
 
         MenuItem clearLand = new MenuItem("clear land");
@@ -116,7 +118,7 @@ public class UnitRectangle extends Circle {
             @Override
             public void handle(ActionEvent actionEvent) {
                 worker.setWorking(true);
-                controller.clearLand(worker.getGround());
+                Game.getInstance().clearLand(worker.getGround());
                 alertSuccess("clear land");
             }
         });
@@ -126,7 +128,7 @@ public class UnitRectangle extends Circle {
             @Override
             public void handle(ActionEvent actionEvent) {
                 worker.setWorking(true);
-                controller.buildRoad(worker.getGround());
+                Game.getInstance().buildRoad(worker.getGround());
                 alertSuccess("build road");
             }
         });
@@ -136,7 +138,7 @@ public class UnitRectangle extends Circle {
             @Override
             public void handle(ActionEvent actionEvent) {
                 worker.setWorking(true);
-                controller.buildRailway(worker.getGround());
+                Game.getInstance().buildRailway(worker.getGround());
                 alertSuccess("build railway");
             }
         });
@@ -176,7 +178,7 @@ public class UnitRectangle extends Circle {
                     alert.show();
                 } else {
                     worker.setWorking(true);
-                    UnitController.freePlundering(worker);
+                    Game.getInstance().freePlundering(worker);
                     alertSuccess("repair");
                 }
             }
@@ -191,7 +193,7 @@ public class UnitRectangle extends Circle {
         return contextMenu;
     }
 
-    private void setImprovementMenu(Worker worker, VBox vBox) {
+    private void setImprovementMenu(Unit worker, VBox vBox) {
         Improvement improvementInProgress = worker.getGround().getImprovementTypeInProgress();
 
         if (improvementInProgress != null) vBox.getChildren().add(new Label("The improvement that you have here is: " +
@@ -209,7 +211,7 @@ public class UnitRectangle extends Circle {
         });
     }
 
-    private ContextMenu improvementContextMenu(ArrayList<ImprovementType> list, Worker worker) {
+    private ContextMenu improvementContextMenu(ArrayList<ImprovementType> list, Unit worker) {
         final ContextMenu contextMenu = new ContextMenu();
 
         for (int i = 0; i < list.size(); i++){
@@ -230,7 +232,7 @@ public class UnitRectangle extends Circle {
     }
 
     private void setHoverForWorker(Unit unit) {
-        if (!(unit instanceof Worker)) return;
+        if (!(unit.getMilitaryType() == MilitaryType.WORKER)) return;
         Stage stage = new Stage();
         stage.setMinHeight(100);
         stage.setMinWidth(100);
@@ -258,7 +260,7 @@ public class UnitRectangle extends Circle {
         });
     }
 
-    private void addingSettler(SettlerUnit settlerUnit) {
+    private void addingSettler(Unit settlerUnit) {
         Button button = new Button("create city");
         button.setDisable(City.findCityByGround(unit.getGround(), unit.getPlayer()) != null);
 
