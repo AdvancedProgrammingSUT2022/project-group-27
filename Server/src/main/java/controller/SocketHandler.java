@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import model.*;
 import Enum.Message;
 
@@ -186,6 +187,13 @@ public class SocketHandler extends Thread{
                     Player.nextTurn();
                     turnPlayerNotify();
                 } else response.setStatus(400);
+            } case "canWeNextTurn" -> {
+                if (Game.getInstance().canWeNextTurn()) response.setStatus(200);
+                else response.setStatus(400);
+            } case "settingGame" -> {
+                ArrayList<String> users = new Gson().fromJson((String) request.getData().get("users"), new TypeToken<ArrayList<String>>(){}.getType());
+                Double seed = (Double) request.getData().get("seed");
+                GameModel.getInstance().setting(users, seed);
             }
             default -> {
                 response.setStatus(400);

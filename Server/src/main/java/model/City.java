@@ -9,24 +9,23 @@ public class City {
     private int savedFood;
     private RemainedTurns remainedTurnsToBuild = new RemainedTurns(0);
     private MilitaryType buildingUnit = null;
-    //private Ground ground;
+    private Ground ground;
     private Productions construction; //in the future, we should write a class for constructions and get type here
     private boolean isPuppet = false;
     private double hp = 20;
     private boolean isMainCapital;
 
-    //private final ArrayList<Unit> listOfUnitsInCity = new ArrayList<>();
-    //private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
-    //private final ArrayList<Ground> rangeOfCity = new ArrayList<>();
-    //private final ArrayList<Building> buildings = new ArrayList<>();
+    private final ArrayList<Unit> listOfUnitsInCity = new ArrayList<>();
+    private final ArrayList<Citizen> listOfCitizens = new ArrayList<>();
+    private final ArrayList<Ground> rangeOfCity = new ArrayList<>();
+    private final ArrayList<Building> buildings = new ArrayList<>();
 
-    public City(/*Ground ground,*/ String name, Player player) {
+    public City(Ground ground, String name, Player player) {
         this.name = name;
-        /*this.ground = ground;
+        this.ground = ground;
         this.rangeOfCity.add(ground);
         this.rangeOfCity.addAll(ground.getAdjacentGrounds());
 
-         */
         this.increasingCitizens();
     }
 
@@ -35,13 +34,11 @@ public class City {
 
     }
 
-    /*public ArrayList<Building> getBuildings() {
+    public ArrayList<Building> getBuildings() {
         return buildings;
     }
 
-     */
-
-    /*public boolean doWeHaveThisBuilding(BuildingsType buildingsType) {
+    public boolean doWeHaveThisBuilding(BuildingsType buildingsType) {
         for (Building building: buildings) {
             if (building.name().equals(buildingsType.name())) return true;
         }
@@ -49,60 +46,46 @@ public class City {
         return false;
     }
 
-     */
-
     public boolean doWeHaveThisStrategicResource(StrategicResource strategicResource) {
-        /*for (Ground ground: rangeOfCity) {
+        for (Ground ground: rangeOfCity) {
             for (StrategicResource resource: ground.getStrategicResources()) {
                 if (resource.name().equals(strategicResource.name())) return true;
             }
         }
 
-         */
-
         return false;
     }
 
     public boolean doWeHaveThisLuxuryResource(LuxuryResource luxuryResource) {
-        /*for (Ground ground: rangeOfCity) {
+        for (Ground ground: rangeOfCity) {
             for (LuxuryResource resource: ground.getLuxuryResources()) {
                 if (resource.name().equals(luxuryResource.name())) return true;
             }
         }
 
-         */
-
         return false;
     }
 
-    /*public void addBuilding(Building building) {
+    public void addBuilding(Building building) {
         buildings.add(building);
     }
 
-     */
-
-    /*public void changeConstruction(Productions construction) {
+    public void changeConstruction(Productions construction) {
         this.construction = construction;
     }
 
-     */
-
-    /*public Productions getConstruction() {
+    public Productions getConstruction() {
         return construction;
     }
-
-     */
 
     public void setSavedFood(int savedFood) {
         this.savedFood = savedFood;
     }
 
-    /*public void setConstruction(Productions construction) {
+    public void setConstruction(Productions construction) {
         this.construction = construction;
         this.remainedTurnsToBuild = construction.getTurnRemainedToComplete();
     }
-
-     */
 
     public void setPuppet(boolean puppet, Player player) {
         isPuppet = puppet;
@@ -111,7 +94,7 @@ public class City {
 
     public void setPlayer(Player player) {
         this.getOwner().getCities().remove(this);
-        //this.buildings.clear();
+        this.buildings.clear();
 
         player.getCities().add(this);
     }
@@ -120,17 +103,13 @@ public class City {
         return isPuppet;
     }
 
-    /*public ArrayList<Unit> getListOfUnitsInCity() {
+    public ArrayList<Unit> getListOfUnitsInCity() {
         return listOfUnitsInCity;
     }
 
-     */
-
-    /*public Ground getGround() {
+    public Ground getGround() {
         return ground;
     }
-
-     */
 
     public String getName() {
         return name;
@@ -138,17 +117,13 @@ public class City {
 
 
 
-    /*public ArrayList<Citizen> getListOfCitizens() {
+    public ArrayList<Citizen> getListOfCitizens() {
         return listOfCitizens;
     }
 
-     */
-
-    /*public ArrayList<Ground> getRangeOfCity() {
+    public ArrayList<Ground> getRangeOfCity() {
         return rangeOfCity;
     }
-
-     */
 
     public int getSavedFood() {
         return savedFood;
@@ -182,30 +157,24 @@ public class City {
     public void finishedConstructed() {
         if (this.construction == null) return;
 
-        /*if (construction instanceof Unit unit) listOfUnitsInCity.add(unit);
+        if (construction instanceof Unit unit) listOfUnitsInCity.add(unit);
         else if (construction instanceof Building building) buildings.add(building);
-
-         */
 
         this.construction = null;
     }
 
-    /*public void addGroundToRangeOfCity(Ground ground){
+    public void addGroundToRangeOfCity(Ground ground){
         this.rangeOfCity.add(ground);
     }
 
-     */
-
-    /*public boolean isThisGroundInThisCityRange(Ground ground){
+    public boolean isThisGroundInThisCityRange(Ground ground){
         for (Ground value : rangeOfCity) {
             if (ground.getNumber() == value.getNumber()) return true;
         }
         return false;
     }
 
-     */
-
-    /*public ArrayList<Citizen> withoutWorkCitizens() {
+    public ArrayList<Citizen> withoutWorkCitizens() {
         ArrayList<Citizen> listOfWithoutWork = new ArrayList<>();
         for (Citizen citizen: this.getListOfCitizens()) {
             if (!citizen.isHaveWork()) listOfWithoutWork.add(citizen);
@@ -214,9 +183,7 @@ public class City {
         return listOfWithoutWork;
     }
 
-     */
-
-    /*public Citizen isAnyoneWorkOnGround(Ground ground) {
+    public Citizen isAnyoneWorkOnGround(Ground ground) {
         for (Citizen citizen : this.listOfCitizens) {
             if (citizen.getGround() != null && citizen.getGround().getNumber() == ground.getNumber()) return citizen;
         }
@@ -224,9 +191,7 @@ public class City {
         return null;
     }
 
-     */
-
-    /*public boolean isThisGroundNearThisCity(Ground ground) {
+    public boolean isThisGroundNearThisCity(Ground ground) {
         for (int i = 1; i <= GlobalVariables.numberOfTiles; i++){
             if (!Ground.AreTheseTwoGroundAdjacent(ground,Ground.getGroundByNumber(i))) continue;
             for (int j = 1; j <= GlobalVariables.numberOfTiles; j++){
@@ -237,14 +202,12 @@ public class City {
         return false;
     }
 
-     */
-
     public void increasingCitizens() {
-        //Citizen.addCitizen(this);
+        Citizen.addCitizen(this);
         //TODO... do all the things that happen by increasing citizens
     }
 
-    /*public ArrayList<Ground> groundsNearTheCity() {
+    public ArrayList<Ground> groundsNearTheCity() {
         ArrayList<Ground> nearCity = new ArrayList<>();
         for (Ground ground: this.getRangeOfCity()) {
             nearCity.addAll(ground.getAdjacentGrounds());
@@ -259,10 +222,8 @@ public class City {
         return 0;
     }
 
-     */
 
-
-    /*public double getCityStrength() {
+    public double getCityStrength() {
         double cityStrength = (double) this.rangeOfCity.size() / 2;
         if (this.ground.getMilitaryUnit() != null)
             cityStrength += 1.5;
@@ -283,9 +244,7 @@ public class City {
         return cityStrength;
     }
 
-     */
-
-    /*public void combat(Ground ground) {
+    public void combat(Ground ground) {
         MilitaryUnit militaryUnit = ground.getMilitaryUnit();
         if (militaryUnit == null) {
             return;
@@ -305,12 +264,10 @@ public class City {
             militaryUnit.removeUnit();
     }
 
-     */
-
     public int getGold() {
         int gold = 0;
         int sources = 0;
-        /*for (Ground ground : getRangeOfCity()) {
+        for (Ground ground : getRangeOfCity()) {
             if (ground.isWorkedOn()) {
                 if (ground.canWeUseThisLuxuryResource()) {
                     gold += ground.getLuxuryResources().get(0).getGold();
@@ -342,12 +299,10 @@ public class City {
                 gold += sources * 3;
             }
         }
-
-         */
         return gold;
     }
 
-    /*public int getProduction() {
+    public int getProduction() {
         int production = listOfCitizens.size();
         for (Ground ground : getRangeOfCity()) {
             if (ground.canWeUseThisLuxuryResource())
@@ -380,11 +335,9 @@ public class City {
         return production;
     }
 
-     */
-
     public int getFoodPerTurn() {
         int food = 3;
-        /*for (Ground ground : getRangeOfCity()) {
+        for (Ground ground : getRangeOfCity()) {
             if (ground.canWeUseThisLuxuryResource())
                 food += ground.getLuxuryResources().get(0).getFood();
             if (ground.canWeUseThisBonusResource())
@@ -409,13 +362,12 @@ public class City {
         if (this.construction != null && this.construction.name().equals(MilitaryType.SETTLER.name()))
             food = 0;
 
-         */
         return food;
     }
 
     public int getScience() {
         int science = 5;
-        /*science += this.listOfCitizens.size();
+        science += this.listOfCitizens.size();
         for (Building building : this.buildings) {
             if (building.getType().equals(BuildingsType.LIBRARY)) {
                 science += this.getListOfCitizens().size() / 2;
@@ -433,8 +385,6 @@ public class City {
             }
 
         }
-
-         */
         return science;
     }
     public Player getOwner(){
@@ -446,7 +396,7 @@ public class City {
         return null;
     }
 
-    /*public static City findCityByGround(Ground ground, Player player) {
+    public static City findCityByGround(Ground ground, Player player) {
         if (player == null) return null;
 
         for (City city: player.getCities()) {
@@ -455,6 +405,4 @@ public class City {
 
         return null;
     }
-
-     */
 }

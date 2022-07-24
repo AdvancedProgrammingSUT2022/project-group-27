@@ -1,9 +1,8 @@
 package model;
 
-import Enum.LuxuryResource;
-import Enum.StrategicResource;
-import Enum.TechnologyType;
+import Enum.*;
 import controller.Game;
+import controller.UnitController;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -16,13 +15,13 @@ public class Player {
     private Socket socket;
     private int numberOfPlayer;
     private int gold;
-    //private City mainCapital = null;
+    private City mainCapital = null;
     private int extraHappiness = 0;
     private static ArrayList<Player> allPlayers = new ArrayList<>();
     private final ArrayList<City> cities = new ArrayList<>();
-    //private final ArrayList<Unit> units = new ArrayList<>();
-    //private ArrayList<Ground> clearToSeeGrounds = new ArrayList<>();
-    //private ArrayList<Ground> wasClearedToSeeGrounds = new ArrayList<>();
+    private final ArrayList<Unit> units = new ArrayList<>();
+    private ArrayList<Ground> clearToSeeGrounds = new ArrayList<>();
+    private ArrayList<Ground> wasClearedToSeeGrounds = new ArrayList<>();
     private static int counterOfNextRound = 0;
     private User user;
     private Technology underConstructionTechnology=null;
@@ -54,14 +53,14 @@ public class Player {
         this.allStrategicResources = allStrategicResources;
     }
 
-    /*public ArrayList<BonusResource> getAllBonusResources() {
+    public ArrayList<BonusResource> getAllBonusResources() {
         ArrayList<BonusResource> list = new ArrayList<>();
         for (Ground ground: Ground.getAllGround()) {
             if (ground.ownerOfThisGround() == this) list.addAll(ground.getBonusResource());
         }
 
         return list;
-    }*/
+    }
 
     public ArrayList<Boolean> getIsInWar() {
         return isInWar;
@@ -100,7 +99,7 @@ public class Player {
         this.isInWar.add(false);
         allPlayers.add(this);
         this.numberOfPlayer=allPlayers.size();
-        //for (TechnologyType technologyType : TechnologyType.values()) AllTechnologyTypes.add(new Technology(technologyType,technologyType.getCost()));
+        for (TechnologyType technologyType : TechnologyType.values()) AllTechnologyTypes.add(new Technology(technologyType,technologyType.getCost()));
     }
 
     public static boolean isDuplicated(User user) {
@@ -116,7 +115,7 @@ public class Player {
 
     public int getFood() {
         int food = 0;
-        //for (City city: getCities()) food += city.getSavedFood();
+        for (City city: getCities()) food += city.getSavedFood();
         return food;
     }
 
@@ -128,13 +127,13 @@ public class Player {
   //      return science;
    // }
 
-    /*public ArrayList<Ground> getClearToSeeGrounds() {
+    public ArrayList<Ground> getClearToSeeGrounds() {
         return clearToSeeGrounds;
-    }*/
+    }
 
-    /*public ArrayList<Ground> getWasClearedToSeeGrounds() {
+    public ArrayList<Ground> getWasClearedToSeeGrounds() {
         return wasClearedToSeeGrounds;
-    }*/
+    }
 
     public static ArrayList<Player> getAllPlayers() {
         return allPlayers;
@@ -144,9 +143,9 @@ public class Player {
         return cities;
     }
 
-    /*public ArrayList<Unit> getUnits() {
+    public ArrayList<Unit> getUnits() {
         return units;
-    }*/
+    }
 
     public static int getCounterOfNextRound() {
         return counterOfNextRound;
@@ -176,7 +175,7 @@ public class Player {
         this.gold -= amount;
     }
 
-    /*public void handleClearToSeeGrounds1depth(ArrayList<Ground> clearToSeeGrounds) {
+    public void handleClearToSeeGrounds1depth(ArrayList<Ground> clearToSeeGrounds) {
         GlobalVariables globalVariables = new GlobalVariables();
         ArrayList<Ground> newArray = new ArrayList<>();
         for (int i = 0; i < clearToSeeGrounds.size(); i++) {
@@ -192,8 +191,9 @@ public class Player {
         }
 
         clearToSeeGrounds.addAll(newArray);
-    }*/
-    /*public void addGroundToClearGround(Ground ground){
+    }
+
+    public void addGroundToClearGround(Ground ground){
         boolean exist = false;
         for (Ground clearToSeeGround : clearToSeeGrounds) {
             if (clearToSeeGround.getNumber() == ground.getNumber()) {
@@ -204,8 +204,8 @@ public class Player {
 
         if (exist) return;
         this.clearToSeeGrounds.add(ground);
-    }*/
-    /*public void handleClearToSee() {
+    }
+    public void handleClearToSee() {
         this.clearToSeeGrounds = new ArrayList<>();
         for (Unit unit : this.units) {
             if (unit.getMilitaryType()== MilitaryType.TREBUCHET || unit.getMilitaryType()== MilitaryType.PANZER ||
@@ -224,7 +224,7 @@ public class Player {
             }
         }
         handleClearToSeeGrounds1depth(this.clearToSeeGrounds); //for the second depth
-    }*/
+    }
 
     public static void nextTurn() {
         if (!Game.getInstance().canWeGoNextTurn()) return ;
@@ -245,7 +245,7 @@ public class Player {
         return allPlayers.get(counterOfNextRound % allPlayers.size());
     }
 
-    /*public void addGroundToVisitedGround(Ground ground) {
+    public void addGroundToVisitedGround(Ground ground) {
         boolean exist = false;
         for (Ground wasClearedToSeeGround : wasClearedToSeeGrounds) {
             if (wasClearedToSeeGround.getNumber() == ground.getNumber()) {
@@ -257,21 +257,21 @@ public class Player {
         if (exist) return;
         Ground copyGround = ground.copyOfCurrentGround();
         wasClearedToSeeGrounds.add(copyGround);
-    }*/
-    /*public void handleVisitedGrounds(){
+    }
+    public void handleVisitedGrounds(){
         for (Ground ground : clearToSeeGrounds){
             if (!wasClearedToSeeGrounds.contains(ground)) wasClearedToSeeGrounds.add(ground);
         }
-    }*/
+    }
 
-    /*public boolean isThisGroundVisible(Ground ground) {
+    public boolean isThisGroundVisible(Ground ground) {
         for (Ground clearToSeeGround : clearToSeeGrounds) {
             if (clearToSeeGround.getNumber() == ground.getNumber()) return true;
         }
         return false;
-    }*/
+    }
 
-    /*public void addCityToThisGround(Ground ground, String name){
+    public void addCityToThisGround(Ground ground, String name){
 
         boolean settlerExist=false;
         for (Unit unit : this.getUnits()){
@@ -305,47 +305,47 @@ public class Player {
             }
         }
 
-    }*/
-    /*public boolean doWeHaveThisTechnology(TechnologyType technologyType){
+    }
+    public boolean doWeHaveThisTechnology(TechnologyType technologyType){
         if (technologyType == null) return true;
         for (TechnologyType type : this.technologyType) {
             if (type == technologyType) return true;
         }
         return false;
-    }*/
+    }
 
-    /*public boolean canWeAddThisTechnology(TechnologyType technologyType){
+    public boolean canWeAddThisTechnology(TechnologyType technologyType){
         for (int i=0;i<technologyType.getPrerequisites().size();i++){
             if (!doWeHaveThisTechnology(technologyType.getPrerequisites().get(i))) return false;
         }
         return true ;
-    }*/
+    }
 
-    /*public ArrayList<Technology> technologiesThatCanBeObtained(){
+    public ArrayList<Technology> technologiesThatCanBeObtained(){
         ArrayList<Technology> answer=new ArrayList<>();
         for (Technology allTechnologyType : AllTechnologyTypes) {
             if (doWeHaveThisTechnology(allTechnologyType.getTechnologyType())) continue;
             if (canWeAddThisTechnology(allTechnologyType.getTechnologyType())) answer.add(allTechnologyType);
         }
         return answer;
-    }*/
+    }
 
-    /*public void setUnderConstructionTechnology(Technology technology){
+    public void setUnderConstructionTechnology(Technology technology){
         underConstructionTechnology = technology;
-    }*/
+    }
 
     public void addTechnology(TechnologyType technologyType){
         underConstructionTechnology = null;
         this.technologyType.add(technologyType);
     }
 
-    /*public ArrayList<TechnologyType> getTechnologyType() {
+    public ArrayList<TechnologyType> getTechnologyType() {
         return technologyType;
-    }*/
+    }
 
     public int getGoldDifference() {
         double goldDifference = 0;
-        /*for (City city : this.getCities()) {
+        for (City city : this.getCities()) {
             goldDifference += city.getGold();
             for (Building building: city.getBuildings()) {
                 goldDifference -= building.getMaintenance();
@@ -360,7 +360,7 @@ public class Player {
             if (ground.ownerOfThisGround()!=null && ground.ownerOfThisGround().equals(this) && ground.getRoad() != null) {
                 goldDifference -= 0.1;
             }
-        }*/
+        }
 
         return (int) (goldDifference + 0.5);
     }
@@ -374,7 +374,7 @@ public class Player {
         int population = 0;
         happiness -= this.cities.size() * 3;
         for (City city : cities) {
-            /*for (Building building : city.getBuildings()) {
+            for (Building building : city.getBuildings()) {
                 if (building.getType().equals(BuildingsType.BURIAL_TOMB) || building.getType().equals(BuildingsType.SATRAPS_COURT)) {
                     happiness += 2;
                 }
@@ -390,21 +390,19 @@ public class Player {
             if (city.isPuppet())
                 happiness++;
             population += city.getListOfCitizens().size();
-
-             */
         }
         happiness -= population / 7;
         happiness += this.allLuxuryResources.size() * 3;
         return happiness + this.extraHappiness;
     }
 
-    /*public boolean hasStrategicResource(StrategicResource strategicResource) {
+    public boolean hasStrategicResource(StrategicResource strategicResource) {
         for (StrategicResource eachStrategicResource : this.allStrategicResources) {
             if (strategicResource.equals(eachStrategicResource))
                 return true;
         }
         return false;
-    }*/
+    }
 
     public int getScience() {
         int science = 0;
@@ -416,14 +414,14 @@ public class Player {
         return science;
     }
 
-    /*public boolean doWeHaveOurCapital() {
+    public boolean doWeHaveOurCapital() {
         return (mainCapital != null && mainCapital.getOwner() == this) || (mainCapital == null && units.size() > 0);
-    }*/
+    }
 
     public static int numberOfAliveAndHaveCapitalPlayer() {
         int count = 0;
         for (Player player: allPlayers) {
-            //if (player.isAlive() && player.doWeHaveOurCapital()) count++;
+            if (player.isAlive() && player.doWeHaveOurCapital()) count++;
         }
 
         return count;
@@ -431,7 +429,7 @@ public class Player {
 
     public static Player playerOfAliveAndHaveCapitalPlayer() {
         for (Player player: allPlayers) {
-            //if (player.isAlive() && player.doWeHaveOurCapital()) return player;
+            if (player.isAlive() && player.doWeHaveOurCapital()) return player;
         }
 
         return null;
@@ -441,7 +439,7 @@ public class Player {
         return counterOfNextRound / allPlayers.size();
     }
 
-    /*public void checkDies() {
+    public void checkDies() {
         if (isAlive && mainCapital != null) {
             if (cities.size() == 0) {
                 isAlive = false;
@@ -449,7 +447,7 @@ public class Player {
                 nextTurn(); //TODO where should we call this method... for now we call it on gameView.run(); ...
             }
         }
-    }*/
+    }
 
     public void setScoreAndTimeAtEnd() {
         int score = countScore();
@@ -468,11 +466,11 @@ public class Player {
         return count;
     }
 
-    /*public City getCapital() {
+    public City getCapital() {
         if (doWeHaveOurCapital()) return mainCapital;
         else if (!cities.isEmpty()) return cities.get(0);
         else return null;
-    }*/
+    }
 
     public void setNumberOfPlayer(int numberOfPlayer) {
         this.numberOfPlayer = numberOfPlayer;

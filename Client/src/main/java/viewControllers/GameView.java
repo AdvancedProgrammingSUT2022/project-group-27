@@ -1,6 +1,7 @@
 package viewControllers;
 
 
+import com.google.gson.Gson;
 import controller.NetworkController;
 import controller.UserController;
 import javafx.application.Application;
@@ -275,8 +276,13 @@ public class GameView extends Application {
         seed=sed;
     }
 
-    public void enterGame(ArrayList<String> arrayList, Response response) {
+    public void enterGame(ArrayList<String> arrayList) {
         System.out.println("yes we got it");
+        Request request = new Request();
+        request.setHeader("settingGame");
+        request.addData("users", new Gson().toJson(arrayList));
+        request.addData("seed", seed);
+        Response response = NetworkController.send(request);
         //TODO request to server for start game:   game.setting(new ArrayList<User>(listOfPlayers),seed);
         Player player = new Player(UserController.getInstance().getUsername(), new Socket(), stage);
     }

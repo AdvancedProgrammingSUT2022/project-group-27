@@ -64,6 +64,13 @@ public class Player {
         }
     }
 
+    public boolean canWeNextTurn() {
+        Request request = new Request();
+        request.setHeader("canWeNextTurn");
+        Response response = NetworkController.send(request);
+        return response != null && response.getStatus() == 200;
+    }
+
     public String getUser() {
         return user;
     }
