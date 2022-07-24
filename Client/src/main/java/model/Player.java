@@ -6,12 +6,14 @@ import controller.NetworkController;
 import controller.UserController;
 import javafx.stage.Stage;
 import viewControllers.GraphicOfGame;
+import Enum.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Player {
     private static ArrayList<Player> list = new ArrayList<>();
@@ -19,6 +21,7 @@ public class Player {
     private String user;
     private Socket server;
     private Stage stage;
+    private ArrayList<City> cities = new ArrayList<>();
 
     public Player(String user, Socket server, Stage stage) {
         this.user = user;
@@ -39,6 +42,24 @@ public class Player {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<Player> getAllPlayers() {
+        return list;
+    }
+
+    public ArrayList<City> getCities() {
+        Request request = new Request();
+        request.setHeader("getCities");
+        request.addData("player", user);
+        Response response = NetworkController.send(request);
+        ArrayList<Integer> citiesGroundNumbers =  new Gson().fromJson((String) response.getData().get("cities"), new TypeToken<ArrayList<Integer>>(){}.getType());
+        for (int i = 0; i < cities.size(); i++) {
+            City city = cities.get(i);
+            if (!citiesGroundNumbers.contains(city.groundNumber())) cities.remove(city);
+        }
+
+        return cities;
     }
 
     public static Double getYear() {
@@ -154,5 +175,54 @@ public class Player {
 
         if (response != null) technology = new Gson().fromJson((String) response.getData().get("technology"), new TypeToken<Technology>(){}.getType());
         return technology;
+    }
+
+    public boolean doWeHaveThisTechnology(TechnologyType technologyType) {
+        Request request = new Request();
+        request.setHeader("doWeHaveThisTechnology");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("technologyType", technologyType);
+        Response response = NetworkController.send(request);
+        return ((String) response.getData().get("answer")).equals("true");
+    }
+
+    public boolean canWeAddThisTechnology(TechnologyType technologyType) {
+        Request request = new Request();
+        request.setHeader("canWeAddThisTechnology");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("technologyType", technologyType);
+        Response response = NetworkController.send(request);
+        return ((String) response.getData().get("answer")).equals("true");
+    }
+
+    public void setUnderConstructionTechnology(Technology technology) {
+        Request request = new Request();
+        request.setHeader("setUnderConstructionTechnology");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("technologyType", technology.getTechnologyType());
+        Response response = NetworkController.send(request);
+    }
+
+    public boolean getWasClearedToSeeGrounds(Ground ground) {
+        Request request = new Request();
+        request.setHeader("getWasClearedToSeeGrounds");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+        return ((String) response.getData().get("answer")).equals("true");
+    }
+
+    public void handleVisitedGrounds() {
+        Request request = new Request();
+        request.setHeader("handleVisitedGrounds");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        Response response = NetworkController.send(request);
+    }
+
+    public void handleClearToSee() {
+        Request request = new Request();
+        request.setHeader("handleClearToSee");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        Response response = NetworkController.send(request);
     }
 }

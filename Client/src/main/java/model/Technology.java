@@ -1,11 +1,19 @@
 package model;
 import Enum.TechnologyType;
+import controller.NetworkController;
+import controller.UserController;
 
 public class Technology {
     private final TechnologyType technologyType;
     private int timeRemain;
 
     public int getTimeRemain() {
+        Request request = new Request();
+        request.setHeader("getTimeRemain");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("technologyType", technologyType);
+        Response response = NetworkController.send(request);
+        timeRemain = (int) Math.floor((Double) response.getData().get("timeRemain"));
         return timeRemain;
     }
 
