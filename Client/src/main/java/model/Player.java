@@ -225,4 +225,54 @@ public class Player {
         request.addData("token", UserController.getInstance().getUserLoggedIn());
         Response response = NetworkController.send(request);
     }
+
+    public int getCapitalGroundNumber() {
+        Request request = new Request();
+        request.setHeader("getCapitalGroundNumber");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        Response response = NetworkController.send(request);
+        return (int) Math.floor((Double) response.getData().get("number"));
+    }
+
+    public boolean getClearToSeeGrounds(Ground ground) {
+        Request request = new Request();
+        request.setHeader("getClearToSeeGrounds");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+        return ((String) response.getData().get("answer")).equals("true");
+    }
+
+    public ArrayList<Unit> getUnits() {
+        Request request = new Request();
+        request.setHeader("getUnits");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("units"), new TypeToken<ArrayList<Unit>>(){}.getType());
+    }
+
+    public boolean checkDies() {
+        Request request = new Request();
+        request.setHeader("checkDies");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        Response response = NetworkController.send(request);
+        return ((String) response.getData().get("answer")).equals("true");
+    }
+
+    public void setScoreAndTimeAtEnd(boolean isWin) {
+        Request request = new Request();
+        request.setHeader("setScoreAndTimeAtEnd");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        Response response = NetworkController.send(request);
+    }
+
+    public Double getScore() {
+        Request request = new Request();
+        request.setHeader("getScore");
+        request.addData("token", user);
+        Response response = NetworkController.send(request);
+        if (response == null) return null;
+
+        return (Double) response.getData().get("score");
+    }
 }

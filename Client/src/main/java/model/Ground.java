@@ -138,4 +138,29 @@ public class Ground {
         request.addData("groundNumber", this.getNumber());
         Response response = NetworkController.send(request);
     }
+
+    public void setxLocation(int xLocation) {
+        this.xLocation = xLocation;
+        Request request = new Request();
+        request.setHeader("setxLocation");
+        request.addData("groundNumber", this.getNumber());
+        request.addData("xLocation", xLocation);
+        Response response = NetworkController.send(request);
+    }
+    public void setyLocation(int yLocation) {
+        this.yLocation = yLocation;
+        Request request = new Request();
+        request.setHeader("setyLocation");
+        request.addData("groundNumber", this.getNumber());
+        request.addData("yLocation", yLocation);
+        Response response = NetworkController.send(request);
+    }
+
+    public boolean getHasRuin() {
+        Request request = new Request();
+        request.setHeader("getHasRuin");
+        request.addData("groundNumber", this.getNumber());
+        Response response = NetworkController.send(request);
+        return ((String) response.getData().get("answer")).equals("true");
+    }
 }

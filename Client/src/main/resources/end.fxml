@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.shape.Rectangle?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="viewControllers.End"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <center>
+        <VBox fx:id="list" alignment="CENTER">
+            <Label text="Winner!" style="-fx-font-size: 20; -fx-text-fill: #b71135"/>
+            <HBox alignment="CENTER">
+                <Rectangle fx:id="profileImage"/>
+                <Label fx:id="text" style="-fx-font-size: 15; -fx-text-fill: #b71135"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
