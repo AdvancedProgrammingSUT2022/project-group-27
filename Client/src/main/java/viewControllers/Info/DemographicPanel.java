@@ -51,10 +51,10 @@ public class DemographicPanel extends Menus {
 
     public void setList() {
         vBox.getChildren().add(new Label("how many city do you have? " + player.getCities().size()));
-        vBox.getChildren().add(new Label("how many gold do you have? " + player.getGold()));
-        vBox.getChildren().add(new Label("how many science do you have? " + player.getScience()));
-        vBox.getChildren().add(new Label("how many food do you store? " + player.getFood()));
-        vBox.getChildren().add(new Label("how many units do you have? " + player.getUnits().size()));
+        vBox.getChildren().add(new Label("how many gold do you have? " + Math.ceil(player.getGold())));
+        vBox.getChildren().add(new Label("how many science do you have? " + Math.ceil(player.getScience())));
+        vBox.getChildren().add(new Label("how many food do you store? " + Math.ceil(player.getFood())));
+        vBox.getChildren().add(new Label("how many units do you have? " + Math.ceil(player.getUnits().size())));
     }
 
     public void back(MouseEvent mouseEvent) {
