@@ -41,7 +41,7 @@ public class EconomicOverview extends Menus {
     @Override
     public void start(Stage stage) throws Exception {
         EconomicOverview.stage = stage;
-        Parent root = Main.loadFXML("economic-panel");
+        Parent root = Main.loadFXML("economic-overview");
         root.getStylesheets().add(Main.class.getResource("/css/menu.css").toExternalForm());
         root.getStyleClass().add("background");
         Scene scene = new Scene(root);

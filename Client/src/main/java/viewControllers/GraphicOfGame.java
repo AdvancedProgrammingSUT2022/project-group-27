@@ -22,10 +22,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
-import viewControllers.Info.DemographicPanel;
-import viewControllers.Info.DiplomacyInformationPanel;
-import viewControllers.Info.TradingInformationPanel;
-import viewControllers.Info.WinPage;
+import viewControllers.Info.*;
 //import viewControllers.Info.*;
 
 import java.util.ArrayList;
@@ -496,16 +493,16 @@ public class GraphicOfGame extends Application {
         economicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                /*
+
                 EconomicOverview economicOverview = new EconomicOverview();
-                EconomicOverview.setPlayer(Player.whichPlayerTurnIs());
+                EconomicOverview.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 try {
                     economicOverview.start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                 */
+
             }
         });
     }
