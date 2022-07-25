@@ -149,5 +149,6 @@ public class MainMenuView extends Application {
         audio.stop();
         InvitationMenu invitationMenu = new InvitationMenu();
         invitationMenu.start(stage);
+
     }
 }
