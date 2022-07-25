@@ -195,7 +195,7 @@ public class Player {
         request.addData("token", UserController.getInstance().getUserLoggedIn());
         request.addData("technologyType", technologyType);
         Response response = NetworkController.send(request);
-        return ((String) response.getData().get("answer")).equals("true");
+        return (boolean) response.getData().get("answer");
     }
 
     public boolean canWeAddThisTechnology(TechnologyType technologyType) {
@@ -204,7 +204,7 @@ public class Player {
         request.addData("token", UserController.getInstance().getUserLoggedIn());
         request.addData("technologyType", technologyType);
         Response response = NetworkController.send(request);
-        return ((String) response.getData().get("answer")).equals("true");
+        return (boolean) response.getData().get("answer");
     }
 
     public void setUnderConstructionTechnology(Technology technology) {
@@ -221,7 +221,7 @@ public class Player {
         request.addData("token", UserController.getInstance().getUserLoggedIn());
         request.addData("groundNumber", ground.getNumber());
         Response response = NetworkController.send(request);
-        return ((String) response.getData().get("answer")).equals("true");
+        return (boolean) response.getData().get("answer");
     }
 
     public void handleVisitedGrounds() {
@@ -252,7 +252,7 @@ public class Player {
         request.addData("token", UserController.getInstance().getUserLoggedIn());
         request.addData("groundNumber", ground.getNumber());
         Response response = NetworkController.send(request);
-        return ((String) response.getData().get("answer")).equals("true");
+        return (boolean) response.getData().get("answer");
     }
 
     public ArrayList<Unit> getUnits() {
@@ -268,7 +268,7 @@ public class Player {
         request.setHeader("checkDies");
         request.addData("token", UserController.getInstance().getUserLoggedIn());
         Response response = NetworkController.send(request);
-        return ((String) response.getData().get("answer")).equals("true");
+        return (boolean) response.getData().get("answer");
     }
 
     public void setScoreAndTimeAtEnd(boolean isWin) {

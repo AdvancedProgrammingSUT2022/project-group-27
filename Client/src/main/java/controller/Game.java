@@ -64,6 +64,6 @@ public class Game {
         Request request = new Request();
         request.setHeader("isFinished");
         Response response = NetworkController.send(request);
-        return ((String) response.getData().get("answer")).equals("true");
+        return (boolean) response.getData().get("answer");
     }
 }

@@ -14,7 +14,7 @@ public class Unit implements Productions {
     protected double hp = 10;
     protected int turnsFortified = 0;
     protected UnitStatus status = UnitStatus.AWAKE;
-    protected RemainedTurns turnRemainedToCompleted = new RemainedTurns(0);
+    protected transient RemainedTurns turnRemainedToCompleted = new RemainedTurns(0);
     protected int combatStrength;
     protected int rangedCombatStrength;
     //protected boolean isSleeping = false;

@@ -49,9 +49,13 @@ public class Ground {
         this.adjacentGrounds.add(ground.getNumber());
     }
 
-    public static void add(Ground ground) {
+    public synchronized static void add(Ground ground) {
+        for (Ground ground1: allGround) {
+            if (ground1.number == ground.number) return;
+        }
         if (allGround.contains(ground)) return;
         allGround.add(ground);
+        System.out.println(ground.number + "....");
     }
 
     public Ground(int x, int y, int number) {
@@ -59,7 +63,7 @@ public class Ground {
         this.yLocation = y;
         this.number = number;
         this.cost = 50; //TODO if it become random make it more fun
-        allGround.add(this);
+        Ground.add(this);
     }
     public void setxLocation(int x){
         this.xLocation=x;
@@ -128,7 +132,14 @@ public class Ground {
         return isWorkedOn;
     }
 
+    public static ArrayList<Integer> getAllGroundNumber() {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (Ground ground: allGround) {
+            if (!list.contains(ground.number)) list.add(ground.getNumber());
+        }
 
+        return list;
+    }
 
     public static ArrayList<Ground> getAllGround() {
         return allGround;

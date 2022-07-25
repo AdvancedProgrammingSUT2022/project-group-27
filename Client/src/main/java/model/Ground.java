@@ -11,10 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Ground {
-    private int counterOfDestroyingFeature=0;
-    private Road road=null;
-    private RailWay railWay=null;
-    private static ArrayList<Ground> allGround = new ArrayList<>();
+    private static ArrayList<Integer> allGround = new ArrayList<>();
     private static HashMap<Integer, Ground> pixelInWhichGround = new HashMap<>();
     private ImprovementType improvementType=null;
     private Improvement plunderingImprovementType = null;
@@ -28,34 +25,57 @@ public class Ground {
     private int cost = 50;
     private boolean isWorkedOn = false;
     private GroundType groundType;
-    private FeatureType featureType;
-    private ArrayList<BonusResource> bonusResource = new ArrayList<>();
-    private ArrayList<StrategicResource> strategicResources = new ArrayList<>();
-    private ArrayList<LuxuryResource> luxuryResources = new ArrayList<>();
-    private boolean hasRuin = false;
 
-    public static ArrayList<Ground> getAllGround() {
+    public Ground(int number) {
+        this.number = number;
+    }
+
+    public static ArrayList<Integer> getAllGround() {
         Request request = new Request();
         request.setHeader("listOfGrounds");
+        System.out.println("yes");
         Response response = NetworkController.send(request);
-        allGround = new Gson().fromJson((String) response.getData().get("listOfGrounds"), new TypeToken<ArrayList<Ground>>(){}.getType());
+
+        System.out.println("yes it works");
+        allGround = new Gson().fromJson((String) response.getData().get("listOfGrounds"), new TypeToken<ArrayList<Integer>>(){}.getType());
         return allGround;
     }
 
     public static Ground getGroundByNumber(int number) {
-        for (Ground ground: allGround) {
-            if (ground.number == number) return ground;
+        for (Integer integer: allGround) {
+            if (integer == number) return new Ground(number);
         }
 
         return null;
     }
 
     public int getxLocation() {
+        Request request = new Request();
+        request.setHeader("getxLocation");
+        request.addData("groundNumber", this.getNumber());
+        Response response = NetworkController.send(request);
+        xLocation = (int) Math.floor((Double) response.getData().get("location"));
+        System.out.println(xLocation);
         return xLocation;
     }
 
     public int getyLocation() {
+        Request request = new Request();
+        request.setHeader("getyLocation");
+        request.addData("groundNumber", this.getNumber());
+        Response response = NetworkController.send(request);
+        yLocation = (int) Math.floor((Double) response.getData().get("location"));
+        System.out.println(yLocation);
         return yLocation;
+    }
+
+    public GroundType getGroundType() {
+        Request request = new Request();
+        request.setHeader("getGroundType");
+        request.addData("groundNumber", this.getNumber());
+        Response response = NetworkController.send(request);
+        groundType =  new Gson().fromJson((String) response.getData().get("type"), new TypeToken<GroundType>(){}.getType());
+        return groundType;
     }
 
     public int getNumber() {
@@ -70,10 +90,6 @@ public class Ground {
         ImprovementType improvementType = ImprovementType.getImprovementByName((String) response.getData().get("improvementType"));
         int timeRemain = (int) Math.floor((Double) response.getData().get("timeRemain"));
         return new Improvement(improvementType, timeRemain, this.getNumber());
-    }
-
-    public GroundType getGroundType() {
-        return groundType;
     }
 
     public ArrayList<StrategicResource> getStrategicResources() {
@@ -161,6 +177,6 @@ public class Ground {
         request.setHeader("getHasRuin");
         request.addData("groundNumber", this.getNumber());
         Response response = NetworkController.send(request);
-        return ((String) response.getData().get("answer")).equals("true");
+        return (boolean) response.getData().get("answer");
     }
 }

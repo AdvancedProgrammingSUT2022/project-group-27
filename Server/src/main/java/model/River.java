@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class River {
     private static final ArrayList<River> allRivers = new ArrayList<>();
-    private Ground firstGround, secondGround;
+    private Integer firstGround, secondGround;
 
     public Ground getFirstGround() {
-        return firstGround;
+        return Ground.getGroundByNumber(firstGround);
     }
 
     public Ground getSecondGround() {
-        return secondGround;
+        return Ground.getGroundByNumber(firstGround);
     }
 
     public static ArrayList<River> getAllRivers() {
@@ -19,15 +19,15 @@ public class River {
     }
 
     public River(Ground firstGround, Ground secondGround) {
-        this.firstGround = firstGround;
-        this.secondGround = secondGround;
+        this.firstGround = firstGround.getNumber();
+        this.secondGround = secondGround.getNumber();
         allRivers.add(this);
     }
 
     public static boolean couldWePutRiverBetweenTheseTwoGround(Ground firstGround, Ground secondGround) {
         for (River allRiver : allRivers)
-            if (allRiver.firstGround.getNumber() == firstGround.getNumber()
-                    && allRiver.secondGround.getNumber() == secondGround.getNumber()) return false;
+            if (allRiver.firstGround == firstGround.getNumber()
+                    && allRiver.secondGround == secondGround.getNumber()) return false;
         GlobalVariables globalVariables = new GlobalVariables();
         return Ground.AreTheseTwoGroundAdjacent(firstGround,secondGround);
     }

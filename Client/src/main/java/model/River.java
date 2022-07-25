@@ -9,7 +9,7 @@ import java.util.List;
 
 public class River {
     private static ArrayList<River> allRivers = new ArrayList<>();
-    private Ground firstGround, secondGround;
+    private Integer firstGround, secondGround;
 
     public static ArrayList<River> getAllRivers() {
         Request request = new Request();
@@ -20,10 +20,10 @@ public class River {
     }
 
     public Ground getFirstGround() {
-        return firstGround;
+        return Ground.getGroundByNumber(firstGround);
     }
 
     public Ground getSecondGround() {
-        return secondGround;
+        return Ground.getGroundByNumber(secondGround);
     }
 }
