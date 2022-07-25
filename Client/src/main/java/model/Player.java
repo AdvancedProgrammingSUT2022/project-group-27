@@ -318,4 +318,14 @@ public class Player {
         Response response = NetworkController.send(request);
         return (double) response.getData().get("score");
     }
+
+    public ArrayList<TechnologyType> getTechnologyType() {
+        Request request = new Request();
+        request.setHeader("getTechnologyType");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<TechnologyType>>(){}.getType());
+    }
 }

@@ -24,6 +24,7 @@ import javafx.util.Duration;
 import model.*;
 import viewControllers.Info.DiplomacyInformationPanel;
 import viewControllers.Info.TradingInformationPanel;
+import viewControllers.Info.WinPage;
 //import viewControllers.Info.*;
 
 import java.util.ArrayList;
@@ -450,16 +451,13 @@ public class GraphicOfGame extends Application {
         winPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                /*
                 WinPage winPage = new WinPage();
-                WinPage.setPlayer(Player.whichPlayerTurnIs());
+                WinPage.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 try {
                     winPage.start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                 */
             }
         });
     }

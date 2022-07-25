@@ -402,6 +402,9 @@ public class SocketHandler extends Thread{
             } case "countScore" -> {
                 Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
                 response.addData("score", player.countScore());
+            } case "getTechnologyType" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                response.addData("list", new Gson().toJson(player.getTechnologyType()));
             }
             default -> {
                 response.setStatus(400);
