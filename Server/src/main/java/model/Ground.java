@@ -12,10 +12,10 @@ import static java.lang.Math.abs;
 import static java.lang.Math.min;
 
 public class Ground {
-    private int counterOfDestroyingFeature=0;
-    private Road road=null;
-    private RailWay railWay=null;
-    private static ArrayList<Ground> allGround = new ArrayList<>();
+    private transient int counterOfDestroyingFeature=0;
+    private transient Road road=null;
+    private transient RailWay railWay=null;
+    private transient static ArrayList<Ground> allGround = new ArrayList<>();
     private static HashMap<Integer, Ground> pixelInWhichGround = new HashMap<>();
     private ImprovementType improvementType=null;
     private Improvement plunderingImprovementType = null;
@@ -29,11 +29,11 @@ public class Ground {
     private int cost = 50;
     private boolean isWorkedOn = false;
     private GroundType groundType;
-    private FeatureType featureType;
-    private ArrayList<BonusResource> bonusResource = new ArrayList<>();
-    private ArrayList<StrategicResource> strategicResources = new ArrayList<>();
-    private ArrayList<LuxuryResource> luxuryResources = new ArrayList<>();
-    private boolean hasRuin = false;
+    private transient FeatureType featureType;
+    private transient ArrayList<BonusResource> bonusResource = new ArrayList<>();
+    private transient ArrayList<StrategicResource> strategicResources = new ArrayList<>();
+    private transient ArrayList<LuxuryResource> luxuryResources = new ArrayList<>();
+    private transient boolean hasRuin = false;
 
     //TODO: luxuryResources to be completed
 
@@ -50,8 +50,12 @@ public class Ground {
     }
 
     public synchronized static void add(Ground ground) {
+        for (Ground ground1: allGround) {
+            if (ground1.number == ground.number) return;
+        }
         if (allGround.contains(ground)) return;
         allGround.add(ground);
+        System.out.println(ground.number + "....");
     }
 
     public Ground(int x, int y, int number) {

@@ -39,7 +39,7 @@ public class NetworkController {
         DataOutputStream outputStreamGame = new DataOutputStream(readerForGameSocketOther.getOutputStream());
         DataInputStream inputStreamGame = new DataInputStream(readerForGameSocketOther.getInputStream());
         Request request = new Request();
-        request.setHeader("register_startGame");
+        request.setHeader("register_startGameOther");
         request.addData("token", UserController.getInstance().getUserLoggedIn());
         outputStreamGame.writeUTF(request.toJson());
         outputStreamGame.flush();

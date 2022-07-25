@@ -103,6 +103,7 @@ public class InitializeMap {
                 }
 
                 Ground ground = Ground.getGroundByNumber(idStartGround);
+                System.out.println(playerUser.getUsername());
                 Player player = Player.findPlayerByUser(playerUser);
                 if (player == null) player = new Player(playerUser);
                 SettlerUnit unMilitaryUnit = new SettlerUnit(ground, player);

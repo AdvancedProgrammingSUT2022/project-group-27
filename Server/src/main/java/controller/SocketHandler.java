@@ -15,6 +15,7 @@ public class SocketHandler extends Thread{
     private final Socket socket;
     private final DataInputStream inputStream;
     private final DataOutputStream outputStream;
+    private static volatile boolean isSetting = false;
 
     public SocketHandler(Socket socket) throws IOException {
         this.socket = socket;
@@ -152,6 +153,11 @@ public class SocketHandler extends Thread{
                 User user = User.findUserByToken(token);
                 System.out.println("Registered start game socket for " + token);
                 user.setStartGameSocket(socket);
+            } case "register_startGameOther" -> {
+                String token = (String) request.getData().get("token");
+                User user = User.findUserByToken(token);
+                System.out.println("Registered start game socket for " + token);
+                user.setStartGameSocketOther(socket);
             } case "addingPlayer" -> {
                 User user = User.findUser((String) request.getData().get("user"));
                 Player player = new Player(user);
@@ -202,7 +208,9 @@ public class SocketHandler extends Thread{
                 if (Ground.getGroundByNumber(groundNumber).getImprovementTypeInProgress().getImprovementType().toString().equals(improvementType))
                     response.addData("turnRemained", Ground.getGroundByNumber(groundNumber).getImprovementTypeInProgress().getTurnRemained());
             } case "listOfGrounds" -> {
+                System.out.println(Ground.getAllGround().size());
                 response.addData("listOfGrounds", new Gson().toJson(Ground.getAllGround()));
+                System.out.println("yes");
             } case "doWeHaveThisTechnology" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 String technologyType = (String) request.getData().get("technologyType");
@@ -500,6 +508,23 @@ public class SocketHandler extends Thread{
                 if (receiver.getStartGameOutputStream() == null) continue;
                 receiver.getStartGameOutputStream().writeUTF(update.toJson());
                 receiver.getStartGameOutputStream().flush();
+            } catch (IOException ignored) {
+                //Nothing
+            }
+        }
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ignored) {
+
+        }
+
+        for (int i = 0; i < User.getListOfUsers().size(); i++) {
+            User receiver = User.getListOfUsers().get(i);
+            try {
+                if (receiver.getStartGameOutputStreamOther() == null) continue;
+                receiver.getStartGameOutputStreamOther().writeUTF(update.toJson());
+                receiver.getStartGameOutputStreamOther().flush();
             } catch (IOException ignored) {
                 //Nothing
             }

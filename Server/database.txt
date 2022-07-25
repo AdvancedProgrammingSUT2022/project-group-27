@@ -1,9 +1,1 @@
-<<<<<<< HEAD
-[{"username":"a","password":"a","nickname":"a","listOfInvitation":[],"profileImage":"troy-helen.jpg","score":0,"timeOfScoreGame":"0","lastLoginTime":"online","adminList":[],"listOfAcceptedUsers":[],"isInGame":0},{"username":"b","password":"b","nickname":"b","listOfInvitation":[],"profileImage":"troy-1.jpg","score":0,"timeOfScoreGame":"0","lastLoginTime":"online","adminList":["a"],"listOfAcceptedUsers":["a"],"isInGame":0}]
-=======
-<<<<<<< HEAD
-[{"username":"a","password":"a","nickname":"a","listOfInvitation":["b"],"profileImage":"troy-1.jpg","score":0,"timeOfScoreGame":"0","lastLoginTime":"online","adminList":[],"listOfAcceptedUsers":[],"isInGame":0},{"username":"b","password":"b","nickname":"b","listOfInvitation":[],"profileImage":"troy-helen.jpg","score":0,"timeOfScoreGame":"0","lastLoginTime":"2022-07-23 16:00:13","adminList":["a"],"listOfAcceptedUsers":[null],"isInGame":0}]
-=======
-[{"username":"a","password":"a","nickname":"a","listOfInvitation":[],"profileImage":"troy-2.jpg","score":0,"timeOfScoreGame":"0","lastLoginTime":"online","adminList":["b"],"listOfAcceptedUsers":["b"],"isInGame":0},{"username":"b","password":"b","nickname":"b","listOfInvitation":[],"profileImage":"troy-1.jpg","score":0,"timeOfScoreGame":"0","lastLoginTime":"online","adminList":[],"listOfAcceptedUsers":[],"isInGame":0}]
->>>>>>> 35e45535d4538e0b3c3e35f18d9150378ee0899c
->>>>>>> 42f3099c6051d69c2d8ace21f0d198b5f98e350d
+[{"username":"a","password":"a","nickname":"a","listOfInvitation":[],"profileImage":"troy-2.jpg","score":0,"timeOfScoreGame":"0","lastLoginTime":"online","adminList":["b"],"listOfAcceptedUsers":["b"],"isInGame":0},{"username":"b","password":"b","nickname":"b","listOfInvitation":[],"profileImage":"troy-helen.jpg","score":0,"timeOfScoreGame":"0","lastLoginTime":"online","adminList":[],"listOfAcceptedUsers":[],"isInGame":0}]

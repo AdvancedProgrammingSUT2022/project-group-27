@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Ground {
-    private int counterOfDestroyingFeature=0;
-    private Road road=null;
-    private RailWay railWay=null;
     private static ArrayList<Ground> allGround = new ArrayList<>();
     private static HashMap<Integer, Ground> pixelInWhichGround = new HashMap<>();
     private ImprovementType improvementType=null;
@@ -28,16 +25,14 @@ public class Ground {
     private int cost = 50;
     private boolean isWorkedOn = false;
     private GroundType groundType;
-    private FeatureType featureType;
-    private ArrayList<BonusResource> bonusResource = new ArrayList<>();
-    private ArrayList<StrategicResource> strategicResources = new ArrayList<>();
-    private ArrayList<LuxuryResource> luxuryResources = new ArrayList<>();
-    private boolean hasRuin = false;
 
     public static ArrayList<Ground> getAllGround() {
         Request request = new Request();
         request.setHeader("listOfGrounds");
+        System.out.println("yes");
         Response response = NetworkController.send(request);
+
+        System.out.println("yes it works");
         allGround = new Gson().fromJson((String) response.getData().get("listOfGrounds"), new TypeToken<ArrayList<Ground>>(){}.getType());
         return allGround;
     }

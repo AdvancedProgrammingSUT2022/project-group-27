@@ -15,6 +15,8 @@ public class User {
     private transient DataOutputStream updateOutputStream;
     private transient Socket startGameSocket;
     private transient DataOutputStream startGameOutputStream;
+    private transient Socket startGameSocketOther;
+    private transient DataOutputStream startGameOutputStreamOther;
     private ArrayList<String> listOfInvitation=new ArrayList<>();
     private String profileImage = null;
     private String currentImage = null;
@@ -112,12 +114,21 @@ public class User {
         this.startGameOutputStream = new DataOutputStream(startGameSocket.getOutputStream());
     }
 
+    public void setStartGameSocketOther(Socket startGameSocketOther) throws IOException {
+        this.startGameSocketOther = startGameSocketOther;
+        this.startGameOutputStreamOther = new DataOutputStream(startGameSocketOther.getOutputStream());
+    }
+
     public DataOutputStream getStartGameOutputStream() {
         return startGameOutputStream;
     }
 
     public DataOutputStream getUpdateOutputStream() {
         return updateOutputStream;
+    }
+
+    public DataOutputStream getStartGameOutputStreamOther() {
+        return startGameOutputStreamOther;
     }
 
     public static void setListOfUsers(ArrayList<User> listOfUsers) {

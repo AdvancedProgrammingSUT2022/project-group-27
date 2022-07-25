@@ -44,7 +44,7 @@ public class InvitationMenu extends Application {
     }
     @FXML
     public void initialize(){
-        makeItOnline();
+        //makeItOnline();
     }
     public void back(MouseEvent mouseEvent) throws Exception {
         inThisPanel=false;
@@ -53,8 +53,8 @@ public class InvitationMenu extends Application {
     }
 
     public void update(MouseEvent mouseEvent) {
-
-        makeItOnline();
+        Update();
+        // makeItOnline();
     }
     public void makeItOnline(){
         Thread thread = new Thread(new Runnable() {
