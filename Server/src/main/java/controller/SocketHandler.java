@@ -429,7 +429,32 @@ public class SocketHandler extends Thread{
                 Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("player")));
                 response.setStatus(200);
                 response.addData("food", player.getFood());
+            } case "getCityFoodPerTurn" -> {
+                City city = (City) request.getData().get("city");
+                response.setStatus(200);
+                response.addData("food", city.getFoodPerTurn());
+            } case "getCityGold" -> {
+                City city = (City) request.getData().get("city");
+                response.setStatus(200);
+                response.addData("gold", city.getGold());
+            } case "getCityScience" -> {
+                City city = (City) request.getData().get("city");
+                response.setStatus(200);
+                response.addData("science", city.getScience());
+            } case "getCityStrength" -> {
+                City city = (City) request.getData().get("city");
+                response.setStatus(200);
+                response.addData("strength", city.getCityStrength());
+            } case "getListOfCitizens" -> {
+                City city = (City) request.getData().get("city");
+                response.setStatus(200);
+                response.addData("listOfCitizens", city.getCityStrength());
+            } case "getRemainedTurnsToBuild" -> {
+                City city = (City) request.getData().get("city");
+                response.setStatus(200);
+                response.addData("remainedTurnsToBuild", city.getCityStrength());
             }
+
             default -> {
                 response.setStatus(400);
                 response.addData("error", "invalid command");
