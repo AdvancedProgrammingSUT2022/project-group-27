@@ -198,21 +198,19 @@ public class GraphicOfGame extends Application {
     private void cheatCode(String input) {
         if (input.matches("^next turn ((--numberOfTurns)|(-n)) \\d+$")) {
             String[] s=input.split(" +");
-            for (int i = 0; i < Integer.parseInt(s[3]); i++) {
-                //Player.nextTurn();
-                initializing();
-            }
+            //Player.nextTurnForMultyTurns(Integer.parseInt(s[3]));
+            initializing();
         } else if (input.matches("^increase gold ((--numberOfGolds)|(-n)) \\d+$")){
             String[] s=input.split(" +");
-            //player.increaseGold(Integer.parseInt(s[3]));
+            playerInstance.increaseGold(Integer.parseInt(s[3]));
             initializing();
         } else if (input.matches("^increase happiness ((--numberOfHappiness)|(-n)) \\d+$")) {
             String[] s=input.split(" +");
-            //player.increaseHappiness(Integer.parseInt(s[3]));
+            playerInstance.increaseHappiness(Integer.parseInt(s[3]));
             initializing();
         } else if (input.matches("^increase score ((--numberOScore)|(-n)) \\d+$")) {
             String[] s=input.split(" +");
-            //player.getUser().increaseScore(Integer.parseInt(s[3]));
+            playerInstance.increaseScore(Integer.parseInt(s[3]));
             initializing();
         }
     }

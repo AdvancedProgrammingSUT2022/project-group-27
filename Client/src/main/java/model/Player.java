@@ -275,4 +275,28 @@ public class Player {
 
         return (Double) response.getData().get("score");
     }
+
+    public void increaseGold(int number) {
+        Request request = new Request();
+        request.setHeader("increaseGold");
+        request.addData("token", user);
+        request.addData("number", number);
+        Response response = NetworkController.send(request);
+    }
+
+    public void increaseHappiness(int number) {
+        Request request = new Request();
+        request.setHeader("increaseHappiness");
+        request.addData("token", user);
+        request.addData("number", number);
+        Response response = NetworkController.send(request);
+    }
+
+    public void increaseScore(int number) {
+        Request request = new Request();
+        request.setHeader("increaseScore");
+        request.addData("token", user);
+        request.addData("number", number);
+        Response response = NetworkController.send(request);
+    }
 }
