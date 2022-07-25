@@ -114,9 +114,12 @@ public class GraphicOfGame extends Application {
 
     @FXML
     public void initialize() {
-        for (int i = 0; i < Ground.getAllGround().size(); i++) {
+        int size = Ground.getAllGround().size();
+        for (int i = 0; i < size; i++) {
             Ground ground = Ground.getGroundByNumber(i);
+            System.out.println(i);
             GroundRectangle groundRectangle=new GroundRectangle(ground, ground.getxLocation(),ground.getyLocation());
+            System.out.println(i);
         }
         playerInstance = Player.getPlayerByUser(UserController.getInstance().getUsername());
         gamePaneSecond=gamePane;
@@ -140,7 +143,9 @@ public class GraphicOfGame extends Application {
         technology.setStyle("-fx-background-color: #00c4ff; -fx-background-radius: 5;");
 
         setIcons();
+        System.out.println("initializing");
         initializing();
+        System.out.println("initializing");
         setTooltip();
         setHover();
 
@@ -253,11 +258,15 @@ public class GraphicOfGame extends Application {
                     || gamePaneSecond.getChildren().get(i) instanceof UnitRectangle ||
                     gamePaneSecond.getChildren().get(i) instanceof CityRectangle) gamePaneSecond.getChildren().remove(i);
         }
-
-        for (int i=0;i<River.getAllRivers().size();i++){
-            RiverRectangle riverRectangle=new RiverRectangle(River.getAllRivers().get(i).getFirstGround(),River.getAllRivers().get(i).getSecondGround());
+        System.out.println("after game pane");
+        int riverSize = River.getAllRivers().size();
+        ArrayList<River> rivers = River.getAllRivers();
+        for (int i=0;i<riverSize;i++){
+            River river = rivers.get(i);
+            RiverRectangle riverRectangle=new RiverRectangle(river.getFirstGround(), river.getSecondGround());
             gamePaneSecond.getChildren().add(riverRectangle);
         }
+        System.out.println("after river");
         for (int i=1;i<=GlobalVariables.numberOfTilesInColumn;i++){
             int startingTool=GlobalVariables.tool+8;
             if (i%2==1){
@@ -279,6 +288,7 @@ public class GraphicOfGame extends Application {
             }
             startingArz+=GlobalVariables.arz+8;
         }
+        System.out.println("after ruin pane");
         for (Player player1 : Player.getAllPlayers()) {
             for (City city : player1.getCities()) {
                 if (player1.getClearToSeeGrounds(city.getGround())) {
@@ -287,7 +297,7 @@ public class GraphicOfGame extends Application {
                 }
             }
         }
-
+        System.out.println("after city pane");
         for (Player user : Player.getAllPlayers()){
             for (Unit unit : user.getUnits()){
                 if (user.getClearToSeeGrounds(unit.getGround())) {
@@ -296,6 +306,7 @@ public class GraphicOfGame extends Application {
                 }
             }
         }
+        System.out.println("after unit pane");
         for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
             if (!playerInstance.getClearToSeeGrounds(Ground.getGroundByNumber(i)) && playerInstance.getWasClearedToSeeGrounds(Ground.getGroundByNumber(i))){
 
@@ -303,7 +314,7 @@ public class GraphicOfGame extends Application {
                 gamePaneSecond.getChildren().add(visitedGround);
             }
         }
-
+        System.out.println("before set trade");
         setTradeAlert();
         if (playerInstance.checkDies()) endOfGame(false);
         if (Game.getInstance().isFinished()) endOfGame(true);

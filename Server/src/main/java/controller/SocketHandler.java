@@ -208,8 +208,7 @@ public class SocketHandler extends Thread{
                 if (Ground.getGroundByNumber(groundNumber).getImprovementTypeInProgress().getImprovementType().toString().equals(improvementType))
                     response.addData("turnRemained", Ground.getGroundByNumber(groundNumber).getImprovementTypeInProgress().getTurnRemained());
             } case "listOfGrounds" -> {
-                System.out.println(Ground.getAllGround().size());
-                response.addData("listOfGrounds", new Gson().toJson(Ground.getAllGround()));
+                response.addData("listOfGrounds", new Gson().toJson(Ground.getAllGroundNumber()));
                 System.out.println("yes");
             } case "doWeHaveThisTechnology" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
@@ -288,7 +287,17 @@ public class SocketHandler extends Thread{
             } case "getFeatureType" -> {
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
                 response.addData("feature", new Gson().toJson(Ground.getGroundByNumber(groundNumber).getFeatureType()));
-            } case "handleVisitedGrounds" -> {
+            } case "getGroundType" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("type", new Gson().toJson(Ground.getGroundByNumber(groundNumber).getGroundType()));
+            } case "getxLocation" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("location", Ground.getGroundByNumber(groundNumber).getxLocation());
+            } case "getyLocation" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("location", Ground.getGroundByNumber(groundNumber).getyLocation());
+            }
+            case "handleVisitedGrounds" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 player.handleVisitedGrounds();
             } case "handleClearToSee" -> {
