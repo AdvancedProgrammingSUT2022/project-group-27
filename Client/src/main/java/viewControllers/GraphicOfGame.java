@@ -22,6 +22,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
+import viewControllers.Info.DiplomacyInformationPanel;
 import viewControllers.Info.TradingInformationPanel;
 //import viewControllers.Info.*;
 
@@ -434,16 +435,13 @@ public class GraphicOfGame extends Application {
         diplomacyInformationPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                /*
                 DiplomacyInformationPanel diplomacyInformationPanel = new DiplomacyInformationPanel();
-                DiplomacyInformationPanel.setPlayer(Player.whichPlayerTurnIs());
+                DiplomacyInformationPanel.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 try {
                     diplomacyInformationPanel.start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                 */
             }
         });
     }

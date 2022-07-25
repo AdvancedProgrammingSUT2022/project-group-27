@@ -396,6 +396,12 @@ public class SocketHandler extends Thread{
             } case "userTradesAll" -> {
                 User user = User.findUser((String) request.getData().get("user"));
                 response.addData("list", new Gson().toJson(Trade.userTradesAll(user)));
+            } case "getIsInWar" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                response.addData("list", new Gson().toJson(player.getIsInWar()));
+            } case "countScore" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                response.addData("score", player.countScore());
             }
             default -> {
                 response.setStatus(400);

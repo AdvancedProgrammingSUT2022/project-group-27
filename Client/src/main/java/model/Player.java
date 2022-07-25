@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class Player {
     private static ArrayList<Player> list = new ArrayList<>();
@@ -298,5 +299,23 @@ public class Player {
         request.addData("token", user);
         request.addData("number", number);
         Response response = NetworkController.send(request);
+    }
+
+    public ArrayList<Boolean> getIsInWar() {
+        Request request = new Request();
+        request.setHeader("getIsInWar");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<Boolean>>(){}.getType());
+    }
+
+    public double countScore() {
+        Request request = new Request();
+        request.setHeader("countScore");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        return (double) response.getData().get("score");
     }
 }
