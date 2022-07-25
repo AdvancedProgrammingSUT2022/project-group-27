@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class Player {
     private static ArrayList<Player> list = new ArrayList<>();
@@ -274,5 +275,57 @@ public class Player {
         if (response == null) return null;
 
         return (Double) response.getData().get("score");
+    }
+
+    public void increaseGold(int number) {
+        Request request = new Request();
+        request.setHeader("increaseGold");
+        request.addData("token", user);
+        request.addData("number", number);
+        Response response = NetworkController.send(request);
+    }
+
+    public void increaseHappiness(int number) {
+        Request request = new Request();
+        request.setHeader("increaseHappiness");
+        request.addData("token", user);
+        request.addData("number", number);
+        Response response = NetworkController.send(request);
+    }
+
+    public void increaseScore(int number) {
+        Request request = new Request();
+        request.setHeader("increaseScore");
+        request.addData("token", user);
+        request.addData("number", number);
+        Response response = NetworkController.send(request);
+    }
+
+    public ArrayList<Boolean> getIsInWar() {
+        Request request = new Request();
+        request.setHeader("getIsInWar");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<Boolean>>(){}.getType());
+    }
+
+    public double countScore() {
+        Request request = new Request();
+        request.setHeader("countScore");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        return (double) response.getData().get("score");
+    }
+
+    public ArrayList<TechnologyType> getTechnologyType() {
+        Request request = new Request();
+        request.setHeader("getTechnologyType");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<TechnologyType>>(){}.getType());
     }
 }

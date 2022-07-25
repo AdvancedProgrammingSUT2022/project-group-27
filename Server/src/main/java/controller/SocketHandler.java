@@ -381,6 +381,30 @@ public class SocketHandler extends Thread{
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
                 Productions construction = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getConstruction();
                 response.addData("construction", construction.name());
+            } case "increaseGold" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int number = (int) Math.floor((Double) request.getData().get("number"));
+                player.increaseGold(number);
+            } case "increaseHappiness" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int number = (int) Math.floor((Double) request.getData().get("number"));
+                player.increaseHappiness(number);
+            } case "increaseScore" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int number = (int) Math.floor((Double) request.getData().get("number"));
+                player.getUser().increaseScore(number);
+            } case "userTradesAll" -> {
+                User user = User.findUser((String) request.getData().get("user"));
+                response.addData("list", new Gson().toJson(Trade.userTradesAll(user)));
+            } case "getIsInWar" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                response.addData("list", new Gson().toJson(player.getIsInWar()));
+            } case "countScore" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                response.addData("score", player.countScore());
+            } case "getTechnologyType" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                response.addData("list", new Gson().toJson(player.getTechnologyType()));
             }
             default -> {
                 response.setStatus(400);

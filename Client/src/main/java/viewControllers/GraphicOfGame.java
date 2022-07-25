@@ -22,6 +22,9 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
+import viewControllers.Info.DiplomacyInformationPanel;
+import viewControllers.Info.TradingInformationPanel;
+import viewControllers.Info.WinPage;
 //import viewControllers.Info.*;
 
 import java.util.ArrayList;
@@ -198,21 +201,19 @@ public class GraphicOfGame extends Application {
     private void cheatCode(String input) {
         if (input.matches("^next turn ((--numberOfTurns)|(-n)) \\d+$")) {
             String[] s=input.split(" +");
-            for (int i = 0; i < Integer.parseInt(s[3]); i++) {
-                //Player.nextTurn();
-                initializing();
-            }
+            //Player.nextTurnForMultyTurns(Integer.parseInt(s[3]));
+            initializing();
         } else if (input.matches("^increase gold ((--numberOfGolds)|(-n)) \\d+$")){
             String[] s=input.split(" +");
-            //player.increaseGold(Integer.parseInt(s[3]));
+            playerInstance.increaseGold(Integer.parseInt(s[3]));
             initializing();
         } else if (input.matches("^increase happiness ((--numberOfHappiness)|(-n)) \\d+$")) {
             String[] s=input.split(" +");
-            //player.increaseHappiness(Integer.parseInt(s[3]));
+            playerInstance.increaseHappiness(Integer.parseInt(s[3]));
             initializing();
         } else if (input.matches("^increase score ((--numberOScore)|(-n)) \\d+$")) {
             String[] s=input.split(" +");
-            //player.getUser().increaseScore(Integer.parseInt(s[3]));
+            playerInstance.increaseScore(Integer.parseInt(s[3]));
             initializing();
         }
     }
@@ -420,15 +421,13 @@ public class GraphicOfGame extends Application {
         tradingPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                /*
                 TradingInformationPanel tradingInformationPanel = new TradingInformationPanel();
-                TradingInformationPanel.setPlayer(Player.whichPlayerTurnIs());
+                TradingInformationPanel.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 try {
                     tradingInformationPanel.start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                 */
             }
         });
     }
@@ -437,16 +436,13 @@ public class GraphicOfGame extends Application {
         diplomacyInformationPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                /*
                 DiplomacyInformationPanel diplomacyInformationPanel = new DiplomacyInformationPanel();
-                DiplomacyInformationPanel.setPlayer(Player.whichPlayerTurnIs());
+                DiplomacyInformationPanel.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 try {
                     diplomacyInformationPanel.start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                 */
             }
         });
     }
@@ -455,16 +451,13 @@ public class GraphicOfGame extends Application {
         winPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                /*
                 WinPage winPage = new WinPage();
-                WinPage.setPlayer(Player.whichPlayerTurnIs());
+                WinPage.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 try {
                     winPage.start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                 */
             }
         });
     }
