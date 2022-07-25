@@ -161,6 +161,6 @@ public class Ground {
         request.setHeader("getHasRuin");
         request.addData("groundNumber", this.getNumber());
         Response response = NetworkController.send(request);
-        return ((String) response.getData().get("answer")).equals("true");
+        return (boolean) response.getData().get("answer");
     }
 }

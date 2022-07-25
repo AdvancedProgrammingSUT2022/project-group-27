@@ -49,7 +49,7 @@ public class Ground {
         this.adjacentGrounds.add(ground.getNumber());
     }
 
-    public static void add(Ground ground) {
+    public synchronized static void add(Ground ground) {
         if (allGround.contains(ground)) return;
         allGround.add(ground);
     }
@@ -59,7 +59,7 @@ public class Ground {
         this.yLocation = y;
         this.number = number;
         this.cost = 50; //TODO if it become random make it more fun
-        allGround.add(this);
+        Ground.add(this);
     }
     public void setxLocation(int x){
         this.xLocation=x;
