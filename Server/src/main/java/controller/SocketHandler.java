@@ -339,6 +339,48 @@ public class SocketHandler extends Thread{
                         UnitController.freePlundering((Worker) unit);
                     }
                 }
+            } case "getHpCity" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("hp", City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getHp());
+            } case "getCapitalGroundNumber" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                response.addData("number", player.getCapital().getGround().getNumber());
+            } case "getAllRivers" -> {
+                response.addData("rivers", new Gson().toJson(River.getAllRivers()));
+            } case "setxLocation" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                int xLocation = (int) Math.floor((Double) request.getData().get("xLocation"));
+                Ground.getGroundByNumber(groundNumber).setxLocation(xLocation);
+            } case "setyLocation" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                int yLocation = (int) Math.floor((Double) request.getData().get("yLocation"));
+                Ground.getGroundByNumber(groundNumber).setyLocation(yLocation);
+            } case "getClearToSeeGrounds" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                Boolean answer = player.getClearToSeeGrounds().contains(Ground.getGroundByNumber(groundNumber));
+                response.addData("answer", answer);
+            } case "getHasRuin" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                Boolean answer = Ground.getGroundByNumber(groundNumber).getHasRuin();
+                response.addData("answer", answer);
+            } case "getUnits" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                response.addData("units", new Gson().toJson(player.getUnits()));
+            } case "checkDies" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                response.addData("answer", player.checkDies());
+            } case "setScoreAndTimeAtEnd" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                player.setScoreAndTimeAtEnd();
+            } case "isFinished" -> {
+                response.addData("answer", Game.getInstance().isFinished());
+            } case "getConstruction" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                Productions construction = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getConstruction();
+                response.addData("construction", construction.name());
             }
             default -> {
                 response.setStatus(400);

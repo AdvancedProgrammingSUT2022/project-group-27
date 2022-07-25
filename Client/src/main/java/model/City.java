@@ -1,6 +1,8 @@
 package model;
 
 import Enum.*;
+import controller.NetworkController;
+import controller.UserController;
 
 import java.util.ArrayList;
 
@@ -30,5 +32,28 @@ public class City {
         }
 
         return null;
+    }
+
+    public Ground getGround() {
+        return ground;
+    }
+
+    public double getHp() {
+        Request request = new Request();
+        request.setHeader("getHpCity");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+        hp = (Double) response.getData().get("hp");
+        return hp;
+    }
+
+    public String getConstruction() {
+        Request request = new Request();
+        request.setHeader("getConstruction");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+        return (String) response.getData().get("construction");
     }
 }

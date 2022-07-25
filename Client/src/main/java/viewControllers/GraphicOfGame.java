@@ -1,5 +1,6 @@
 package viewControllers;
 
+import controller.Game;
 import controller.ProfileController;
 import controller.UserController;
 import javafx.application.Application;
@@ -20,10 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.GlobalVariables;
-import model.Ground;
-import model.GroundRectangle;
-import model.Player;
+import model.*;
 //import viewControllers.Info.*;
 
 import java.util.ArrayList;
@@ -220,7 +218,6 @@ public class GraphicOfGame extends Application {
     }
 
     public void initializing() { //TODO it should run at every steps, every moves and ...
-
         science.setText("science: " + playerInstance.getScience());
         gold.setText("gold: " + playerInstance.getGold());
         happiness.setText("happiness: " + playerInstance.getHappiness());
@@ -242,9 +239,9 @@ public class GraphicOfGame extends Application {
             nextTurn.setCursor(Cursor.DISAPPEAR);
             nextTurn.setDisable(true);
         }
-        /*
-        player.handleClearToSee();
-        player.handleVisitedGrounds();
+
+        playerInstance.handleClearToSee();
+        playerInstance.handleVisitedGrounds();
         setMenus();
         int cnt=0;
         int startingArz=GlobalVariables.arz+50;
@@ -274,7 +271,7 @@ public class GraphicOfGame extends Application {
                 Ground ground=Ground.getGroundByNumber(cnt);
                 ground.setxLocation(startingArz);
                 ground.setyLocation(startingTool);
-                if (ground.getHasRuin() && player.getClearToSeeGrounds().contains(ground))
+                if (ground.getHasRuin() && playerInstance.getClearToSeeGrounds(ground))
                     gamePaneSecond.getChildren().add(new RuinRectangle(ground));
                 System.out.println(Ground.getGroundByNumber(cnt).getxLocation());
                 startingTool+=(GlobalVariables.tool+8)*3;
@@ -283,7 +280,7 @@ public class GraphicOfGame extends Application {
         }
         for (Player player1 : Player.getAllPlayers()) {
             for (City city : player1.getCities()) {
-                if (player.getClearToSeeGrounds().contains(city.getGround())) {
+                if (player1.getClearToSeeGrounds(city.getGround())) {
                     CityRectangle cityRectangle = new CityRectangle(city);
                     gamePaneSecond.getChildren().add(cityRectangle);
                 }
@@ -292,45 +289,37 @@ public class GraphicOfGame extends Application {
 
         for (Player user : Player.getAllPlayers()){
             for (Unit unit : user.getUnits()){
-                if (player.getClearToSeeGrounds().contains(unit.getGround())) {
+                if (user.getClearToSeeGrounds(unit.getGround())) {
                     UnitRectangle unitRectangle = new UnitRectangle(unit);
                     gamePaneSecond.getChildren().add(unitRectangle);
                 }
             }
         }
         for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
-            if (!player.getClearToSeeGrounds().contains(Ground.getGroundByNumber(i)) && player.getWasClearedToSeeGrounds().contains(Ground.getGroundByNumber(i))){
+            if (!playerInstance.getClearToSeeGrounds(Ground.getGroundByNumber(i)) && playerInstance.getWasClearedToSeeGrounds(Ground.getGroundByNumber(i))){
 
                 VisitedGround visitedGround=new VisitedGround(Ground.getGroundByNumber(i));
                 gamePaneSecond.getChildren().add(visitedGround);
-                System.out.println("higuhurhgrthgirh" + player.getClearToSeeGrounds().size() + " " + player.getWasClearedToSeeGrounds().size());
             }
         }
 
-        City capital = Player.whichPlayerTurnIs().getCapital();
-        if (capital != null) {
-            //TODO show palace on it
-        }
-
         setTradeAlert();
-        playerInstance.checkDies();
-        if (Game.getInstance().isFinished()) endOfGame();
-
-         */
+        if (playerInstance.checkDies()) endOfGame(false);
+        if (Game.getInstance().isFinished()) endOfGame(true);
     }
 
     public static void showMap(){
-        /*Player player=Player.whichPlayerTurnIs();
-        player.handleClearToSee();
-        player.handleVisitedGrounds();
+        Player playerInstance = Player.getPlayerByUser(UserController.getInstance().getUsername());
+        playerInstance.handleClearToSee();
+        playerInstance.handleVisitedGrounds();
         int cnt=0;
         int startingArz=GlobalVariables.arz+50;
         for (int i=gamePaneSecond.getChildren().size()-1;i>-1;i--){
             if (gamePaneSecond.getChildren().get(i) instanceof GroundRectangle || gamePaneSecond.getChildren().get(i) instanceof FeatureRectangle
                     || gamePaneSecond.getChildren().get(i) instanceof RiverRectangle ||
                     gamePaneSecond.getChildren().get(i) instanceof VisitedGround
-                    || gamePaneSecond.getChildren().get(i) instanceof UnitRectangle
-                    || gamePaneSecond.getChildren().get(i) instanceof CityRectangle) gamePaneSecond.getChildren().remove(i);
+                    || gamePaneSecond.getChildren().get(i) instanceof UnitRectangle ||
+                    gamePaneSecond.getChildren().get(i) instanceof CityRectangle) gamePaneSecond.getChildren().remove(i);
         }
 
         for (int i=0;i<River.getAllRivers().size();i++){
@@ -351,7 +340,7 @@ public class GraphicOfGame extends Application {
                 Ground ground=Ground.getGroundByNumber(cnt);
                 ground.setxLocation(startingArz);
                 ground.setyLocation(startingTool);
-                if (ground.getHasRuin() && player.getClearToSeeGrounds().contains(ground))
+                if (ground.getHasRuin() && playerInstance.getClearToSeeGrounds(ground))
                     gamePaneSecond.getChildren().add(new RuinRectangle(ground));
                 System.out.println(Ground.getGroundByNumber(cnt).getxLocation());
                 startingTool+=(GlobalVariables.tool+8)*3;
@@ -360,38 +349,28 @@ public class GraphicOfGame extends Application {
         }
         for (Player player1 : Player.getAllPlayers()) {
             for (City city : player1.getCities()) {
-                if (player.getClearToSeeGrounds().contains(city.getGround())) {
+                if (player1.getClearToSeeGrounds(city.getGround())) {
                     CityRectangle cityRectangle = new CityRectangle(city);
                     gamePaneSecond.getChildren().add(cityRectangle);
                 }
             }
         }
+
         for (Player user : Player.getAllPlayers()){
             for (Unit unit : user.getUnits()){
-                if (player.getClearToSeeGrounds().contains(unit.getGround())) {
+                if (user.getClearToSeeGrounds(unit.getGround())) {
                     UnitRectangle unitRectangle = new UnitRectangle(unit);
                     gamePaneSecond.getChildren().add(unitRectangle);
                 }
             }
         }
         for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
-            if (!player.getClearToSeeGrounds().contains(Ground.getGroundByNumber(i)) && player.getWasClearedToSeeGrounds().contains(Ground.getGroundByNumber(i))){
+            if (!playerInstance.getClearToSeeGrounds(Ground.getGroundByNumber(i)) && playerInstance.getWasClearedToSeeGrounds(Ground.getGroundByNumber(i))){
 
                 VisitedGround visitedGround=new VisitedGround(Ground.getGroundByNumber(i));
                 gamePaneSecond.getChildren().add(visitedGround);
-                System.out.println("higuhurhgrthgirh" + player.getClearToSeeGrounds().size() + " " + player.getWasClearedToSeeGrounds().size());
             }
         }
-
-        City capital = Player.whichPlayerTurnIs().getCapital();
-        if (capital != null) {
-            //TODO show palace on it
-        }
-
-        GraphicOfGame.getInstance().setTradeAlert();
-        Player.whichPlayerTurnIs().checkDies();
-        if (Game.getInstance().isFinished()) GraphicOfGame.getInstance().endOfGame();
-         */
     }
 
     private void setHover() {
@@ -808,19 +787,14 @@ public class GraphicOfGame extends Application {
         preStage.show();
     }
 
-    private void endOfGame() {
-        /*
-        Player player = Player.playerOfAliveAndHaveCapitalPlayer();
-        if (player == null) return;
-
-        for (Player player1: Player.getAllPlayers()) {
-            player1.setScoreAndTimeAtEnd();
-        }
+    private void endOfGame(boolean isWin) {
+        audio.stop();
+        Player.getPlayerByUser(UserController.getInstance().getUsername()).setScoreAndTimeAtEnd(isWin);
 
         Stage preStage = new Stage();
         preStage.initOwner(stage);
         End end = new End();
-        End.setPlayer(player);
+        End.setPlayer(playerInstance);
         try {
             end.start(preStage);
             MainMenuView mainMenuView = new MainMenuView();
@@ -828,14 +802,12 @@ public class GraphicOfGame extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-         */
     }
 
     public void stopGame(MouseEvent mouseEvent) throws Exception {
         audio.stop();
-        /*
-        for (City city: Player.whichPlayerTurnIs().getCities()) {
+
+        for (City city: Player.getPlayerByUser(UserController.getInstance().getUsername()).getCities()) {
             if (city.getConstruction() != null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText("can not stop here");
@@ -844,8 +816,6 @@ public class GraphicOfGame extends Application {
                 return;
             }
         }
-
-         */
 
         MainMenuView mainMenuView = new MainMenuView();
         mainMenuView.start(stage);

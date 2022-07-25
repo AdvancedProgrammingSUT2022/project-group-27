@@ -439,7 +439,7 @@ public class Player {
         return counterOfNextRound / allPlayers.size();
     }
 
-    public void checkDies() {
+    public boolean checkDies() {
         if (isAlive && mainCapital != null) {
             if (cities.size() == 0) {
                 isAlive = false;
@@ -447,6 +447,8 @@ public class Player {
                 nextTurn(); //TODO where should we call this method... for now we call it on gameView.run(); ...
             }
         }
+
+        return !isAlive;
     }
 
     public void setScoreAndTimeAtEnd() {

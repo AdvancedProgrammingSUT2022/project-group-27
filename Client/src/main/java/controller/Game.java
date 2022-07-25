@@ -59,4 +59,11 @@ public class Game {
         request.addData("token", worker.getPlayer().getUser());
         Response response = NetworkController.send(request);
     }
+
+    public boolean isFinished() {
+        Request request = new Request();
+        request.setHeader("isFinished");
+        Response response = NetworkController.send(request);
+        return ((String) response.getData().get("answer")).equals("true");
+    }
 }
