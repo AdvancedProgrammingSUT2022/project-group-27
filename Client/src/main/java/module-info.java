@@ -9,5 +9,6 @@ module Client {
     opens viewControllers to javafx.fxml;
     opens model to com.google.gson, javafx.base;
     opens Enum to com.google.gson;
+    opens viewControllers.Info to javafx.fxml;
     exports viewControllers;
 }

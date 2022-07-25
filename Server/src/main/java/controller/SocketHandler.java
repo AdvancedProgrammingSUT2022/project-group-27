@@ -312,7 +312,8 @@ public class SocketHandler extends Thread{
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
                 String name = (String) request.getData().get("name");
-                for (Unit unit: player.getUnits()) {
+                for (int i = 0; i < player.getUnits().size(); i++) {
+                    Unit unit = player.getUnits().get(i);
                     if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType() == MilitaryType.SETTLER) {
                         ((SettlerUnit) unit).buildCity(name);
                     }
@@ -325,7 +326,8 @@ public class SocketHandler extends Thread{
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
                 boolean working = (Boolean) request.getData().get("working");
-                for (Unit unit: player.getUnits()) {
+                for (int i = 0; i < player.getUnits().size(); i++) {
+                    Unit unit = player.getUnits().get(i);
                     if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType() == MilitaryType.WORKER) {
                         ((Worker) unit).setWorking(working);
                     }
@@ -351,7 +353,8 @@ public class SocketHandler extends Thread{
             } case "freePlundering" -> {
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
-                for (Unit unit: player.getUnits()) {
+                for (int i = 0; i < player.getUnits().size(); i++) {
+                    Unit unit = player.getUnits().get(i);
                     if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType() == MilitaryType.WORKER) {
                         UnitController.freePlundering((Worker) unit);
                     }
