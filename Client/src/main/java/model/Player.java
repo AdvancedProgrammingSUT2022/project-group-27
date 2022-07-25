@@ -156,6 +156,17 @@ public class Player {
         return science;
     }
 
+    public Double getFood() {
+        Double food = 0.0;
+        Request request = new Request();
+        request.setHeader("getPlayerFood");
+        request.addData("player", user);
+        Response response = NetworkController.send(request);
+
+        if (response != null) food = (Double) response.getData().get("food");
+        return food;
+    }
+
     public Double getGold() {
         Double gold = 0.0;
         Request request = new Request();

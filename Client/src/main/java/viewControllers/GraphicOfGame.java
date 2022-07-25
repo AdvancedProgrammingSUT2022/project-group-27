@@ -22,6 +22,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
+import viewControllers.Info.DemographicPanel;
 import viewControllers.Info.DiplomacyInformationPanel;
 import viewControllers.Info.TradingInformationPanel;
 import viewControllers.Info.WinPage;
@@ -538,16 +539,16 @@ public class GraphicOfGame extends Application {
         demographicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                /*
+
                 DemographicPanel demographicPanel = new DemographicPanel();
-                DemographicPanel.setPlayer(Player.whichPlayerTurnIs());
+                DemographicPanel.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 try {
                     demographicPanel.start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                 */
+
             }
         });
     }

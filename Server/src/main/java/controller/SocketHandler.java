@@ -405,6 +405,10 @@ public class SocketHandler extends Thread{
             } case "getTechnologyType" -> {
                 Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
                 response.addData("list", new Gson().toJson(player.getTechnologyType()));
+            } case "getPlayerFood" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("player")));
+                response.setStatus(200);
+                response.addData("food", player.getFood());
             }
             default -> {
                 response.setStatus(400);
