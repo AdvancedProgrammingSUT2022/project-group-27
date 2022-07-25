@@ -91,6 +91,7 @@ public class Player {
     }
 
     public Player(User user) {
+        if (findPlayerByUser(user) != null) return;
         this.user = user;
         for (int i = 0; i < this.allPlayers.size(); i++) {
             this.isInWar.add(false);
