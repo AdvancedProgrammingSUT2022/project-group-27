@@ -393,6 +393,9 @@ public class SocketHandler extends Thread{
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 int number = (int) Math.floor((Double) request.getData().get("number"));
                 player.getUser().increaseScore(number);
+            } case "userTradesAll" -> {
+                User user = User.findUser((String) request.getData().get("user"));
+                response.addData("list", new Gson().toJson(Trade.userTradesAll(user)));
             }
             default -> {
                 response.setStatus(400);
