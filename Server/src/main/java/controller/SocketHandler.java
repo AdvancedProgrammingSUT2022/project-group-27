@@ -439,27 +439,39 @@ public class SocketHandler extends Thread{
                 response.setStatus(200);
                 response.addData("food", player.getFood());
             } case "getCityFoodPerTurn" -> {
-                City city = (City) request.getData().get("city");
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                City city = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player);
                 response.setStatus(200);
                 response.addData("food", city.getFoodPerTurn());
             } case "getCityGold" -> {
-                City city = (City) request.getData().get("city");
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                City city = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player);
                 response.setStatus(200);
                 response.addData("gold", city.getGold());
             } case "getCityScience" -> {
-                City city = (City) request.getData().get("city");
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                City city = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player);
                 response.setStatus(200);
                 response.addData("science", city.getScience());
             } case "getCityStrength" -> {
-                City city = (City) request.getData().get("city");
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                City city = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player);
                 response.setStatus(200);
                 response.addData("strength", city.getCityStrength());
             } case "getListOfCitizens" -> {
-                City city = (City) request.getData().get("city");
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                City city = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player);
                 response.setStatus(200);
                 response.addData("listOfCitizens", city.getCityStrength());
             } case "getRemainedTurnsToBuild" -> {
-                City city = (City) request.getData().get("city");
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                City city = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player);
                 response.setStatus(200);
                 response.addData("remainedTurnsToBuild", city.getCityStrength());
             } case "setInWar" -> {

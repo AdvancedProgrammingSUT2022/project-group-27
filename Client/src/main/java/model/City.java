@@ -93,7 +93,8 @@ public class City {
         Double science = 0.0;
         Request request = new Request();
         request.setHeader("getCityScience");
-        request.addData("city", this);
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
         Response response = NetworkController.send(request);
 
         if (response != null) science = (Double) response.getData().get("science");
@@ -104,7 +105,8 @@ public class City {
         Double food = 0.0;
         Request request = new Request();
         request.setHeader("getCityFoodPerTurn");
-        request.addData("city", this);
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
         Response response = NetworkController.send(request);
 
         if (response != null) food = (Double) response.getData().get("food");
@@ -115,7 +117,8 @@ public class City {
         Double gold = 0.0;
         Request request = new Request();
         request.setHeader("getCityGold");
-        request.addData("city", this);
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
         Response response = NetworkController.send(request);
 
         if (response != null) gold = (Double) response.getData().get("gold");
@@ -126,7 +129,8 @@ public class City {
         Double strength = 0.0;
         Request request = new Request();
         request.setHeader("getCityStrength");
-        request.addData("city", this);
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
         Response response = NetworkController.send(request);
 
         if (response != null) strength = (Double) response.getData().get("strength");
@@ -137,7 +141,8 @@ public class City {
         ArrayList<Citizen> listOfCitizens = new ArrayList<>();
         Request request = new Request();
         request.setHeader("getListOfCitizens");
-        request.addData("city", this);
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
         Response response = NetworkController.send(request);
 
         if (response != null) listOfCitizens = new Gson().fromJson((String) response.getData().get("listOfCitizens"),  new TypeToken<ArrayList<Citizen>>(){}.getType());
@@ -148,7 +153,8 @@ public class City {
         Double remainedTurns = 0.0;
         Request request = new Request();
         request.setHeader("getRemainedTurnsToBuild");
-        request.addData("city", this);
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
         Response response = NetworkController.send(request);
 
         if (response != null) remainedTurns = (Double) response.getData().get("remainedTurnsToBuild");
