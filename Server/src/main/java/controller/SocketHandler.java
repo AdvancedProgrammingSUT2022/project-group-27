@@ -240,11 +240,14 @@ public class SocketHandler extends Thread{
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
                 response.addData("timeRemain", City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getRemainedTurnsToBuild());
             }  case "getStatus" -> {
-                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                //Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 String militaryType = (String) request.getData().get("militaryType");
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
-                for (Unit unit: player.getUnits()) {
-                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) response.addData("status", unit.getStatus());
+                for (Player player: Player.getAllPlayers()) {
+                    for (Unit unit : player.getUnits()) {
+                        if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType))
+                            response.addData("status", new Gson().toJson(unit.getStatus()));
+                    }
                 }
             } case "getImprovementTypeInProgress" -> {
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
@@ -252,11 +255,14 @@ public class SocketHandler extends Thread{
                 response.addData("improvementType", improvement.getImprovementType().toString());
                 response.addData("timeRemain", improvement.getTurnRemained());
             } case "getHp" -> {
-                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                //Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 String militaryType = (String) request.getData().get("militaryType");
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
-                for (Unit unit: player.getUnits()) {
-                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) response.addData("hp", unit.getHp());
+                for (Player player: Player.getAllPlayers()) {
+                    for (Unit unit : player.getUnits()) {
+                        if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType))
+                            response.addData("hp", unit.getHp());
+                    }
                 }
             } case "getMp" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));

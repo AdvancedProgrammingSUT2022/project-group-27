@@ -32,7 +32,7 @@ public enum UnitStatus {
         for (UnitStatus unitStatus: UnitStatus.values()) {
             if (unitStatus.name().equals(name)) return unitStatus;
         }
-
+        System.out.println(name);
         return null;
     }
 }

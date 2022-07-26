@@ -2,8 +2,11 @@ package model;
 
 import Enum.*;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import controller.NetworkController;
 import controller.UserController;
+
+import java.util.ArrayList;
 
 public class Unit implements Productions{
     protected MilitaryType militaryType;
@@ -25,11 +28,11 @@ public class Unit implements Productions{
     public UnitStatus getStatus() {
         Request request = new Request();
         request.setHeader("getStatus");
-        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        //request.addData("token", UserController.getInstance().getUserLoggedIn());
         request.addData("militaryType", militaryType);
         request.addData("groundNumber", ground.getNumber());
         Response response = NetworkController.send(request);
-        status = UnitStatus.getStatusByName((String) response.getData().get("status"));
+        status = new Gson().fromJson((String) response.getData().get("status"), new TypeToken<UnitStatus>(){}.getType());
         return status;
     }
 
@@ -70,7 +73,7 @@ public class Unit implements Productions{
     public double getHp() {
         Request request = new Request();
         request.setHeader("getHp");
-        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        //request.addData("token", UserController.getInstance().getUserLoggedIn());
         request.addData("militaryType", militaryType);
         request.addData("groundNumber", ground.getNumber());
         Response response = NetworkController.send(request);

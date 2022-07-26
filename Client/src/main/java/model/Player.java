@@ -300,7 +300,7 @@ public class Player {
     public ArrayList<Unit> getUnits() {
         Request request = new Request();
         request.setHeader("getUnits");
-        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("token", user);
         Response response = NetworkController.send(request);
         return new Gson().fromJson((String) response.getData().get("units"), new TypeToken<ArrayList<Unit>>(){}.getType());
     }
