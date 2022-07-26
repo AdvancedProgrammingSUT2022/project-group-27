@@ -16,8 +16,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.City;
+import model.Ground;
 import model.Player;
 import model.Unit;
+import viewControllers.ConquerCityPanel;
 import viewControllers.GraphicOfGame;
 import viewControllers.Main;
 import viewControllers.Menus;
@@ -166,6 +169,16 @@ public class UnitPanel extends Menus {
                             try {
                                 int number = Integer.parseInt(text);
                                 Message message = Game.getInstance().meleeFight(unit, number);
+                                if (message == Message.CONQUER_CITY) {
+                                    ConquerCityPanel conquerCityPanel = new ConquerCityPanel();
+                                    ConquerCityPanel.setCity(City.findCityByGround(Ground.getGroundByNumber(number)));
+                                    ConquerCityPanel.setPlayer(player);
+                                    try {
+                                        conquerCityPanel.start(new Stage());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                                 showAlert(message);
                                 list.getChildren().remove(textField);
                             } catch (NumberFormatException e) {

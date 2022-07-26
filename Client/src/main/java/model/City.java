@@ -71,6 +71,18 @@ public class City {
         return null;
     }
 
+    public static City findCityByGround(Ground ground) {
+        ArrayList<Player> list = Player.getAllPlayers();
+        for (Player player: list) {
+            ArrayList<City> cities = player.getCities();
+            for (City city : cities) {
+                if (city.groundNumber() == ground.getNumber()) return city;
+            }
+        }
+
+        return null;
+    }
+
     public Ground getGround() {
         return ground;
     }

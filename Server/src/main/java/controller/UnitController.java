@@ -143,9 +143,13 @@ public class UnitController extends Controller {
 
         if (unit instanceof MeleeUnit && unit.getGround().AreTheseTwoGroundAdjacent(unit.getGround(), ground)) {
             City city = City.findCityByGround(ground, ground.ownerOfThisGround());
+            Message message = Message.SUCCESS_WORK;
             if (city == null) ((MeleeUnit)unit).combat(ground);
-            else ((MeleeUnit)unit).combat(city);
-            return Message.SUCCESS_WORK;
+            else {
+                boolean isWin = ((MeleeUnit)unit).combat(city);
+                if (isWin) message = Message.CONQUER_CITY;
+            }
+            return message;
         }
 
         return Message.UNIT_CAN_NOT_DO;

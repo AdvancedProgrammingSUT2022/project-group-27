@@ -26,7 +26,7 @@ public abstract class Menus extends Application {
     protected void showAlert(Message message) {
         Alert alert;
 
-        if (message != Message.SUCCESS_WORK) {
+        if (message != Message.SUCCESS_WORK && message != Message.CONQUER_CITY) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Error");
         } else {

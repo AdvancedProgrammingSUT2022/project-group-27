@@ -37,7 +37,8 @@ public enum Message {
     UNIT_CAN_NOT_DO("Your unit can't do this action"),
     SUCCESS_WORK("Everything happens successfully:)"),
     FIGHTING_START("fighting is start..."),
-    LOST_RESPONSE("Unfortunately, we don't get response from server");
+    LOST_RESPONSE("Unfortunately, we don't get response from server"),
+    CONQUER_CITY("ConquerCity");
 
     private String message;
 
