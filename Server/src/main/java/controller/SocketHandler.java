@@ -480,6 +480,91 @@ public class SocketHandler extends Thread{
             } case "technologiesThatCanBeObtained" -> {
                 Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
                 response.addData("list", new Gson().toJson(player.technologiesThatCanBeObtained()));
+            } case "setStatus" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String militaryType = (String) request.getData().get("militaryType");
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                UnitStatus status = new Gson().fromJson((String) request.getData().get("status"), new TypeToken<UnitStatus>(){}.getType());
+                for (int i = 0; i < player.getUnits().size(); i++) {
+                    Unit unit = player.getUnits().get(i);
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) unit.setStatus(status);
+                }
+            } case "established" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String militaryType = (String) request.getData().get("militaryType");
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                for (int i = 0; i < player.getUnits().size(); i++) {
+                    Unit unit = player.getUnits().get(i);
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) {
+                        Message message = UnitController.established(unit);
+                        response.addData("message", new Gson().toJson(message));
+                    }
+                }
+            } case "rangedFight" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String militaryType = (String) request.getData().get("militaryType");
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                int number = (int) Math.floor((Double) request.getData().get("number"));
+                for (int i = 0; i < player.getUnits().size(); i++) {
+                    Unit unit = player.getUnits().get(i);
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) {
+                        Message message = UnitController.rangedFight(unit, number);
+                        response.addData("message", new Gson().toJson(message));
+                    }
+                }
+            } case "meleeFight" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String militaryType = (String) request.getData().get("militaryType");
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                int number = (int) Math.floor((Double) request.getData().get("number"));
+                for (int i = 0; i < player.getUnits().size(); i++) {
+                    Unit unit = player.getUnits().get(i);
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) {
+                        Message message = UnitController.meleeFight(unit, number);
+                        response.addData("message", new Gson().toJson(message));
+                    }
+                }
+            } case "readyToRangedFight" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String militaryType = (String) request.getData().get("militaryType");
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                for (int i = 0; i < player.getUnits().size(); i++) {
+                    Unit unit = player.getUnits().get(i);
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) {
+                        Message message = UnitController.readyToRangedFight(unit);
+                        response.addData("message", new Gson().toJson(message));
+                    }
+                }
+            } case "plundering" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String militaryType = (String) request.getData().get("militaryType");
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                for (int i = 0; i < player.getUnits().size(); i++) {
+                    Unit unit = player.getUnits().get(i);
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) {
+                        Message message = UnitController.plundering(unit);
+                        response.addData("message", new Gson().toJson(message));
+                    }
+                }
+            } case "removeOneOrder" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String militaryType = (String) request.getData().get("militaryType");
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                for (int i = 0; i < player.getUnits().size(); i++) {
+                    Unit unit = player.getUnits().get(i);
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) {
+                        String message = UnitController.removeOneOrder(unit);
+                        response.addData("message", message);
+                    }
+                }
+            } case "deleteUnit" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                String militaryType = (String) request.getData().get("militaryType");
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                for (int i = 0; i < player.getUnits().size(); i++) {
+                    Unit unit = player.getUnits().get(i);
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) UnitController.deleteUnit(unit);
+                }
             }
             default -> {
                 response.setStatus(400);

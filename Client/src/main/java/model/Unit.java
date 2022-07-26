@@ -1,6 +1,7 @@
 package model;
 
 import Enum.*;
+import com.google.gson.Gson;
 import controller.NetworkController;
 import controller.UserController;
 
@@ -108,5 +109,16 @@ public class Unit implements Productions{
             request.addData("groundNumber", ground.getNumber());
             Response response = NetworkController.send(request);
         }
+    }
+
+    public void setStatus(UnitStatus status) {
+        this.status = status;
+        Request request = new Request();
+        request.setHeader("setStatus");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("militaryType", militaryType);
+        request.addData("groundNumber", ground.getNumber());
+        request.addData("status", new Gson().toJson(status));
+        Response response = NetworkController.send(request);
     }
 }

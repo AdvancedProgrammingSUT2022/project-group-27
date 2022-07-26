@@ -1,9 +1,12 @@
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import model.Ground;
 import model.Request;
 import model.Response;
 import model.Unit;
+import Enum.Message;
 
 public class Game {
     //singleton pattern
@@ -65,5 +68,76 @@ public class Game {
         request.setHeader("isFinished");
         Response response = NetworkController.send(request);
         return (boolean) response.getData().get("answer");
+    }
+
+    public Message established(Unit unit) {
+        Request request = new Request();
+        request.setHeader("established");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("militaryType", unit.getMilitaryType());
+        request.addData("groundNumber", unit.getGround().getNumber());
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("message"), new TypeToken<Message>(){}.getType());
+    }
+
+    public Message rangedFight(Unit unit, int number) {
+        Request request = new Request();
+        request.setHeader("rangedFight");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("militaryType", unit.getMilitaryType());
+        request.addData("groundNumber", unit.getGround().getNumber());
+        request.addData("number", number);
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("message"), new TypeToken<Message>(){}.getType());
+    }
+
+    public Message meleeFight(Unit unit, int number) {
+        Request request = new Request();
+        request.setHeader("meleeFight");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("militaryType", unit.getMilitaryType());
+        request.addData("groundNumber", unit.getGround().getNumber());
+        request.addData("number", number);
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("message"), new TypeToken<Message>(){}.getType());
+    }
+
+    public Message readyToRangedFight(Unit unit) {
+        Request request = new Request();
+        request.setHeader("readyToRangedFight");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("militaryType", unit.getMilitaryType());
+        request.addData("groundNumber", unit.getGround().getNumber());
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("message"), new TypeToken<Message>(){}.getType());
+    }
+
+    public Message plundering(Unit unit) {
+        Request request = new Request();
+        request.setHeader("plundering");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("militaryType", unit.getMilitaryType());
+        request.addData("groundNumber", unit.getGround().getNumber());
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("message"), new TypeToken<Message>(){}.getType());
+    }
+
+    public String removeOneOrder(Unit unit) {
+        Request request = new Request();
+        request.setHeader("removeOneOrder");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("militaryType", unit.getMilitaryType());
+        request.addData("groundNumber", unit.getGround().getNumber());
+        Response response = NetworkController.send(request);
+        return (String) response.getData().get("message");
+    }
+
+    public void deleteUnit(Unit unit) {
+        Request request = new Request();
+        request.setHeader("deleteUnit");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("militaryType", unit.getMilitaryType());
+        request.addData("groundNumber", unit.getGround().getNumber());
+        Response response = NetworkController.send(request);
     }
 }
