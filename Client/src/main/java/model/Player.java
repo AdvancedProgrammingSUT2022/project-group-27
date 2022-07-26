@@ -85,12 +85,21 @@ public class Player {
         request.addData("player", user);
         Response response = NetworkController.send(request);
         ArrayList<Integer> citiesGroundNumbers =  new Gson().fromJson((String) response.getData().get("cities"), new TypeToken<ArrayList<Integer>>(){}.getType());
-        for (int i = 0; i < cities.size(); i++) {
-            City city = cities.get(i);
-            if (!citiesGroundNumbers.contains(city.groundNumber())) cities.remove(city);
-        }
+        if (user.equals(UserController.getInstance().getUsername())) {
+            for (int i = 0; i < cities.size(); i++) {
+                City city = cities.get(i);
+                if (!citiesGroundNumbers.contains(city.groundNumber())) cities.remove(city);
+            }
 
-        return cities;
+            return cities;
+        } else {
+            ArrayList<City> list = new ArrayList<>();
+            for (Integer citiesGroundNumber : citiesGroundNumbers) {
+                list.add(new City("", Ground.getGroundByNumber(citiesGroundNumber)));
+            }
+
+            return list;
+        }
     }
 
     public void addCity(City city) {
@@ -283,7 +292,7 @@ public class Player {
     public int getCapitalGroundNumber() {
         Request request = new Request();
         request.setHeader("getCapitalGroundNumber");
-        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("token", user);
         Response response = NetworkController.send(request);
         return (int) Math.floor((Double) response.getData().get("number"));
     }

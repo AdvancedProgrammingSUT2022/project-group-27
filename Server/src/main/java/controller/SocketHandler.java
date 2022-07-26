@@ -370,10 +370,14 @@ public class SocketHandler extends Thread{
             } case "getHpCity" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
-                response.addData("hp", City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getHp());
+                for (Player player1: Player.getAllPlayers()) {
+                    if (City.findCityByGround(Ground.getGroundByNumber(groundNumber), player1) != null)
+                        response.addData("hp", City.findCityByGround(Ground.getGroundByNumber(groundNumber), player1).getHp());
+                }
             } case "getCapitalGroundNumber" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
-                response.addData("number", player.getCapital().getGround().getNumber());
+                if (player.getCapital() != null) response.addData("number", player.getCapital().getGround().getNumber());
+                else response.addData("number", 0);
             } case "getAllRivers" -> {
                 response.addData("rivers", new Gson().toJson(River.getAllRivers()));
             } case "setxLocation" -> {
