@@ -675,6 +675,17 @@ public class SocketHandler extends Thread{
                 String selection = (String) request.getData().get("selection");
                 Message message = (new BuildCityController()).changeConstruction(City.findCityByGround(Ground.getGroundByNumber(groundNumber), player), selection);
                 response.addData("message", new Gson().toJson(message));
+            } case "setPuppet" -> {
+                Player owner = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                boolean isPuppet = (Boolean) request.getData().get("isPuppet");
+                City.findCityByGround(Ground.getGroundByNumber(groundNumber), owner).setPuppet(isPuppet, player);
+            } case "setPlayer" -> {
+                Player owner = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                City.findCityByGround(Ground.getGroundByNumber(groundNumber), owner).setPlayer(player);
             }
             default -> {
                 response.setStatus(400);

@@ -207,4 +207,23 @@ public class City {
         Response response = NetworkController.send(request);
         return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<BuildingsType>>(){}.getType());
     }
+
+    public void setPuppet(boolean b, Player player) {
+        Request request = new Request();
+        request.setHeader("setPuppet");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("player", player.getUser());
+        request.addData("groundNumber", ground.getNumber());
+        request.addData("isPuppet", b);
+        Response response = NetworkController.send(request);
+    }
+
+    public void setPlayer(Player player) {
+        Request request = new Request();
+        request.setHeader("setPlayer");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("player", player.getUser());
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+    }
 }
