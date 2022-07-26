@@ -32,6 +32,7 @@ public class RangedUnit extends MilitaryUnit{
         decreasedHp *= (double) 100.0 / (ground.getGroundType().getCombatCoefficient() + 100.0);
         decreasedHp *= (double) 100.0 / (ground.getFeatureType().getCombatCoefficient() + 100.0);
 
+        System.out.println("73 " + decreasedHp);
         if (militaryUnit.militaryType.getCombatType() != "Mounted" && militaryUnit.militaryType.getCombatType() != "Siege") {
             if (militaryUnit.turnsFortified >= 2)
                 decreasedHp /= 2;

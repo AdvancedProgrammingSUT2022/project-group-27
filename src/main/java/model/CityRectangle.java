@@ -18,7 +18,7 @@ public class CityRectangle extends Circle {
         this.setLayoutX(cityUnit.getGround().getyLocation());
         this.setLayoutY(cityUnit.getGround().getxLocation());
         this.setRadius(40);
-        if (Player.whichPlayerTurnIs().getCapital().getGround().getNumber() == cityUnit.getGround().getNumber())
+        if (Player.whichPlayerTurnIs().getCapital() != null && Player.whichPlayerTurnIs().getCapital().getGround().getNumber() == cityUnit.getGround().getNumber())
             this.setFill(GlobalVariables.getImagePattern("/images/crown.jfif"));
         else this.setFill(GlobalVariables.getImagePattern("/images/city.png"));
         if (city.getHp() < 19.7)
