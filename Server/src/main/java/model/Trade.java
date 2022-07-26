@@ -28,6 +28,14 @@ public class Trade {
         list.add(this);
     }
 
+    public static Trade findTrade(Trade trade) {
+        for (Trade trade1: list) {
+            if (trade1.sender.equals(trade.sender) && trade1.receiver.equals(trade.receiver) && trade1.receive.equals(trade.receive) &&
+                    trade1.send.equals(trade.send) && trade1.numberSend == trade.numberSend && trade1.numberReceive == trade.numberReceive) return trade1;
+        }
+        return trade;
+    }
+
     public boolean accept() {
         isAccepted = true;
         User sender = User.findUser(this.sender);

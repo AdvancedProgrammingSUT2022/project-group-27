@@ -47,6 +47,16 @@ public class Trade {
         return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<Trade>>(){}.getType());
     }
 
+    public static ArrayList<Trade> userReceiverTrades(String user) {
+        Request request = new Request();
+        request.setHeader("userReceiverTrades");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<Trade>>(){}.getType());
+    }
+
     @Override
     public String toString() {
         return "sending object: " + numberSend + "- " + send.toString() + "\nreceiving object: " + numberReceive + "- " +
@@ -59,5 +69,19 @@ public class Trade {
 
     public boolean isDeny() {
         return isDeny;
+    }
+
+    public void accept() {
+        Request request = new Request();
+        request.setHeader("accept");
+        request.addData("trade", new Gson().toJson(this));
+        Response response = NetworkController.send(request);
+    }
+
+    public void deny() {
+        Request request = new Request();
+        request.setHeader("deny");
+        request.addData("trade", new Gson().toJson(this));
+        Response response = NetworkController.send(request);
     }
 }

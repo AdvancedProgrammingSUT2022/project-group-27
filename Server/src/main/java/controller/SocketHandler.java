@@ -416,6 +416,15 @@ public class SocketHandler extends Thread{
             } case "userTradesAll" -> {
                 User user = User.findUser((String) request.getData().get("user"));
                 response.addData("list", new Gson().toJson(Trade.userTradesAll(user)));
+            } case "userReceiverTrades" -> {
+                User user = User.findUser((String) request.getData().get("user"));
+                response.addData("list", new Gson().toJson(Trade.userReceiverTrades(user)));
+            } case "accept" -> {
+                Trade trade = Trade.findTrade(new Gson().fromJson((String) request.getData().get("trade"), new TypeToken<Trade>(){}.getType()));
+                trade.accept();
+            } case "deny" -> {
+                Trade trade = Trade.findTrade(new Gson().fromJson((String) request.getData().get("trade"), new TypeToken<Trade>(){}.getType()));
+                trade.deny();
             } case "getIsInWar" -> {
                 Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
                 response.addData("list", new Gson().toJson(player.getIsInWar()));

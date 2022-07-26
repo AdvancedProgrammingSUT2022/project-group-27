@@ -710,9 +710,8 @@ public class GraphicOfGame extends Application {
     }
 
     private void setTradeAlert() {
-        /*
         boolean shouldChange = false;
-        for (Trade trade: Trade.userReceiverTrades(Player.whichPlayerTurnIs().getUser())) {
+        for (Trade trade: Trade.userReceiverTrades(UserController.getInstance().getUsername())) {
             if (!trade.isAccepted() && !trade.isDeny()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setHeaderText("Trade");
@@ -728,8 +727,6 @@ public class GraphicOfGame extends Application {
         }
 
         if (shouldChange) initializing();
-
-         */
     }
 
     public void nextTurn(MouseEvent mouseEvent) {
