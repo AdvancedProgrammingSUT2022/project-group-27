@@ -367,4 +367,14 @@ public class Player {
 
         return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<LuxuryResource>>(){}.getType());
     }
+
+    public ArrayList<Notification> getNotificationHistory() {
+        Request request = new Request();
+        request.setHeader("getNotificationHistory");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<Notification>>(){}.getType());
+    }
 }

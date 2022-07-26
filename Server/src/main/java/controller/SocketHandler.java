@@ -471,6 +471,9 @@ public class SocketHandler extends Thread{
                 String send = (String) request.getData().get("send");
                 int numberSend = (int) Math.floor((Double) request.getData().get("numberSend"));
                 Trade trade = new Trade(sender, receiver, receive, numberReceive, send, numberSend);
+            } case "getNotificationHistory" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                response.addData("list", new Gson().toJson(player.getNotificationHistory()));
             }
             default -> {
                 response.setStatus(400);

@@ -523,7 +523,6 @@ public class GraphicOfGame extends Application {
         notificationPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                /*
                 NotificationPanel notificationPanel = new NotificationPanel();
                 NotificationPanel.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 try {
@@ -531,8 +530,6 @@ public class GraphicOfGame extends Application {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                 */
             }
         });
     }
