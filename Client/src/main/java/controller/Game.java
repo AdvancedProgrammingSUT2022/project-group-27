@@ -2,11 +2,8 @@ package controller;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import model.Ground;
-import model.Request;
-import model.Response;
-import model.Unit;
-import Enum.Message;
+import model.*;
+import Enum.*;
 
 public class Game {
     //singleton pattern
@@ -139,5 +136,95 @@ public class Game {
         request.addData("militaryType", unit.getMilitaryType());
         request.addData("groundNumber", unit.getGround().getNumber());
         Response response = NetworkController.send(request);
+    }
+
+    public Message lockCitizenToGround(City city, int number) {
+        Request request = new Request();
+        request.setHeader("lockCitizenToGround");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", city.getGround().getNumber());
+        request.addData("number", number);
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("message"), new TypeToken<Message>(){}.getType());
+    }
+
+    public Message removeFromWork(City city, int number) {
+        Request request = new Request();
+        request.setHeader("removeFromWork");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", city.getGround().getNumber());
+        request.addData("number", number);
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("message"), new TypeToken<Message>(){}.getType());
+    }
+
+    public Message buyGround(City city, int number) {
+        Request request = new Request();
+        request.setHeader("buyGround");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", city.getGround().getNumber());
+        request.addData("number", number);
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("message"), new TypeToken<Message>(){}.getType());
+    }
+
+    public Message buyThings(City city, String selection) {
+        Request request = new Request();
+        request.setHeader("buyThings");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", city.getGround().getNumber());
+        request.addData("selection", selection);
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("message"), new TypeToken<Message>(){}.getType());
+    }
+
+    public boolean canWeHaveThisBuildingType(BuildingsType buildingsType, City city) {
+        Request request = new Request();
+        request.setHeader("canWeHaveThisBuildingType");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", city.getGround().getNumber());
+        request.addData("buildingsType", new Gson().toJson(buildingsType));
+        Response response = NetworkController.send(request);
+        return (Boolean) response.getData().get("message");
+    }
+
+    public boolean canWeHaveThisUnitType(MilitaryType militaryType, City city) {
+        Request request = new Request();
+        request.setHeader("canWeHaveThisUnitType");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", city.getGround().getNumber());
+        request.addData("militaryType", new Gson().toJson(militaryType));
+        Response response = NetworkController.send(request);
+        return (Boolean) response.getData().get("message");
+    }
+
+    public Message buildUnit(City city, String selection) {
+        Request request = new Request();
+        request.setHeader("buildUnit");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", city.getGround().getNumber());
+        request.addData("selection", selection);
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("message"), new TypeToken<Message>(){}.getType());
+    }
+
+    public Message buildBuilding(City city, String selection) {
+        Request request = new Request();
+        request.setHeader("buildBuilding");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", city.getGround().getNumber());
+        request.addData("selection", selection);
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("message"), new TypeToken<Message>(){}.getType());
+    }
+
+    public Message changeConstruction(City city, String selection) {
+        Request request = new Request();
+        request.setHeader("changeConstruction");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", city.getGround().getNumber());
+        request.addData("selection", selection);
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("message"), new TypeToken<Message>(){}.getType());
     }
 }

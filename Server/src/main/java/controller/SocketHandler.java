@@ -565,6 +565,107 @@ public class SocketHandler extends Thread{
                     Unit unit = player.getUnits().get(i);
                     if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) UnitController.deleteUnit(unit);
                 }
+            } case "getRangeOfCity" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                ArrayList<Integer> list = new ArrayList<>();
+                ArrayList<Ground> grounds = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getRangeOfCity();
+                for (Ground ground: grounds) {
+                    list.add(ground.getNumber());
+                }
+                response.addData("list", new Gson().toJson(list));
+            } case "getSavedFood" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("save", City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getSavedFood());
+            } case "getProduction" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("production", City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getProduction());
+            } case "getOwner" -> {
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                for (Player player: Player.getAllPlayers()) {
+                    if (City.findCityByGround(Ground.getGroundByNumber(groundNumber), player) != null) {
+                        response.addData("user", player.getUser().getUsername());
+                        break;
+                    }
+                }
+            } case "getBuildingUnit" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("unit", new Gson().toJson(City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getBuildingUnit()));
+            } case "withoutWorkCitizens" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                response.addData("list", new Gson().toJson(City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).withoutWorkCitizens()));
+            } case "combat" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                int groundOther = (int) Math.floor((Double) request.getData().get("groundOther"));
+                City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).combat(Ground.getGroundByNumber(groundOther));
+            } case "getBuildings" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                ArrayList<Building> buildings = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getBuildings();
+                ArrayList<BuildingsType> list = new ArrayList<>();
+                for (Building building: buildings) {
+                    list.add(building.getType());
+                }
+                response.addData("list", new Gson().toJson(list));
+            } case "lockCitizenToGround" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                int number = (int) Math.floor((Double) request.getData().get("number"));
+                Message message = (new CityMenuController()).lockCitizenToGround(City.findCityByGround(Ground.getGroundByNumber(groundNumber), player), number);
+                response.addData("message", new Gson().toJson(message));
+            } case "removeFromWork" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                int number = (int) Math.floor((Double) request.getData().get("number"));
+                Message message = (new CityMenuController()).removeFromWork(City.findCityByGround(Ground.getGroundByNumber(groundNumber), player), number);
+                response.addData("message", new Gson().toJson(message));
+            } case "buyGround" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                int number = (int) Math.floor((Double) request.getData().get("number"));
+                Message message = (new CityMenuController()).buyGround(City.findCityByGround(Ground.getGroundByNumber(groundNumber), player), number);
+                response.addData("message", new Gson().toJson(message));
+            } case "buyThings" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                String selection = (String) request.getData().get("selection");
+                Message message = (new CityMenuController()).buyThings(City.findCityByGround(Ground.getGroundByNumber(groundNumber), player), selection);
+                response.addData("message", new Gson().toJson(message));
+            } case "canWeHaveThisBuildingType" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                BuildingsType buildingsType = new Gson().fromJson((String) request.getData().get("buildingsType"), new TypeToken<BuildingsType>(){}.getType());
+                Boolean message = (new CityMenuController()).canWeHaveThisBuildingType(buildingsType, City.findCityByGround(Ground.getGroundByNumber(groundNumber), player));
+                response.addData("message", message);
+            } case "canWeHaveThisUnitType" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                MilitaryType militaryType = new Gson().fromJson((String) request.getData().get("militaryType"), new TypeToken<BuildingsType>(){}.getType());
+                Boolean message = (new CityMenuController()).canWeHaveThisUnitType(militaryType, City.findCityByGround(Ground.getGroundByNumber(groundNumber), player));
+                response.addData("message", message);
+            } case "buildUnit" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                String selection = (String) request.getData().get("selection");
+                Message message = (new BuildCityController()).buildUnit(City.findCityByGround(Ground.getGroundByNumber(groundNumber), player), selection);
+                response.addData("message", new Gson().toJson(message));
+            } case "buildBuilding" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                String selection = (String) request.getData().get("selection");
+                Message message = (new BuildCityController()).buildBuilding(City.findCityByGround(Ground.getGroundByNumber(groundNumber), player), selection);
+                response.addData("message", new Gson().toJson(message));
+            } case "changeConstruction" -> {
+                Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
+                int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
+                String selection = (String) request.getData().get("selection");
+                Message message = (new BuildCityController()).changeConstruction(City.findCityByGround(Ground.getGroundByNumber(groundNumber), player), selection);
+                response.addData("message", new Gson().toJson(message));
             }
             default -> {
                 response.setStatus(400);

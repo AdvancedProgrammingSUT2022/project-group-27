@@ -588,7 +588,6 @@ public class GraphicOfGame extends Application {
         cityPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                /*
                 CityPanel cityPanel = new CityPanel();
                 CityPanel.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 CityPanel.setGame(GraphicOfGame.this);
@@ -597,8 +596,6 @@ public class GraphicOfGame extends Application {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                 */
             }
         });
     }

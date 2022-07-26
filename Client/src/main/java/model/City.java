@@ -1,6 +1,8 @@
 package model;
 
 import Enum.*;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import controller.NetworkController;
 import controller.UserController;
 
@@ -9,7 +11,7 @@ import java.util.regex.Matcher;
 
 public class City {
     private String name;
-    private int savedFood;
+    private double savedFood;
     private MilitaryType buildingUnit = null;
     private Ground ground;
     private Productions construction; //in the future, we should write a class for constructions and get type here
@@ -27,52 +29,27 @@ public class City {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getSavedFood() {
+    public double getSavedFood() {
+        Request request = new Request();
+        request.setHeader("getSavedFood");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+        savedFood = (Double) response.getData().get("save");
         return savedFood;
     }
 
-    public void setSavedFood(int savedFood) {
-        this.savedFood = savedFood;
-    }
-
-
-    public void setGround(Ground ground) {
-        this.ground = ground;
-    }
-
-    public void setConstruction(Productions construction) {
-        this.construction = construction;
-    }
-
-    public boolean isPuppet() {
-        return isPuppet;
-    }
-
-    public void setPuppet(boolean puppet) {
-        isPuppet = puppet;
-    }
-
-    public void setHp(double hp) {
-        this.hp = hp;
-    }
-
-    public boolean isMainCapital() {
-        return isMainCapital;
-    }
-
-    public void setMainCapital(boolean mainCapital) {
-        isMainCapital = mainCapital;
-    }
-
-    public ArrayList<Unit> getListOfUnitsInCity() {
-        return listOfUnitsInCity;
-    }
-
     public ArrayList<Ground> getRangeOfCity() {
+        Request request = new Request();
+        request.setHeader("getRangeOfCity");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+        ArrayList<Integer> list = new Gson().fromJson((String) response.getData().get("list"),  new TypeToken<ArrayList<Integer>>(){}.getType());
+        rangeOfCity.clear();
+        for (Integer integer: list) {
+            rangeOfCity.add(Ground.getGroundByNumber(integer));
+        }
         return rangeOfCity;
     }
 
@@ -163,7 +140,7 @@ public class City {
         request.addData("city", this);
         Response response = NetworkController.send(request);
 
-        if (response != null) listOfCitizens = (ArrayList<Citizen>) response.getData().get("listOfCitizens");
+        if (response != null) listOfCitizens = new Gson().fromJson((String) response.getData().get("listOfCitizens"),  new TypeToken<ArrayList<Citizen>>(){}.getType());
         return listOfCitizens;
     }
 
@@ -178,4 +155,56 @@ public class City {
         return (int) Math.ceil(remainedTurns);
     }
 
+    public double getProduction() {
+        Request request = new Request();
+        request.setHeader("getProduction");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+        return (Double) response.getData().get("production");
+    }
+
+    public Player getOwner() {
+        Request request = new Request();
+        request.setHeader("getOwner");
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+        return Player.getPlayerByUser((String) response.getData().get("user"));
+    }
+
+    public MilitaryType getBuildingUnit() {
+        Request request = new Request();
+        request.setHeader("getBuildingUnit");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("unit"), new TypeToken<MilitaryType>(){}.getType());
+    }
+
+    public ArrayList<Citizen> withoutWorkCitizens() {
+        Request request = new Request();
+        request.setHeader("withoutWorkCitizens");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<Citizen>>(){}.getType());
+    }
+
+    public void combat(Ground ground) {
+        Request request = new Request();
+        request.setHeader("combat");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", this.ground.getNumber());
+        request.addData("groundOther", ground.getNumber());
+        Response response = NetworkController.send(request);
+    }
+
+    public ArrayList<BuildingsType> getBuildings() {
+        Request request = new Request();
+        request.setHeader("getBuildings");
+        request.addData("token", UserController.getInstance().getUserLoggedIn());
+        request.addData("groundNumber", ground.getNumber());
+        Response response = NetworkController.send(request);
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<BuildingsType>>(){}.getType());
+    }
 }
