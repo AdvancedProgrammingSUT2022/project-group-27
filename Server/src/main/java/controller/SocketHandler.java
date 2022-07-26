@@ -453,8 +453,25 @@ public class SocketHandler extends Thread{
                 City city = (City) request.getData().get("city");
                 response.setStatus(200);
                 response.addData("remainedTurnsToBuild", city.getCityStrength());
+            } case "setInWar" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                Player other = Player.findPlayerByUser(User.findUser((String) request.getData().get("other")));
+                player.setInWar(other);
+            } case "getAllStrategicResources" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                response.addData("list", new Gson().toJson(player.getAllStrategicResources()));
+            } case "getAllLuxuryResources" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                response.addData("list", new Gson().toJson(player.getAllLuxuryResources()));
+            } case "addTrade" -> {
+                User sender = User.findUser((String) request.getData().get("sender"));
+                User receiver = User.findUser((String) request.getData().get("receiver"));
+                String receive = (String) request.getData().get("receive");
+                int numberReceive = (int) Math.floor((Double) request.getData().get("numberReceive"));
+                String send = (String) request.getData().get("send");
+                int numberSend = (int) Math.floor((Double) request.getData().get("numberSend"));
+                Trade trade = new Trade(sender, receiver, receive, numberReceive, send, numberSend);
             }
-
             default -> {
                 response.setStatus(400);
                 response.addData("error", "invalid command");

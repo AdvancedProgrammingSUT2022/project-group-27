@@ -475,16 +475,13 @@ public class GraphicOfGame extends Application {
         diplomacyPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                /*
                 DiplomacyPanel diplomacyPanel = new DiplomacyPanel();
-                DiplomacyPanel.setPlayer(Player.whichPlayerTurnIs());
+                DiplomacyPanel.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 try {
                     diplomacyPanel.start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                 */
             }
         });
     }

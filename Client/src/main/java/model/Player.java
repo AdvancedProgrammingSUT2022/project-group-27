@@ -339,4 +339,32 @@ public class Player {
 
         return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<TechnologyType>>(){}.getType());
     }
+
+    public void setInWar(Player other) {
+        Request request = new Request();
+        request.setHeader("setInWar");
+        request.addData("user", user);
+        request.addData("other", other);
+        Response response = NetworkController.send(request);
+    }
+
+    public ArrayList<StrategicResource> getAllStrategicResources() {
+        Request request = new Request();
+        request.setHeader("getAllStrategicResources");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<StrategicResource>>(){}.getType());
+    }
+
+    public ArrayList<LuxuryResource> getAllLuxuryResources() {
+        Request request = new Request();
+        request.setHeader("getAllLuxuryResources");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<LuxuryResource>>(){}.getType());
+    }
 }

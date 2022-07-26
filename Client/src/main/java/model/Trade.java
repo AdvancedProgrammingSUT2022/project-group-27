@@ -19,6 +19,24 @@ public class Trade {
     private boolean isAccepted = false;
     private boolean isDeny = false;
 
+    public Trade(String sender, String receiver, String receive, int numberReceive, String send, int numberSend) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.receive = receive;
+        this.numberReceive = numberReceive;
+        this.send = send;
+        this.numberSend = numberSend;
+        Request request = new Request();
+        request.setHeader("addTrade");
+        request.addData("sender", sender);
+        request.addData("receiver", receiver);
+        request.addData("receive", receive);
+        request.addData("numberReceive", numberReceive);
+        request.addData("send", send);
+        request.addData("numberSend", numberSend);
+        Response response = NetworkController.send(request);
+    }
+
     public static ArrayList<Trade> userTradesAll(String user) {
         Request request = new Request();
         request.setHeader("userTradesAll");
