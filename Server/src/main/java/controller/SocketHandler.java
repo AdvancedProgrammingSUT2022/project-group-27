@@ -408,7 +408,10 @@ public class SocketHandler extends Thread{
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
                 Productions construction = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getConstruction();
-                response.addData("construction", construction.name());
+                if (construction == null)
+                    response.addData("construction", "nothing");
+                else
+                    response.addData("construction", construction.name());
             } case "increaseGold" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 int number = (int) Math.floor((Double) request.getData().get("number"));
@@ -470,12 +473,12 @@ public class SocketHandler extends Thread{
                 City city = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player);
                 response.setStatus(200);
                 response.addData("strength", city.getCityStrength());
-            } case "getListOfCitizens" -> {
+            } case "getNumberOfCitizens" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
                 City city = City.findCityByGround(Ground.getGroundByNumber(groundNumber), player);
                 response.setStatus(200);
-                response.addData("listOfCitizens", city.getCityStrength());
+                response.addData("numberOfCitizens", city.getCityStrength());
             } case "getRemainedTurnsToBuild" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));

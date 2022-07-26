@@ -154,16 +154,16 @@ public class City {
         return (int) Math.ceil(strength);
     }
 
-    public ArrayList<Citizen> getListOfCitizens() {
-        ArrayList<Citizen> listOfCitizens = new ArrayList<>();
+    public int getNumberOfCitizens() {
+        Double numberOfCitizens = 0.0;
         Request request = new Request();
-        request.setHeader("getListOfCitizens");
+        request.setHeader("getNumberOfCitizens");
         request.addData("token", UserController.getInstance().getUserLoggedIn());
         request.addData("groundNumber", ground.getNumber());
         Response response = NetworkController.send(request);
 
-        if (response != null) listOfCitizens = new Gson().fromJson((String) response.getData().get("listOfCitizens"),  new TypeToken<ArrayList<Citizen>>(){}.getType());
-        return listOfCitizens;
+        if (response != null) numberOfCitizens = (Double) response.getData().get("numberOfCitizens");
+        return (int) Math.ceil(numberOfCitizens);
     }
 
     public int getRemainedTurnsToBuild() {

@@ -52,7 +52,7 @@ public class EconomicOverview extends Menus {
 
     public void setList() {
         for (City city: player.getCities()) {
-            String string = "city name: " + city.getName() + "\ndemography: " + city.getListOfCitizens().size() +
+            String string = "city name: " + city.getName() + "\ndemography: " + city.getNumberOfCitizens() +
                     "\npower: " + city.getCityStrength() + "\noutput of food: " + city.getFoodPerTurn() + "\nscience: " +
                     city.getScience() + "\ngold: " + city.getGold();
 
