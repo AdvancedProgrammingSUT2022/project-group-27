@@ -52,7 +52,9 @@ public class DiplomacyInformationPanel extends Application {
     }
 
     private void setList() {
-        for (int i = 0; i < player.getIsInWar().size(); i++) {
+        int size = player.getIsInWar().size();
+        System.out.println(size + " ... " + Player.getAllPlayers().size());
+        for (int i = 0; i < size; i++) {
             Player other = Player.getAllPlayers().get(i);
             if (Player.getAllPlayers().get(i) == player) continue;
 

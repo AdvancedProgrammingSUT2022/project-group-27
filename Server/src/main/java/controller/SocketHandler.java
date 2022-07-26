@@ -603,6 +603,12 @@ public class SocketHandler extends Thread{
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
                 response.addData("production", City.findCityByGround(Ground.getGroundByNumber(groundNumber), player).getProduction());
+            } case "getAllPlayers" -> {
+                ArrayList<String> players = new ArrayList<>();
+                for (Player player: Player.getAllPlayers()) {
+                    players.add(player.getUser().getUsername());
+                }
+                response.addData("players", new Gson().toJson(players));
             } case "getOwner" -> {
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
                 for (Player player: Player.getAllPlayers()) {

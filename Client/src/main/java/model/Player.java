@@ -45,8 +45,24 @@ public class Player {
         }
     }
 
+    public Player(String user) {
+        this.user = user;
+    }
+
     public static ArrayList<Player> getAllPlayers() {
-        return list;
+        ArrayList<Player> playerArrayList = new ArrayList<>();
+        Request request = new Request();
+        request.setHeader("getAllPlayers");
+        Response response = NetworkController.send(request);
+        ArrayList<String> players =  new Gson().fromJson((String) response.getData().get("players"), new TypeToken<ArrayList<String>>(){}.getType());
+        for (String s : players) {
+            if (s.equals(UserController.getInstance().getUsername())) playerArrayList.add(getThisPlayer());
+            else {
+                Player player = new Player(s);
+                playerArrayList.add(player);
+            }
+        }
+        return playerArrayList;
     }
 
     public ArrayList<City> getCities() {
@@ -102,8 +118,16 @@ public class Player {
     }
 
     public static Player getPlayerByUser(String user) {
-        for (Player player: list) {
+        for (Player player: Player.getAllPlayers()) {
             if (player.user.equals(user)) return player;
+        }
+
+        return null;
+    }
+
+    public static Player getThisPlayer() {
+        for (Player player: list) {
+            if (player.user.equals(UserController.getInstance().getUsername())) return player;
         }
 
         return null;
