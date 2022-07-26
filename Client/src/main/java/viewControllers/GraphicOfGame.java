@@ -508,16 +508,13 @@ public class GraphicOfGame extends Application {
         militaryPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                /*
                 MilitaryOverView militaryOverView = new MilitaryOverView();
-                MilitaryOverView.setPlayer(Player.whichPlayerTurnIs());
+                MilitaryOverView.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 try {
                     militaryOverView.start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                 */
             }
         });
     }
@@ -528,7 +525,7 @@ public class GraphicOfGame extends Application {
             public void handle(MouseEvent mouseEvent) {
                 /*
                 NotificationPanel notificationPanel = new NotificationPanel();
-                NotificationPanel.setPlayer(Player.whichPlayerTurnIs());
+                NotificationPanel.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 try {
                     notificationPanel.start(new Stage());
                 } catch (Exception e) {
@@ -564,7 +561,7 @@ public class GraphicOfGame extends Application {
             public void handle(MouseEvent mouseEvent) {
                 /*
                 TechnologyMenu technologyMenu = new TechnologyMenu();
-                TechnologyMenu.setPlayer(Player.whichPlayerTurnIs());
+                TechnologyMenu.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 TechnologyMenu.setGame(GraphicOfGame.this);
                 try {
                     technologyMenu.start(new Stage());
@@ -583,7 +580,7 @@ public class GraphicOfGame extends Application {
             public void handle(MouseEvent mouseEvent) {
                 /*
                 UnitPanel unitPanel = new UnitPanel();
-                UnitPanel.setPlayer(Player.whichPlayerTurnIs());
+                UnitPanel.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 UnitPanel.setGame(GraphicOfGame.this);
                 try {
                     unitPanel.start(new Stage());
@@ -602,7 +599,7 @@ public class GraphicOfGame extends Application {
             public void handle(MouseEvent mouseEvent) {
                 /*
                 CityPanel cityPanel = new CityPanel();
-                CityPanel.setPlayer(Player.whichPlayerTurnIs());
+                CityPanel.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 CityPanel.setGame(GraphicOfGame.this);
                 try {
                     cityPanel.start(new Stage());
