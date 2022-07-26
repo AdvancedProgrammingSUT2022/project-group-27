@@ -474,6 +474,12 @@ public class SocketHandler extends Thread{
             } case "getNotificationHistory" -> {
                 Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
                 response.addData("list", new Gson().toJson(player.getNotificationHistory()));
+            } case "getAllTechnologyTypes" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                response.addData("list", new Gson().toJson(player.getAllTechnologyTypes()));
+            } case "technologiesThatCanBeObtained" -> {
+                Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
+                response.addData("list", new Gson().toJson(player.technologiesThatCanBeObtained()));
             }
             default -> {
                 response.setStatus(400);

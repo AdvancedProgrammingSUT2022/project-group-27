@@ -556,7 +556,6 @@ public class GraphicOfGame extends Application {
         technologyPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                /*
                 TechnologyMenu technologyMenu = new TechnologyMenu();
                 TechnologyMenu.setPlayer(Player.getPlayerByUser(UserController.getInstance().getUsername()));
                 TechnologyMenu.setGame(GraphicOfGame.this);
@@ -565,8 +564,6 @@ public class GraphicOfGame extends Application {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                 */
             }
         });
     }

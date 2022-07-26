@@ -377,4 +377,24 @@ public class Player {
 
         return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<Notification>>(){}.getType());
     }
+
+    public ArrayList<Technology> getAllTechnologyTypes() {
+        Request request = new Request();
+        request.setHeader("getAllTechnologyTypes");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<Technology>>(){}.getType());
+    }
+
+    public ArrayList<Technology> technologiesThatCanBeObtained() {
+        Request request = new Request();
+        request.setHeader("technologiesThatCanBeObtained");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        if (response == null) return new ArrayList<>();
+
+        return new Gson().fromJson((String) response.getData().get("list"), new TypeToken<ArrayList<Technology>>(){}.getType());
+    }
 }
