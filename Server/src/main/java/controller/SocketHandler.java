@@ -263,7 +263,7 @@ public class SocketHandler extends Thread{
                 String militaryType = (String) request.getData().get("militaryType");
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
                 for (Unit unit: player.getUnits()) {
-                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) response.addData("mp", unit.getHp());
+                    if (unit.getGround().getNumber() == groundNumber && unit.getMilitaryType().name().equals(militaryType)) response.addData("mp", unit.getMp());
                 }
             } case "getCities" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("player")));
