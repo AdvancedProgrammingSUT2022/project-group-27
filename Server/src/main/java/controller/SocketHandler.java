@@ -706,6 +706,9 @@ public class SocketHandler extends Thread{
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
                 Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("user")));
                 City.findCityByGround(Ground.getGroundByNumber(groundNumber), owner).setPlayer(player);
+            } case "isItOurTurn" -> {
+                String user = (String) request.getData().get("user");
+                response.addData("answer", Player.isItOurTurn(user));
             }
             default -> {
                 response.setStatus(400);

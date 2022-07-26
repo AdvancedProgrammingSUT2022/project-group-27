@@ -37,7 +37,13 @@ public class Player {
         request.setHeader("addingPlayer");
         request.addData("user", user);
         Response response = NetworkController.send(request);
-
+        if (!isItOurTurn()) {
+            try {
+                listenForTurn();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         try {
             game.start(stage);
         } catch (Exception e) {
@@ -47,6 +53,14 @@ public class Player {
 
     public Player(String user) {
         this.user = user;
+    }
+
+    private boolean isItOurTurn() {
+        Request request = new Request();
+        request.setHeader("isItOurTurn");
+        request.addData("user", user);
+        Response response = NetworkController.send(request);
+        return (Boolean) response.getData().get("answer");
     }
 
     public static ArrayList<Player> getAllPlayers() {

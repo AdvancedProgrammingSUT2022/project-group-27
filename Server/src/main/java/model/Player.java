@@ -103,6 +103,10 @@ public class Player {
         for (TechnologyType technologyType : TechnologyType.values()) AllTechnologyTypes.add(new Technology(technologyType,technologyType.getCost()));
     }
 
+    public static boolean isItOurTurn(String user) {
+        return Player.whichPlayerTurnIs().getUser().getUsername().equals(user);
+    }
+
     public static boolean isDuplicated(User user) {
         for (Player player: allPlayers) {
             if (player.getUser().getUsername().equals(user.getUsername())) return true;
