@@ -306,7 +306,7 @@ public class GraphicOfGame extends Application {
 
                 VisitedGround visitedGround=new VisitedGround(Ground.getGroundByNumber(i));
                 gamePaneSecond.getChildren().add(visitedGround);
-                System.out.println("higuhurhgrthgirh" + player.getClearToSeeGrounds().size() + " " + player.getWasClearedToSeeGrounds().size());
+              //  System.out.println("higuhurhgrthgirh" + player.getClearToSeeGrounds().size() + " " + player.getWasClearedToSeeGrounds().size());
             }
         }
 

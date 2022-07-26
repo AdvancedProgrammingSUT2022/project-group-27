@@ -58,16 +58,20 @@ public class CreateMap extends Application {
         int cnt=0;
         int startingArz=GlobalVariables.arz+50;
         for (int i=gamePaneSecond.getChildren().size()-1;i>-1;i--){
-            if (gamePaneSecond.getChildren().get(i) instanceof GroundRectangleForCreateMap || gamePaneSecond.getChildren().get(i) instanceof FeatureRectangle
-                    || gamePaneSecond.getChildren().get(i) instanceof RiverRectangle ||
+            if (gamePaneSecond.getChildren().get(i) instanceof GroundRectangleForCreateMap || gamePaneSecond.getChildren().get(i) instanceof FeatureForCreateMap
+                    || gamePaneSecond.getChildren().get(i) instanceof RiverForCreateMap ||
                     gamePaneSecond.getChildren().get(i) instanceof VisitedGround
                     || gamePaneSecond.getChildren().get(i) instanceof UnitRectangle ||
                     gamePaneSecond.getChildren().get(i) instanceof CityRectangle) gamePaneSecond.getChildren().remove(i);
         }
 
-        for (int i=0;i<River.getAllRivers().size();i++){
-            RiverRectangle riverRectangle=new RiverRectangle(River.getAllRivers().get(i).getFirstGround(),River.getAllRivers().get(i).getSecondGround());
-            gamePaneSecond.getChildren().add(riverRectangle);
+        for (int i=1;i<=GlobalVariables.numberOfTiles;i++){
+            for (int j=i+1;j<GlobalVariables.numberOfTiles;j++){
+                if (River.couldWePutRiverBetweenTheseTwoGround(Ground.getGroundByNumber(i),Ground.getGroundByNumber(j))){
+                    RiverForCreateMap river=new RiverForCreateMap(Ground.getGroundByNumber(i),Ground.getGroundByNumber(j));
+                    gamePaneSecond.getChildren().add(river);
+                }
+            }
         }
         for (int i=1;i<=GlobalVariables.numberOfTilesInColumn;i++){
             int startingTool=GlobalVariables.tool+8;
@@ -79,6 +83,10 @@ public class CreateMap extends Application {
                 cnt++;
                 GroundRectangleForCreateMap groundRectangleForCreateMap=new GroundRectangleForCreateMap(Ground.getGroundByNumber(cnt),startingArz,startingTool);
                 gamePaneSecond.getChildren().add(groundRectangleForCreateMap);
+                gamePaneSecond.getChildren().add(new FeatureForCreateMap(groundRectangleForCreateMap,startingArz,startingTool));
+                gamePaneSecond.getChildren().add(new BonusResourceForCreateMap(groundRectangleForCreateMap,startingArz,startingTool));
+                gamePaneSecond.getChildren().add(new StrategicResourceForCreateMap(groundRectangleForCreateMap,startingArz,startingTool));
+                gamePaneSecond.getChildren().add(new LuxuryResourceForCreateMap(groundRectangleForCreateMap,startingArz,startingTool));
                // gamePaneSecond.getChildren().add(new FeatureRectangle(groundRectangleForCreateMap,startingArz,startingTool));
                 Ground ground=Ground.getGroundByNumber(cnt);
                 ground.setxLocation(startingArz);

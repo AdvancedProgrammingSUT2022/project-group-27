@@ -42,4 +42,16 @@ public class River {
         }
         return false;
     }
+    public static void removeRiver(River river){
+        allRivers.remove(river);
+    }
+    public static River GetRiverByGrounds(Ground firstGround,Ground secondGround){
+        for (River river : allRivers){
+            if (river.getFirstGround().equals(firstGround) && river.getSecondGround().equals(secondGround))
+                return river;
+            if (river.getFirstGround().equals(secondGround) && river.getSecondGround().equals(firstGround))
+                return river;
+        }
+        return null;
+    }
 }

@@ -26,9 +26,8 @@ public class InitializeMap {
         if (seed != 6) setGroundsType();
         setGroundsAdjacent();
         setFirstGroundsForPlayers();
-        System.out.println("hey");
-        setRivers();
-        setFeature();
+        if (seed != 6) setRivers();
+        if (seed!=6) setFeature();
         setBonusType();
         setLuxuryType();
         setStrategicType();
@@ -150,7 +149,6 @@ public class InitializeMap {
                 }
             }
         }
-        System.out.println(" egnheijideuhgiuhigrhitghrghier");
     }
 
     private void setBonusType() {
