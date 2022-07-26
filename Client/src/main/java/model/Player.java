@@ -63,6 +63,10 @@ public class Player {
         return cities;
     }
 
+    public void addCity(City city) {
+        cities.add(city);
+    }
+
     public static Double getYear() {
         Double year = 0.0;
         Request request = new Request();

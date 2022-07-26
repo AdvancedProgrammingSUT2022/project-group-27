@@ -97,6 +97,8 @@ public class Unit implements Productions{
             request.addData("name", name);
             request.addData("groundNumber", ground.getNumber());
             Response response = NetworkController.send(request);
+            City city = new City(name, ground);
+            Player.getPlayerByUser(UserController.getInstance().getUsername()).addCity(city);
         }
     }
 

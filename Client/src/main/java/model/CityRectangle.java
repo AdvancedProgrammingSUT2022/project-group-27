@@ -13,7 +13,7 @@ public class CityRectangle extends Circle {
         this.setLayoutY(cityUnit.getGround().getxLocation());
         this.setRadius(40);
         if (Player.getPlayerByUser(UserController.getInstance().getUsername()).getCapitalGroundNumber() == cityUnit.getGround().getNumber())
-            this.setFill(GlobalVariables.getImagePattern("/images/crown.jfif"));
+            this.setFill(GlobalVariables.getImagePattern("/images/crown.png"));
         else this.setFill(GlobalVariables.getImagePattern("/images/city.png"));
         if (city.getHp() < 19.7)
             setEffect(new InnerShadow((int) ((20 - city.getHp()) * 8),1,1,Color.RED));

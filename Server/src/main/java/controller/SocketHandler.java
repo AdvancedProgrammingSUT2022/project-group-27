@@ -666,7 +666,7 @@ public class SocketHandler extends Thread{
             } case "canWeHaveThisUnitType" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 int groundNumber = (int) Math.floor((Double) request.getData().get("groundNumber"));
-                MilitaryType militaryType = new Gson().fromJson((String) request.getData().get("militaryType"), new TypeToken<BuildingsType>(){}.getType());
+                MilitaryType militaryType = new Gson().fromJson((String) request.getData().get("militaryType"), new TypeToken<MilitaryType>(){}.getType());
                 Boolean message = (new CityMenuController()).canWeHaveThisUnitType(militaryType, City.findCityByGround(Ground.getGroundByNumber(groundNumber), player));
                 response.addData("message", message);
             } case "buildUnit" -> {

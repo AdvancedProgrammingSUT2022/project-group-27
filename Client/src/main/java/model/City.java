@@ -25,6 +25,11 @@ public class City {
 //    private final ArrayList<Building> buildings = new ArrayList<>();
 
 
+    public City(String name, Ground ground) {
+        this.name = name;
+        this.ground = ground;
+    }
+
     public String getName() {
         return name;
     }
