@@ -182,7 +182,7 @@ public class SocketHandler extends Thread{
             } case "getUnderConstructionTechnology" -> {
                 Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("player")));
                 response.setStatus(200);
-                response.addData("technology", player.getUnderConstructionTechnology());
+                response.addData("technology", new Gson().toJson(player.getUnderConstructionTechnology()));
             } case "getHappiness" -> {
                 Player player = Player.findPlayerByUser(User.findUser((String) request.getData().get("player")));
                 response.setStatus(200);
@@ -223,7 +223,9 @@ public class SocketHandler extends Thread{
             } case "getTimeRemain" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 String technologyType = (String) request.getData().get("technologyType");
-                response.addData("timeRemain",player.getUnderConstructionTechnology().getTimeRemain());
+                for (Technology technology: player.getAllTechnologyTypes()) {
+                    if (technology.getTechnologyType().name().equals(technologyType)) response.addData("timeRemain", technology.getTimeRemain());
+                }
             } case "setUnderConstructionTechnology" -> {
                 Player player = Player.findPlayerByUser(User.findUserByToken((String) request.getData().get("token")));
                 String technologyType = (String) request.getData().get("technologyType");
